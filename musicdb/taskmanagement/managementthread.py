@@ -243,6 +243,8 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
         uploadmanager.PreProcessUploadedFile(task)
 
     elif state == "readyforintegration":
+        if contenttype == "artwork":
+            taskmanager.UpdateTaskState(task, "remove")
         #integrationmanager.IntegrateUploadedFile(task)
         # further steps should be triggered by the user!
         pass

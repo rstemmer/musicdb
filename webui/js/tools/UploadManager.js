@@ -78,7 +78,8 @@ class UploadManager
         task.filename = filedescription.name
         this.uploads[task.id] = task;
         
-        MusicDB_Call("InitiateUpload", 
+        MusicDB_Request("InitiateUpload",
+            "UploadingContent",
             {
                 taskid:   task.id,
                 mimetype: task.mimetype,
@@ -86,7 +87,8 @@ class UploadManager
                 filesize: task.filesize,
                 checksum: task.checksum,
                 filename: task.filename
-            });
+            },
+            {task: task});
 
         if(typeof initialannotations === "object")
             MusicDB_Call("AnnotateUpload", {taskid: task.id, ...initialannotations});
@@ -134,11 +136,19 @@ class UploadManager
             if(sig == "StateUpdate")
             {
                 window.console && console.info(`Stateupdate for ${contenttype} to ${state}`);
-                // Artwork will be automatically imported
+                // Import artwork
                 if(contenttype == "artwork")
                 {
                     if(state == "readyforintegration")
-                        MusicDB_Call("IntegrateUpload", {taskid: taskid, triggerimport: true});
+                    {
+                        let sourcepath  = uploadtask.preprocessedpath;
+                        let targetpath  = uploadtask.annotations.musicpath;
+                        let annotations = uploadtask.annotations; // Save annotations
+                        MusicDB_Request("InitiateArtworkImport", "ImportingArtwork", 
+                            {sourcepath: sourcepath, targetpath: targetpath},
+                            {annotations: annotations}
+                            );
+                    }
                 }
             }
         }

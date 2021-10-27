@@ -85,6 +85,7 @@ class AlbumView extends MainView2
         this.column2.AppendChild(this.tagscell);
 
         this.currentalbumtags = null;
+        this.artworkuploader  = null;
     }
 
 
@@ -117,7 +118,7 @@ class AlbumView extends MainView2
 
         // Update Settings
         this.colorselect     = new ColorSchemeSelection("audio", currentalbumid);
-        this.artworkuploader = new ArtworkUploader(MDBArtist.name, MDBAlbum.name, MDBAlbum.id);
+        this.artworkuploader = new ArtworkUploader("album", MDBAlbum.path, MDBAlbum.id);
         this.settings_color.RemoveChilds();
         this.settings_color.AppendChild(this.artworkuploader.GetHTMLElement());
         this.settings_color.AppendChild(this.colorselect.GetHTMLElement());
@@ -364,24 +365,7 @@ class AlbumView extends MainView2
 
     onMusicDBNotification(fnc, sig, rawdata)
     {
-        if(fnc == "MusicDB:Upload"/* && sig == "StateUpdate"*/)
-        {
-            let task        = rawdata.uploadtask;
-            let contenttype = task.contenttype;
-            if(contenttype !== "artwork")
-                return;
-
-            let annotations = task.annotations;
-            let albumid     = annotations.albumid;
-            let state       = rawdata.state;
-            if(albumid !== mdbmodemanager.GetCurrentAlbumID())
-                return;
-
-            if(sig == "StateUpdate")
-                this.artworkuploader.UpdateUploadStatus(state);
-            else if(sig == "InternalError")
-                this.artworkuploader.ShowErrorStatus(rawdata);
-        }
+        this.artworkuploader?.onMusicDBNotification(fnc, sig, rawdata);
     }
 
 
@@ -416,6 +400,9 @@ class AlbumView extends MainView2
                     MusicDB_Request("GetAlbum", "UpdateTags", {albumid: args.album.id});
             }
         }
+
+
+        this.artworkuploader?.onMusicDBMessage(fnc, sig, args, pass);
         return;
     }
 

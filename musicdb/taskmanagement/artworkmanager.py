@@ -274,12 +274,15 @@ class ArtworkManager(TaskManager):
     def ImportArtworkFromUpload(self, task):
         """
         This method performs the artwork import from an uploaded file.
-        It loads the files into the MusicDB Artwork Directory and updates the corresponding MusicDB Database entries.
+        It loads the files into the Upload Directory and updates the corresponding music entries.
 
-        This method can be called indirectly by calling :meth:`~ImportArtwork` or directly (For example from the MusicDB WebSocket API).
+        The following key/value setup must be provided by the ``task``:
 
-        This method expects that the state of the task is ``"importingartwork"`` or ``"readyforintegration"`` as well as the content type of ``"artwork"``.
-        If one of those values is not correct, the method logs an error and returns with ``False``.
+            * ``"awsourcetype"``: Must be ``"imagefile"``
+            * ``"awsourcepath"``: A path to a song inside the upload directory
+            * ``"albumpath"``: A path relative to the music directory, addressing an album that already exists in the database.
+
+        This method expects that the state of the task is ``"importingartwork"``.
 
         Args:
             task (dict): The task dictionary
@@ -287,33 +290,22 @@ class ArtworkManager(TaskManager):
         Returns:
             ``True`` on success.
         """
-        logging.error("The Import Album Artwork from Song File Process needs to be reviewed!") # FIXME
-        return False
-        # Check task state and type - This should have been checked by ImportArtwork already
-        if task["state"] not in ["importingartwork", "readyforintegration"]:
-            logging.error("Unexpected state of task %s. Expected was \"importingartwork\" or \"readyforintegration\". Actual state was \"%s\"! \033[1;30m(Artwork will not be imported)", task["id"], task["state"])
-            self.UpdateTaskState(task, "importfailed")
-            return False
+        sourcepath = task["awsourcepath"]
+        albumpath  = task["albumpath"]
 
-        if task["awsourcetype"] != "imagefile":
-            logging.error("Unexpected source type of task %s. Expected was \"imagefile\". Actual artwork source was \"%s\"! \033[1;30m(Artwork will not be imported)", task["id"], task["awsourcetype"])
-            self.UpdateTaskState(task, "importfailed")
-            return False
+        logging.debug("Importing artwork from \"%s\" for album \"%s\".", sourcepath, albumpath)
 
-        if task["state"] == "readyforintegration":
-            self.UpdateTaskState(task, "importingartwork")
-
-        # Get important information
-        # TODO: if album ID is given, the other values can be obtained from the database
-        try:
-            artistname = task["annotations"]["artistname"]
-            albumname  = task["annotations"]["albumname"]
-            albumid    = task["annotations"]["albumid"]
-            sourcepath = task["preprocessedpath"]
-        except KeyError as e:
-            logging.error("Collecting artwork information for importing failed with key-error for: %s \033[1;30m(Make sure the artist and album name is annotated as well as the album ID.)", str(e))
-            self.UpdateTaskState(task, "importfailed")
+        # Get album information
+        album = self.db.GetAlbumByPath(albumpath)
+        if not album:
+            logging.waring("Album with path \"%s\" does not exist in the database! \033[1;30m(Album Artwork Import canceled)")
+            self.NotifyClient("InternalError", task, "Album does not exist in the database.")
             return False
+        artist = self.db.GetArtistById(album["artistid"])
+
+        artistname = artist["name"]
+        albumname  = album["name"]
+        albumid    = album["id"]
 
         # Import artwork
         awmanager   = MusicDBArtwork(self.cfg, self.db)
@@ -323,11 +315,9 @@ class ArtworkManager(TaskManager):
         if not success:
             logging.error("Importing artwork \"%s\" failed. \033[1;30m(Artwork import canceled)", str(sourcepath))
             self.NotifyClient("InternalError", task, "Importing artwork failed")
-            self.UpdateTaskState(task, "importfailed")
             return False
 
         logging.info("Importing Artwork succeeded")
-        self.UpdateTaskState(task, "importcomplete")
         return True
 
 

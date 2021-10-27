@@ -81,7 +81,7 @@ class VideoFileSelect extends FileSelect
 
 class ArtworkFileSelect extends FileSelect
 {
-    // Optional initial annotations. MusicDB requires a "artistname", "albumname" and "albumid" for artworks
+    // Optional initial annotations. MusicDB requires a "musictype", "musicpath" and "musicid" for artworks
     constructor(labeltext, tooltip, initialannotations=null)
     {
         super(labeltext, tooltip, new SVGIcon("ArtworkFile"), "artwork", "image/*", initialannotations);
