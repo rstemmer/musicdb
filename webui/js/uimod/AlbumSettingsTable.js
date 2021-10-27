@@ -86,9 +86,7 @@ class AlbumSettingsTable extends Table
         this.artistnameinput     = new TextInput(  (value)=>{return this.ValidateArtistName(value);  });
         this.albumnameinput      = new TextInput(  (value)=>{return this.ValidateAlbumName(value);   });
         this.releasedateinput    = new NumberInput((value)=>{return this.ValidateReleaseDate(value); });
-        this.origininput         = new TextInput(  (value)=>{return this.ValidateOrigin(value);      });
         this.importartworkinput  = new SVGCheckBox((state)=>{this.onImportArtworkInputStateChange(state);});
-        this.importlyricsinput   = new SVGCheckBox((state)=>{this.onImportLyricsInputStateChange(state); });
 
         this.artistnameinput.SetAfterValidateEventCallback( (value, valid)=>{return this.EvaluateNewPath();});
         this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
@@ -110,18 +108,10 @@ class AlbumSettingsTable extends Table
             "Release Date",
             this.releasedateinput,
             "Release year with 4 digits (like \"2021\")");
-        this.originrow = new AlbumSettingsTableRow(
-            "File Origin",
-            this.origininput,
-            "Where the file comes from. For example: \"iTunes\", \"bandcamp\", \"Amazon\", \"Google\", \"CD\", \"internet\"");
         this.importartworkrow = new AlbumSettingsTableRow(
             "Import Artwork",
             this.importartworkinput,
             "Try to import the album artwork from a song file");
-        this.importlyricsrow = new AlbumSettingsTableRow(
-            "Import Lyrics",
-            this.importlyricsinput,
-            "Try to import the lyrics from the song files");
 
         this.newpathelement = new Element("span");
         let  newpathnode    = this.newpathelement.GetHTMLElement();
@@ -131,21 +121,13 @@ class AlbumSettingsTable extends Table
         this.AddRow(new TableSpanRow(3, [], artistinfos.GetHTMLElement()));
         this.AddRow(this.albumnamerow    );
         this.AddRow(this.releasedaterow  );
-        this.AddRow(this.originrow       );
         this.AddRow(this.importartworkrow);
-        this.AddRow(this.importlyricsrow );
         this.AddRow(new TableSpanRow(3, [], newpathnode));
         this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage.GetHTMLElement()));
     }
 
 
     onImportArtworkInputStateChange(state)
-    {
-        let validationstatus = this.CheckIfValid();
-        if(typeof this.validationstatuscallback === "function")
-            this.validationstatuscallback(validationstatus);
-    }
-    onImportLyricsInputStateChange(state)
     {
         let validationstatus = this.CheckIfValid();
         if(typeof this.validationstatuscallback === "function")
@@ -201,8 +183,6 @@ class AlbumSettingsTable extends Table
         if(this.albumnameinput.GetValidState() == false)
             return false;
         if(this.releasedateinput.GetValidState() == false)
-            return false;
-        if(this.origininput.GetValidState() == false)
             return false;
         return true;
     }
@@ -374,11 +354,6 @@ class AlbumSettingsTable extends Table
         return this.importartworkinput.GetSelectionState();
     }
 
-    GetImportLyricsState()
-    {
-        return this.importlyricsinput.GetSelectionState();
-    }
-
     GetArtistDirectoryName()
     {
         let artistname = this.artistnameinput.GetValue();
@@ -437,15 +412,13 @@ class AlbumSettingsTable extends Table
 
 
 
-    Update(artistname, albumname, releasedate, origin, hasartwork, haslyrics, albumpath)
+    Update(artistname, albumname, releasedate, hasartwork, albumpath)
     {
         this.oldpath = albumpath;
         this.artistnameinput.SetValue(artistname);
         this.albumnameinput.SetValue(albumname);
         this.releasedateinput.SetValue(releasedate);
-        this.origininput.SetValue(origin);
         this.importartworkinput.SetSelectionState(hasartwork);
-        this.importlyricsinput.SetSelectionState(haslyrics);
     }
 }
 

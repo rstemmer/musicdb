@@ -327,18 +327,6 @@ class AlbumImportLayer extends Layer
                 );
         }
 
-        // Import Lyrics
-        if(this.albumsettingstable.GetImportLyricsState() === true)
-        {
-            this.tasks.AddTask("Import Lyrics from Song Files",
-                (webuitaskid)=>{
-                    return "active";
-                },
-                (fnc, sig, args, pass)=>{
-                    return "good";
-                });
-        }
-
     }
 
 
@@ -353,7 +341,7 @@ class AlbumImportLayer extends Layer
             if(args.length == 0)
             {
                 // Clear everything and show an error
-                this.albumsettingstable.Update("","","","",false,false,"");
+                this.albumsettingstable.Update("","","",false,"");
                 this.albumsettingstable.Hide();
                 this.songfilestable.Update([]);
                 this.songfilestable.Hide();
@@ -380,9 +368,7 @@ class AlbumImportLayer extends Layer
                 args[0].artistname,
                 args[0].albumname,
                 args[0].releaseyear,
-                args[0].origin,
                 args[0].hasartwork,
-                args[0].haslyrics,
                 albumpath);
             this.songfilestable.Update(args);
             this.ValidateForm();
