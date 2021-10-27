@@ -109,7 +109,7 @@ Uploading
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.AnnotateUpload`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.IntegrateUpload`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateImport`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateMusicImport`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateArtworkImport`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.ImportContent`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveUpload`
@@ -359,8 +359,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.AnnotateUpload(args["taskid"], args)
         elif fncname == "IntegrateUpload":
             retval = self.IntegrateUpload(args["taskid"], args["triggerimport"])
-        elif fncname == "InitiateImport":
-            retval = self.InitiateImport(args["contenttype"], args["contentpath"])
+        elif fncname == "InitiateMusicImport":
+            retval = self.InitiateMusicImport(args["contenttype"], args["contentpath"])
         elif fncname == "InitiateArtworkImport":
             retval = self.InitiateArtworkImport(args["sourcepath"], args["targetpath"])
         elif fncname == "ImportContent":
@@ -4020,10 +4020,6 @@ class MusicDBWebSocketInterface(object):
 
 
 
-    # TODO: Use this for importing Artwork as well
-    # TODO: For Upload -> Integrate -> Import, an existing Task ID may be necessary
-    def InitiateImport(self, contenttype, contentpath):
-        return self.InitiateMusicImport(contenttype, contentpath)
     def InitiateMusicImport(self, contenttype, contentpath):
         """
         This method uses :meth:`musicdb.mdbapi.importmanager.ImportManager.InitiateImport` to prepare and start an import task.
@@ -4041,7 +4037,7 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB_Request("InitiateImport", "NewTaskID",
+                MusicDB_Request("InitiateMusicImport", "NewTaskID",
                     {contenttype: "album", contentpath: "artist/2021 - new album"});
 
                 // …

@@ -253,7 +253,7 @@ class AlbumImportLayer extends Layer
         let newalbumpath = artistdirectoryname + "/" + albumdirectoryname;
         this.tasks.AddTask("Import Album",
             (webuitaskid)=>{
-                MusicDB_Request("InitiateImport", "ConfirmAlbumImportTask",
+                MusicDB_Request("InitiateMusicImport", "ConfirmAlbumImportTask",
                     {contenttype: "album", contentpath: newalbumpath},
                     {webuitaskid: webuitaskid});
                 return "active";
