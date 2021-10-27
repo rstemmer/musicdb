@@ -29,17 +29,18 @@ class FileSelect extends Element
         this.input.accept   = accept;
         this.input.onchange = (event)=>{this.onFileSelected(event);};
         this.icon  = icon;
-        this.text  = document.createElement("span");
-        this.text.innerText = labeltext;
+        this.text  = new Element("span");
+        this.text.SetInnerText(labeltext);
 
         this.contenttype = contenttype;
         this.annotations = annotations;
 
-        this.element.classList.add("flex-row");
-        this.element.title = tooltip;
-        this.element.appendChild(this.icon.GetHTMLElement());
-        this.element.appendChild(this.text);
-        this.element.appendChild(this.input);
+        this.AddCSSClass("flex-row");
+        this.SetTooltip(tooltip);
+
+        this.AppendChild(this.icon);
+        this.AppendChild(this.text);
+        this.AppendChild(this.input);
     }
 
 
@@ -62,8 +63,8 @@ class FileSelect extends Element
         uploadmanager.UploadFile(this.contenttype, fileinfos, this.annotations);
 
         // Update Label
-        let newlabel = `${name} <span class="hlcolor">${size}&#8239;MiB</span>`;
-        this.text.innerHTML = newlabel;
+        let newlabel = `${name}&nbsp;<span class="hlcolor">${size}&#8239;MiB</span>`;
+        this.text.SetInnerHTML(newlabel);
     }
 }
 
