@@ -38,8 +38,12 @@ class BatchExecution
     // resultsevalfunction gets the typical fnc,sif,args,pass arguments to evaluate if the tasks was successful
     // notificationfunction gets the typical fnc,sif,rawdata arguments to evaluate if the tasks was successful
     //
+    // When canfail is true, then the batch execution won't stop when the status of the task becomes "bad"
+    // So if canfail is true, status "good" and "bad" leads to executing the next task.
+    // Otherwise only a status of "good".
+    //
     // Returns: the new created task object
-    AddTask(htmllabel, taskfunction, resultevalfunction, notificationfunction=null)
+    AddTask(htmllabel, taskfunction, resultevalfunction, notificationfunction=null, canfail=false)
     {
         let task = new Object();
         task["webuitaskid"]   = this.idseed++;
@@ -47,6 +51,7 @@ class BatchExecution
         task["taskfunction"]  = taskfunction;
         task["resultevalfunction"] = resultevalfunction;
         task["notificationfunction"] = notificationfunction;
+        task["canfail"]              = canfail;
 
         this.tasks.push(task);
         return task;
@@ -97,10 +102,12 @@ class BatchExecution
             // The task failed.
             window.console?.warn("Finished task returned status \"bad\". Batch execution will be stopped.");
         }
-        else if(newstate == "good")
+
+        if(newstate == "good" || (newstate == "bad" && this.currenttask["canfail"] == true))
         {
             // This task has now finished. Continue with the next task.
             this.finishedtasks.push(this.currenttask);
+            this.currenttask = null;
             this.ExecuteTasks();
         }
         return;
