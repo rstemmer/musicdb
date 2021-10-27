@@ -54,22 +54,102 @@ class ArtworkManager(TaskManager):
 
 
 
-    # TODO: This may be useful to import any artwork from the file system that is already available
-    #       and not recently uploaded.
-    def InitiateImport(self):
+    def InitiateImport(self, sourcepath, targetpath):
         """
+        This method initiates importing an artwork for an album.
+
+        The addresses file can be an image or a music file.
+        This file is used to determine the ``"awsourcetype"``.
+        The following source types are possible and determined in the described way:
+
+            * ``"imagefile"``: A file that exists in the upload directory
+            * ``"songfile"``: A file that exists in the music directory and can be analysed by :meth:`musicdb.mdbapi.musicdirectory.MusicDirectory.AnalysePath`.
+            * ``"videofile"``: A file that exists in the music directory and can be analysed by :meth:`musicdb.mdbapi.musicdirectory.MusicDirectory.AnalysePath`.
+
+        The ``sourcepath`` must be a path relative to the music directory or the upload directory.
+        If the file does not exist in the music directory, it will then be checked in the upload directory.
+
+        The ``targetpath`` must be a path to an album or a video that already exists in the database.
+        It determines if the artwork will be imported for an album or a video.
+        The target type is determined by using :meth:`musicdb.mdbapi.musicdirectory.MusicDirectory.AnalysePath`.
+
+        Args:
+            sourcepath (str): Path to the artwork that shall be imported.
+            targetpath (str): Path relative to the music directory
+        
+        Returns:
+            The task ID as string or ``None`` if something failed.
+
+        Raises:
+            TypeError: When one of the parameters are of a wrong data type
+            ValueError: When one of the parameters has an unexpected value
         """
-        raise NotImplementedError
+        # Check parameters
+        if type(sourcepath) != str:
+            raise TypeError("Source path must be a string!")
+
+        if type(targetpath) != str:
+            raise TypeError("Target path must be a string")
+
+        # Determine source type
+        sourcetype = None
+        if self.uploaddirectory.IsFile(sourcepath):
+            sourcetype = "imagefile"
+        elif self.musicdirectory.IsFile(sourcepath):
+            fileinfos = self.musicdirectory.AnalysePath(sourcepath)
+            if fileinfos and fileinfos["song"]:
+                sourcetype = "songfile"
+            elif fileinfos and fileinfos["video"]:
+                sourcetype = "videofile"
+
+        if not sourcetype:
+            raise ValueError("Source path \"%s\" does not address a valid image, song or video file", str(sourcepath))
+
+        # Determine target type
+        targettype = None
+        fileinfos  = self.musicdirectory.AnalysePath(targetpath)
+        if not fileinfos:
+            raise ValueError("Invalid target path \"%s\".", str(targetpath))
+
+        if fileinfos["video"] and self.musicdirectory.IsFile(targetpath):
+            targettype = "video"
+        elif fileinfos["album"] and self.musicdirectory.IsDirectory(targetpath):
+            targettype = "album"
+
+        if not targettype:
+            raise ValueError("Target path \"%s\" does not address a valid video file or album directory", str(targetpath))
+
+
+        task = self.CreateNewTask()
+        # General Data
+        task["state"       ] = "startartworkimport"
+        task["contenttype" ] = "artwork"
+        task["awsourcetype"] = sourcetype
+        task["awsourcepath"] = sourcepath
+        if targettype == "album":
+            task["albumpath"] = targetpath
+        elif targettype == "video":
+            task["videopath"] = targetpath
+
+        self.SaveTask(task)
+        self.ScheduleTask(task)
+        return task["id"]
 
 
 
     def ImportArtwork(self, task):
         """
-        This method imports artwork from the download directory or from an integrated or imported music file.
-        Depending on the *contenttype* different import methods are called:
+        This method imports artwork from the upload directory or from an integrated or imported music file.
+        Depending on the ``"awsourcetype"`` different import methods are called:
 
-            * ``"video"``: :meth:`~ImportVideoArtwork` - Import from video file
-            * ``"artwork"``: :meth:`~ImportArtworkFromUpload` - Import from upload directory
+            * ``"videofile"``: :meth:`~ImportVideoArtwork` - Import from video file
+            * ``"songfile"``:  :meth:`~ImportAlbumArtwork` - Import from a song file of an album
+            * ``"imagefile"``: :meth:`~ImportArtworkFromUpload` - Import from upload directory
+
+        The path to the artwork source must be given in ``"awsourcepath"``.
+
+        If the artwork is being imported for an album or video is determined by the values of ``"videopath"`` or ``"albumpath"``.
+        Only one of those values shall be set. The other one must the ``None``.
 
         The task must be in ``"startartworkimport"`` state, otherwise nothing happens but printing an error message.
         If post processing was successful, the task state gets updated to ``"importcomplete"``.
@@ -87,15 +167,19 @@ class ArtworkManager(TaskManager):
 
         # Perform artwork import
         self.UpdateTaskState(task, "importingartwork")
+        awsourcetype = task["awsourcetype"]
         success = False
-        if task["contenttype"] == "video":
-            logging.debug("Importing Artwork from Video File: %s", task["videofile"])
+        if awsourcetype == "videofile":
+            logging.debug("Importing Artwork from Video File: %s", awsourcetype)
             success = self.ImportVideoArtwork(task)
-        elif task["contenttype"] == "artwork":
-            logging.debug("Importing Artwork from Upload Directory: %s", task["artworkfile"])
+        elif awsourcetype == "songfile":
+            logging.debug("Importing Artwork from Song File: %s", awsourcetype)
+            success = self.ImportAlbumArtwork(task)
+        elif awsourcetype == "imagefile":
+            logging.debug("Importing Artwork from Upload Directory: %s", awsourcetype)
             success = self.ImportArtworkFromUpload(task)
         else:
-            logging.warning("Unsupported content type to import: \"%s\" \033[1;30m(Content will be ignored)", str(task["contenttype"]))
+            logging.warning("Unsupported artwork source type: \"%s\" \033[1;30m(Content will be ignored)", str(awsourcetype))
             self.UpdateTaskState(task, "invalidcontent", "Unsupported content type")
             return False
 
@@ -147,6 +231,46 @@ class ArtworkManager(TaskManager):
 
 
 
+    def ImportAlbumArtwork(self, task):
+        """
+        This method imports an album artwork from one of the songs of the album.
+
+        The following key/value setup must be provided by the ``task``:
+
+            * ``"awsourcetype"``: *Not Used* (Will be determined automatically by :meth:`musicdb.mdbapi.artwork.MusicDBArtwork.UpdateAlbumArtwork`).
+            * ``"awsourcepath"``: A path to a song inside the music directory (usually also inside the album directory)
+            * ``"albumpath"``: A path relative to the music directory, addressing an album that already exists in the database.
+
+        Returns:
+            ``True`` on success
+        """
+        sourcepath = task["awsourcepath"]
+        albumpath  = task["albumpath"]
+        
+        logging.debug("Importing artwork from \"%s\" for album \"%s\".", sourcepath, albumpath)
+
+        # Get album information
+        album = self.db.GetAlbumByPath(albumpath)
+        if not album:
+            logging.waring("Album with path \"%s\" does not exist in the database! \033[1;30m(Album Artwork Import canceled)")
+            self.NotifyClient("InternalError", task, "Album does not exist in the database.")
+            return False
+
+        # Import Artwork
+        awmanager   = MusicDBArtwork(self.cfg, self.db)
+        success     = awmanager.UpdateAlbumArtwork(album)
+
+        # Give feedback
+        if not success:
+            logging.error("Importing artwork \"%s\" failed. \033[1;30m(Artwork import canceled)", str(sourcepath))
+            self.NotifyClient("InternalError", task, "Importing artwork failed")
+            return False
+
+        logging.info("Importing artwork for album \"%s\" succeeded", album["name"])
+        return True
+
+
+
     def ImportArtworkFromUpload(self, task):
         """
         This method performs the artwork import from an uploaded file.
@@ -163,14 +287,16 @@ class ArtworkManager(TaskManager):
         Returns:
             ``True`` on success.
         """
+        logging.error("The Import Album Artwork from Song File Process needs to be reviewed!") # FIXME
+        return False
         # Check task state and type - This should have been checked by ImportArtwork already
         if task["state"] not in ["importingartwork", "readyforintegration"]:
             logging.error("Unexpected state of task %s. Expected was \"importingartwork\" or \"readyforintegration\". Actual state was \"%s\"! \033[1;30m(Artwork will not be imported)", task["id"], task["state"])
             self.UpdateTaskState(task, "importfailed")
             return False
 
-        if task["contenttype"] != "artwork":
-            logging.error("Unexpected content type of task %s. Expected was \"artwork\". Actual content type was \"%s\"! \033[1;30m(Artwork will not be imported)", task["id"], task["contenttype"])
+        if task["awsourcetype"] != "imagefile":
+            logging.error("Unexpected source type of task %s. Expected was \"imagefile\". Actual artwork source was \"%s\"! \033[1;30m(Artwork will not be imported)", task["id"], task["awsourcetype"])
             self.UpdateTaskState(task, "importfailed")
             return False
 

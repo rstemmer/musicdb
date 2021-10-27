@@ -110,6 +110,7 @@ Uploading
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.AnnotateUpload`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.IntegrateUpload`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateImport`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateArtworkImport`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.ImportContent`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveUpload`
 
@@ -360,6 +361,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.IntegrateUpload(args["taskid"], args["triggerimport"])
         elif fncname == "InitiateImport":
             retval = self.InitiateImport(args["contenttype"], args["contentpath"])
+        elif fncname == "InitiateArtworkImport":
+            retval = self.InitiateArtworkImport(args["sourcepath"], args["targetpath"])
         elif fncname == "ImportContent":
             retval = self.ImportContent(args["taskid"])
         elif fncname == "RemoveUpload":
@@ -4020,6 +4023,8 @@ class MusicDBWebSocketInterface(object):
     # TODO: Use this for importing Artwork as well
     # TODO: For Upload -> Integrate -> Import, an existing Task ID may be necessary
     def InitiateImport(self, contenttype, contentpath):
+        return self.InitiateMusicImport(contenttype, contentpath)
+    def InitiateMusicImport(self, contenttype, contentpath):
         """
         This method uses :meth:`musicdb.mdbapi.importmanager.ImportManager.InitiateImport` to prepare and start an import task.
 
@@ -4060,6 +4065,28 @@ class MusicDBWebSocketInterface(object):
         """
         taskid = self.importmanager.InitiateImport(contenttype, contentpath);
         return taskid
+
+
+
+    def InitiateArtworkImport(self, sourcepath, targetpath):
+        """
+        Similar to :meth:`~InitiateMusicImport`, but uses
+        :meth:`musicdb.mdbapi.artworkmanager.ArtworkManager.InitiateImport` to prepare and start an import task.
+
+        The ``sourcepath`` must address an existing image file in the upload directory or a song file or video file in the music directory.
+        The ``targetpath`` must address a video file or album directory inside the music directory.
+        The target path must address music that is also registered in the database.
+
+        Args:
+            sourcepath (str): Path to an image, song or video file
+            targetpath (str): Path to an album directory or video file
+
+        Returns:
+            The task ID as string
+        """
+        taskid = self.artworkmanager.InitiateImport(sourcepath, targetpath)
+        return taskid
+
 
 
     def ImportContent(self, taskid):
