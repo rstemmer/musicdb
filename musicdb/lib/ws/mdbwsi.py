@@ -111,7 +111,6 @@ Uploading
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.IntegrateContent`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateMusicImport`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateArtworkImport`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.ImportContent`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveUpload`
 
 File Handling
@@ -363,8 +362,6 @@ class MusicDBWebSocketInterface(object):
             retval = self.InitiateMusicImport(args["contenttype"], args["contentpath"])
         elif fncname == "InitiateArtworkImport":
             retval = self.InitiateArtworkImport(args["sourcepath"], args["targetpath"])
-        elif fncname == "ImportContent":
-            retval = self.ImportContent(args["taskid"])
         elif fncname == "RemoveUpload":
             retval = self.RemoveUpload(args["taskid"])
         # Call-Methods (retval will be ignored unless method gets not changed)
@@ -4074,27 +4071,6 @@ class MusicDBWebSocketInterface(object):
         taskid = self.artworkmanager.InitiateImport(sourcepath, targetpath)
         return taskid
 
-
-
-    def ImportContent(self, taskid):
-        """
-        This method triggers the import process of data that is already inside the Music Directory.
-        It can also be called to import uploaded artwork for existing music.
-
-        If the music is not already integrated into the Music Directory (including correct naming),
-        call :meth:`~IntegrateUpload`.
-
-        Args:
-            taskid (str): ID to identify the upload
-            triggerimport (boolean): When ``true``, the integration manager also triggers the import process of the music into the Music Database.
-        """
-        logging.error("DEPRECATED: Use Initiate Import")
-        task = taskmanager.GetTaskByID(taskid)
-        if task["contenttype"] == "artwork":
-            self.artworkmanager.ImportArtwork(task)
-        else:
-            self.importmanager.ImportMusic(task)
-        return
 
 
     def RemoveUpload(self, taskid):
