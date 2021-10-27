@@ -231,6 +231,13 @@ class SongFilesTableRow extends SongFilesTableRowBase
 
 
 
+    GetNewSongFileName()
+    {
+        return this.newfilename;
+    }
+
+
+
     CheckIfValid()
     {
         // First part is the optional CD number
@@ -284,6 +291,23 @@ class SongFilesTable extends Table
             }
         }
         return renamerequests;
+    }
+
+
+
+    GetNewSongFileNames()
+    {
+        let filenames = new Array();
+        for(let row of this.rows)
+        {
+            if(typeof row.GetNewSongFileName === "function")
+            {
+                let filename = row.GetNewSongFileName();
+                if(filename !== null)
+                    filenames.push(filename);
+            }
+        }
+        return filenames;
     }
 
 
