@@ -88,7 +88,7 @@ class UploadManager
                 checksum: task.checksum,
                 filename: task.filename
             },
-            {task: task});
+            {contenttype: task.contenttype});
 
         if(typeof initialannotations === "object")
             MusicDB_Call("AnnotateUpload", {taskid: task.id, ...initialannotations});
@@ -141,13 +141,9 @@ class UploadManager
                 {
                     if(state == "readyforintegration")
                     {
-                        let sourcepath  = uploadtask.preprocessedpath;
-                        let targetpath  = uploadtask.annotations.musicpath;
-                        let annotations = uploadtask.annotations; // Save annotations
-                        MusicDB_Request("InitiateArtworkImport", "ImportingArtwork", 
-                            {sourcepath: sourcepath, targetpath: targetpath},
-                            {annotations: annotations}
-                            );
+                        let taskid    = uploadtask.id;
+                        let musicpath = uploadtask.annotations.musicpath;
+                        MusicDB_Call("IntegrateContent", {taskid: taskid, musicpath: musicpath});
                     }
                 }
             }

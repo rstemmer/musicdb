@@ -106,22 +106,11 @@ class ArtworkUploader extends Element
     {
         if(fnc == "InitiateUpload" && sig == "UploadingContent")
         {
-            let task = pass.task;
-            if(task.contenttype != "artwork")
+            let contenttype = pass.contenttype;
+            if(contenttype != "artwork")
                 return;
 
             this.listenontaskid = args; // InitiateUpload returns the task ID
-        }
-        else if(fnc == "InitiateArtworkImport" && sig == "ImportingArtwork")
-        {
-            let taskid      = args;
-            let annotations = pass.annotations;
-            let musicid     = annotations.musicid;
-
-            if(musicid !== this.musicid)
-                return;
-
-            this.listenontaskid = taskid;
         }
         return;
     }

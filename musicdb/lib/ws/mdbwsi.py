@@ -108,7 +108,7 @@ Uploading
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UploadChunk`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.AnnotateUpload`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.IntegrateUpload`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.IntegrateContent`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateMusicImport`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateArtworkImport`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.ImportContent`
@@ -357,8 +357,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetUploads()
         elif fncname == "AnnotateUpload":
             retval = self.AnnotateUpload(args["taskid"], args)
-        elif fncname == "IntegrateUpload":
-            retval = self.IntegrateUpload(args["taskid"], args["triggerimport"])
+        elif fncname == "IntegrateContent":
+            retval = self.IntegrateContent(args["taskid"], args["musicpath"])
         elif fncname == "InitiateMusicImport":
             retval = self.InitiateMusicImport(args["contenttype"], args["contentpath"])
         elif fncname == "InitiateArtworkImport":
@@ -3986,37 +3986,28 @@ class MusicDBWebSocketInterface(object):
         return
 
 
-    # TODO: Refactor the following methods and make them asynchronous
-    def IntegrateUpload(self, taskid, triggerimport):
+
+    def IntegrateContent(self, taskid, musicpath):
         """
-        This method integrates the uploaded files into the music directory.
-        The whole file tree will be created following the MusicDB naming scheme.
+        This method integrates uploaded content into the Music Directory.
+        The task with the ID ``taskid`` must be in state ``"readyforintegration"``.
 
-        The upload task must be in ``readyforintegration`` state. If not, nothing happens.
+        When the content type is ``"artwork"``, then the artwork will directly be imported.
+        Then the ``musicpath`` determines the target of the artwork import.
+        Because artwork cannot only be integrated but must be imported,
+        the import process will directly be triggered.
 
-        When *triggerimport* is ``true``, the upload manager start importing the music.
-        This happens asynchronously inside the Upload Manager Thread.
-
-        Artwork files cannot be integrated.
-        In case the content type is ``"artwork"`` **and** ``triggerimport`` is ``true``,
-        the artwork import process will be triggered.
-        If ``triggerimport`` is ``false``, an error gets logged and the call ignored.
-        For artwork it is recommended to directly call :meth:`~ImportContent`.
+        Otherwise the ``musicpath`` defines the target file or directory inside the Music Directory
+        to that the uploaded content will be moved to.
 
         Args:
             taskid (str): ID to identify the upload
-            triggerimport (boolean): When ``true``, the integration manager also triggers the import process of the music into the Music Database.
-        """
-        task = self.taskmanager.GetTaskByID(taskid)
-        if task["contenttype"] == "artwork":
-            if not triggerimport:
-                logging.warning("Task of content type \"artwork\" cannot be integrated, only imported. Triggering an import process was not requested (triggerimport == false). \033[1;30m(Artwork will not be processed)")
-                return
+            musicpath (str): Path to the destination directory or of the target for artwork import.
 
-            self.artworkmanager.ImportArtworkFromUpload(task)
-        else:
-            self.integrationmanager.IntegrateUploadedFile(taskid, triggerimport)
-        return
+        Returns:
+            The task ID as string
+        """
+        return self.integrationmanager.InitiateIntegration(taskid, musicpath)
 
 
 

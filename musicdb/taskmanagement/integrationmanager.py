@@ -54,6 +54,64 @@ class IntegrationManager(TaskManager):
         #return
 
 
+    def InitiateIntegration(self, uploadtaskid, targetpath):
+        """
+        This method initiates the integration of an uploaded file or directory.
+        The ``targetpath`` will be the destination at that the uploaded content will be moved to.
+        This path must be relative to the music directory.
+
+        If the content type of the uploaded content is ``"artwork"``, then
+        the ``targetpath`` must be a path to an album or a video that already exists in the database.
+        It determines if the artwork will be imported for an album or a video.
+        The target type is determined by using :meth:`musicdb.mdbapi.musicdirectory.MusicDirectory.AnalysePath`.
+
+        Otherwise it is mandatory that the ``targetpath`` does not yet exist inside the Music Directory.
+
+        The addressed task by ``uploadtaskid`` must be in the state ``"readyforintegration"``.
+
+        Args:
+            uploadtaskid (str): ID of the task that performed the upload
+            targetpath (str): Path relative to the music directory
+
+        Returns:
+            The task ID as string or ``None`` if something failed.
+
+        Raises:
+            TypeError: When one of the parameters are of a wrong data type
+            ValueError: When one of the parameters has an unexpected value
+        """
+        task = self.GetTaskByID(uploadtaskid)
+        if task["state"] != "readyforintegration":
+            logging.warning("Cannot integrate an upload that is not in \"readyforintegration\" state. Task with ID \"%s\" was in \"%s\" state! \033[1;30m(Nothing will be done)", str(task["id"]), str(task["state"]))
+            return False
+
+        # Determine target type
+        targettype = None
+        fileinfos  = self.musicdirectory.AnalysePath(targetpath)
+        if not fileinfos:
+            raise ValueError("Invalid target path \"%s\".", str(targetpath))
+
+        if fileinfos["video"] and self.musicdirectory.IsFile(targetpath):
+            targettype = "video"
+        elif fileinfos["album"] and self.musicdirectory.IsDirectory(targetpath):
+            targettype = "album"
+
+        if not targettype:
+            raise ValueError("Target path \"%s\" does not address a valid video file or album directory", str(targetpath))
+
+        if task["contenttype"] == "artwork":
+            task["state"] = "startartworkimport"
+            task["awsourcetype"] = "imagefile"
+            task["awsourcepath"] = task["preprocessedpath"]
+            if targettype == "album":
+                task["albumpath"] = targetpath
+            elif targettype == "video":
+                task["videopath"] = targetpath
+
+        self.SaveTask(task)
+        self.ScheduleTask(task)
+        return task["id"]
+
 
     def IntegrateUploadedFile(self, taskid, triggerimport=False):
         """
