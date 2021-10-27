@@ -284,6 +284,8 @@ class TaskManager(object):
         # Import/Integration Related
         task["videopath"      ] = None              # Path to the video file in the music directory
         task["albumpath"      ] = None              # Path to the album directory in the music directory
+        task["awsourcetype"   ] = None
+        task["awsourcepath"   ] = None
 
         return task
 

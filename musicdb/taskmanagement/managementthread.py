@@ -76,6 +76,9 @@ The following keys are in dictionary that represent a task:
     * Integration related information (May not be valid if the file is not yet integrated into the Music Directory)
         * ``"videopath"`` (str): Path to a video file, relative to the Music Directory
         * ``"albumpath"`` (str): Path to an album directory, relative to the Music Directory
+    * Artwork related
+        * ``"awsourcetype"`` (str): Type of the artwork source: ``"imagefile"``, ``"songfile"`` or ``"videofile"``.
+        * ``"awsourcepath"`` (str): Path to the artwork source
 
 After upload is complete,
 the Management Thread takes care about post processing or removing no longer needed content
@@ -206,7 +209,12 @@ def TaskManagementThread():
         deletekeys = []
         for taskid, task in tasks.items():
             try:
-                keeptask = ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, importmanager)
+                keeptask = ProcessTask(taskid, task,
+                        taskmanager,
+                        uploadmanager,
+                        integrationmanager,
+                        importmanager,
+                        artworkmanager)
                 if not keeptask:
                     deletekeys.append(taskid)
             except Exception as e:
@@ -219,7 +227,7 @@ def TaskManagementThread():
 
 
 
-def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, importmanager):
+def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, importmanager, artworkmanager):
     """
     Returns:
         ``True`` when the processing can continue. ``False`` when the task with taskid can be removed from the list of tasks
