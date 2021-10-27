@@ -110,7 +110,7 @@ class ArtworkUploader extends Element
             if(task.contenttype != "artwork")
                 return;
 
-            this.listenontaskid = task.id;  // TODO: Should be args, needs to be refactored in the back-end
+            this.listenontaskid = args; // InitiateUpload returns the task ID
         }
         else if(fnc == "InitiateArtworkImport" && sig == "ImportingArtwork")
         {

@@ -3901,7 +3901,7 @@ class MusicDBWebSocketInterface(object):
             sourcefilename (str): File name (example: ``"test.png"``)
         
         Returns:
-            *Nothing*
+            The task ID ``taskid``
 
         Example:
             .. code-block:: javascript
@@ -3910,7 +3910,7 @@ class MusicDBWebSocketInterface(object):
 
         """
         self.uploadmanager.InitiateUpload(taskid, mimetype, contenttype, filesize, checksum, filename)
-        return
+        return taskid
 
 
     def UploadChunk(self, taskid, chunkdata):
