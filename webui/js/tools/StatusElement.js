@@ -34,9 +34,7 @@ class StatusElementBase extends Element
     // state: unknown, good, bad, active, open
     SetState(state)
     {
-        this.element.dataset.state = state;
-        if(typeof text === "string")
-            this.SetText(text);
+        this.SetData("state", state);
     }
 
 
@@ -52,7 +50,7 @@ class StatusElementBase extends Element
 
     SetText(text)
     {
-        this.element.innerText = text;
+        this.SetInnerText(text);
     }
 }
 
@@ -84,15 +82,6 @@ class StatusHTMLText extends StatusText
     }
 }
 
-/*
-
-    * Unrelated states
-    * Upload related states:
-        * ``"preprocessing"``: The file is currently in preprocessing state. For example if an archive gets unpacked.
-    * Integration related states:
-        * ``"integrating"``: The integration process has started
-    * Import related states:
- */
 
 
 class UploadStatusText extends StatusText
@@ -161,7 +150,7 @@ class StatusList extends Element
     {
         let item = new StatusItem(statelabel, "unknown");
         this.states[statename] = item;
-        this.element.appendChild(item.GetHTMLElement());
+        this.AppendChild(item);
         return;
     }
 
@@ -172,5 +161,6 @@ class StatusList extends Element
         this.states[statename].SetState(state);
     }
 }
+
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
