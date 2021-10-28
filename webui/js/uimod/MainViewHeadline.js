@@ -18,25 +18,22 @@
 
 class SimpleMainViewHeadline extends Element
 {
-    constructor(text=null)
+    constructor(text="")
     {
         super("div", ["MainViewHeadline", "flex"]);
 
         // Main Headline
-        this.headline = document.createElement("span");
-        this.headline.classList.add("fgcolor");
+        this.headline = new Element("span", ["fgcolor"]);
+        this.UpdateRawInformation(text);
 
-        if(typeof text === "string")
-            this.UpdateRawInformation(text);
-
-        this.element.appendChild(this.headline);
+        this.AppendChild(this.headline);
     }
 
 
 
     UpdateRawInformation(headlinetext)
     {
-        this.headline.innerText = headlinetext;
+        this.headline.SetInnerText(headlinetext);
         return;
     }
 }
@@ -45,19 +42,15 @@ class SimpleMainViewHeadline extends Element
 
 class SettingsHeadline extends SimpleMainViewHeadline
 {
-    constructor(headlinetext=null, infotext=null)
+    constructor(headlinetext="", infotext="")
     {
         super(headlinetext);
-        this.element.classList.add("flex-column");
+        this.AddCSSClass("flex-column");
 
-        this.infoelement = document.createElement("span");
-        this.infoelement.classList.add("hlcolor");
-        this.infoelement.classList.add("smallfont");
+        this.infoelement = new Element("span", ["hlcolor", "smallfont"]);
+        this.infoelement.SetInnerText(infotext);
 
-        if(typeof infotext === "string")
-            this.infoelement.innerText = infotext;
-
-        this.element.appendChild(this.infoelement);
+        this.AppendChild(this.infoelement);
     }
 }
 
@@ -65,7 +58,7 @@ class SettingsHeadline extends SimpleMainViewHeadline
 
 class LayerHeadline extends SettingsHeadline
 {
-    constructor(headlinetext=null, infotext=null)
+    constructor(headlinetext="", infotext="")
     {
         super(headlinetext, infotext);
     }
