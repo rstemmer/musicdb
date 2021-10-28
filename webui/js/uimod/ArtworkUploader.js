@@ -87,7 +87,7 @@ class ArtworkUploader extends Element
     {
         if(fnc == "MusicDB:Task")
         {
-            let task  = rawdata.uploadtask;
+            let task  = rawdata.task;
             let state = rawdata.state;
 
             if(this.listenontaskid !== task.id)

@@ -119,13 +119,13 @@ class UploadManager
         {
             window.console && console.info(data);
             let taskid      = data.taskid;
-            let uploadtask  = data.uploadtask;
+            let task        = data.task;
             let state       = data.state;
-            let contenttype = uploadtask.contenttype;
+            let contenttype = task.contenttype;
 
             if(sig == "ChunkRequest")
             {
-                this.videouploadstable.TryUpdateRow(uploadtask);
+                this.videouploadstable.TryUpdateRow(task);
                 this.UploadNextChunk(data)
             }
             else // "StateUpdate", "InternalError"
@@ -141,8 +141,8 @@ class UploadManager
                 {
                     if(state == "readyforintegration")
                     {
-                        let taskid    = uploadtask.id;
-                        let musicpath = uploadtask.annotations.musicpath;
+                        let taskid    = task.id;
+                        let musicpath = task.annotations.musicpath;
                         MusicDB_Call("IntegrateContent", {taskid: taskid, musicpath: musicpath});
                     }
                 }
