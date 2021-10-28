@@ -17,10 +17,13 @@
 "use strict";
 
 
-class BatchExecution
+// BatchExecution extends StatusList but it can also be used
+// without making use of the visual components.
+class BatchExecution extends StatusList
 {
     constructor()
     {
+        super();
         this.tasks         = new Array();
         this.idseed        = 1;
         this.currenttask   = null;
@@ -46,14 +49,15 @@ class BatchExecution
     AddTask(htmllabel, taskfunction, resultevalfunction, notificationfunction=null, canfail=false)
     {
         let task = new Object();
-        task["webuitaskid"]   = this.idseed++;
-        task["statuselement"] = new StatusHTMLText(htmllabel, "open");
-        task["taskfunction"]  = taskfunction;
-        task["resultevalfunction"] = resultevalfunction;
+        task["webuitaskid"]          = this.idseed++;
+        task["statuselement"]        = new StatusItem(htmllabel, "open");
+        task["taskfunction"]         = taskfunction;
+        task["resultevalfunction"]   = resultevalfunction;
         task["notificationfunction"] = notificationfunction;
         task["canfail"]              = canfail;
 
         this.tasks.push(task);
+        this.AppendChild(task["statuselement"]);
         return task;
     }
 
@@ -69,6 +73,7 @@ class BatchExecution
     Clear()
     {
         this.tasks = new Array();
+        this.RemoveChilds();
     }
 
 

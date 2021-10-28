@@ -17,58 +17,6 @@
 "use strict";
 
 
-class AlbumImportTasks extends Element
-{
-    constructor()
-    {
-        super("div", ["AlbumImportTaks"]);
-        this.tasks = new BatchExecution();
-    }
-
-
-
-    AddTask(htmllabel, taskfunction, resultevalfunction, notificationfunction=null)
-    {
-        let task = this.tasks.AddTask(htmllabel, taskfunction, resultevalfunction, notificationfunction);
-        this.AppendChild(task["statuselement"]);
-    }
-
-
-
-    SetListenSignature(signature)
-    {
-        this.tasks.SetListenSignature(signature);
-    }
-
-
-
-    Clear()
-    {
-        this.tasks.Clear();
-        this.RemoveChilds();
-    }
-
-
-
-    ExecuteTasks()
-    {
-        this.tasks.ExecuteTasks();
-    }
-
-
-
-    onMusicDBMessage(fnc, sig, args, pass)
-    {
-        this.tasks.onMusicDBMessage(fnc, sig, args, pass);
-    }
-
-    onMusicDBNotification(fnc, sig, rawdata)
-    {
-        this.tasks.onMusicDBNotification(fnc, sig, rawdata);
-    }
-}
-
-
 
 class AlbumImportLayer extends Layer
 {
@@ -102,7 +50,7 @@ class AlbumImportLayer extends Layer
         // Forms
         this.albumsettingstable = new AlbumSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
         this.songfilestable     = new SongFilesTable((isvalid)=>{this.onSongsSettingsValidation(isvalid);});
-        this.tasks              = new AlbumImportTasks();
+        this.tasks              = new BatchExecution();
 
         // Tool Bar
         this.toolbar            = new ToolBar();

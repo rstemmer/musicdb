@@ -50,7 +50,7 @@ class StatusElementBase extends Element
 
     SetText(text)
     {
-        this.SetInnerText(text);
+        this.SetInnerHTML(text);
     }
 }
 
