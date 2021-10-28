@@ -22,6 +22,9 @@ class AlbumImport extends MainSettingsView
     {
         super("AlbumImport", "Import new Albums", "Import new found albums into the MusicDB Music Database. To find new albums, they must be uploaded into the Music Directory managed by MusicDB.");
 
+        this.directoryupload = new AlbumDirectorySelect("Select Album Directory", "Select an album directory from the local computer");
+        this.AppendChild(this.directoryupload);
+
         this.albumlist = new List();
         this.AppendChild(this.albumlist);
     }

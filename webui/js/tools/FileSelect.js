@@ -70,6 +70,41 @@ class FileSelect extends Element
 
 
 
+class DirectorySelect extends FileSelect
+{
+    constructor(labeltext, tooltip, icon, contenttype, accept, annotations=null)
+    {
+        super(labeltext, tooltip, icon, contenttype, accept, annotations);
+        this.input.webkitdirectory = true;
+    }
+
+
+
+    onFileSelected(event)
+    {
+        let files = event.target.files;
+        window.console?.log(files);
+
+        // TODO: Start Upload Process
+
+        let size  = 0;
+        let count = 0;
+        for(let file of files)
+        {
+            size  += Math.ceil(file.size / (1024*1024)); // in MiB
+            count += 1;
+        }
+
+        // Update Label
+        let newlabel = `${count} Files <span class="hlcolor">${size}&#8239;MiB</span>`;
+        this.text.SetInnerHTML(newlabel);
+
+        // super.onFileSelected(…)
+    }
+}
+
+
+
 class VideoFileSelect extends FileSelect
 {
     constructor(labeltext, tooltip)
@@ -86,6 +121,16 @@ class ArtworkFileSelect extends FileSelect
     constructor(labeltext, tooltip, initialannotations=null)
     {
         super(labeltext, tooltip, new SVGIcon("ArtworkFile"), "artwork", "image/*", initialannotations);
+    }
+}
+
+
+
+class AlbumDirectorySelect extends DirectorySelect
+{
+    constructor(labeltext, tooltip)
+    {
+        super(labeltext, tooltip, new SVGIcon("MusicDB"), "album", "*");
     }
 }
 
