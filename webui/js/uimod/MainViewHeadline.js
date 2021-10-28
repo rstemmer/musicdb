@@ -63,6 +63,16 @@ class SettingsHeadline extends SimpleMainViewHeadline
 
 
 
+class LayerHeadline extends SettingsHeadline
+{
+    constructor(headlinetext=null, infotext=null)
+    {
+        super(headlinetext, infotext);
+    }
+}
+
+
+
 /* Layout:
  *
  *   headline                       button box

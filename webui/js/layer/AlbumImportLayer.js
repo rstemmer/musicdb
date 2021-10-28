@@ -85,6 +85,20 @@ class AlbumImportLayer extends Layer
         this.invalidsourceinfo  = new MessageBarError("Invalid Album Source. There were no songs in the selected Album directory.");
         this.invalidsourceinfo.HideCloseButton();
 
+        // Headlines
+        let albumheadline = new LayerHeadline("Album Directory Settings",
+            "These settings can be used to finalize the naming of the Album and to define to which Artist the Album belongs. "+
+            "After import, the album path follows the MusicDB Naming Scheme for Albums: "+
+            "\"{ArtistName}/{ReleaseYear} - {AlbumName}\"");
+        let songsheadline = new LayerHeadline("Song Files Settings",
+            "These settings can be used to finalize the naming of the Song files."+
+            "After import, the song files follow the MusicDB Naming Scheme for Songs: "+
+            "\"{SongNumber} {SongName}.{FileExtension}\" or "+
+            "\"{CDNumber}-{SongNumber} {SongName}.{FileExtension}\"");
+        let tasksheadline = new LayerHeadline("Import Tasks Overview",
+            "This is an overview of the Tasks that will be executed when the Import process gets started. "+
+            "During import, the status of each task will be visualized.");
+
         // Forms
         this.albumsettingstable = new AlbumSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
         this.songfilestable     = new SongFilesTable((isvalid)=>{this.onSongsSettingsValidation(isvalid);});
@@ -105,8 +119,11 @@ class AlbumImportLayer extends Layer
         this.toolbar.AddButton(this.importbutton);
 
         this.AppendChild(this.invalidsourceinfo);
+        this.AppendChild(albumheadline);
         this.AppendChild(this.albumsettingstable);
+        this.AppendChild(songsheadline);
         this.AppendChild(this.songfilestable);
+        this.AppendChild(tasksheadline);
         this.AppendChild(this.tasks);
         this.AppendChild(this.toolbar);
     }
