@@ -28,8 +28,20 @@ class TextButton extends Element
         this.SetTooltip(tooltip);
         this.AppendChild(this.icon);
         this.AppendChild(this.text);
-        this.element.onclick = onclick;
+
+        this.onclickcallback = onclick;
+        this.element.onclick = ()=>{this.onClick();};
         this.Enable();
+    }
+
+
+
+    onClick()
+    {
+        if(this.GetData("enabled") == "false")
+            return;
+
+        this.onclickcallback();
     }
 
 
