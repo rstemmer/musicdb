@@ -71,20 +71,38 @@ class AlbumImportProgress extends Layer
     // tasks: AlbumImportTasks object
     ExecuteTasks(tasks)
     {
+        // Reset UI
+        this.RemoveChilds();
         this.closebutton.Disable();
+        this.successmessage.Hide();
+        this.errormessage.Hide();
 
+        // Prepare Tasks for being executed
         this.tasks = tasks;
         this.tasks.SetListenSignature("ConfirmAlbumImportTask");
+        this.tasks.SetOnFinishCallback((opentasks, finishedtasks)=>{this.onFinish(opentasks, finishedtasks);});
 
-        this.RemoveChilds();
+        // Rebuild UI
         this.AppendChild(this.headline);
         this.AppendChild(this.tasks);
         this.AppendChild(this.successmessage);
         this.AppendChild(this.errormessage);
         this.AppendChild(this.toolbar);
 
+        // And Fire
         this.Show();
         this.tasks.ExecuteTasks();
+    }
+
+
+
+    onFinish(opentasks, finishedtasks)
+    {
+        if(opentasks.length == 0)
+            this.successmessage.Show();
+        else
+            this.errormessage.Show();
+        this.closebutton.Enable();
     }
 
 
