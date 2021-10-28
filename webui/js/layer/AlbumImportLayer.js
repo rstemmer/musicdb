@@ -34,16 +34,16 @@ class AlbumImportLayer extends Layer
         this.invalidsourceinfo.HideCloseButton();
 
         // Headlines
-        let albumheadline = new LayerHeadline("Album Directory Settings",
+        this.albumheadline = new LayerHeadline("Album Directory Settings",
             "These settings can be used to finalize the naming of the Album and to define to which Artist the Album belongs. "+
             "After import, the album path follows the MusicDB Naming Scheme for Albums: "+
             "\"{ArtistName}/{ReleaseYear} - {AlbumName}\"");
-        let songsheadline = new LayerHeadline("Song Files Settings",
+        this.songsheadline = new LayerHeadline("Song Files Settings",
             "These settings can be used to finalize the naming of the Song files."+
             "After import, the song files follow the MusicDB Naming Scheme for Songs: "+
             "\"{SongNumber} {SongName}.{FileExtension}\" or "+
             "\"{CDNumber}-{SongNumber} {SongName}.{FileExtension}\"");
-        let tasksheadline = new LayerHeadline("Import Tasks Overview",
+        this.tasksheadline = new LayerHeadline("Import Tasks Overview",
             "This is an overview of the Tasks that will be executed when the Import process gets started. "+
             "During import, the status of each task will be visualized.");
 
@@ -65,12 +65,20 @@ class AlbumImportLayer extends Layer
         this.toolbar.AddSpacer(true); // grow
         this.toolbar.AddButton(this.importbutton);
 
+        this.ResetUI();
+    }
+
+
+
+    ResetUI()
+    {
+        this.RemoveChilds();
         this.AppendChild(this.invalidsourceinfo);
-        this.AppendChild(albumheadline);
+        this.AppendChild(this.albumheadline);
         this.AppendChild(this.albumsettingstable);
-        this.AppendChild(songsheadline);
+        this.AppendChild(this.songsheadline);
         this.AppendChild(this.songfilestable);
-        this.AppendChild(tasksheadline);
+        this.AppendChild(this.tasksheadline);
         this.AppendChild(this.tasks);
         this.AppendChild(this.toolbar);
     }
@@ -299,6 +307,7 @@ class AlbumImportLayer extends Layer
         if(fnc == "FindAlbumSongFiles" && sig == "ShowAlbumSongFiles")
         {
             window.console?.log(args);
+            this.ResetUI();
 
             // It can happen that a potential album directory does not contain any songs
             if(args.length == 0)
