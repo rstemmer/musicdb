@@ -288,44 +288,41 @@ class AlbumImportLayer extends Layer
             );
 
         // Import Artwork
-        if(this.albumsettingstable.GetImportArtworkState() === true)
-        {
-            let firstsongfile = this.songfilestable.GetNewSongFileNames()[0];
-            let artworkpath   = newalbumpath + "/" + firstsongfile; // Get Artwork that is embedded in the first song of the album
-            this.tasks.AddTask("Import Artwork from Song Files",
-                (webuitaskid)=>{
-                    MusicDB_Request("InitiateArtworkImport", "ConfirmAlbumImportTask",
-                        {sourcepath: artworkpath, targetpath: newalbumpath},
-                        {webuitaskid: webuitaskid});
+        let firstsongfile = this.songfilestable.GetNewSongFileNames()[0];
+        let artworkpath   = newalbumpath + "/" + firstsongfile; // Get Artwork that is embedded in the first song of the album
+        this.tasks.AddTask("Trying to Import Artwork from Song Files",
+            (webuitaskid)=>{
+                MusicDB_Request("InitiateArtworkImport", "ConfirmAlbumImportTask",
+                    {sourcepath: artworkpath, targetpath: newalbumpath},
+                    {webuitaskid: webuitaskid});
+                return "active";
+            },
+            (fnc, sig, args, pass)=>{
+                if(args == null)
+                    return "bad";
+                else
                     return "active";
-                },
-                (fnc, sig, args, pass)=>{
-                    if(args == null)
-                        return "bad";
-                    else
-                        return "active";
-                },
-                (fnc, sig, rawdata)=>{
-                    if(fnc != "MusicDB:Task")
-                        return null;
+            },
+            (fnc, sig, rawdata)=>{
+                if(fnc != "MusicDB:Task")
+                    return null;
 
-                    if(sig == "InternalError")
-                    {
-                        window.console?.warn(`Importing Artwork failed with error: "${rawdata["message"]}"`)
+                if(sig == "InternalError")
+                {
+                    window.console?.warn(`Importing Artwork failed with error: "${rawdata["message"]}"`)
+                    return "bad";
+                }
+                if(sig == "StateUpdate")
+                {
+                    if(rawdata["state"] == "importfailed")
                         return "bad";
-                    }
-                    if(sig == "StateUpdate")
-                    {
-                        if(rawdata["state"] == "importfailed")
-                            return "bad";
-                        else if(rawdata["state"] == "importcomplete")
-                            return "good";
-                    }
-                    return "active";
-                },
-                /*canfail=*/ true // when importing artwork fails, it is not a big issue.
-                );
-        }
+                    else if(rawdata["state"] == "importcomplete")
+                        return "good";
+                }
+                return "active";
+            },
+            /*canfail=*/ true // when importing artwork fails, it is not a big issue.
+            );
 
     }
 
@@ -341,7 +338,7 @@ class AlbumImportLayer extends Layer
             if(args.length == 0)
             {
                 // Clear everything and show an error
-                this.albumsettingstable.Update("","","",false,"");
+                this.albumsettingstable.Update("","","","");
                 this.albumsettingstable.Hide();
                 this.songfilestable.Update([]);
                 this.songfilestable.Hide();
@@ -368,7 +365,6 @@ class AlbumImportLayer extends Layer
                 args[0].artistname,
                 args[0].albumname,
                 args[0].releaseyear,
-                args[0].hasartwork,
                 albumpath);
             this.songfilestable.Update(args);
             this.ValidateForm();

@@ -86,7 +86,6 @@ class AlbumSettingsTable extends Table
         this.artistnameinput     = new TextInput(  (value)=>{return this.ValidateArtistName(value);  });
         this.albumnameinput      = new TextInput(  (value)=>{return this.ValidateAlbumName(value);   });
         this.releasedateinput    = new NumberInput((value)=>{return this.ValidateReleaseDate(value); });
-        this.importartworkinput  = new SVGCheckBox((state)=>{this.onImportArtworkInputStateChange(state);});
 
         this.artistnameinput.SetAfterValidateEventCallback( (value, valid)=>{return this.EvaluateNewPath();});
         this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
@@ -108,10 +107,6 @@ class AlbumSettingsTable extends Table
             "Release Date",
             this.releasedateinput,
             "Release year with 4 digits (like \"2021\")");
-        this.importartworkrow = new AlbumSettingsTableRow(
-            "Import Artwork",
-            this.importartworkinput,
-            "Try to import the album artwork from a song file");
 
         this.newpathelement = new Element("span");
         let  newpathnode    = this.newpathelement.GetHTMLElement();
@@ -121,18 +116,11 @@ class AlbumSettingsTable extends Table
         this.AddRow(new TableSpanRow(3, [], artistinfos.GetHTMLElement()));
         this.AddRow(this.albumnamerow    );
         this.AddRow(this.releasedaterow  );
-        this.AddRow(this.importartworkrow);
         this.AddRow(new TableSpanRow(3, [], newpathnode));
         this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage.GetHTMLElement()));
     }
 
 
-    onImportArtworkInputStateChange(state)
-    {
-        let validationstatus = this.CheckIfValid();
-        if(typeof this.validationstatuscallback === "function")
-            this.validationstatuscallback(validationstatus);
-    }
 
     ValidateArtistName(value)
     {
@@ -349,10 +337,6 @@ class AlbumSettingsTable extends Table
     }
 
 
-    GetImportArtworkState()
-    {
-        return this.importartworkinput.GetSelectionState();
-    }
 
     GetArtistDirectoryName()
     {
@@ -412,13 +396,12 @@ class AlbumSettingsTable extends Table
 
 
 
-    Update(artistname, albumname, releasedate, hasartwork, albumpath)
+    Update(artistname, albumname, releasedate, albumpath)
     {
         this.oldpath = albumpath;
         this.artistnameinput.SetValue(artistname);
         this.albumnameinput.SetValue(albumname);
         this.releasedateinput.SetValue(releasedate);
-        this.importartworkinput.SetSelectionState(hasartwork);
     }
 }
 
