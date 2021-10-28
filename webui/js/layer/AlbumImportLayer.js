@@ -268,7 +268,7 @@ class AlbumImportLayer extends Layer
                 }
             },
             (fnc, sig, rawdata)=>{
-                if(fnc != "MusicDB:Upload")
+                if(fnc != "MusicDB:Task")
                     return null;
 
                 if(sig == "InternalError")
@@ -306,7 +306,7 @@ class AlbumImportLayer extends Layer
                         return "active";
                 },
                 (fnc, sig, rawdata)=>{
-                    if(fnc != "MusicDB:Upload")
+                    if(fnc != "MusicDB:Task")
                         return null;
 
                     if(sig == "InternalError")

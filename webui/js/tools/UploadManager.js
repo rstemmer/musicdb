@@ -115,7 +115,7 @@ class UploadManager
 
     onMusicDBNotification(fnc, sig, data)
     {
-        if(fnc == "MusicDB:Upload")
+        if(fnc == "MusicDB:Task")
         {
             window.console && console.info(data);
             let taskid      = data.taskid;

@@ -202,7 +202,7 @@ class MusicDBWebSocketInterface(object):
         self.videostream.RegisterCallback(self.onVideoStreamEvent)
         self.songqueue.RegisterCallback(self.onSongQueueEvent)
         self.videoqueue.RegisterCallback(self.onVideoQueueEvent)
-        self.taskmanager.RegisterCallback(self.onUploadEvent)
+        self.taskmanager.RegisterCallback(self.onTaskEvent)
         return None
         
 
@@ -211,7 +211,7 @@ class MusicDBWebSocketInterface(object):
         self.videostream.RemoveCallback(self.onVideoStreamEvent)
         self.songqueue.RemoveCallback(self.onSongQueueEvent)
         self.videoqueue.RemoveCallback(self.onVideoQueueEvent)
-        self.taskmanager.RemoveCallback(self.onUploadEvent)
+        self.taskmanager.RemoveCallback(self.onTaskEvent)
         return None
 
 
@@ -263,7 +263,7 @@ class MusicDBWebSocketInterface(object):
         success = self.SendPacket(response)
         return success
 
-    def onUploadEvent(self, notification, data):
+    def onTaskEvent(self, notification, data):
         # This function is called from a different thread. Therefore NO sqlite3-access is allowed.
         # So there will be just a notification so that the clients can request related functions.
 
@@ -273,7 +273,7 @@ class MusicDBWebSocketInterface(object):
 
         response    = {}
         response["method"]      = "notification"
-        response["fncname"]     = "MusicDB:Upload"
+        response["fncname"]     = "MusicDB:Task"
         response["fncsig"]      = notification
         response["arguments"]   = data
         response["pass"]        = None
@@ -4042,7 +4042,7 @@ class MusicDBWebSocketInterface(object):
                 }
                 function onMuiscDBNotification(fnc, sig, rawdata)
                 {
-                    if(fnc == "MusicDB:Upload" && sig == "StateUpdate")
+                    if(fnc == "MusicDB:Task" && sig == "StateUpdate")
                         console.log(`State Update: ${rawdata["state"]}`);
                 }
 

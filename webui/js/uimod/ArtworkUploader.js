@@ -85,7 +85,7 @@ class ArtworkUploader extends Element
 
     onMusicDBNotification(fnc, sig, rawdata)
     {
-        if(fnc == "MusicDB:Upload")
+        if(fnc == "MusicDB:Task")
         {
             let task  = rawdata.uploadtask;
             let state = rawdata.state;
