@@ -111,7 +111,7 @@ class AlbumImportLayer extends Layer
             ()=>{this.onClick_Cancel();},
             "Cancel album import. Nothing will be changed.");
         this.importbutton       = new TextButton("MusicDB", "Import Album",
-            ()=>{this.onClick_Rename();},
+            ()=>{this.onClick_Import();},
             "Apply rename files and directories properly and import album into database. Create artis if not existing.");
 
         this.toolbar.AddButton(this.cancelbutton);
@@ -135,7 +135,7 @@ class AlbumImportLayer extends Layer
         this.Hide();
     }
 
-    onClick_Rename()
+    onClick_Import()
     {
         this.tasks.ExecuteTasks();
     }
