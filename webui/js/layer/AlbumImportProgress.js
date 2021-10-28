@@ -31,7 +31,7 @@ class AlbumImportProgress extends Layer
             "During import, the status of each task will be visualized.");
 
         // Finish-Messages
-        this.successmessage = new MessageBarError("Importing the new album succeeded");
+        this.successmessage = new MessageBarConfirm("Importing the new album succeeded");
         this.errormessage   = new MessageBarError("An error occured while importing the new album");
         this.successmessage.HideCloseButton();
         this.errormessage.HideCloseButton();
