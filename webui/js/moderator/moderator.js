@@ -26,6 +26,7 @@ let artistscache        = new ArtistsCache();
 let curtain             = new Curtain();
 let layerbackground     = new LayerBackground();
 let albumimportlayer    = new AlbumImportLayer(layerbackground, "AlbumImportLayer");
+let albumimportprogress = new AlbumImportProgress(layerbackground, "AlbumImportProgress");
 
 // Create Basic MusicDB WebUI Components
 let musicdbhud          = new MusicDBHUD();
@@ -99,6 +100,7 @@ window.onload = function ()
     document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
     document.body.appendChild(layerbackground.GetHTMLElement());
     document.body.appendChild(albumimportlayer.GetHTMLElement());
+    document.body.appendChild(albumimportprogress.GetHTMLElement());
 
     leftviewmanager     = new LeftViewManager();
     mainviewmanager     = new MainViewManager();
@@ -143,7 +145,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
     streamview.onMusicDBNotification(fnc, sig, rawdata);
     uploadmanager.onMusicDBNotification(fnc, sig, rawdata);
     albumview.onMusicDBNotification(fnc, sig, rawdata);
-    albumimportlayer.onMusicDBNotification(fnc, sig, rawdata);
+    albumimportprogress.onMusicDBNotification(fnc, sig, rawdata);
 
     if(fnc == "MusicDB:AudioStream")
     {
@@ -227,6 +229,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     videoimport.onMusicDBMessage(fnc, sig, args, pass);
     // Layer
     albumimportlayer.onMusicDBMessage(fnc, sig, args, pass);
+    albumimportprogress.onMusicDBMessage(fnc, sig, args, pass);
     
 
 

@@ -103,7 +103,6 @@ class AlbumImportLayer extends Layer
         this.albumsettingstable = new AlbumSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
         this.songfilestable     = new SongFilesTable((isvalid)=>{this.onSongsSettingsValidation(isvalid);});
         this.tasks              = new AlbumImportTasks();
-        this.tasks.SetListenSignature("ConfirmAlbumImportTask");
 
         // Tool Bar
         this.toolbar            = new ToolBar();
@@ -137,7 +136,9 @@ class AlbumImportLayer extends Layer
 
     onClick_Import()
     {
-        this.tasks.ExecuteTasks();
+        //this.tasks.ExecuteTasks();
+        albumimportprogress.ExecuteTasks(this.tasks); // Will also Show the layer
+        this.Hide();
     }
 
 
@@ -386,16 +387,6 @@ class AlbumImportLayer extends Layer
             this.songfilestable.Update(args);
             this.ValidateForm();
         }
-        if(sig == "ConfirmAlbumImportTask")
-        {
-            window.console?.log(args);
-            window.console?.log(pass);
-            this.tasks.onMusicDBMessage(fnc, sig, args, pass);
-        }
-    }
-    onMusicDBNotification(fnc, sig, rawdata)
-    {
-        this.tasks.onMusicDBNotification(fnc, sig, rawdata);
     }
 }
 
