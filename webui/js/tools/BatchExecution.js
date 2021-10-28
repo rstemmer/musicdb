@@ -72,8 +72,21 @@ class BatchExecution extends StatusList
 
     Clear()
     {
-        this.tasks = new Array();
+        this.tasks         = new Array();
+        this.finishedtasks = new Array();
+        this.currenttask   = null;
         this.RemoveChilds();
+    }
+
+
+
+    // The callback gets called when all tasks have been processed
+    // or when the processing has been stopped due to an error.
+    // The callback gets two parameter: A list of all finished tasks, and a list of all left tasks.
+    //   callback(opentasks, finishedtasks)
+    SetOnFinishCallback(onfinishcallback)
+    {
+        this.onfinishcallback = onfinishcallback;
     }
 
 
@@ -81,7 +94,11 @@ class BatchExecution extends StatusList
     ExecuteTasks()
     {
         if(this.tasks.length <= 0)
+        {
+            if(typeof this.onfinishcallback === "function")
+                this.onfinishcallback(this.tasks, this.finishedtasks);
             return;
+        }
 
         this.currenttask = this.tasks[0];
         this.tasks       = this.tasks.splice(1);
