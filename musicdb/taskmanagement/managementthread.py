@@ -85,6 +85,9 @@ the Management Thread takes care about post processing or removing no longer nee
 The uploaded file follows the following naming scheme: *contenttype* + ``-`` + *checksum* + ``.`` + source-file-extension
 The upload manager also takes care about the validity of the uploaded file (via SHA-1 checksum).
 
+After an import is completed successfully, all clients connected to the server get a ``"sys:refresh"`` notification
+to update their caches.
+This notification is generated via :meth:`musicdb.mdbapi.server.UpdateCaches`.
 """
 # TODO: Visualize state machine
 # TODO: Module description: move upload details into upload module
@@ -95,6 +98,7 @@ import logging
 import threading
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
+import musicdb.mdbapi.server    as server
 
 from musicdb.taskmanagement.taskmanager     import TaskManager
 from musicdb.taskmanagement.uploadmanager   import UploadManager
@@ -229,6 +233,10 @@ def TaskManagementThread():
 
 def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, importmanager, artworkmanager):
     """
+    After an import is completed successfully, all clients connected to the server get a ``"sys:refresh"`` notification
+    to update their caches.
+    This notification is generated via :meth:`musicdb.mdbapi.server.UpdateCaches`.
+
     Returns:
         ``True`` when the processing can continue. ``False`` when the task with taskid can be removed from the list of tasks
     """
@@ -236,10 +244,8 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
     contenttype = task["contenttype"]
     logging.debug("Task with state \"%s\" found. (%s)", str(state), str(contenttype));
 
-    if state == "uploadfailed" or state == "importfailed" or state == "importcomplete":
-        taskmanager.UpdateTaskState(task, "remove")
-
-    elif state == "uploadcomplete":
+    # Check if there are some things to do to proceed with the task
+    if state == "uploadcomplete":
         uploadmanager.PreProcessUploadedFile(task)
 
     elif state == "readyforintegration":
@@ -253,18 +259,18 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
     elif state == "startmusicimport":
         importmanager.ImportMusic(task)
 
-        # TODO: There are 4 types of artwork:
-        # - from audio file for album
-        # - from video file for video
-        # - from upload for album
-        # - from upload for video (not supported)
-        # This needs to be handled separately
-
     elif state == "startartworkimport":
-        success = artworkmanager.ImportArtwork(task)
+        artworkmanager.ImportArtwork(task)
+
+    elif state == "importcomplete":
+        server.UpdateCaches(); # Trigger all Clients to update their caches
 
     elif state == "remove":
         return False
+
+    # Now check if the task can be removed
+    if state == "uploadfailed" or state == "importfailed" or state == "importcomplete":
+        taskmanager.UpdateTaskState(task, "remove")
 
     return True
 
