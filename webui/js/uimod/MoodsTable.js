@@ -41,6 +41,7 @@ class MoodsTableHeadline extends MoodsTableRowBase
     constructor(MDBMood)
     {
         super();
+        this.AddCSSClass("TableHeadline");
         for(let cellnum in MOODTABLEHEADLINE)
         {
             let headline = document.createTextNode(MOODTABLEHEADLINE[cellnum]);

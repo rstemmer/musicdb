@@ -21,13 +21,6 @@
 {
 }
 
-.MoodsTable > tr:first-child
-{
-    color:              var(--bgcolor);
-    background-color:   var(--hlcolor);
-    font-weight:        bold;
-    letter-spacing:     0.05rem;
-}
 .MoodsTable > tr:last-child
 {
     border-top:         var(--borderwidth) solid var(--hlcolor);
