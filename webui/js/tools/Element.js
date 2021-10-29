@@ -152,6 +152,13 @@ class Element
 
 
 
+    SetColor(htmlcolor)
+    {
+        this.element.style.color = htmlcolor;
+    }
+
+
+
     SetClickEventCallback(callback)
     {
         this.element.onclick = callback;
