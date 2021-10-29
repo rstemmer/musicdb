@@ -324,7 +324,7 @@ class TaskManager(object):
 
         global Tasks
         if taskid not in Tasks:
-            self.NotifiyClient("InternalError", None, "Invalid Task ID")
+            self.NotifyClient("InternalError", None, "Invalid Task ID")
             raise ValueError("Task ID \"%s\" not in Task Queue.", str(taskid))
 
         return Tasks[taskid]
