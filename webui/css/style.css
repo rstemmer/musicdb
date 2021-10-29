@@ -85,6 +85,11 @@
     border-color:   var(--fmcolor);
 }
 
+.opaque
+{
+    background-color:   var(--bgcolor);
+    background-image:   url(../img/Noise10.png);
+}
 
 /***********************/
 /* default font  style */

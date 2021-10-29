@@ -37,7 +37,7 @@ class Layer extends Element
     // When the layer is made visible, then also the background will be shown
     constructor(background, id)
     {
-        super("div", ["Layer", "frame"], id);
+        super("div", ["Layer", "frame", "opaque"], id);
         this.background = background;
         this.Hide();
     }

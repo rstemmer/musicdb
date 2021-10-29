@@ -24,7 +24,6 @@ div#MainMenu
     top:                3rem;
     right:              1rem;
 
-    background-color:   var(--bgcolor);
     box-shadow:         0px 4px 8px 0px rgba(1, 0, 0, 1), 0px 6px 20px 0px rgba(0, 0, 0, 0.5);
 }
 

@@ -22,7 +22,7 @@ class MainMenu extends Menu
 {
     constructor(curtain=null)
     {
-        super(["frame"], "MainMenu");
+        super(["frame", "opaque"], "MainMenu");
 
         this.curtain     = curtain;
         if(this.curtain)
