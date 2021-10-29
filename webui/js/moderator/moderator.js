@@ -94,13 +94,15 @@ window.onload = function ()
     queuecontrolsbox.appendChild(queuecontrolview.GetHTMLElement());
 
     let mainmenubutton = new MenuButton("1rem", "1rem", "Menu", ()=>{mainmenu.ToggleMenu();}, "Show main menu");
-    document.body.appendChild(curtain.GetHTMLElement());
-    document.body.appendChild(mainmenubutton.GetHTMLElement());
-    document.body.appendChild(mainmenu.GetHTMLElement());
-    document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
-    document.body.appendChild(layerbackground.GetHTMLElement());
-    document.body.appendChild(albumimportlayer.GetHTMLElement());
-    document.body.appendChild(albumimportprogress.GetHTMLElement());
+
+    let body = new Element(document.body);
+    body.AppendChild(curtain);
+    body.AppendChild(mainmenubutton);
+    body.AppendChild(mainmenu);
+    body.AppendChild(musicdbstatus.GetReconnectButtonHTMLElement());
+    body.AppendChild(layerbackground);
+    body.AppendChild(albumimportlayer);
+    body.AppendChild(albumimportprogress);
 
     leftviewmanager     = new LeftViewManager();
     mainviewmanager     = new MainViewManager();
