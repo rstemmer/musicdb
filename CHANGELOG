@@ -7,27 +7,32 @@
 
 Run  git log --oneline  for more details
 
-┍━━━━┫ 2021-??-?? ┣━━━━┫ 8.0.0 ┣━━━━━━━━╍╍
+┍━━━━┫ 2022-??-?? ┣━━━━┫ 8.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ * MusicDB got off of /opt and now lives in the system like any other application
 │       -> Expects all your path settings need to be reviewed
 │ * Missing data directories, files and databases will be created when the server gets started
 │ * Invalid ownership and permissions of files and sub-directories will be fixed when the server gets started
+│ * MusicDB server start/stop is now managed via systemd and journald
+│ * MusicDB can now be installed via pacman
 │ - FIFO interface removed
 │ - PID-File interfaces removed
 │ - [lycra] Lyrics Crawler feature removed (Data quality was bad, feature was never used)
-│ + [musicdb] SystemD can now be used to start/stop the server
-│ + [musicdb] Can now be installed via pacman
 │ + [logging] Allow logging to journald
 │ + [artwork] Long broken app-cache manifest generation removed
 │ + [tracker] Configuration added to decide if random songs shall be tracked: [tracker]->trackrandom
-│ + [Filesystem] Filesystem class refactored. Uses now pathlib and type hinting
-│ + [Upload] Upload management refactored into task management
 │ + [WebUI] Audio stream player + settings form added
+│ + [WebUI] Allow importing albums via web front-end
+│ + Web API:
+│    * notification "MusicDB:Upload" is now called "MusicDB:Task"
+│    * Removed functions: GetLyricsCrawlerCache, RunLyricsCrawler, IntegrateUpload
+│    * New functions: CreateArtist, IntegrateContent, InitiateMusicImport, InitiateArtworkImport, FindAlbumSongFiles, RenameMusicFile, RenameAlbumDirectory, ChangeArtistDirectory
 │ * Solved Issues: #68, #66
 │
 ┝━ MINOR CHANGES
 │ * [metadata] Uses mutagen instead of mutagenx module
+│ + [Filesystem] Filesystem class refactored. Uses now pathlib and type hinting
+│ + [Upload] Upload management refactored into task management
 └───────────────────────────────────────╌╌
 
 
