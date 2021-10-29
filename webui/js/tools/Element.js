@@ -156,6 +156,10 @@ class Element
     {
         this.element.onclick = callback;
     }
+    SetRightClickEventCallback(callback)
+    {
+        this.element.oncontextmenu = callback;
+    }
 }
 
 
