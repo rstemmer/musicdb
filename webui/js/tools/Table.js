@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ class Table extends Element
     Clear()
     {
         this.rows = new Array();
-        this.element.innerHTML = "";
+        this.RemoveChilds();
     }
 
 
@@ -39,7 +39,7 @@ class Table extends Element
     AddRow(tablerow)
     {
         this.rows.push(tablerow);
-        this.element.appendChild(tablerow.GetHTMLElement());
+        this.AppendChild(tablerow);
     }
 
 
@@ -47,7 +47,6 @@ class Table extends Element
     RemoveRow(tablerow, includecontextrow=false)
     {
         let rowelement   = tablerow.element;
-        window.console && console.log(tablerow);
 
         // Remove rows from the DOM
         let rowstoremove = 1
@@ -69,11 +68,11 @@ class Table extends Element
 
 
 
-    AddContextView(htmlelement)
+    AddContextView(element)
     {
         let lastrow    = this.rows[this.rows.length - 1];
         let tablewidth = lastrow.cells.length;
-        let contextrow = new TableSpanRow(tablewidth, ["ContextRow"], htmlelement);
+        let contextrow = new TableSpanRow(tablewidth, ["ContextRow"], element);
 
         // Show/Hide on right click on previous cell
         contextrow.Hide();
@@ -97,6 +96,23 @@ class Table extends Element
 
 
 
+class TableCell extends Element
+{
+    constructor(span=null)
+    {
+        super("td");
+    }
+
+
+
+    SetColumnSpan(numcells)
+    {
+        this.GetHTMLElement().colSpan = numcells;
+    }
+}
+
+
+
 class TableRow extends Element
 {
     constructor(numcells, classes)
@@ -106,18 +122,18 @@ class TableRow extends Element
         this.cells = new Array();
         for(let i=0; i<numcells; i++)
         {
-            let cell = document.createElement("td");
+            let cell = new TableCell("td");
             this.cells.push(cell);
-            this.element.appendChild(cell);
+            this.AppendChild(cell);
         }
     }
 
 
 
-    SetContent(cellnum, htmlelement)
+    SetContent(cellnum, element)
     {
-        this.cells[cellnum].innerHTML = "";
-        this.cells[cellnum].appendChild(htmlelement);
+        this.cells[cellnum].RemoveChilds();
+        this.cells[cellnum].AppendChild(element);
     }
 
 
@@ -143,21 +159,21 @@ class TableRow extends Element
 
 class TableSpanRow extends TableRow
 {
-    constructor(numcells, classes=[], htmlcontent=null)
+    constructor(numcells, classes=[], content=null)
     {
         super(1, classes);
-        this.cells[0].colSpan = numcells;
+        this.cells[0].SetColumnSpan(numcells);
 
         // Set content if available
-        if(htmlcontent !== null)
-            this.SetContent(htmlcontent);
+        if(content !== null)
+            this.SetContent(content);
     }
 
 
 
-    SetContent(htmlelement)
+    SetContent(element)
     {
-        super.SetContent(0, htmlelement);
+        super.SetContent(0, element);
     }
 }
 
