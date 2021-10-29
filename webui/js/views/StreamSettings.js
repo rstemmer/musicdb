@@ -49,13 +49,13 @@ class StreamSettingsTableHeadline extends StreamSettingsTableRowBase
 
 class StreamSettingsTableRow extends StreamSettingsTableRowBase
 {
-    constructor(description, htmlinputnode, example="")
+    constructor(description, inputelement, example="")
     {
         super();
         let descriptionnode = document.createTextNode(description);
         let examplenode     = document.createTextNode(example);
         this.SetContent(SST_DESCRIPTION_COLUMN, descriptionnode);
-        this.SetContent(SST_SETTINGS_COLUMN,    htmlinputnode);
+        this.SetContent(SST_SETTINGS_COLUMN,    inputelement);
         this.SetContent(SST_EXAMPLE_COLUMN,     examplenode);
     }
 }
@@ -80,15 +80,15 @@ class StreamSettingsTable extends Table
         this.headlinerow  = new StreamSettingsTableHeadline();
         this.addressrow   = new StreamSettingsTableRow(
             "Address (URL)",
-            this.addressinput.GetHTMLElement(),
+            this.addressinput,
             `http://${location.hostname}:8000/stream or https://${location.hostname}:8000/stream`);
         this.usernamerow  = new StreamSettingsTableRow(
             "User Name",
-            this.usernameinput.GetHTMLElement(),
+            this.usernameinput,
             "max_power");
         this.passwordrow  = new StreamSettingsTableRow(
             "Password",
-            this.passwordinput.GetHTMLElement(),
+            this.passwordinput,
             `${randompassword}`);
         this.AddRow(this.headlinerow);
         this.AddRow(this.addressrow );

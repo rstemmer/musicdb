@@ -30,14 +30,6 @@ class SongFilesTableRowBase extends TableRow
     {
         super(SONGFILESTABLEHEADLINE.length, ["SongFilesTableRow"]);
     }
-
-
-
-    SetContent(cellnum, element)
-    {
-        let htmlelement = element.GetHTMLElement();
-        super.SetContent(cellnum, htmlelement);
-    }
 }
 
 

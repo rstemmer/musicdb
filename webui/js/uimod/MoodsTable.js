@@ -87,7 +87,7 @@ class MoodsTableRow extends MoodsTableRowBase
         if(numdependencies > 0)
         {
             removebutton.SetColor("var(--color-brightred)");
-            removebutton.GetHTMLElement().classList.add("hovpacity");
+            removebutton.AddCSSClass("hovepacity");
             removebutton.SetTooltip("Delete Mood-Flag and remove Flag from all songs, albums and videos");
         }
         else
@@ -162,29 +162,28 @@ class MoodsTableRow extends MoodsTableRowBase
         if(color === null)
         {
             colorstateicon = new SVGIcon("StatusBad");
-            colorelement = document.createElement("span");
-            colorelement.innerText = "No Color";
-            colorelement.classList.add("hlcolor");
+            colorelement   = new Element("span", ["hlcolor"]);
+            colorelement.SetInnerText("No Color");
         }
         else
         {
             colorstateicon = new SVGIcon("StatusGood");
-            colorelement = document.createElement("span");
-            colorelement.innerText   = color.toUpperCase();
-            colorelement.style.color = color;
+            colorelement   = new Element("span");
+            colorelement.SetInnerText(color.toUpperCase());
+
+            colorelement.SetColor(color);
             colorstateicon.SetColor(color);
             icon.SetColor(color);
         }
 
-        let controls = document.createElement("div");
-        controls.classList.add("flex-column");
-        controls.appendChild(buttonbox.GetHTMLElement());
-        controls.appendChild(this.confirmmessage.GetHTMLElement());
+        let controls = new Element("div", ["flex-column"]);
+        controls.AppendChild(buttonbox);
+        controls.AppendChild(this.confirmmessage);
 
-        this.SetContent(ICON_COLUMN    , icon.GetHTMLElement());
+        this.SetContent(ICON_COLUMN    , icon);
         this.SetContent(ICONTYPE_COLUMN, document.createTextNode(typename));
         this.SetContent(MOODNAME_COLUMN, document.createTextNode(name));
-        this.SetContent(HASCOLOR_COLUMN, colorstateicon.GetHTMLElement());
+        this.SetContent(HASCOLOR_COLUMN, colorstateicon);
         this.SetContent(COLOR_COLUMN   , colorelement);
         this.SetContent(USAGE_COLUMN   , usageelement);
         this.SetContent(BUTTON_COLUMN  , controls);
@@ -218,7 +217,7 @@ class MoodsTableRow extends MoodsTableRowBase
     {
         // Replace this Row with an Edit-Row
         let editrow = new MoodsTableEditRow(MDBMood);
-        this.element.replaceWith(editrow.GetHTMLElement());
+        this.ReplaceWith(editrow);
     }
 }
 
@@ -229,10 +228,10 @@ class MoodsTableEditRow extends MoodsTableRowBase
     constructor(MDBMood)
     {
         super();
-        this.iconinput        = document.createElement("input");
-        this.iconinput.style.color = "var(--hlcolor)";
-        this.nameinput        = document.createElement("input");
-        this.colorinput       = new ColorInput(null /*no label*/, "Change Flag-Color", "#FFFFFF",
+        this.iconinput  = new TextInput(()=>{this.Validate();}, "", "Set a singe Unicode Icon");
+        this.iconinput.SetColor("var(--hlcolor)");
+        this.nameinput  = new TextInput(()=>{this.Validate();}, "", "Provide a desriptive Name");
+        this.colorinput = new ColorInput(null /*no label*/, "Change Flag-Color", "#FFFFFF",
             ()=>{this.onPreviewColor();},
             ()=>{this.onPreviewColor();}
             );
@@ -241,16 +240,14 @@ class MoodsTableEditRow extends MoodsTableRowBase
         this.confirmbutton    = new SVGButton("Save", ()=>{this.onSave();});
         this.confirmbutton.SetTooltip("Create new Flag with the given attributes");
 
-        this.iconinput.oninput = ()=>{this.Validate();}
-        this.nameinput.oninput = ()=>{this.Validate();}
-
         if(typeof MDBMood === "object" && MDBMood != null)
         {
             // Initialize everything
-            this.iconinput.value = MDBMood.icon;
-            this.nameinput.value = MDBMood.name;
-            this.posx            = MDBMood.posx;
-            this.posy            = MDBMood.posy;
+            this.iconinput.SetValue(MDBMood.icon);
+            this.nameinput.SetValue(MDBMood.name);
+            this.posx             = MDBMood.posx;
+            this.posy             = MDBMood.posy;
+            this.mood             = MDBMood;
             if(typeof MDBMood.color === "string")
             {
                 this.colorinput.SetColor(MDBMood.color);
@@ -261,7 +258,6 @@ class MoodsTableEditRow extends MoodsTableRowBase
             {
                 this.SetContent(COLOR_COLUMN, document.createTextNode("No Color"));
             }
-            this.mood            = MDBMood;
         }
         else
         {
@@ -276,9 +272,9 @@ class MoodsTableEditRow extends MoodsTableRowBase
         this.SetContent(ICON_COLUMN    , this.iconinput); 
         this.SetContent(ICONTYPE_COLUMN, document.createTextNode("Unicode"));
         this.SetContent(MOODNAME_COLUMN, this.nameinput);
-        this.SetContent(HASCOLOR_COLUMN, this.colorstatebutton.GetHTMLElement());
+        this.SetContent(HASCOLOR_COLUMN, this.colorstatebutton);
         this.SetContent(USAGE_COLUMN   , document.createTextNode("This Flag does not exists yet"));
-        this.SetContent(BUTTON_COLUMN  , this.confirmbutton.GetHTMLElement());
+        this.SetContent(BUTTON_COLUMN  , this.confirmbutton);
     }
 
 
@@ -296,6 +292,15 @@ class MoodsTableEditRow extends MoodsTableRowBase
 
     Validate()
     {
+        // During early initialization validation, some objects may not exist
+        // Only validate when all required objects exist
+        if(typeof this.iconinput !== "object")
+            return;
+        if(typeof this.nameinput !== "object")
+            return;
+        if(typeof this.confirmbutton !== "object")
+            return;
+
         let valid = true;
         if(this.ValidateIcon() !== true)
             valid = false;
@@ -318,23 +323,23 @@ class MoodsTableEditRow extends MoodsTableRowBase
 
     ValidateIcon()
     {
-        let icon  = this.iconinput.value;
+        let icon  = this.iconinput.GetValue();
         let valid = false;
         if(typeof icon === "string" && icon.length == 1)
             valid = true;
 
-        this.iconinput.dataset.valid = valid;
+        this.iconinput.SetValidState(valid);
         return valid;
     }
     ValidateName()
     {
-        let name  = this.nameinput.value;
+        let name  = this.nameinput.GetValue();
         let valid = false;
         if(typeof name === "string" && name.length > 0)
             valid = true;
         // TODO: Check if name already exists
 
-        this.nameinput.dataset.valid = valid;
+        this.nameinput.SetValidState(valid);
         return valid;
     }
 
@@ -345,7 +350,7 @@ class MoodsTableEditRow extends MoodsTableRowBase
         if(newstate == false)
         {
             this.SetContent(COLOR_COLUMN, document.createTextNode("No Color"));
-            this.iconinput.style.color = "var(--hlcolor)";
+            this.iconinput.SetColor("var(--hlcolor)");
             return;
         }
 
@@ -357,7 +362,7 @@ class MoodsTableEditRow extends MoodsTableRowBase
     onPreviewColor()
     {
         let color = this.colorinput.GetColor();
-        this.iconinput.style.color = color;
+        this.iconinput.SetColor(color);
         return;
     }
 
@@ -366,8 +371,8 @@ class MoodsTableEditRow extends MoodsTableRowBase
     onSave()
     {
         // Get all data
-        let name  = this.nameinput.value;
-        let icon  = this.iconinput.value;
+        let name  = this.nameinput.GetValue();
+        let icon  = this.iconinput.GetValue();
         let color = null;
         let posx  = this.posx;
         let posy  = this.posy;
@@ -396,8 +401,8 @@ class MoodsTableEditRow extends MoodsTableRowBase
 
         // Clear inputs for new data
         this.posx += 1;
-        this.iconinput.value = "";
-        this.nameinput.value = "";
+        this.iconinput.SetValue("");
+        this.nameinput.SetValue("");
         this.colorinput.SetColor("#ffffff");
         this.colorstatebutton.SetSelectionState(false);
         this.Validate();
