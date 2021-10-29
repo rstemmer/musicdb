@@ -167,6 +167,20 @@ class Element
     {
         this.element.oncontextmenu = callback;
     }
+
+
+
+    ReplaceWith(newelement)
+    {
+        let newnode;
+        if(typeof newelement.GetHTMLElement === "function")
+            newnode = newelement.GetHTMLElement();
+        else
+            newnode = newelement;
+
+        this.element.replaceWith(newnode);
+        this.displaystyle = this.element.style.display;
+    }
 }
 
 
