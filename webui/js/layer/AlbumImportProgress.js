@@ -52,6 +52,7 @@ class AlbumImportProgress extends Layer
 
     onClick_Close()
     {
+        MusicDB_Request("FindNewContent", "ShowAlbumImport");   // Reload Album Import Settings View
         this.Hide();
     }
 
