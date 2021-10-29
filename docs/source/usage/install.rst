@@ -263,7 +263,7 @@ and to secure the Icecast server.
 
    </icecast>
 
-You the can, for example with `VLC <https://www.videolan.org/vlc/index.de.html>`_, connect to the audio stream.
+You then can, for example with `VLC <https://www.videolan.org/vlc/index.de.html>`_, connect to the audio stream.
 The stream URL is ``http://127.0.0.1:8000/stream``.
 
 
@@ -274,7 +274,6 @@ OLD
 
 TODO: REMOVE
 
-   * **Arch Linux:** gst-python, gst-plugins-good, gst-plugins-bad
    * **Fedora:** python3-gstreamer1 gstreamer1-plugins-good gstreamer1-plugins-bad-free
 
 
