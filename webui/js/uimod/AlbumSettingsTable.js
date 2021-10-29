@@ -55,7 +55,7 @@ class AlbumSettingsTableRow extends AlbumSettingsTableRowBase
         let labelnode       = document.createTextNode(label);
         let descriptionnode = document.createTextNode(description);
         this.SetContent(AST_LABEL_COLUMN,       labelnode);
-        this.SetContent(AST_SETTINGS_COLUMN,    input.GetHTMLElement());
+        this.SetContent(AST_SETTINGS_COLUMN,    input);
         this.SetContent(AST_DESCRIPTION_COLUMN, descriptionnode);
     }
 }
@@ -113,11 +113,11 @@ class AlbumSettingsTable extends Table
 
         this.AddRow(this.headlinerow     );
         this.AddRow(this.artistnamerow   );
-        this.AddRow(new TableSpanRow(3, [], artistinfos.GetHTMLElement()));
+        this.AddRow(new TableSpanRow(3, [], artistinfos));
         this.AddRow(this.albumnamerow    );
         this.AddRow(this.releasedaterow  );
         this.AddRow(new TableSpanRow(3, [], newpathnode));
-        this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage.GetHTMLElement()));
+        this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage));
     }
 
 
