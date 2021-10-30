@@ -306,6 +306,16 @@ If you want to protect the audio stream, you need to configure the corresponding
       <!-- … -->
    </mount>
 
+   <!-- … -->
+
+   <paths>
+      <!-- … -->
+
+      <ssl-certificate>/etc/ssl/Icecast.pem</ssl-certificate>
+
+      <!-- … -->
+   </paths>
+
 Then create the file and restart Icecast
 
 .. code-block:: bash
