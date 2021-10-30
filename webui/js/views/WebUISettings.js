@@ -42,7 +42,7 @@ class WebUISettings extends MainSettingsView
 
         this.avshowreleasecheckbox = new SettingsCheckbox(
             "Show album release date in Artists View",
-            "If set, the release date of an album is shown next to its name in the Artists View. If false, the release date will not be shown.</br>In any case, the albums of an artist are sorted by their release date.",
+            "If set, the release date of an album is shown next to its name in the Artists View. If false, the release date will not be shown.</br>In any case, the albums of an artist are sorted by their release date.</br><span style=\"color:red\">Requires reloading the WebUI!</span> (Press F5)",
             (state)=>{
                 if(state == true) this.ChangeSetting("ArtistsView", "showrelease", true);
                 else              this.ChangeSetting("ArtistsView", "showrelease", false);
