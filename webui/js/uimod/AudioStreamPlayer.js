@@ -33,7 +33,21 @@ class AudioStreamPlayer extends AudioPlayer
     {
         // If username and password are give, attach them to the URL
         if(username.length > 0 && password.length > 0)
-            url = `${username}:${password}@${url}`;
+        {
+            // The format is ${Protocol}://${Username}:${Password}@${Address}
+            // So first the protocol must be separated from the URL
+            let protocol = url.substring(0, url.indexOf(":"));
+            let address  = url.substring(url.indexOf(":")+3); // Skip "://"
+            password = encodeURIComponent(password);
+            username = encodeURIComponent(username);
+            address  = encodeURI(address);
+
+            url = `${protocol}://${username}:${password}@${address}`;
+        }
+        else
+        {
+            url = encodeURI(url);
+        }
 
         // Check if the URL changed. If not, return without touching the audio element
         if(this.configuredurl == url)
