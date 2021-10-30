@@ -46,6 +46,11 @@ webdata/:
 Transition from 7.2.0 to 8.0.0
 ------------------------------
 
+.. warning::
+
+   Create a backup of your MusicDB data directory befor installing MusicDB.
+   For example via ``cp -r /opt/musicdb/data ~/musicdb-7.2.0``.
+
 Before the transition make sure that you started the MusicDB server at least once successfully.
 Then make sure that the server is *not* running during the transition.
 
@@ -53,9 +58,9 @@ If in doubt run:
 
 .. code-block:: bash
 
-   systemctl musicdb start
-   systemctl musicdb status # make sure that MusicDB started successful
-   systemctl muiscdb stop
+   systemctl start  musicdb
+   systemctl status musicdb # make sure that MusicDB started successful
+   systemctl stop   muiscdb
 
 In this instructions it is assumed that the new data path will be ``/var/lib/musicdb``
 as it is the default data path since version 8.0.0.
@@ -92,6 +97,15 @@ Most categories and keys are the same.
 | /opt/musicdb/data/webui.ini         | /var/lib/muiscdb/webui.ini         |
 | /opt/musicdb/server/webui/config.js | /var/lib/musicdb/webdata/config.js |
 +-------------------------------------+------------------------------------+
+
+The WebUI configuration must also be transfered.
+
++--------------------------------------+------------------------------------+
+| Old Path                             | New Path                           |
++--------------------------------------+------------------------------------+
+| /opt/musicdb/server/webui/config.js  | /var/lib/webdata/config.js         |
++--------------------------------------+------------------------------------+
+
 
 
 Artworks

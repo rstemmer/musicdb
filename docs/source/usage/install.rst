@@ -45,6 +45,8 @@ All libraries and dependencies are available in the Arch Linux repository so tha
 Installation via pacman
 -----------------------
 
+After downloading the latest MusicDB package, you can simply install it with the package manager `pacman`.
+
 .. code-block:: bash
 
    # Install MusicDB
@@ -213,6 +215,9 @@ Please consider a Apache server configuration that supports HTTPS.
 
 For details see :doc:`/basics/securtiy`
 
+You may also want to give access to your music directory.
+Therefore edit the apache configuration at ``/etc/httpd/conf/extra/musicdb.conf``.
+
 
 Setup Audio Streaming via Icecast
 ---------------------------------
@@ -224,6 +229,9 @@ This section shows how to setup Icecast and how to connect MusicDB with Icecast.
 
    If you do not want to use Icecase, deactivate the responsible interface in MusicDB.
    Open ``/etc/musicdb.ini`` and set ``[debug]->disableicecast`` to ``True``.
+
+Installation of Icecast
+^^^^^^^^^^^^^^^^^^^^^^^
 
 The following code shows how to install Icecast via ``pacman``.
 
@@ -263,9 +271,48 @@ and to secure the Icecast server.
 
    </icecast>
 
+
+Run Icecast
+^^^^^^^^^^^
+
+After setup, you can start Icecast.
+Be sure you have enabled MusicDB to connect to Icecast.
+
+.. code-block:: bash
+
+   systemctl start   icecast
+   systemctl enable  icecast
+   systemctl restart musicdb # Just to be sure it uses the correct configuration
+
 You then can, for example with `VLC <https://www.videolan.org/vlc/index.de.html>`_, connect to the audio stream.
 The stream URL is ``http://127.0.0.1:8000/stream``.
 
+
+Protected Stream
+^^^^^^^^^^^^^^^^
+
+If you want to protect the audio stream, you need to configure the corresponding mount points as follows:
+
+.. code-block:: xml
+
+   <mount>
+      <!-- … -->
+
+      <authentication type="htpasswd">
+         <option name="filename" value="/var/lib/musicdb/icecastusers" />
+         <option name="allow_duplicate_users" value="1" />
+      </authentication>
+
+      <!-- … -->
+   </mount>
+
+Then create the file and restart Icecast
+
+.. code-block:: bash
+
+   touch /var/lib/musicdb/icecastusers
+   chown icecast:icecast /var/lib/musicdb/icecastusers
+   chmod u=rw,g=r,o-rw /var/lib/musicdb/icecastusers
 
 
 
