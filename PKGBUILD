@@ -54,9 +54,6 @@ validpgpkeys=()
 #}
 
 build() {
-    #ls > /tmp/mkpkg/ls.txt
-    #pwd > /tmp/mkpkg/pwd.txt
-    #echo $pkgdir > /tmp/mkpkg/echo.txt
 	cd "$pkgname-$pkgver-src"
     python3 setup.py build
 }
