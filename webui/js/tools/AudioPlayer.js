@@ -18,12 +18,31 @@
 
 class AudioPlayer extends Element
 {
-    constructor(songpath)
+    constructor(source, classes=[])
     {
-        super("audio");
+        super("audio", classes);
         this.element.controls = "controls";
         this.element.preload  = "none";
-        this.element.src      = EncodePath("/musicdb/music/" + songpath);
+
+        this.SetSource(source);
+    }
+
+
+
+    SetSource(source)
+    {
+        this.element.src = source;
+    }
+}
+
+
+
+class SongPlayer extends AudioPlayer
+{
+    constructor(songpath)
+    {
+        let url = EncodePath("/musicdb/music/" + songpath);
+        super(url);
     }
 }
 

@@ -17,11 +17,11 @@
 "use strict";
 
 
-class AudioStreamPlayer extends Element
+class AudioStreamPlayer extends AudioPlayer
 {
     constructor()
     {
-        super("audio", ["AudioStreamPlayer"]);
+        super(null, ["AudioStreamPlayer"]);
         this.element.controls = "controls";
         this.element.preload  = "none";
         this.configuredurl    = null
@@ -40,7 +40,7 @@ class AudioStreamPlayer extends Element
             return;
 
         // Update stream URL
-        this.element.src   = url;
+        this.SetSource(url);
         this.configuredurl = url;
         return;
     }
