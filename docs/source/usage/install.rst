@@ -299,7 +299,7 @@ If you want to protect the audio stream, you need to configure the corresponding
       <!-- … -->
 
       <authentication type="htpasswd">
-         <option name="filename" value="/var/lib/musicdb/icecastusers" />
+         <option name="filename" value="/var/lib/icecast/users" />
          <option name="allow_duplicate_users" value="1" />
       </authentication>
 
