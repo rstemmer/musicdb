@@ -196,7 +196,7 @@ class MusicDBDatabase(object):
         This method searches inside a given album path for new songs.
         The album part can address an album that is known by the MusicDB, but it can also be an unknown one.
 
-        The songs are filtered by the configured ignore list (see :doc:`basics/config`).
+        The songs are filtered by the configured ignore list (see :doc:`/basics/config`).
 
         Furthermore the songs are filtered by their extension.
         Only the following files are considered: .aac, .m4a, .mp3, .flac

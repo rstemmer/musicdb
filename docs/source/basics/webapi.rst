@@ -226,7 +226,7 @@ The package has the following information:
       * **fncname:** ``"MusicDB:VideoQueue"``
       * **fncsig:** ``"onVideoQueueChanged"`` or ``"onVideoChanged"``
       * **argument:** ``None``
-   * Event triggered by :doc:`/task/taskmanager`
+   * Event triggered by :doc:`/taskmanagement/taskmanager`
       * **fncname:** ``"MusicDB:Task"``
       * **fncsig:** ``"ChunkRequest"``, ``"StateUpdate"`` or ``"InternalError"``
       * **argument:** See :meth:`.taskmanagement.taskmanager.TaskManager.NotifyClient`

@@ -94,7 +94,7 @@ class ImportManager(TaskManager):
         Depending on the *contenttype* different import methods are called:
 
             * ``"video"``: :meth:`~ImportVideo`
-            * ``"album"``: :meth:`~ImportAlbum
+            * ``"album"``: :meth:`~ImportAlbum`
 
         The task must be in ``"startmusicimport"`` state, otherwise nothing happens but printing an error message.
         If post processing was successful, the task state gets updated to ``"importcomplete"``.

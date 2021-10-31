@@ -259,7 +259,7 @@ class TaskManager(object):
         """
         This method returns an empty but initialized task.
         The task state will be set to ``"new"``.
-        The task ID will be created by :meht:`~CreateTaskID`.
+        The task ID will be created by :meth:`~CreateTaskID`.
         All other entries are set to ``None``.
 
         The new task will not be saved and not scheduled!
@@ -376,7 +376,7 @@ class TaskManager(object):
             filesize (int): Size of the complete file in bytes
             checksum (str): SHA-1 check sum of the source file
             sourcefilename (str): File name (example: ``"test.png"``)
-            initialstate (str): The Initial state of this process. See :doc:`/mdbapi/importmanagement`.
+            initialstate (str): The Initial state of this process. See :doc:`/taskmanagement/importmanager`.
 
         Raises:
             TypeError: When one of the arguments has not the expected type

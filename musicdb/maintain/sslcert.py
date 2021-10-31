@@ -23,7 +23,7 @@ The creation of the SSL keys is done by executing the following command:
 
     openssl req -x509 -batch -utf8 -sha256 -newkey rsa:4096 -days 3650 -nodes -keyout $key.key -out $certificate.cert
 
-The path of the key and certificate can be configured in the musicdb configuration file. (See :doc:`basic/config`)
+The path of the key and certificate can be configured in the musicdb configuration file. (See :doc:`/basics/config`)
 
 """
 

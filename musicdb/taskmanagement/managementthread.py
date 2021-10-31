@@ -23,7 +23,7 @@ Furthermore uploading a file, integrating it into the music directory and import
 shall be possible in separate steps.
 
 The upload is performed chunk-wise.
-After initiating an Upload, this upload manager (:doc:`/mdbapi/uploadmanager`)
+After initiating an Upload, this upload manager (:doc:`/taskmanagement/uploadmanager`)
 requests chunks of data via MusicDB Notifications from the clients.
 All clients are informed about the upload process, not only the client that initiated the upload.
 So each client can show the progress and state.

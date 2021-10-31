@@ -22,7 +22,7 @@ Available Methods
 Artists
 
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums` (Alternative: GetFIlteredArtistsWithAlbums)
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums` (Alternative: GetFilteredArtistsWithAlbums)
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetFilteredArtistsWithVideos`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CreateArtist`
 

@@ -27,14 +27,14 @@ It contains the following sub directories:
 
 state/:
    This directory is used to provide and maintain a consistent state for the MusicDB Websocket Server.
-   It is mainly maintained by :doc:`/lib/mdbstate`
+   It is mainly maintained by :mod:`musicdb.lib.cfg.mdbstate`
 
 uploads/:
    The uploads directory contains temporary uploaded data.
    This directory is mainly maintained by :doc:`/taskmanagement/uploadmanager`
 
 tasks/:
-   Persistent state of tasks that are processed by the :doc:`/taskmanagement/managementthread`
+   Persistent state of tasks that are processed by the :mod:`musicdb.taskmanagement.managementthread`
    and managed by the :doc:`/taskmanagement/taskmanager`.
 
 webdata/:

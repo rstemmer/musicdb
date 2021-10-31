@@ -72,12 +72,12 @@ that will be managed, presented and streamed by MusicDB.
 It is mandatory for MusicDB to work correctly.
 
 Before you can start the MusicDB server, a music directory needs to be defined.
-This can be done in the :doc:`~/basics/config` file that is placed at ``/etc/musicdb.ini``.
+This can be done in the :doc:`/basics/config` file that is placed at ``/etc/musicdb.ini``.
 In this file you need to set the music directory in the section->entry: ``[directories]->music``.
 The default directory is ``/var/music``.
 This directory can be empty but must be accessible by the MusicDB server.
 The expected ownership is ``$username:musicdb`` with the permission ``rwxrwxr-x``.
-More details about the directories and files managed by MusicDB can be found in the :docs:`~/basics/data` section of the documentation.
+More details about the directories and files managed by MusicDB can be found in the :doc:`/basics/data` section of the documentation.
 
 The following example expects that you do not have a music directory yet.
 If you have one, just check if the permissions are fine.
@@ -335,7 +335,6 @@ TODO: REMOVE
 
 
 Additional Steps for Ubuntu
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Important for Ubuntu users (and maybe Debian) only**
 
