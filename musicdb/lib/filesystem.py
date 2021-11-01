@@ -890,7 +890,7 @@ class Filesystem(object):
 
         # Make sure all paths are of type Path and relative
         parents = [Path(parent) for parent in parents]
-        parents = [self.TryRemoveRoot(parent) for parent in parents]
+        #parents = [self.TryRemoveRoot(parent) for parent in parents] # Removed for speed optimization reasons
 
         if type(ignore) != list:
             ignore = [ignore]
@@ -898,15 +898,11 @@ class Filesystem(object):
         pathlist = []
 
         for parent in parents:
-            self.AssertDirectory(parent)
-
-            paths = []
-
+            paths   = []
             entries = self.ListDirectory(parent)
             for entry in entries:
                 # check if entry shall be ignored
-                name = self.GetFileName(entry)
-                if ignore and name in ignore:
+                if ignore and entry.name in ignore:
                     continue
 
                 # if it's a file, add it to the paths list, otherwise ignore it
