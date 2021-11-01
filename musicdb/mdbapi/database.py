@@ -79,6 +79,27 @@ class MusicDBDatabase(object):
         self.ignorealbums  = self.cfg.music.ignorealbums
         self.ignoresongs   = self.cfg.music.ignoresongs
 
+        self.artistpathscache = []
+        self.albumpathscache  = []
+        self.songpathscache   = []
+        self.videopathscache  = []
+        self._UpdatePathsCaches()
+
+
+
+    def _UpdatePathsCaches(self):
+        """
+        """
+        artists = self.db.GetAllArtists()
+        albums  = self.db.GetAllAlbums()
+        songs   = self.db.GetAllSongs()
+        videos  = self.db.GetVideos()
+        self.artistpathscache = [artist["path"] for artist in artists]
+        self.albumpathscache  = [album["path"]  for album  in albums]
+        self.songpathscache   = [song["path"]   for song   in songs]
+        self.videopathscache  = [video["path"]  for video  in videos]
+        return
+
 
 
     def FindLostPaths(self):
@@ -145,20 +166,20 @@ class MusicDBDatabase(object):
         newpaths["songs"]   = []
         newpaths["videos"]  = []
 
+        self._UpdatePathsCaches()
+
         artistpaths = self.musicdirectory.GetSubdirectories(None, self.ignoreartists)
         artistpaths = self.musicdirectory.ToString(artistpaths)
 
         # Check Artists
-        artists          = self.db.GetAllArtists()
-        knownartistpaths = [artist["path"] for artist in artists if self.musicdirectory.IsDirectory(artist["path"])]
+        knownartistpaths = self.artistpathscache
 
         for path in artistpaths:
             if path not in knownartistpaths:
                 newpaths["artists"].append(path)
 
         # Check Albums
-        albums          = self.db.GetAllAlbums()
-        knownalbumpaths = [album["path"] for album in albums if self.musicdirectory.IsDirectory(album["path"])]
+        knownalbumpaths = self.albumpathscache
         albumpaths      = self.musicdirectory.GetSubdirectories(artistpaths, self.ignorealbums)
         albumpaths      = self.musicdirectory.ToString(albumpaths)
         
@@ -172,8 +193,7 @@ class MusicDBDatabase(object):
             newpaths["songs"].extend(newsongpaths)
 
         # Check Videos
-        videos          = self.db.GetVideos()
-        knownvideopaths = [video["path"] for video in videos if self.musicdirectory.IsFile(video["path"])]
+        knownvideopaths = self.videopathscache
         videopaths      = self.musicdirectory.GetFiles(artistpaths)
         videopaths      = self.musicdirectory.ToString(videopaths)
 
@@ -210,8 +230,7 @@ class MusicDBDatabase(object):
             A list of new, unknown song paths. If no new songs have be found, an empty list gets returned.
         """
         newpaths        = []
-        songs           = self.db.GetAllSongs()
-        knownsongpaths  = [song["path"] for song in songs if self.musicdirectory.IsFile(song["path"])]
+        knownsongpaths  = self.songpathscache
         songpaths       = self.musicdirectory.GetFiles(albumpath, self.ignoresongs)
         songpaths       = self.musicdirectory.ToString(songpaths)
 
