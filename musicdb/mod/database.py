@@ -161,7 +161,7 @@ class database(MDBModule, MusicDBDatabase):
     def CMD_Remove(self, target, abspath):
 
         try:
-            path = self.fs.RemoveRoot(abspath)
+            path = self.musicdirectory.RemoveRoot(abspath)
         except ValueError:
             print("\033[1;31mERROR: Path %s is not part of the music collection!\033[0m"%(abspath))
             return None
@@ -191,7 +191,7 @@ class database(MDBModule, MusicDBDatabase):
             self.AddLyricsFromFile(path)
 
         elif target == "album":
-            path  = self.fs.RemoveRoot(path) # remove the path to the music directory
+            path  = self.musicdirectory.RemoveRoot(path) # remove the path to the music directory
             album = self.db.GetAlbumByPath(path)
             songs = self.db.GetSongsByAlbumId(album["id"])
             
@@ -199,7 +199,7 @@ class database(MDBModule, MusicDBDatabase):
                 self.AddLyricsFromFile(song["path"])
 
         elif target == "artist":
-            path   = self.fs.RemoveRoot(path) # remove the path to the music directory
+            path   = self.musicdirectory.RemoveRoot(path) # remove the path to the music directory
             artist = self.db.GetArtistByPath(path)
             songs  = self.db.GetSongsByArtistId(artist["id"])
             
@@ -218,26 +218,26 @@ class database(MDBModule, MusicDBDatabase):
         # returns "album", "artist", "song", "video" or None if path is invalid
 
         try:
-            path = self.fs.RemoveRoot(abspath)
+            path = self.musicdirectory.RemoveRoot(abspath)
         except ValueError:
             print("\033[1;31mERROR: Path %s is not part of the music collection!\033[0m"%(abspath))
             return None
 
         print("\033[1;34mDetermin target by path \"\033[0;36m%s\033[1;34m\" …"%(path))
 
-        if self.fs.IsArtistPath(path, self.cfg.music.ignorealbums, self.cfg.music.ignoresongs):
+        if self.musicdirectory.IsArtistPath(path, self.cfg.music.ignorealbums, self.cfg.music.ignoresongs):
             print("\033[1;34mWorking on Artist-path\033[0m")
             return "artist"
 
-        elif self.fs.IsAlbumPath(path, self.cfg.music.ignoresongs):
+        elif self.musicdirectory.IsAlbumPath(path, self.cfg.music.ignoresongs):
             print("\033[1;34mWorking on Album-path")
             return "album"
 
-        elif self.fs.IsSongPath(path):
+        elif self.musicdirectory.IsSongPath(path):
             print("\033[1;34mWorking on Song-path")
             return "song"
 
-        elif self.fs.IsVideoPath(path):
+        elif self.musicdirectory.IsVideoPath(path):
             print("\033[1;34mWorking on Video-path")
             return "video"
 
@@ -315,7 +315,7 @@ class database(MDBModule, MusicDBDatabase):
         # Handle optional oldpath argument
         if args.oldpath:
             oldpath = os.path.abspath(args.oldpath)
-            oldpath = self.fs.RemoveRoot(oldpath) # remove the path to the music directory
+            oldpath = self.musicdirectory.RemoveRoot(oldpath) # remove the path to the music directory
         else:
             oldpath = None
 
