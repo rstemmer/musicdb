@@ -43,7 +43,7 @@ class mise(MDBModule, MusicDBMicroSearchEngine):
 
     def __init__(self, config, database):
         MDBModule.__init__(self)
-        MusicDBMicroSearchEngine.__init__(self, database)
+        MusicDBMicroSearchEngine.__init__(self, config)
 
         self.database = database
 

@@ -236,7 +236,7 @@ def Initialize(configobj, databaseobj):
     # Initialize all interfaces
     logging.debug("Initializing MicroSearchEngine…")
     global mise
-    mise   = MusicDBMicroSearchEngine(database)
+    mise   = MusicDBMicroSearchEngine(cfg)
 
     logging.debug("Starting Task Management…")
     StartTaskManagementThread(cfg, database)

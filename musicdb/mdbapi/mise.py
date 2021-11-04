@@ -31,7 +31,7 @@ Example:
 
     .. code-block:: python
 
-        database = MusicDatabase("./music.db")
+        database = MusicDBConfig()
         mise     = MusicDBMicroSeachEngine(database)
 
         mise.UpdateCache()
@@ -48,7 +48,8 @@ import re
 from fuzzywuzzy         import fuzz
 import datetime
 import logging
-from musicdb.lib.db.musicdb import MusicDatabase
+from musicdb.lib.db.musicdb     import MusicDatabase
+from musicdb.lib.cfg.musicdb    import MusicDBConfig
 
 
 class MusicDBMicroSearchEngine(object):
@@ -56,18 +57,21 @@ class MusicDBMicroSearchEngine(object):
     Before an object can be used, the :meth:`~musicdb.mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache`
     method must be called to generate the cache.
 
+    Because a cache update can be triggered from any thread, a new database instance will be created
+    for reading information from the database.
+
     Args:
-        database: :class:`musicdb.lib.db.musicdb.MusicDatabase` object the cache will generated from via :meth:`~musicdb.mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache`.
+        config: :class:`musicdb.lib.cfg.musicdb.MusicDBConfig` object for the path to the music database.
 
     Raises:
         TypeError: When the database argument is invalid.
     """
-    def __init__(self, database):
-        if type(database) != MusicDatabase:
-            logging.critical("Database-class of unknown type or None!")
-            raise TypeError("Database-class of unknown type or None!")
+    def __init__(self, config):
+        if type(config) != MusicDBConfig:
+            logging.error("Configuration-class of unknown type or None! (MusicDBConfig instance expected)")
+            raise TypeError("Configuration-class of unknown type or None! (MusicDBConfig instance expected)")
 
-        self.db          = database
+        self.config = config
 
         # the caches are lists of tuple of name and id (name, id)
         self.songcache   = None
@@ -88,12 +92,13 @@ class MusicDBMicroSearchEngine(object):
         Returns:
             ``None``
         """
+        musicdb = MusicDatabase(self.config.files.musicdatabase)
         t_start = datetime.datetime.now()
 
         # 1. get all data from the database
-        artists = self.db.GetAllArtists()
-        albums  = self.db.GetAllAlbums()
-        songs   = self.db.GetAllSongs()
+        artists = musicdb.GetAllArtists()
+        albums  = musicdb.GetAllAlbums()
+        songs   = musicdb.GetAllSongs()
 
         # 2. build caches
         self.artistcache = self.__BuildCache(artists)
