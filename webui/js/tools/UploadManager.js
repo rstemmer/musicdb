@@ -117,11 +117,15 @@ class UploadManager
     {
         if(fnc == "MusicDB:Task")
         {
-            window.console && console.info(data);
+            window.console?.log(data);
             let taskid      = data.taskid;
             let task        = data.task;
             let state       = data.state;
             let contenttype = task.contenttype;
+
+            // Only process task, if this client is the owner of the task
+            if(typeof this.uploads[taskid] === "undefined")
+                return;
 
             if(sig == "ChunkRequest")
             {
@@ -135,16 +139,21 @@ class UploadManager
 
             if(sig == "StateUpdate")
             {
-                window.console && console.info(`Stateupdate for ${contenttype} to ${state}`);
+                window.console?.info(`Stateupdate for ${contenttype} to ${state}`);
                 // Import artwork
                 if(contenttype == "artwork")
                 {
                     if(state == "readyforintegration")
                     {
-                        let taskid    = task.id;
                         let musicpath = task.annotations.musicpath;
                         MusicDB_Call("IntegrateContent", {taskid: taskid, musicpath: musicpath});
                     }
+                }
+
+                // Remove tasks of this client from the list of active tasks when they are done
+                if(state === "remove")
+                {
+                    delete this.uploads[taskid];
                 }
             }
         }
