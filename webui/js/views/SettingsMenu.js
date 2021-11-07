@@ -146,7 +146,6 @@ class SettingsMenu extends LeftView
         let index = this.views.indexOf(videoimport);
         if(typeof index === "number")
             this.entries[index].style.display= "none";
-        window.console && console.log(`Video entry (${index}) hidden`);
     }
 
 
