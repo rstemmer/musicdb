@@ -7,12 +7,14 @@ Vendor:     Ralf Stemmer <ralf.stemmer@gmx.net>
 License:    GPLv3
 URL:        https://github.com/rstemmer/%{name}
 Source0:    %{name}-%{version}-src.tar.zst
+Source1:    musicdb.sysusers
 
 BuildArch:  noarch
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-build
 BuildRequires:  /usr/bin/pathfix.py
+BuildRequires:  systemd-rpm-macros
 
 Requires: python3 >= 3.8
 Requires: ffmpeg
@@ -72,11 +74,16 @@ install -Dm 644 "share/musicdb.ini"        "%{buildroot}%{_sysconfdir}/musicdb.i
 install -Dm 644 "share/logrotate.conf"     "%{buildroot}%{_sysconfdir}/logrotate.d/%{name}"
 install -Dm 644 "share/apache.conf"        "%{buildroot}%{_sysconfdir}/httpd/conf/%{name}.conf"
 install -Dm 644 "share/musicdb.service"    "%{buildroot}%{_unitdir}/%{name}.service"
-install -Dm 644 "share/sysusers.conf"      "%{buildroot}%{_exec_prefix}/lib/sysusers.d/%{name}.conf"
-install -Dm 644 "share/tmpfiles.conf"      "%{buildroot}%{_exec_prefix}/lib/tmpfiles.d/%{name}.conf"
+install -Dm 644 "share/tmpfiles.conf"      "%{buildroot}%{_tmpfilesdir}/%{name}.conf"
+
+install -p -Dm 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/%{name}.conf
 
 # Meta Data
 install -Dm 644 LICENSE "%{buildroot}%{_datadir}/licenses/%{name}/LICENSE"
+
+
+%pre
+%sysusers_create_compat %{SOURCE1}
 
 
 %files -f INSTALLED_FILES
@@ -93,8 +100,8 @@ install -Dm 644 LICENSE "%{buildroot}%{_datadir}/licenses/%{name}/LICENSE"
 
 %{_datadir}/%{name}/*
 %{_datadir}/webapps/%{name}/*
-%{_exec_prefix}/lib/sysusers.d/%{name}.conf
-%{_exec_prefix}/lib/tmpfiles.d/%{name}.conf
+%{_sysusersdir}/%{name}.conf
+%{_tmpfilesdir}/%{name}.conf
 
 
 %changelog

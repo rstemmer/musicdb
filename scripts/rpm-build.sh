@@ -15,6 +15,7 @@ oldwd=$(pwd)
 cd $repository
 
 cp dist/*src.tar.zst ~/rpmbuild/SOURCES/.
+cp share/sysusers.conf ~/rpmbuild/SOURCES/musicdb.sysusers
 rpmbuild -bb musicdb.spec
 cp ~/rpmbuild/RPMS/noarch/musicdb* dist/.
 
