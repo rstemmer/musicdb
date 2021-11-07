@@ -18,11 +18,14 @@
 
 
 
+#StreamSettings
+{
+}
+
 #StreamSettings > *
 {
     margin:         1rem auto;
     width:          95%;
-    overflow:       scroll;
 }
 
 
@@ -33,10 +36,6 @@
 
 .StreamSettingsTable > tr:first-child
 {
-    color:              var(--bgcolor);
-    background-color:   var(--hlcolor);
-    font-weight:        bold;
-    letter-spacing:     0.05rem;
 }
 
 

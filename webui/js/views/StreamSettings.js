@@ -46,6 +46,7 @@ class StreamSettingsTableHeadline extends StreamSettingsTableRowBase
     constructor()
     {
         super();
+        this.AddCSSClass("TableHeadline");
         for(let cellnum in STREAMSETTINGSHEADLINE)
         {
             let headline = document.createTextNode(STREAMSETTINGSHEADLINE[cellnum]);
