@@ -33,6 +33,18 @@ class AudioPlayer extends Element
     {
         this.element.src = source;
     }
+
+
+
+    SetErrorCallback(callback)
+    {
+        this.element.onerror = callback;
+    }
+
+    SetPlaysCallback(callback)
+    {
+        this.element.onplay = callback;
+    }
 }
 
 
