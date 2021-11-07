@@ -115,7 +115,11 @@ class StreamSettings extends MainSettingsView
     {
         super("StreamSettings", "Stream Settings", "Configure the connection settings to the audio stream managed by MusicDB. Username and Password are optional. These settings are used by the audio stream player integrated in the WebUI. It does not change any settings of the MusicDB server.");
 
+        // Settings Table
         this.table = new StreamSettingsTable();
+
+        // Test Player
+        this.player = new AudioStreamPlayer();
 
         // Load / Save buttons
         let loadbutton = new SVGButton("Load", ()=>{this.Reload()});
@@ -127,6 +131,7 @@ class StreamSettings extends MainSettingsView
         this.toolbar.AddButton(new ToolGroup([loadbutton, savebutton]));
 
         this.AppendChild(this.table);
+        this.AppendChild(this.player);
         this.AppendChild(this.toolbar);
     }
 
@@ -149,7 +154,13 @@ class StreamSettings extends MainSettingsView
     UpdateView(settings)
     {
         this.settings = settings;
-        this.table.Update(settings.Stream.url, settings.Stream.username, settings.Stream.password);
+
+        let url      = settings.Stream.url;
+        let username = settings.Stream.username;
+        let password = settings.Stream.password;
+
+        this.table.Update(    url, username, password);
+        this.player.Configure(url, username, password);
     }
 
 
