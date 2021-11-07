@@ -52,6 +52,22 @@ After downloading the latest MusicDB package, you can simply install it with the
    # Install MusicDB
    pacman -U musicdb-$version-any.pkg.tar.zst
 
+Installation via dnf (Fedora)
+-----------------------------
+
+First you have to make sure you can install dependencies from the rpmfusion repository
+
+.. code-block:: bash
+
+   dnf repolist
+   # Output should contain:
+   #  rpmfusion-free
+   #  rpmfusion-nonfree
+
+   # If not, install the repository via the following commands:
+   sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+   sudo dnf install https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
 
 Initial Setup
 -------------
@@ -191,7 +207,10 @@ Of cause any other web server can be used in place.
 A web server is required to serve the *MusicDB WebUI* - The web front-end for MusicDB.
 
 This server can simply be installed via the package manager.
-The default MusicDB Apache server configuration is already installed into ``/etc/httpd/conf/extra/musicdb.conf``.
+The default MusicDB Apache server configuration is already installed.
+* On Arch Linux into ``/etc/httpd/conf/extra/musicdb.conf``.
+* On Fedora into ``/etc/httpd/conf/musicdb.conf``.
+
 This configuration just needs to be included into the Apache main configuration ``/etc/httpd/conf/httpd.conf``.
 
 The following code shows how to install the HTTP server via ``pacman``.
