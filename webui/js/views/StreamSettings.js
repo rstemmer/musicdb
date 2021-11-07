@@ -32,6 +32,15 @@ class StreamSettingsTableRowBase extends TableRow
 }
 
 
+class StreamSettingsTableSpanRow extends TableSpanRow
+{
+    constructor(content)
+    {
+        super(STREAMSETTINGSHEADLINE.length, ["StreamSettingsTableRow"], content);
+    }
+}
+
+
 class StreamSettingsTableHeadline extends StreamSettingsTableRowBase
 {
     constructor()
@@ -64,14 +73,40 @@ class StreamSettingsTableRow extends StreamSettingsTableRowBase
 
 class StreamSettingsTable extends Table
 {
-    constructor()
+    constructor(onchangecallback)
     {
         super(["StreamSettingsTable"]);
+        this.onchangecallback = onchangecallback;
+
+        // Error messages
+        this.urlerror    = new MessageBarError();
+        this.urlerror.HideCloseButton();
+        this.urlerrorrow = new StreamSettingsTableSpanRow(this.urlerror);
 
         // Text Inputs
-        this.addressinput  = new TextInput(()=>{return;});
-        this.usernameinput = new TextInput(()=>{return;});
-        this.passwordinput = new TextInput(()=>{return;});
+        this.addressinput  = new TextInput(
+                (url)=>{
+                    let isvalid = this.ValidateURL(url);
+                    if(typeof this.onchangecallback === "function")
+                        this.onchangecallback();
+                    return isvalid;
+                },
+                "", "Enter the stream URL including protocol and port number"
+            );
+        this.usernameinput = new TextInput(
+                (username)=>{
+                    if(typeof this.onchangecallback === "function")
+                        this.onchangecallback();
+                    return;
+                },
+                "", "Enter your user name if the stream needs authentication");
+        this.passwordinput = new TextInput(
+                (password)=>{
+                    if(typeof this.onchangecallback === "function")
+                        this.onchangecallback();
+                    return;
+                },
+                "", "Enter your password if the stream needs authentication");
 
         // Source: https://stackoverflow.com/questions/9719570/generate-random-password-string-with-requirements-in-javascript/9719815#comment103450423_9719570
         let randompassword = new Array(20).fill().map(() => String.fromCharCode(Math.random()*86+40)).join("")
@@ -92,8 +127,78 @@ class StreamSettingsTable extends Table
             `${randompassword}`);
         this.AddRow(this.headlinerow);
         this.AddRow(this.addressrow );
+        this.AddRow(this.urlerrorrow);
         this.AddRow(this.usernamerow);
         this.AddRow(this.passwordrow);
+    }
+
+
+
+    ValidateURL(url)
+    {
+        if(url.length <= 0)
+        {
+            this.urlerror.UpdateMessage("Please enter a stream address.");
+            this.urlerror.Show();
+            return false;
+        }
+
+        // Check Protocol
+        let validprotocols = ["http", "https", "rtp", "srtp", "rtcp", "rtsp", "rtmp", "srt"];
+        let protocol = url.substring(0, url.indexOf(":"));
+
+        if(validprotocols.indexOf(protocol) < 0)
+        {
+            this.urlerror.UpdateMessage(`Unknown protocol "${protocol}". Please enter use one of those: ${validprotocols.join(", ")}`);
+            this.urlerror.Show();
+            return false;
+        }
+
+        // Check rest of the address
+        let address  = url.substring(url.indexOf(":")+3); // Skip "://"
+
+        if(address.length <= 0)
+        {
+            this.urlerror.UpdateMessage(`Protocol is valid, but rest of the address is missing.`);
+            this.urlerror.Show();
+            return false;
+        }
+
+        // Check host name
+        let hostname;
+        if(address.indexOf(":") > 0)
+            hostname = address.substring(0, address.indexOf(":"));
+        else if(address.indexOf("/") > 0)
+            hostname = address.substring(0, address.indexOf("/"));
+        else
+            hostname = address;
+
+        if(hostname <= 0)
+        {
+            this.urlerror.UpdateMessage(`Hostname is missing. Please enter the complete audio stream address.`);
+            this.urlerror.Show();
+            return false;
+        }
+
+        // Check port
+        let portnumber = "";
+        if(address.indexOf(":") > 0)
+        {
+            portnumber = address.substring(address.indexOf(":")+1); // Skip ":"
+            if(portnumber.indexOf("/") > 0)
+                portnumber = portnumber.substring(0, portnumber.indexOf("/"));
+        }
+
+        if(portnumber.length > 0 && isNaN(portnumber))
+        {
+            this.urlerror.UpdateMessage(`The given port number "${portnumber}" is not valid. Please enter a correct number for the port.`);
+            this.urlerror.Show();
+            return false;
+        }
+
+        // Everything is fine.
+        this.urlerror.Hide();
+        return true;
     }
 
 
@@ -116,7 +221,7 @@ class StreamSettings extends MainSettingsView
         super("StreamSettings", "Stream Settings", "Configure the connection settings to the audio stream managed by MusicDB. Username and Password are optional. These settings are used by the audio stream player integrated in the WebUI. It does not change any settings of the MusicDB server.");
 
         // Settings Table
-        this.table = new StreamSettingsTable();
+        this.table = new StreamSettingsTable(()=>{this.onSettingsChanged();});
 
         // Test Player
         this.player = new AudioStreamPlayer();
@@ -127,6 +232,10 @@ class StreamSettings extends MainSettingsView
         this.streamerror = new MessageBarError();
         this.streamerror.HideCloseButton();
         this.streamplays = new MessageBarConfirm("Connection to the stream seems to work technically.");
+
+        this.saved   = new MessageBarConfirm("Audio stream connection settings successfully updated.");
+        this.unsaved = new MessageBarWarning("Audio stream changed but not yet saved!");
+        this.unsaved.HideCloseButton();
 
         // Load / Save buttons
         let loadbutton = new SVGButton("Load", ()=>{this.Reload()});
@@ -141,6 +250,8 @@ class StreamSettings extends MainSettingsView
         this.AppendChild(this.player);
         this.AppendChild(this.streamerror);
         this.AppendChild(this.streamplays);
+        this.AppendChild(this.saved);
+        this.AppendChild(this.unsaved);
         this.AppendChild(this.toolbar);
     }
 
@@ -182,6 +293,37 @@ class StreamSettings extends MainSettingsView
 
 
 
+    onSettingsChanged()
+    {
+        // During initializing the table, changes will be applied but the table object is not yet assigned.
+        if(typeof this.table === "undefined")
+            return;
+        // Same for other objects
+        if(typeof this.oldurl      === "undefined"
+        || typeof this.oldusername === "undefined"
+        || typeof this.oldpassword === "undefined")
+            return;
+
+        let newurl      = this.table.addressinput.GetValue();
+        let newusername = this.table.usernameinput.GetValue();
+        let newpassword = this.table.passwordinput.GetValue();
+
+        // Check if things are different to the settings stored at the server
+        // If not, just return
+        if(this.oldurl      === newurl
+        && this.oldusername === newusername
+        && this.oldpassword === newpassword)
+        {
+            this.unsaved.Hide();
+            return;
+        }
+
+        this.player.Configure(newurl, newusername, newpassword);
+        this.unsaved.Show();
+    }
+
+
+
     Reload()
     {
         MusicDB_Request("LoadWebUIConfiguration", "ReloadStreamSettings");
@@ -204,6 +346,10 @@ class StreamSettings extends MainSettingsView
         let username = settings.Stream.username;
         let password = settings.Stream.password;
 
+        this.oldurl      = url;
+        this.oldusername = username;
+        this.oldpassword = password;
+
         this.table.Update(    url, username, password);
         this.player.Configure(url, username, password);
     }
@@ -214,6 +360,13 @@ class StreamSettings extends MainSettingsView
     {
         if(fnc == "LoadWebUIConfiguration" || fnc == "SaveWebUIConfiguration")
         {
+            if(fnc == "SaveWebUIConfiguration")
+                this.saved.Show();
+            else
+            {
+                this.saved.Hide();
+                this.unsaved.Hide();
+            }
             this.UpdateView(args);
         }
         return;
