@@ -223,6 +223,9 @@ class StreamSettings extends MainSettingsView
         // Settings Table
         this.table = new StreamSettingsTable(()=>{this.onSettingsChanged();});
 
+        // TLS Information
+        this.tlsinfo = new Element("div", ["Welcome"]);
+
         // Test Player
         this.player = new AudioStreamPlayer();
         this.player.SetErrorCallback((event)=>{this.onStreamError(event);});
@@ -246,9 +249,12 @@ class StreamSettings extends MainSettingsView
         this.toolbar.AddSpacer(true /*grow*/);
         this.toolbar.AddButton(new ToolGroup([loadbutton, savebutton]));
 
+        this.UpdateTLSInformation();
+
         this.AppendChild(this.table);
         this.AppendChild(this.player);
         this.AppendChild(this.streamerror);
+        this.AppendChild(this.tlsinfo);
         this.AppendChild(this.streamplays);
         this.AppendChild(this.saved);
         this.AppendChild(this.unsaved);
@@ -318,8 +324,27 @@ class StreamSettings extends MainSettingsView
             return;
         }
 
+        this.UpdateTLSInformation();
         this.player.Configure(newurl, newusername, newpassword);
         this.unsaved.Show();
+    }
+
+
+
+    UpdateTLSInformation()
+    {
+        let url = this.table.addressinput.GetValue();
+        let message = "";
+        message += "<p>If you use a self signed certificate to secure the audio stream";
+        message += " you may have to confirm that this certificate can be trusted by the browser.";
+        message += " To do so, please click the following URL to the audio stream";
+        message += " and follow the instructions of the browser to confirm that you trust the server.</p>";
+        message += `<p><b>Please follow this link:</b> <a href="${url}">${url}</a></p>`;
+        message += "<p>Once the certificate has been confirmed the browser trusts the source.";
+        message += " Any changes to the URL that do not lead to use a different certificate can be done";
+        message += " without confirming the certificate again.</p>";
+
+        this.tlsinfo.SetInnerHTML(message);
     }
 
 
@@ -352,6 +377,7 @@ class StreamSettings extends MainSettingsView
 
         this.table.Update(    url, username, password);
         this.player.Configure(url, username, password);
+        this.UpdateTLSInformation();
     }
 
 
