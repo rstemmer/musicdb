@@ -315,6 +315,10 @@ class StreamSettings extends MainSettingsView
         let newusername = this.table.usernameinput.GetValue();
         let newpassword = this.table.passwordinput.GetValue();
 
+        // Update URL of the TLS Information and stream player
+        this.UpdateTLSInformation();
+        this.player.Configure(newurl, newusername, newpassword);
+
         // Check if things are different to the settings stored at the server
         // If not, just return
         if(this.oldurl      === newurl
@@ -322,12 +326,12 @@ class StreamSettings extends MainSettingsView
         && this.oldpassword === newpassword)
         {
             this.unsaved.Hide();
-            return;
         }
-
-        this.UpdateTLSInformation();
-        this.player.Configure(newurl, newusername, newpassword);
-        this.unsaved.Show();
+        else
+        {
+            this.unsaved.Show();
+        }
+        return;
     }
 
 
