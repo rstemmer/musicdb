@@ -110,5 +110,5 @@ install -Dm 644 LICENSE "%{buildroot}%{_datadir}/licenses/%{name}/LICENSE"
 - MusicDB 8.0.0 Release
 
 
-# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 nospell
 
