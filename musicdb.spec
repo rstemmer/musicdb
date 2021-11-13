@@ -35,7 +35,7 @@ Requires: python3-pillow
 Requires: python3-tqdm
 
 Recommends: logrotate
-Recommends: https
+Recommends: httpd
 Recommends: icecast
 
 
