@@ -24,6 +24,10 @@
   </a>
 </p>
 
+
+
+## Quick Start
+
 <p align="center">
   [&nbsp;&nbsp;
   <a href="https://rstemmer.github.io/musicdb/">🌍 Website</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -32,18 +36,19 @@
   <a href="https://rstemmer.github.io/musicdb/build/html/index.html">📚 Code Documentation</a>&nbsp;&nbsp;&nbsp;]
 </p>
 
-## Quick Install
-
-
 | Distribution | Download | Installation |
 | --- | --- | --- |
-| Arch Linux | [📦 musicdb-8.0.0-1.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases) | `pacman -U musicdb-8.0.0-1.pkg.tar.zst` |
-| Fedora     | [📦 musicdb-8.0.0-1.fc35.noarch.rpm](https://github.com/rstemmer/musicdb/releases) | `dnf install musicdb-8.0.0-1.fc35.noarch.rpm` |
-| Ubuntu     | [📦 musicdb-8.0.0-1.](https://github.com/rstemmer/musicdb/releases) | `apt install musicdb-8.0.0-1.` |
-| Raspbian   | [📦 musicdb-8.0.0-1.](https://github.com/rstemmer/musicdb/releases) | `apt install musicdb-8.0.0-1.` |
-| Source     | [📦 musicdb-8.0.0-src.tar.zst](https://github.com/rstemmer/musicdb/releases) | [⚙️ Install from Source]() |
+| Arch Linux      | [📦 musicdb-8.0.0-1.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases) | `pacman -U musicdb-8.0.0-1.pkg.tar.zst` |
+| Fedora 35       | [📦 musicdb-8.0.0-1.fc35.noarch.rpm](https://github.com/rstemmer/musicdb/releases) | `dnf install musicdb-8.0.0-1.fc35.noarch.rpm` |
+| openSUSE 15.3   | [📦 musicdb-8.0.0-1.](https://github.com/rstemmer/musicdb/releases) | `zypper install musicdb-8.0.0-1.` |
+| Ubuntu 21.10    | [📦 musicdb-8.0.0-1.](https://github.com/rstemmer/musicdb/releases) | `apt install musicdb-8.0.0-1.` |
+| Debian 11       | [📦 musicdb-8.0.0-1.](https://github.com/rstemmer/musicdb/releases) | `apt install musicdb-8.0.0-1.` |
+| Raspberry Pi OS | [📦 musicdb-8.0.0-1.](https://github.com/rstemmer/musicdb/releases) | `apt install musicdb-8.0.0-1.` |
+| Source          | [📦 musicdb-8.0.0-src.tar.zst](https://github.com/rstemmer/musicdb/releases) | [⚙️ Install from Source](https://rstemmer.github.io/musicdb/build/html/usage/install.html) |
 
 [⚙️ Setup and Run MusicDB with Apache and Icecast](https://rstemmer.github.io/musicdb/build/html/usage/install.html)
+
+MusicDB is hardware independent. It works with any listed distribution installed on a Raspberry Pi, Mac or PC.
 
 ---
 
