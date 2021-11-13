@@ -89,7 +89,6 @@ class DataDirectoryMaintainer(object):
         The WebUI JavaScript configuration must already exist.
         If that file already has a key, it will not be replaced.
         If no key exists yet (a dummy key ``WSAPIKEY`` is expected in place) the key will be set.
-        In this case an infomation will be written into the log.
 
         Args:
             wsapikey (str): The API key to set
