@@ -24,6 +24,7 @@ Requires: gstreamer1-plugins-base
 Requires: gstreamer1-plugins-bad-free
 Requires: gstreamer1-plugins-good
 Requires: sqlite
+Requires: openssl
 Requires: python3-gobject
 Requires: python3-autobahn
 Requires: python3-systemd
