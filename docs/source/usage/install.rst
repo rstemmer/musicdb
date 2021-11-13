@@ -215,11 +215,13 @@ and/or check the debug log file via ``less -R /var/log/musicdb/debuglog.ansi``.
 
 When you start MusicDB server for the first time, there will appear some warnings because of missing files in the MusicDB *state* directory (csv-files).
 This is fine. These files will automatically be created when you use MusicDB for streaming music.
+There will also be a regular occurring error that the connection to Icecast failed.
+This is also fine because Icecast has not been set up yet. Setting up Icecast is explained later in this document.
 
-You can also already access the websocket server with your web browser to see if all network settings around MusicDB are correct.
-Use the following address: ``https://127.0.0.1:9000``. Of course with the correct IP address and port if you changed the port.
+Now you can already access the websocket server with your web browser to see if all network settings around MusicDB are correct.
+Use the following address: `https://127.0.0.1:9000`_. Of course use the correct IP address and port if you changed the port.
 The default SSL certificate is self-signed and needs to be confirmed explicitly.
-Then the *"AutobahnPython"* http page should load telling you the version number and that this is not an actual web server.
+Then the *"AutobahnPython"* web page should load telling you the version number and that this is not an actual web server.
 
 
 Setup Web User Interface via Apache
@@ -235,30 +237,59 @@ The default MusicDB Apache server configuration is already installed.
 * On Fedora into ``/etc/httpd/conf/musicdb.conf``.
 
 This configuration just needs to be included into the Apache main configuration ``/etc/httpd/conf/httpd.conf``.
-
-The following code shows how to install the HTTP server via ``pacman``.
 In this example, the web-server would provide the WebUI via HTTP.
 It is recommend to use HTTPS. Please check the web server manual on how to setup SSL encrypted web sites.
 
+Apache on Arch Linux
+^^^^^^^^^^^^^^^^^^^^
+
+The following code shows how to install the HTTP server via ``pacman`` on Arch Linux.
+
 .. code-block:: bash
 
-   # Setup web server for the front end
+   # Install Apache
    pacman -S apache
+
+   # Setup web server for the front end
    echo "Include conf/extra/musicdb.conf" >> /etc/httpd/conf/httpd.conf
 
-   # Start service and enable autostart
+
+Apache on Fedora
+^^^^^^^^^^^^^^^^
+
+The following code shows how to install the HTTP server via ``dnf`` on Fedora.
+
+.. code-block:: bash
+
+   # Install Apache
+   dnf install httpd
+
+   # Setup web server for the front end
+   mv /etc/httpd/conf/musicdb.conf /etc/httpd/conf.d/.
+
+
+Start the Web Server
+^^^^^^^^^^^^^^^^^^^^
+
+After installation and configuration, the server can be started via ``systemd``:
+
+.. code-block:: bash
+
+   # Start web server and enable autostart
    systemctl start httpd
    systemctl enable httpd
 
 Now the web server is running. You can check the status via ``systemctl status httpd``.
 
 You should now be able to access the MusicDB WebUI via ``http://127.0.0.1/musicdb/``.
-Please consider a Apache server configuration that supports HTTPS.
+When where is no music managed by MusicDB yet, the WebUI will show you a Welcome-Message telling you that there is no music in the Queue.
+This is fine because you have not hand over any music to MusicDB.
 
-For details see :doc:`/basics/securtiy`
+Please consider a Apache server configuration that supports HTTPS.
+For details see :doc:`/basics/securtiy`.
 
 You may also want to give access to your music directory.
-Therefore edit the apache configuration at ``/etc/httpd/conf/extra/musicdb.conf``.
+Therefore edit the Apache configuration at ``/etc/httpd/conf/extra/musicdb.conf``.
 
 
 Setup Audio Streaming via Icecast
@@ -272,22 +303,35 @@ This section shows how to setup Icecast and how to connect MusicDB with Icecast.
    If you do not want to use Icecase, deactivate the responsible interface in MusicDB.
    Open ``/etc/musicdb.ini`` and set ``[debug]->disableicecast`` to ``True``.
 
-Installation of Icecast
+Icecast on Arch Linux
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The following code shows how to install Icecast via ``pacman``.
+The following code shows how to install Icecast via ``pacman`` on Arch Linux.
 
 .. code-block:: bash
 
    # Setup Icecast for secure audio streaming
    pacman -S icecast
-   vim /etc/icecast.xml
+
+
+Icecast on Fedora
+^^^^^^^^^^^^^^^^^
+
+The following code shows how to install Icecast via ``dnf`` on Fedora.
+
+.. code-block:: bash
+
+   # Setup Icecast for secure audio streaming
+   dnf install icecast
+
+Setup Icecast
+^^^^^^^^^^^^^
 
 The default settings in ``/etc/musicdb.ini`` match the default Icecast settings in ``/etc/icecast.xml``.
 Only the source password needs to be configured.
 Some more details about Icecast can be found in the chapter: :doc:`/lib/icecast`
 
-The following listing shows the changes that are mandatory to make inside the ``icecast.xml`` file
+The following listing shows the changes that are mandatory to make inside the ``/etc/icecast.xml`` file
 to connect MusicDB with Icecast.
 You should review the whole settings to make sure that Icecast is doing what you expect
 and to secure the Icecast server.
@@ -313,12 +357,14 @@ and to secure the Icecast server.
 
    </icecast>
 
+Do not forget to also set the source password in ``/etc/musicdb.ini`` at ``[Icecast]->password``.
+
 
 Run Icecast
 ^^^^^^^^^^^
 
 After setup, you can start Icecast.
-Be sure you have enabled MusicDB to connect to Icecast.
+Be sure you have enabled MusicDB to connect to Icecast if you disabled it previously.
 
 .. code-block:: bash
 
@@ -372,9 +418,6 @@ OLD
 ===
 
 TODO: REMOVE
-
-   * **Fedora:** python3-gstreamer1 gstreamer1-plugins-good gstreamer1-plugins-bad-free
-
 
 Additional Steps for Ubuntu
 
