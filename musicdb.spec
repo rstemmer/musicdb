@@ -21,13 +21,13 @@ Requires: ffmpeg
 Requires: libshout
 Requires: gstreamer1
 Requires: gstreamer1-plugins-base
-Requires: gstreamer1-plugins-bad
+Requires: gstreamer1-plugins-bad-free
 Requires: gstreamer1-plugins-good
 Requires: sqlite
 Requires: python3-gobject
 Requires: python3-autobahn
 Requires: python3-systemd
-Requires: python3-levenshtein
+Requires: python3-Levenshtein
 Requires: python3-mutagen
 Requires: python3-fuzzywuzzy
 Requires: python3-pillow
