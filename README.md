@@ -1,4 +1,14 @@
 
+<h1 align="center">MusicDB</h1>
+
+<p align="center"><b>Your Music. Your Cloud.</b></p>
+
+![MusicDB WebUI Screenshot](graphics/Screenshots/WebUI-2021-09-17.png?raw=true)
+
+
+
+---
+
 <p align="center">
   <a href="https://github.com/rstemmer/musicdb/releases">
     <img src="https://img.shields.io/github/release/rstemmer/musicdb.svg" alt="MusicDB releases"/>
@@ -14,11 +24,30 @@
   </a>
 </p>
 
-![MusicDB WebUI Screenshot](graphics/Screenshots/WebUI-2021-09-17.png?raw=true)
+<p align="center">
+  [&nbsp;&nbsp;
+  <a href="https://rstemmer.github.io/musicdb/">🌍 Website</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="https://rstemmer.github.io/musicdb/build/html/usage/install.html">⚙️ Installation Guide</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="https://rstemmer.github.io/musicdb/build/html/usage/music.html">🎵 Usage Guide</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="https://rstemmer.github.io/musicdb/build/html/index.html">📚 Code Documentation</a>&nbsp;&nbsp;&nbsp;]
+</p>
 
-# MusicDB
+## Quick Install
 
-**Your Music. Your Cloud.**
+
+| Distribution | Download | Installation |
+| --- | --- | --- |
+| Arch Linux | [📦 musicdb-8.0.0-1.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases) | `pacman -U musicdb-8.0.0-1.pkg.tar.zst` |
+| Fedora     | [📦 musicdb-8.0.0-1.fc35.noarch.rpm](https://github.com/rstemmer/musicdb/releases) | `dnf install musicdb-8.0.0-1.fc35.noarch.rpm` |
+| Ubuntu     | [📦 musicdb-8.0.0-1.](https://github.com/rstemmer/musicdb/releases) | `apt install musicdb-8.0.0-1.` |
+| Raspbian   | [📦 musicdb-8.0.0-1.](https://github.com/rstemmer/musicdb/releases) | `apt install musicdb-8.0.0-1.` |
+| Source     | [📦 musicdb-8.0.0-src.tar.zst](https://github.com/rstemmer/musicdb/releases) | [⚙️ Install from Source]() |
+
+[⚙️ Setup and Run MusicDB with Apache and Icecast](https://rstemmer.github.io/musicdb/build/html/usage/install.html)
+
+---
+
+## Details
 
 MusicDB is a music manager with focus on remote access to your music collection using a web-based user interface.
 It allows you to manage an audio stream based on a song-queue.
@@ -31,60 +60,7 @@ I started this project on 4th January 2014.
 Since I finished a first prototype within one weekend, I use MusicDB almost every day.
 Time to share it with the world. :smiley:
 
-## Quick Install
-
-<table>
-<tr>
-<td>Distrubution</td>
-<td>Download</td>
-<td>Quick Install</td>
-</tr>
-<tr>
-<td>Arch Linux</td>
-<td>[📦 pkg]()</td>
-<td>
-```bash
-wget …
-su
-pacman -U musicdb-8.0.0-1.pkg.tar.zst
-```
-</td>
-</tr>
-<tr>
-<td>Fedora 35</td>
-<td>[📦 rpm]()</td>
-<td>
-```bash
-wget …
-sudo dnf install musicdb-8.0.0-1.fc35.noarch.rpm
-```
-</td>
-</tr>
-<tr>
-<td>Ubuntu</td>
-<td>[📦 deb]()</td>
-<td>
-```bash
-wget …
-apt …
-```
-</td>
-</tr>
-<tr>
-<td>Raspbian</td>
-<td>[📦 deb]()</td>
-<td>
-```bash
-wget …
-apt …
-```
-</td>
-</tr>
-</table>
-
-[Setup ran Run]() | [Install from Source]()
-
-## Details
+### Features
 
 * Store your music at one place (Server), and listen to it wherever you are (via Stream)
 * The client is a web application running on all operating systems that have a Firefox browser
@@ -106,49 +82,7 @@ For news, follow [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitte
 For ongoing work and future plans see the [GitHub Projects](https://github.com/rstemmer/musicdb/projects).
 
 
-## Important News
-
-This section contains some important information on how to update to a next major version.
-Major releases have changes that are not compatible to the previous version of MusicDB.
-Furthermore those changes may break scripts you wrote around MusicDB.
-
-Lines starting with "**:wrench: Change:**" are steps you have to do *before* or *after* updating via `update.sh` script.
-
-**28.03.2021: 6.x.x → 7.0.0+**
-
-* Update mechanism improved, just call the `update.sh` script (remember to make a backup)
-* Full rebuild of the WebUI
-  * **:wrench: Change:** Reload WebUI *after* update
-* Changes in the configuration file and music database (See CHANGELOG for details)
-* Experimental support for Music Videos added (needs to be enabled explicitly)
-  * **:wrench: Change:** Provide `videoframes` directory access for HTTPS to see its content in the WebUI
-* Docker-Support removed
-
-<details>
-<summary>01.08.2020: 5.x.x → 6.0.0+ </summary>
-
-* Changes in the configuration file and music database (See CHANGELOG for details)
-  * **:wrench: Change:** Remember to call `musicdb upgrade` *after* installation when using the `update.sh` script
-  * **:wrench: Change:** Reload WebUI *after* update
-* MusicAI will no longer work. Everything related to MusicAI got removed. Reason: The used framework _tflearn_ is no longer under development and got not ported to TensorFlow 2.0.
-
-</details>
-
-<details>
-<summary> 20.01.2019: 4.x.x → 5.0.0+ </summary>
-
-* Some changes in the configuration file
-  * **:wrench: Change:** Remember to call `musicdb upgrade` *after* installation when using the `update.sh` script
-* Blacklists and songqueue files in the MusicDB state directory got additional columns
-  * They will be automatically upgraded by MusicDB without any information loss
-* Changes in the WebUI
-  * **:wrench: Change:** Reload WebUI *after* update (Clear cache if necessary)
-
-</details>
-
-
-
-## Socialize
+### Socialize
 
 Providing and maintaining open source software comes with some downsides and a lot of work.
 I'd like to know if anyone is using this software, and what you are doing with it. :smiley:
@@ -162,11 +96,11 @@ In case you find any bugs, please [create an Issue](https://github.com/rstemmer/
 Feature requests are welcome as well.
 
 
-# Using MusicDB
+## Using MusicDB
 
 This section describes how to install, update and use MusicDB.
 
-## Requirements
+### Requirements
 
 I test MusicDB only with the latest version of the requirements listed below.
 If MusicDB breaks when updating dependencies, it's a bug in MusicDB.
@@ -203,36 +137,7 @@ When MusicDB breaks because of an updated dependency create a ticket.
 I then will fix MusicDB as soon as possible.
 
 
-## Installation and Update
-
-### Download
-
-The latest releases can be found in the [GitHubs Releases Section](https://github.com/rstemmer/musicdb/releases).
-You can also use `git clone` and install from the *master* branch.
-
-```sh
-git clone https://github.com/rstemmer/musicdb.git
-```
-
-### Installation of MusicDB
-
-To install MusicDB, read [:notebook: How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html) in the documentation.
-
-### Update to a New Version
-
-Updating can be done by the following simple steps.
-Read the *Important News* for manual steps to do before updating to a new major release.
-Only execute the scripts as root, that are followed by the comment "as root"!
-
-``` bash
-git checkout master # Only install from master branch!
-git pull
-
-cd scripts
-./update.sh # as root
-```
-
-## Usage
+### Start Managing your Music
 
 The start page of [:notebook: MusicDB's Documentation](https://rstemmer.github.io/musicdb/build/html/index.html)
 should give you the help you need to start - or at least the links to the chapters that do
@@ -317,7 +222,7 @@ You don't need to be a hacker to contribute to open source projects.
 * Please don't commit *docs/build*.
 
 
-# Roadmap
+## Roadmap
 
 *MusicDB* is under active development.
 Beside maintaining this software, I also think about improving it or adding new features if necessary.
