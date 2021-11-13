@@ -1,3 +1,19 @@
+
+<p align="center">
+  <a href="https://github.com/rstemmer/musicdb/releases">
+    <img src="https://img.shields.io/github/release/rstemmer/musicdb.svg" alt="MusicDB releases"/>
+  </a>
+  <a href="https://www.python.org/">
+    <img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="Python 3.8+"/>
+  </a>
+  <a href="https://github.com/rstemmer/musicdb/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/License-GPLv3-green.svg" alt="License"/>
+  </a>
+  <a href="https://twitter.com/MusicDBProject/">
+    <img src="https://img.shields.io/twitter/follow/musicdbproject.svg" alt="Twitter: @MusicDBProject"/>
+  </a>
+</p>
+
 ![MusicDB WebUI Screenshot](graphics/Screenshots/WebUI-2021-09-17.png?raw=true)
 
 # MusicDB
@@ -14,6 +30,58 @@ Instead you explore your music collection.
 I started this project on 4th January 2014.
 Since I finished a first prototype within one weekend, I use MusicDB almost every day.
 Time to share it with the world. :smiley:
+
+## Quick Install
+
+<table>
+<tr>
+<td>Distrubution</td>
+<td>Download</td>
+<td>Quick Install</td>
+</tr>
+<tr>
+<td>Arch Linux</td>
+<td>[📦 pkg]()</td>
+<td>
+```bash
+wget …
+pacman -U musicdb-8.0.0-1.pkg.tar.zst
+```
+</td>
+</tr>
+<tr>
+<td>Fedora</td>
+<td>[📦 rpm]()</td>
+<td>
+```bash
+wget …
+dnf …
+```
+</td>
+</tr>
+<tr>
+<td>Ubuntu</td>
+<td>[📦 deb]()</td>
+<td>
+```bash
+wget …
+apt …
+```
+</td>
+</tr>
+<tr>
+<td>Raspbian</td>
+<td>[📦 deb]()</td>
+<td>
+```bash
+wget …
+apt …
+```
+</td>
+</tr>
+</table>
+
+[Setup ran Run]() | [Install from Source]()
 
 ## Details
 
