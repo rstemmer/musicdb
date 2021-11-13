@@ -97,6 +97,9 @@ class DataDirectoryMaintainer(object):
         Returns:
             *Nothing*
         """
+        # Prepare API Key to become valid JavaScript
+        wsapikey = "\"" + wsapikey + "\";"
+
         # Read file
         with open(configjs) as file:
             lines = file.read()
