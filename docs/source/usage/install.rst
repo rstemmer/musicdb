@@ -38,24 +38,45 @@ Download
 --------
 
 Download the latest package file from the `MusicDB Releases page on GitHub <https://github.com/rstemmer/musicdb/releases>`_.
+There are severel packages avalilabe.
+Download the one that matches to your Linux Distribution.
+
 Be aware that MusicDB requires lots of libraries because of its dependency to `FFmpeg <https://www.ffmpeg.org/>`_ and `gstreamer <https://gstreamer.freedesktop.org/>`_.
 All libraries and dependencies are available in the Arch Linux repository so that they will be installed automatically by the package manager.
 
+Installation
+------------
 
-Installation via pacman
------------------------
+Update your system before installing MusicDB.
 
-After downloading the latest MusicDB package, you can simply install it with the package manager `pacman`.
+
+Arch Linux via pacman
+^^^^^^^^^^^^^^^^^^^^^
+
+After downloading the latest MusicDB package, you can simply install it with the package manager ``pacman``.
 
 .. code-block:: bash
+
+   # Become root
+   su
 
    # Install MusicDB
    pacman -U musicdb-$version-any.pkg.tar.zst
 
-Installation via dnf (Fedora)
------------------------------
 
-First you have to make sure you can install dependencies from the rpmfusion repository
+Fedora via dnf
+^^^^^^^^^^^^^^
+
+After downloading the latest MusicDB package for Fedora, you can install it with the Fedora package manager ``dnf``.
+MusicDB is optimized for the latest version of Fedora.
+To make the instruction version independed, ``rpm -E %fedora`` is used to get the version of your Fedora distribution.
+The output should match the fedora version encoded in the downloaded packaged.
+
+If ``rpm -E %fedora`` returns ``35``, the downloaded file should contail ``fc35`` in its file name. For example: *musicdb-8.0.0-1.fc35.noarch.rpm*.
+
+First you have to make sure you can install dependencies from the rpmfusion repository.
+MusicDB requires some dependencies that do not follow the strict free software policy fedora follows.
+Those dependencies (in our case multimedia transcoding tools like ``ffmpeg``) must be installed from a third party repository.
 
 .. code-block:: bash
 
@@ -67,6 +88,12 @@ First you have to make sure you can install dependencies from the rpmfusion repo
    # If not, install the repository via the following commands:
    sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
    sudo dnf install https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+
+.. code-block::
+
+   # Install MusicDB
+   sudo dnf install musicdb-8.0.0-1.fc$(rpm -E %fedora).noarch.rpm
 
 
 Initial Setup
@@ -85,13 +112,14 @@ Music Directory
 
 The music directory is the directory that contains the music files
 that will be managed, presented and streamed by MusicDB.
-It is mandatory for MusicDB to work correctly.
+
+**It is mandatory for MusicDB to work correctly.**
 
 Before you can start the MusicDB server, a music directory needs to be defined.
 This can be done in the :doc:`/basics/config` file that is placed at ``/etc/musicdb.ini``.
 In this file you need to set the music directory in the section->entry: ``[directories]->music``.
 The default directory is ``/var/music``.
-This directory can be empty but must be accessible by the MusicDB server.
+This directory can be empty but it must be accessible by the MusicDB server.
 The expected ownership is ``$username:musicdb`` with the permission ``rwxrwxr-x``.
 More details about the directories and files managed by MusicDB can be found in the :doc:`/basics/data` section of the documentation.
 
@@ -106,13 +134,15 @@ Of course it is also possible to create a new user that is only responsible for 
    mkdir /var/music
    chown -R $username:musicdb /var/music
    chmod ug=rwx,o=rx /var/music
-   vim /etc/musicdb.ini  # update [directories]->music
+
+   # Update [directories]->music if you do not use /var/music
+   vim /etc/musicdb.ini
 
 Websocket Settings
 ^^^^^^^^^^^^^^^^^^
 
 For security reasons, by default MusicDB only accepts connections from *localhost*.
-To make the MusicDB websocket server available from the local network, or internet if you setup your router correct, change the following setting: ``[websocket]->bind=0.0.0.0``.
+To make the MusicDB websocket server available from the local network, or internet if you setup your router correct, change the following setting: ``[websocket]->bind=0.0.0.0`` in ``/etc/musicdb.ini``
 
 .. code-block:: ini
 
@@ -140,27 +170,32 @@ To only handle websocket traffic from authenticated users, the data must contain
 Before the first run, you have to generate a key and provide it to the MusicDB server configuration
 as well as to the MusicDB WebUI configuration.
 
+**Generating a key is mandatory to use MusicDB.**
+
 To generate a good key you can use ``openssl``:
 
 .. code-block:: bash
 
    openssl rand -base64 32
    #> 52bRSRLIeBSOHVxN/L4SQgsxxP8IHmDDskmg8H/d0C0=
+   # DO NOT COPY THIS KEY. CREATE YOUR OWN!
 
-This key now must be entered into the server and client configuration:
+This key now must be entered into the server configuration.
+When starting MusicDB for the first time, this key gets propargated into the generated client configuration automatically.
 
-Server Side
-"""""""""""
-
-``/etc/musicdb.ini``: ``[websocket]->apikey``:
+To write the generated random key into the MusicDB server configratuion edit ``/etc/muiscdb.ini`` and update the ``[websocket]->apikey`` value.
 
 .. code-block:: ini
 
    [websocket]
+   ; Example! Use your own generated key!
    apikey=52bRSRLIeBSOHVxN/L4SQgsxxP8IHmDDskmg8H/d0C0=
 
 Client Side
 """""""""""
+
+TODO: REMOVE - THIS WILL BE NO LONGER REQUIRED IN FUTURE
+The client requires the key 
 
 ``/var/lib/webdata/config.js``: ``WEBSOCKET_APIKEY=``
 
@@ -172,7 +207,7 @@ Client Side
 Debugging logs
 ^^^^^^^^^^^^^^
 
-If you want to turn of the debug log file edit ``/etc/musicdb.ini`` and change ``[log]->debugfile`` to ``/dev/null``.
+If you want to turn off the debug log file edit ``/etc/musicdb.ini`` and change ``[log]->debugfile`` to ``/dev/null``.
 
 
 Start MusicDB Server

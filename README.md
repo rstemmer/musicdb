@@ -45,17 +45,18 @@ Time to share it with the world. :smiley:
 <td>
 ```bash
 wget …
+su
 pacman -U musicdb-8.0.0-1.pkg.tar.zst
 ```
 </td>
 </tr>
 <tr>
-<td>Fedora</td>
+<td>Fedora 35</td>
 <td>[📦 rpm]()</td>
 <td>
 ```bash
 wget …
-dnf …
+sudo dnf install musicdb-8.0.0-1.fc35.noarch.rpm
 ```
 </td>
 </tr>
