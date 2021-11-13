@@ -77,6 +77,43 @@ class DataDirectoryMaintainer(object):
 
 
 
+    def InsertWSAPIKey(self, wsapikey: str, configjs: str) -> bool:
+        """
+        This method copies the WebSocket API Key given by the parameter ``wsapikey``
+        into a new generated WebUI ``config.js`` file addressed by the ``configjs`` parameter.
+        The API key should be read from ``/etc/musicdb.ini``: ``[websocket]->apikey``.
+
+        It is expected that the addressed file in ``configjs`` exists.
+        If not a ``FileNotFound`` exception will raise.
+
+        The WebUI JavaScript configuration must already exist.
+        If that file already has a key, it will not be replaced.
+        If no key exists yet (a dummy key ``WSAPIKEY`` is expected in place) the key will be set.
+        In this case an infomation will be written into the log.
+
+        Args:
+            wsapikey (str): The API key to set
+            configjs (str): Path to the config.js file of the WebUI client that shall use the API Key
+
+        Returns:
+            *Nothing*
+        """
+        # Read file
+        with open(configjs) as file:
+            lines = file.read()
+
+        # Process file: Replace WSAPIKEY dummy by actual key
+        lines = lines.splitlines()
+        lines = [line.replace("WSAPIKEY", wsapikey) for line in lines]
+        lines = "\n".join(lines)
+
+        # Write file
+        with open(configjs, "w") as file:
+            file.write(lines)
+        return
+
+
+
     def Check(self):
         """
         This method just checks if everything is correct including existence, ownership and access mode.
@@ -135,6 +172,10 @@ class DataDirectoryMaintainer(object):
             if not self.CheckPath(file["path"], file["user"], file["group"], file["mode"]):
                 logging.info("Updating attributes of %s", file["path"])
                 self.filesystem.SetAttributes(file["path"], file["user"], file["group"], file["mode"])
+
+        # Make sure the WebSocket API Key is set in the config.js file
+        self.InsertWSAPIKey(self.config.websocket.apikey, self.config.files.webuijsconfig)
+        return
 
 
 

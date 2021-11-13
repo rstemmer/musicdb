@@ -191,18 +191,6 @@ To write the generated random key into the MusicDB server configratuion edit ``/
    ; Example! Use your own generated key!
    apikey=52bRSRLIeBSOHVxN/L4SQgsxxP8IHmDDskmg8H/d0C0=
 
-Client Side
-"""""""""""
-
-TODO: REMOVE - THIS WILL BE NO LONGER REQUIRED IN FUTURE
-The client requires the key 
-
-``/var/lib/webdata/config.js``: ``WEBSOCKET_APIKEY=``
-
-.. code-block:: javascript
-
-   const WEBSOCKET_APIKEY = "52bRSRLIeBSOHVxN/L4SQgsxxP8IHmDDskmg8H/d0C0=";
-
 
 Debugging logs
 ^^^^^^^^^^^^^^
@@ -213,7 +201,7 @@ If you want to turn off the debug log file edit ``/etc/musicdb.ini`` and change 
 Start MusicDB Server
 --------------------
 
-After setting up the music directory, and possibly other settings, the MusicDB websocket server can be started via ``systemctl start musicdb``.
+After setting up the music directory, the WebSocket API Key and possibly other settings, the MusicDB websocket server can be started via ``systemctl start musicdb``.
 If you want to autostart the server after a reboot (recommended), you have to enable it via ``systemctl enable musicdb``.
 
 .. code-block:: bash
