@@ -77,18 +77,15 @@ Time to share it with the world. :smiley:
 * **Private:** Your music is stored on your private server.
 * **Everywhere:** Control via Web Application. Listen via audio stream.
 * **Visual:** Albums and songs are represented by their artwork.
-* **Presentation:** MusicDB presents your music. It does not feel like a Database Frontend.
+* **Presentation:** MusicDB presents your music. It does not feel like a Database Front-end. No meta data overloaded list-based UI.
 * **Typos Allowed:** Fuzzy search allows you to have some typos when searching your music collection.
-* **Focused:** Hide all music not taged with the genres you currently like to lisen to.
+* **Focused:** Hide all music not tagged with the genres you currently like to listen to.
 * **Annotate:** Use custom flags to annotate songs with specific moods or themes.
+* **Queue Based:** No playlist management distracts you from your music. Put a songs into the queue, then it will be played.
+* **Single User:** MusicDB is a Single-User Multi-Client application. Connect all your computers to MusicDB without messing around with user management.
 * **No Limits:** Scales with music collections of hundreds of albums.
 * **Independence:** Keeps your music directory clean to use it with other tools as well. The file system is ground truth, not the database.
 
-### Comparison
-
-| Feature | MusicDB | Ampache |
-| --- | --- | --- |
-| | | |
 
 ---
 
