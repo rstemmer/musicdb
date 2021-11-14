@@ -120,8 +120,6 @@ class Config(configparser.ConfigParser, object):
 
         Changing configuration can be prevented by setting the file attributes to read only.
 
-        To make sure it is actually propagated to the file system ``os.sync`` is executed after saving.
-
         If writing fails not because of missing write permission, an exception gets raised.
         """
         try:
@@ -130,7 +128,10 @@ class Config(configparser.ConfigParser, object):
         except IOError as e:
             if e[0] != 13:
                 raise e # The user shall be able to forbid me messing up his config :D
-        os.sync()
+        # sync may be too aggressive. 
+        # If issue #65 (Syncing genre selection fails) is not solved without it, I add this later to the code.
+        # To make sure it is actually propagated to the file system ``os.sync`` is executed after saving.
+        #os.sync()
   
   
     def OptionAvailable(self, section, option):
