@@ -366,6 +366,28 @@ class MDBState(Config, object):
         return
 
 
+    def UpdateFilterList(self, genre, enable):
+        """
+        Sets the enable-state of a genre to the value of the parameter ``enable``.
+
+        The value is stored in the state.ini file under the category ``"albumfilter"``.
+        See :meth:`~GetFilterList` for reading out the information.
+
+        Args:
+            genre (str): Name of a genre to enable or disable
+            enable (bool): Enable or disable genre
+
+        Returns:
+            *Nothing*
+        """
+        if type(enable) != bool:
+            raise ValueError("Value of the genre %s must be a boolean. Given was a %s."%(name, type(value)))
+
+        self.Reload()
+        self.Set("albumfilter", genre, enable)
+        logging.debug("Filter list updated for genre %s -> %s. New list: %s", genre, str(enable), str(self.GetFilterList()))
+        return
+
 
     def GetFilterList(self):
         """
@@ -376,6 +398,8 @@ class MDBState(Config, object):
         The available genres get compared to the ones set in the state.ini file inside the MusicDB State directory.
         If a genre is not defined in the configuration file, its default value is ``False`` and so it is not active.
         Before the comparison, the state file gets reloaded so that external changes get applied directly.
+
+        See :meth:`~UpdateFilterList` for changing the state of the genres.
 
         Example:
 

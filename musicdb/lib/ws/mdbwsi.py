@@ -1408,13 +1408,16 @@ class MusicDBWebSocketInterface(object):
                 MusicDB_Call("SetMDBState", {category:"albumfilter", name:"Metal", value:true});
         """
         if category == "albumfilter":
-            self.mdbstate.Set(category, name, value)
+            try:
+                self.mdbstate.UpdateFilterList(name, value)
+            except Exception as e:
+                logging.warning("Setting Album Filter failed with errror \"%s\"", str(e))
+
         elif category == "MusicDB" and name == "uimode":
             try:
                 self.mdbstate.SetUIMode(value)
             except Exception as e:
                 logging.warning("Setting MusicDB UI Mode failed with errror \"%s\"", str(e))
-                pass
 
         return None
 
