@@ -25,7 +25,7 @@
 ---
 
 
-## Quick Start
+## 🚀 Quick Start
 
 <p align="center">
   [&nbsp;&nbsp;
@@ -51,13 +51,13 @@ MusicDB is hardware independent. It works with any listed distribution installed
 
 ---
 
-## Details
+## 🔍 Details
 
 <p align="center">
   [&nbsp;&nbsp;
   <a href="https://rstemmer.github.io/musicdb/">🌍 Screenshots</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
   <a href="https://rstemmer.github.io/musicdb/build/html/basics/overview.html">⚙️ Architecture</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-  <a href="https://github.com/rstemmer/musicdb/projects">📚 Roadmap</a>&nbsp;&nbsp;&nbsp;]
+  <a href="https://github.com/rstemmer/musicdb/projects">🏗 Roadmap</a>&nbsp;&nbsp;&nbsp;]
 </p>
 
 MusicDB is a music manager with focus on remote access to your music collection using a web-based user interface.
@@ -89,13 +89,13 @@ Time to share it with the world. :smiley:
 
 ---
 
-## Socialize
+## 💬 Socialize
 
 <p align="center">
   [&nbsp;&nbsp;
-  <a href="https://github.com/rstemmer/musicdb/discussions">🌍 GitHub Discussions</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-  <a href="https://twitter.com/MusicDBProject">⚙️ Twitter</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-  <a href="https://github.com/rstemmer/musicdb/issues">📚 GitHub Issues</a>&nbsp;&nbsp;&nbsp;]
+  <a href="https://github.com/rstemmer/musicdb/discussions">💬 GitHub Discussions</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="https://twitter.com/MusicDBProject">🐦 Twitter</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="https://github.com/rstemmer/musicdb/issues">🐞 GitHub Issues</a>&nbsp;&nbsp;&nbsp;]
 </p>
 
 Providing and maintaining open source software comes with some downsides and a lot of work.
@@ -110,7 +110,7 @@ I'd like to know if anyone is using this software, and what you are doing with i
 
 ---
 
-## Using MusicDB
+## 🎵 Using MusicDB
 
 <p align="center">
   [&nbsp;&nbsp;
@@ -157,7 +157,7 @@ If there are any problems setting up MusicDB, create an issue.
 
 ---
 
-## Technical Details
+## 🔩 Technical Details
 
 ### Requirements
 
@@ -182,13 +182,13 @@ The following matrix shows on which Linux Distributions I tested the MusicDB bac
 
 | MusicDB | Arch Linux | Fedora | Ubuntu |
 | --- | --- | --- | --- |
-| 8.0.0 | OK | OK | not tested |
+| 8.0.0 | 🟢 OK | 🟢 OK | 🟡 not tested |
 
 The following matrix shows with which web browsers I tested the MusicDB front end and if it succeeded.
 
 | MusicDB | [Firefox](https://www.mozilla.org/en-US/) | [Chrome](https://www.google.com/chrome/index.html) | [Safari](https://www.apple.com/safari/) |
 | --- | --- | --- | --- |
-| 8.0.0 | OK | failed<sup>1</sup> | not tested |
+| 8.0.0 | 🟢 OK | 🔴 faild<sup>1</sup> | 🟡 not tested |
 
 <sup>1: **Not yet supported** as long as mandatory [CSS features](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) are missing</sup>
 
