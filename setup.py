@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# The line above is necessary so that debmake can identify setup.py packages python 3 software
 
 import setuptools
 import os
