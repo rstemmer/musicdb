@@ -23,6 +23,7 @@ class AudioStreamPlayer extends AudioPlayer
     {
         super(null, ["AudioStreamPlayer"]);
         this.configuredurl = null
+        this.SetPausedCallback(()=>{this.Stop();});
     }
 
 
