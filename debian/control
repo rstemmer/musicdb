@@ -2,7 +2,7 @@ Source: musicdb
 Section: contrib/web
 Priority: optional
 Maintainer: Ralf Stemmer <ralf.stemmer@gmx.net>
-Build-Depends: debhelper (>=11~), dh-python, python3-all
+Build-Depends: debhelper (>=11~), dh-exec, dh-python, python3-all
 Standards-Version: 4.1.4
 Homepage: https://github.com/rstemmer/muiscdb/
 X-Python3-Version: >= 3.8
