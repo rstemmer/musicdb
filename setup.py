@@ -7,6 +7,8 @@ import sys
 
 #SOURCEDIR=setuptools.convert_path(".")
 SOURCEDIR=os.path.dirname(__file__)
+if not SOURCEDIR:
+    SOURCEDIR = "."
 
 def ReadVersion():
     versionpath = SOURCEDIR + "/VERSION"
