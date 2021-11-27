@@ -38,11 +38,14 @@ mv ${sourcename} musicdb-${version}
 echo -e "\e[1;34mPreparing deb build environment …"
 cd musicdb-${version}
 cp -r ${repository}/debian .
+cp    ${repository}/share/musicdb.service ./debian/musicdb.service
+cp    ${repository}/share/tmpfiles.conf   ./debian/musicdb.tmpfile
 
 # Build deb package
 echo -e "\e[1;34mBuilding deb package …\e[0m"
 debuild
 
+cp ${builddir}/musicdb*.deb ${repository}/dist/.
 echo -e "\e[1;32mdone"
 
 cd $oldwd
