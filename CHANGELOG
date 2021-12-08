@@ -27,7 +27,7 @@ Run  git log --oneline  for more details
 │    * notification "MusicDB:Upload" is now called "MusicDB:Task"
 │    * Removed functions: GetLyricsCrawlerCache, RunLyricsCrawler, IntegrateUpload
 │    * New functions: CreateArtist, IntegrateContent, InitiateMusicImport, InitiateArtworkImport, FindAlbumSongFiles, RenameMusicFile, RenameAlbumDirectory, ChangeArtistDirectory
-│ * Solved Issues: #68, #66, #65, #22
+│ * Solved Issues: #68, #66, #65, #22, #27
 │
 ┝━ MINOR CHANGES
 │ * [metadata] Uses mutagen instead of mutagenx module
