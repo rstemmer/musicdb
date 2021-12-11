@@ -85,8 +85,7 @@ class DirectorySelect extends FileSelect
         let files = event.target.files;
         window.console?.log(files);
 
-        // TODO: Start Upload Process
-
+        // Calculate the sum of all file sized to get the total upload size
         let size  = 0;
         let count = 0;
         for(let file of files)
@@ -95,11 +94,18 @@ class DirectorySelect extends FileSelect
             count += 1;
         }
 
+        // TODO: In Firefox, there is an object webkitRelativePath that holds "dirname/filename".
+        // This can be used to annotate a potential album name.
+
         // Update Label
         let newlabel = `${count} Files <span class="hlcolor">${size}&#8239;MiB</span>`;
         this.text.SetInnerHTML(newlabel);
 
-        // super.onFileSelected(…)
+        // Trigger Upload
+        for(let fileinfos of files)
+        {
+            uploadmanager.UploadFile(this.contenttype, fileinfos, this.annotations);
+        }
     }
 }
 
