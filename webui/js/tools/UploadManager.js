@@ -118,9 +118,18 @@ class UploadManager
         if(fnc == "MusicDB:Task")
         {
             window.console?.log(data);
+            let state = data.state;
+            if(state === "notexisting")
+            {
+                window.console?.warn(`MusicDB:Task notification for task in "notexisting" state`);
+                if(sig == "InternalError")
+                    window.console?.warn(`The same task came with the message: "${data.message}"`);
+                return;
+            }
+
+            // Get information of the task that caused this notification
             let taskid      = data.taskid;
             let task        = data.task;
-            let state       = data.state;
             let contenttype = task.contenttype;
 
             // Only process task, if this client is the owner of the task
