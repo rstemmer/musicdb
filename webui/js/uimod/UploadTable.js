@@ -137,9 +137,9 @@ class UploadTable extends Table
                 this.RemoveRow(tablerow, true); // Remove row including context row
                 delete this.entries[taskid];
             }
-            else if(! this.TryUpdateRow(upload))
+            else
             {
-                this.CreateNewRow(upload);
+                this.UpdateRow(upload);
             }
         }
 
@@ -148,18 +148,17 @@ class UploadTable extends Table
 
 
 
-    TryUpdateRow(upload)
+    UpdateRow(upload)
     {
         let key = upload.id;
-        if(! (key in this.entries))
-            return false;
+        if((key in this.entries) == false)
+                this.CreateNewRow(upload);
 
+        // Update the row and, if available, the controls form
         this.entries[key].row.Update(upload);
-        this.entries[key].form.UpdateUploadTask(upload);
-        this.entries[key].form.ValidateForm();
+        this.entries[key].form?.UpdateUploadTask(upload);
+        this.entries[key].form?.ValidateForm();
         // TODO: Update annotations
-
-        return true;
     }
 
 
