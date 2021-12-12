@@ -409,6 +409,7 @@ class TaskManager(object):
         if not contenttype in self.cfg.uploads.allow:
             self.NotifyClient("InternalError", None, "Upload of %s not allowed"%(contenttype))
             logging.warning("Uploads of %s not allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)", contenttype)
+            return
 
         fileextension   = self.uploaddirectory.GetFileExtension(sourcefilename)
         destinationname = contenttype + "-" + checksum + "." + fileextension
