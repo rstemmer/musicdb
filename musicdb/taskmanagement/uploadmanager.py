@@ -251,6 +251,8 @@ class UploadManager(TaskManager):
             success = self.PreProcessVideo(task)
         elif task["contenttype"] == "artwork":
             success = self.PreProcessArtwork(task)
+        elif task["contenttype"] == "albumfile":
+            success = True # No preprocessing required
         else:
             logging.warning("Unsupported content type of upload: \"%s\" \033[1;30m(Upload will be ignored)", str(task["contenttype"]))
             self.UpdateTaskState(task, "invalidcontent", "Unsupported content type")
