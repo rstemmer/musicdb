@@ -244,6 +244,13 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
     contenttype = task["contenttype"]
     logging.debug("Task with state \"%s\" found. (%s)", str(state), str(contenttype));
 
+    # Check if the tasks still exists in the file system.
+    # Remove if not, because the user may have removed that file for a purpose
+    # Note that updating the task state to "remove" will recreate the removed task file!
+    if not taskmanager.ExistsTaskFile(task):
+        taskmanager.UpdateTaskState(task, "remove")
+        logging.info("Found task did not exist as file in the tasks directory anymore. Task will be removed.");
+
     # Check if there are some things to do to proceed with the task
     if state == "uploadcomplete":
         uploadmanager.PreProcessUploadedFile(task)

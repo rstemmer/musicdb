@@ -35,6 +35,11 @@ class TaskManager(object):
     :meth:`~musicdb.taskmanagement.managementthread.TaskManagementThread`
     to perform the upload, integration and import tasks.
 
+    Tasks are stored as JSON file in the MusicDB data directory inside a sub directory *tasks*.
+    When a user removed one of the JSON files inside that directory, the task will be set into the ``remove`` state internally.
+    This state update will be stored in the previous removed file, so that this file appears short after removing.
+    Anyway, as soon as the ``remove`` state got processed, the task file and related uploaded files will be removed again by MusicDB.
+
     Args:
         config: :class:`~musicdb.lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration
         database: (optional) A :class:`~musicdb.lib.db.musicdb.MusicDatabase` instance
@@ -233,6 +238,29 @@ class TaskManager(object):
                 Tasks[task["id"]] = task
 
         return
+
+
+
+    def ExistsTaskFile(self, task):
+        """
+        This method checks if the task file related to ``task`` exists in the tasks directory.
+        If it is so, ``True`` gets returned.
+        This method can be used to check if the task has been removed by the user.
+        Reasons for the user to remove a task file can be fixing a stuck process.
+
+        This method does not more than checking if the task exists in the file system.
+        It will not add or remove the task from the global task list processed by the :meth:`~taskmanagement.managementthread.TaskManagementThread`
+
+        Args:
+            task (dict): The task to check
+
+        Returns:
+            ``True`` if the tasks exists in the file system, otherwise ``False``
+        """
+        taskid = task["id"]
+        path   = self.tasksdirectory.GetRoot() / Path(taskid+".json")
+        exists = self.tasksdirectory.Exists(path)
+        return exists
 
 
 
