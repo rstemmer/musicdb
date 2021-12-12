@@ -90,6 +90,8 @@ class ArtworkUploader extends Element
             let task  = rawdata.task;
             let state = rawdata.state;
 
+            if(state == "notexisting")
+                return;
             if(this.listenontaskid !== task.id)
                 return;
 
