@@ -33,14 +33,19 @@ class UploadManager
     constructor()
     {
         this.uploads = new Object;
-        this.videouploadstable = new UploadTable();
+        this.videouploads      = new UploadTable();
+        this.albumfileuploads  = new UploadTable();
     }
 
 
 
     GetVideoUploadsTable()
     {
-        return this.videouploadstable;
+        return this.videouploads;
+    }
+    GetAlbumFileUploadsTable()
+    {
+        return this.albumfileuploads;
     }
 
 
@@ -138,12 +143,17 @@ class UploadManager
 
             if(sig == "ChunkRequest")
             {
-                this.videouploadstable.TryUpdateRow(task);
+                albumuploadprogress.Show();
+                if(contenttype == "video")
+                    this.videouploads.UpdateRow(task);
+                else if(contenttype == "albumfile")
+                    this.albumfileuploads.UpdateRow(task);
                 this.UploadNextChunk(data)
             }
             else // "StateUpdate", "InternalError"
             {
-                this.videouploadstable.Update(data.uploadslist.videos);
+                this.videouploads.Update(data.uploadslist.videos);
+                this.albumfileuploads.Update(data.uploadslist.albumfiles);
             }
 
             if(sig == "StateUpdate")
@@ -176,7 +186,8 @@ class UploadManager
         {
             window.console && console.log(args);
             window.console && console.log(pass);
-            this.videouploadstable.Update(args.videos);
+            this.videouploads.Update(args.videos);
+            this.albumfileuploads.Update(args.albumfiles);
         }
 
         return;

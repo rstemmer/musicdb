@@ -36,6 +36,7 @@ class AlbumUploadProgress extends Layer
             "This list shows the progress of the upload of all files of the ablum.");
 
         // Forms
+        this.uploadstable = uploadmanager.GetAlbumFileUploadsTable();
 
         // Tool Bar
         this.toolbar            = new ToolBar();
@@ -60,6 +61,7 @@ class AlbumUploadProgress extends Layer
         this.RemoveChilds();
         this.AppendChild(this.albumheadline);
         this.AppendChild(this.uploadheadline);
+        this.AppendChild(this.uploadstable);
         this.AppendChild(this.toolbar);
     }
 
