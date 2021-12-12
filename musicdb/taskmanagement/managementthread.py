@@ -269,7 +269,7 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
         return False
 
     # Now check if the task can be removed
-    if state == "uploadfailed" or state == "importfailed" or state == "importcomplete":
+    if state == "uploadfailed" or state == "importfailed" or state == "importcomplete" or state == "invalidcontent":
         taskmanager.UpdateTaskState(task, "remove")
 
     return True
