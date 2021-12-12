@@ -136,7 +136,7 @@ class AlbumDirectorySelect extends DirectorySelect
 {
     constructor(labeltext, tooltip)
     {
-        super(labeltext, tooltip, new SVGIcon("MusicDB"), "album", "*");
+        super(labeltext, tooltip, new SVGIcon("MusicDB"), "albumfile", "*");
     }
 }
 

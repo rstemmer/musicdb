@@ -388,8 +388,8 @@ class TaskManager(object):
             raise TypeError("mime type must be of type string")
         if type(contenttype) != str:
             raise TypeError("content type must be of type string")
-        if contenttype not in ["video", "album", "artwork"]:
-            raise ValueError("content type \"%s\" not valid. \"video\", \"album\" or \"artwork\" expected."%(str(contenttype)))
+        if contenttype not in ["video", "albumfile", "artwork"]:
+            raise ValueError("content type \"%s\" not valid. \"video\", \"albumfile\" or \"artwork\" expected."%(str(contenttype)))
         if type(filesize) != int:
             raise TypeError("file size must be of type int")
         if filesize <= 0:
