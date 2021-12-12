@@ -90,7 +90,7 @@ class UploadManager
             },
             {contenttype: task.contenttype});
 
-        if(typeof initialannotations === "object")
+        if(typeof initialannotations === "object" && initialannotations !== null)
             MusicDB_Call("AnnotateUpload", {taskid: task.id, ...initialannotations});
 
         window.console && console.log(task);
