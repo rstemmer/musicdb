@@ -3933,7 +3933,7 @@ class MusicDBWebSocketInterface(object):
         This list then gets split into three lists:
 
             * *videos*: A list of all available video uploads
-            * *albums*: Album uploads
+            * *albumfiles*: A song or any other album content uploaded as part of an album upload
             * *artworks*: Artwork uploads
 
         Returns:
@@ -3949,18 +3949,24 @@ class MusicDBWebSocketInterface(object):
 
                 function onMusicDBMessage(fnc, sig, args, pass)
                 {
-                    console.log(args.albums);
+                    console.log(args.albumfiless);
                     console.log(args.videos);
                     console.log(args.artworks);
                 }
         """
         tasksdict = self.uploadmanager.GetTasks()
         retval    = {}
-        retval["videos"]   = []
-        retval["albums"]   = []
-        retval["artworks"] = []
+        retval["videos"]     = []
+        retval["albumfiles"] = []
+        retval["artworks"]   = []
         for key, task in tasksdict.items():
-            contentlist = task["contenttype"] + "s"
+            contenttype = task["contenttype"]
+            if contenttype == "video":
+                contentlist = "videos"
+            elif contenttype == "albumfile":
+                contentlist = "albumfiles"
+            elif contenttype == "artwork":
+                contentlist = "artworks"
             retval[contentlist].append(task)
 
         return retval
