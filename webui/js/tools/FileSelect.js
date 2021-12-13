@@ -138,6 +138,14 @@ class AlbumDirectorySelect extends DirectorySelect
     {
         super(labeltext, tooltip, new SVGIcon("MusicDB"), "albumfile", "*");
     }
+
+    onFileSelected(event)
+    {
+        // Show upload progress layer for album uploads
+        // Then continue with the regular file selection process (=trigger upload)
+        albumuploadprogress.Show();
+        super.onFileSelected(event);
+    }
 }
 
 

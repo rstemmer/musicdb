@@ -143,7 +143,6 @@ class UploadManager
 
             if(sig == "ChunkRequest")
             {
-                albumuploadprogress.Show();
                 if(contenttype == "video")
                     this.videouploads.UpdateRow(task);
                 else if(contenttype == "albumfile")
