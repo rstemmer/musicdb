@@ -308,7 +308,11 @@ class UploadManager(TaskManager):
         """
         taskid     = task["id"]
         uploadpath = task["uploadpath"]
-        # TODO: Determine the task["minetype"] can be very interesting/important because of the variety of file types processed within this method
+
+        # Update mime type
+        # Usually mime type is set by the front end. If not, it may be important here because album files can be anything
+        if not task["mimetype"]:
+            task["mimetype"] = self.fileprocessing.GuessMimeType(uploadpath)
 
         # Read out some meta data and annotate them to the task
         meta = MetaTags()
