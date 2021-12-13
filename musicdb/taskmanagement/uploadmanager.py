@@ -198,6 +198,7 @@ class UploadManager(TaskManager):
 
         Args:
             taskid (str): ID to identify the upload
+            annotations (dict): A dictionary with annotations that will be added to the upload task data structure
 
         Returns:
             ``True`` on success, otherwise ``False``
@@ -252,7 +253,7 @@ class UploadManager(TaskManager):
         elif task["contenttype"] == "artwork":
             success = self.PreProcessArtwork(task)
         elif task["contenttype"] == "albumfile":
-            success = True # No preprocessing required
+            success = self.PreProcessAlbumFile(task)
         else:
             logging.warning("Unsupported content type of upload: \"%s\" \033[1;30m(Upload will be ignored)", str(task["contenttype"]))
             self.UpdateTaskState(task, "invalidcontent", "Unsupported content type")
@@ -289,6 +290,38 @@ class UploadManager(TaskManager):
         #logging.debug(tags)
         return True
 
+
+    def PreProcessAlbumFile(self, task):
+        """
+        An album file in general can be anything. It can be a song (normal case) but also a booklet,
+        a music video or anything else.
+        This method identifies music files and reads its meta data using the :class:`~musicdb.lib.metatags.MetaTags` class.
+
+        All tags returned by :meth:`~musicdb.lib.metatags.MetaTags.GetAllMetadata` will be annotated to the task, if the file is a music file.
+        To annotate those information, the :meth:`~AnnotateUpload` method will be used.
+
+        Args:
+            task (dict): the task object of an upload-task
+
+        Returns:
+            ``True`` on success, otherwise ``False``.
+        """
+        taskid     = task["id"]
+        uploadpath = task["uploadpath"]
+        # TODO: Determine the task["minetype"] can be very interesting/important because of the variety of file types processed within this method
+
+        # Read out some meta data and annotate them to the task
+        meta = MetaTags()
+        try:
+            meta.Load(uploadpath)
+        except ValueError:
+            logging.debug("The file \"%s\" uploaded as part of an album to %s is not a song file.", task["sourcefilename"], task["uploadpath"])
+        else:
+            tags = meta.GetAllMetadata()
+            self.AnnotateUpload(taskid, tags)
+
+        task["preprocessedpath"] = uploadpath # path does not change. Set it anyway to be consistent.
+        return True
 
 
     def PreProcessArtwork(self, task):
