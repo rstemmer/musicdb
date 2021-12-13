@@ -26,6 +26,7 @@ let artistscache        = new ArtistsCache();
 let curtain             = new Curtain();
 let layerbackground     = new LayerBackground();
 let albumimportlayer    = new AlbumImportLayer(layerbackground, "AlbumImportLayer");
+let albumintegrationlayer=new AlbumIntegrationLayer(layerbackground, "AlbumIntegrationLayer");
 let albumuploadprogress = new AlbumUploadProgress(layerbackground, "AlbumUploadProgress");
 let albumimportprogress = new AlbumImportProgress(layerbackground, "AlbumImportProgress");
 
@@ -103,6 +104,7 @@ window.onload = function ()
     body.AppendChild(musicdbstatus.GetReconnectButtonHTMLElement());
     body.AppendChild(layerbackground);
     body.AppendChild(albumimportlayer);
+    body.AppendChild(albumintegrationlayer);
     body.AppendChild(albumuploadprogress);
     body.AppendChild(albumimportprogress);
 
@@ -234,6 +236,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     videoimport.onMusicDBMessage(fnc, sig, args, pass);
     // Layer
     albumimportlayer.onMusicDBMessage(fnc, sig, args, pass);
+    albumintegrationlayer.onMusicDBMessage(fnc, sig, args, pass);
     albumuploadprogress.onMusicDBMessage(fnc, sig, args, pass);
     albumimportprogress.onMusicDBMessage(fnc, sig, args, pass);
     
