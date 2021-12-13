@@ -21,6 +21,8 @@ import subprocess
 from pathlib import Path
 from typing  import Union, Optional
 
+import mimetypes
+mimetypes.init()
 
 class Filesystem(object):
     """
@@ -512,6 +514,34 @@ class Filesystem(object):
 
         extension = extension[1:]               # remove the "." (".py"->"py")
         return extension
+
+
+    def GuessMimeType(self, xpath: Union[str, Path]) -> str:
+        """
+        Derives the mime type based on the file extension.
+
+        Args:
+            xpath (str/Path): A path or name of a file
+
+        Returns:
+            The mime type as ``"type/subtype"``, or ``None`` if the mime type cannot be determined.
+
+        Example:
+
+            .. code-block:: python
+
+                fs   = FileSystem("/tmp")
+
+                type = fs.GuessMimeType("test.txt")
+                print("MIME type is: \"%s\""%(type))    # in this example: "text/plain"
+
+                type = fs.GuessMimeType("README")
+                print("MIME type is: \"%s\""%(type))    # in this example: "None"
+
+        """
+        path = self.AbsolutePath(xpath)
+        mimetype = mimetypes.guess_type(path)[0]
+        return mimetype
 
 
 
