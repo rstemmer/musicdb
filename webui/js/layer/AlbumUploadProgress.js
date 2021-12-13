@@ -27,11 +27,6 @@ class AlbumUploadProgress extends Layer
         super(background, id)
 
         // Headlines
-        this.albumheadline = new LayerHeadline("Album Directory Settings",
-            "These settings can be used to initialize the naming of the Album and to define to which Artist the Album belongs. "+
-            "These settings can also be updated after the upload is complete. "+ 
-            "After integrating the uploaded album, the path follows the MusicDB Naming Scheme for Albums: "+
-            "\"{ArtistName}/{ReleaseYear} - {AlbumName}\"");
         this.uploadheadline = new LayerHeadline("Album Files Upload",
             "This list shows the progress of the upload of all files of the ablum.");
 
@@ -43,9 +38,9 @@ class AlbumUploadProgress extends Layer
         this.cancelbutton       = new TextButton("MusicDB", "Cancel and Discard",
             ()=>{this.onClick_Cancel();},
             "Cancel album upload. Nothing will be changed. Partialy uploaded data will be removed.");
-        this.integratebutton    = new TextButton("MusicDB", "Integrate Album",
+        this.integratebutton    = new TextButton("MusicDB", "Continue",
             ()=>{this.onClick_Integrate();},
-            "Apply some renaming and stores the uploaded files inside the music dicretory. After integration the album can be imported into MusicDB.");
+            "Go to the integration layer to stores the uploaded files inside the music dicretory. After integration the album can be imported into MusicDB.");
 
         this.toolbar.AddButton(this.cancelbutton);
         this.toolbar.AddSpacer(true); // grow
@@ -59,7 +54,6 @@ class AlbumUploadProgress extends Layer
     ResetUI()
     {
         this.RemoveChilds();
-        this.AppendChild(this.albumheadline);
         this.AppendChild(this.uploadheadline);
         this.AppendChild(this.uploadstable);
         this.AppendChild(this.toolbar);
@@ -70,11 +64,13 @@ class AlbumUploadProgress extends Layer
     onClick_Cancel()
     {
         this.Hide();
+        // TODO: Trigger removing partially uploaded files and cancel upload tasks
     }
 
     onClick_Integrate()
     {
         this.Hide();
+        albumintegrationlayer.Show();
     }
 
 
