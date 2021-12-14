@@ -34,6 +34,7 @@ class AlbumIntegrationLayer extends Layer
             "\"{ArtistName}/{ReleaseYear} - {AlbumName}\"");
 
         // Forms
+        this.albumsettingstable = new AlbumSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
 
         // Tool Bar
         this.toolbar            = new ToolBar();
@@ -57,6 +58,7 @@ class AlbumIntegrationLayer extends Layer
     {
         this.RemoveChilds();
         this.AppendChild(this.albumheadline);
+        this.AppendChild(this.albumsettingstable);
         this.AppendChild(this.toolbar);
     }
 
@@ -74,6 +76,18 @@ class AlbumIntegrationLayer extends Layer
 
 
 
+    onAlbumSettingsValidation(isvalid)
+    {
+        //this.PrepareImportTasks();
+
+        if(isvalid)
+            this.integratebutton.Enable();
+        else
+            this.integratebutton.Disable();
+    }
+
+
+
     onMusicDBNotification(fnc, sig, rawdata)
     {
         if(fnc == "MusicDB:Task")
@@ -85,6 +99,16 @@ class AlbumIntegrationLayer extends Layer
                 return;
             //if(this.listenontaskid !== task.id)
             //    return;
+            // FIXME: May be a different file than a song file
+            // FIXME: Check if this belongs to the expected album
+            if(state == "readyforintegration")
+            {
+                window.console?.log("Updating integration album settings table");
+                let artistname  = task.annotations.artist;
+                let albumname   = task.annotations.album;
+                let releaseyear = task.annotations.releaseyear;
+                this.albumsettingstable.Update(artistname, albumname, releaseyear);
+            }
 
             if(sig == "StateUpdate")
                 return;
