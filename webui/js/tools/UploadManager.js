@@ -34,7 +34,6 @@ class UploadManager
     {
         this.uploads = new Object;
         this.videouploads      = new UploadTable();
-        this.albumfileuploads  = new UploadTable();
     }
 
 
@@ -42,10 +41,6 @@ class UploadManager
     GetVideoUploadsTable()
     {
         return this.videouploads;
-    }
-    GetAlbumFileUploadsTable()
-    {
-        return this.albumfileuploads;
     }
 
 
@@ -147,14 +142,11 @@ class UploadManager
             {
                 if(contenttype == "video")
                     this.videouploads.UpdateRow(task);
-                else if(contenttype == "albumfile")
-                    this.albumfileuploads.UpdateRow(task);
                 this.UploadNextChunk(data)
             }
             else // "StateUpdate", "InternalError"
             {
                 this.videouploads.Update(data.uploadslist.videos);
-                this.albumfileuploads.Update(data.uploadslist.albumfiles);
             }
 
             if(sig == "StateUpdate")
@@ -188,7 +180,6 @@ class UploadManager
             window.console && console.log(args);
             window.console && console.log(pass);
             this.videouploads.Update(args.videos);
-            this.albumfileuploads.Update(args.albumfiles);
         }
 
         return;

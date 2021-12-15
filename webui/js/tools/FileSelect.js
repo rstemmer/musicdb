@@ -159,10 +159,12 @@ class AlbumDirectorySelect extends DirectorySelect
 
     onFileSelected(event)
     {
-        // Show upload progress layer for album uploads
-        // Then continue with the regular file selection process (=trigger upload)
+        // Start the upload but also show the progress layer for album upload.
+        // Filter for the selected file group
+        let groupid;
+        groupid = super.onFileSelected(event);
+        albumuploadprogress.SetGroupIDFilter(groupid);
         albumuploadprogress.Show();
-        super.onFileSelected(event);
     }
 }
 

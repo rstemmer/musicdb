@@ -26,12 +26,14 @@ class AlbumUploadProgress extends Layer
     {
         super(background, id)
 
+        this.groupid = null;    // This ID is used as filter to only show uploads of a certain file group if not null
+
         // Headlines
         this.uploadheadline = new LayerHeadline("Album Files Upload",
             "This list shows the progress of the upload of all files of the ablum.");
 
         // Forms
-        this.uploadstable = uploadmanager.GetAlbumFileUploadsTable();
+        this.uploadstable = new UploadTable();
 
         // Tool Bar
         this.toolbar            = new ToolBar();
@@ -61,6 +63,15 @@ class AlbumUploadProgress extends Layer
 
 
 
+    // group ID as specified for task.annotations.groupid.
+    // null when upload progress of all upload tasks shall be shown
+    SetGroupIDFilter(groupid)
+    {
+        this.groupid = groupid;
+    }
+
+
+
     onClick_Cancel()
     {
         this.Hide();
@@ -75,22 +86,32 @@ class AlbumUploadProgress extends Layer
 
 
 
-    onMusicDBNotification(fnc, sig, rawdata)
+    onMusicDBNotification(fnc, sig, data)
     {
         if(fnc == "MusicDB:Task")
         {
-            let task  = rawdata.task;
-            let state = rawdata.state;
+            let taskid = data.taskid;
+            let task   = data.task;
+            let state  = data.state;
 
             if(state == "notexisting")
                 return;
-            //if(this.listenontaskid !== task.id)
-            //    return;
+            if(task.contenttype !== "albumfile")
+                return;
 
-            if(sig == "StateUpdate")
-                return;
-            else if(sig == "InternalError")
-                return;
+            // Only consider tasks of a certain group
+            if(this.groupid != null)
+            {
+                if(task.annotations?.groupid !== this.groupid)
+                    return;
+            }
+
+            if(sig == "ChunkRequest"
+            || sig == "StateUpdate"
+            || sig == "InternalError")
+                this.uploadstable.UpdateRow(task);
+
+            return;
         }
     }
 
