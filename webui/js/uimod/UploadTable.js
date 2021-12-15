@@ -123,6 +123,14 @@ class UploadTable extends Table
 
 
 
+    Clear()
+    {
+        super.Clear();
+        this.AddRow(this.headline);
+    }
+
+
+
     Update(uploads)
     {
         if(typeof uploads !== "object" || uploads === null)
