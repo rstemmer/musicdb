@@ -211,6 +211,7 @@ def TaskManagementThread():
             time.sleep(1)
 
         deletekeys = []
+        # Process all tasks
         for taskid, task in tasks.items():
             try:
                 keeptask = ProcessTask(taskid, task,
@@ -226,7 +227,11 @@ def TaskManagementThread():
 
         # Remove all deleted tasks
         for taskid in deletekeys:
-            taskmanager.RemoveTask(taskid)
+            try:
+                taskmanager.RemoveTask(taskid)
+            except Exception as e:
+                logging.exception("Removing task (ID: %s) failed with exception: %s \033[1;30m(Oh.)", str(taskid), str(e))
+
     return
 
 
@@ -242,7 +247,7 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
     """
     state       = task["state"]
     contenttype = task["contenttype"]
-    logging.debug("Task with state \"%s\" found. (%s)", str(state), str(contenttype));
+    #logging.debug("Task with state \"%s\" found. (%s)", str(state), str(contenttype));
 
     # Check if the tasks still exists in the file system.
     # Remove if not, because the user may have removed that file for a purpose
