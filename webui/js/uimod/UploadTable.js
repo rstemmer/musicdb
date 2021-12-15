@@ -117,7 +117,8 @@ class UploadTable extends Table
         this.Clear();
         this.AddRow(this.headline);
 
-        this.entries = new Object();
+        this.entries       = new Object();
+        this.hascontextrow = false;
     }
 
 
@@ -128,20 +129,7 @@ class UploadTable extends Table
             return;
 
         for(let upload of uploads)
-        {
-            if(upload.state == "remove")
-            {
-                // Remove row of no longer existing uploads
-                let taskid = upload.id;
-                let tablerow = this.entries[taskid].row;
-                this.RemoveRow(tablerow, true); // Remove row including context row
-                delete this.entries[taskid];
-            }
-            else
-            {
-                this.UpdateRow(upload);
-            }
-        }
+            this.UpdateRow(upload);
 
         return;
     }
@@ -150,14 +138,25 @@ class UploadTable extends Table
 
     UpdateRow(upload)
     {
-        let key = upload.id;
+        let key   = upload.id;
+        let state = upload.state;
+
         if((key in this.entries) == false)
                 this.CreateNewRow(upload);
 
-        // Update the row and, if available, the controls form
-        this.entries[key].row.Update(upload);
-        this.entries[key].form?.UpdateUploadTask(upload);
-        this.entries[key].form?.ValidateForm();
+        if(state == "remove")
+        {
+            let tablerow = this.entries[key].row;
+            this.RemoveRow(tablerow, this.hascontextrow); // Remove row including context row
+            delete this.entries[key];
+        }
+        else
+        {
+            // Update the row and, if available, the controls form
+            this.entries[key].row.Update(upload);
+            this.entries[key].form?.UpdateUploadTask(upload);
+            this.entries[key].form?.ValidateForm();
+        }
         // TODO: Update annotations
     }
 
@@ -200,6 +199,7 @@ class UploadTable extends Table
 
         if(importform != null)
         {
+            this.hascontextrow = true;
             this.AddContextView(importform.GetHTMLElement());
             importform.ValidateForm();
         }
