@@ -131,6 +131,22 @@ class UploadTable extends Table
 
 
 
+    // Check if all upload tasks have been uploaded to 100%
+    CheckCompleteness()
+    {
+        for(let key in this.entries)
+        {
+            let row      = this.entries[key].row;
+            let progress = row.progressbar.GetProgress();
+
+            if(progress < 100)
+                return false;
+        }
+        return true;
+    }
+
+
+
     Update(uploads)
     {
         if(typeof uploads !== "object" || uploads === null)
