@@ -26,6 +26,8 @@ class AlbumIntegrationLayer extends Layer
     {
         super(background, id)
 
+        this.groupid = null;    // This ID is used as filter to only show uploads of a certain file group if not null
+
         // Headlines
         this.albumheadline = new LayerHeadline("Album Directory Settings",
             "These settings can be used to initialize the naming of the Album and to define to which Artist the Album belongs. "+
@@ -64,6 +66,15 @@ class AlbumIntegrationLayer extends Layer
 
 
 
+    // group ID as specified for task.annotations.groupid.
+    // null when upload progress of all upload tasks shall be shown
+    SetGroupIDFilter(groupid)
+    {
+        this.groupid = groupid;
+    }
+
+
+
     onClick_Cancel()
     {
         this.Hide();
@@ -97,17 +108,26 @@ class AlbumIntegrationLayer extends Layer
 
             if(state == "notexisting")
                 return;
-            //if(this.listenontaskid !== task.id)
-            //    return;
+
+            // Only consider tasks of a certain group
+            if(this.groupid != null)
+            {
+                if(task.annotations?.groupid !== this.groupid)
+                    return;
+            }
+
             // FIXME: May be a different file than a song file
             // FIXME: Check if this belongs to the expected album
             if(state == "readyforintegration")
             {
-                window.console?.log("Updating integration album settings table");
                 let artistname  = task.annotations.artist;
                 let albumname   = task.annotations.album;
                 let releaseyear = task.annotations.releaseyear;
-                this.albumsettingstable.Update(artistname, albumname, releaseyear);
+
+                // If there are valid artist and album names, update the settings table
+                window.console?.log("Updating integration album settings table");
+                if(typeof artistname === "string" || typeof albumname === "string")
+                    this.albumsettingstable.Update(artistname, albumname, releaseyear);
             }
 
             if(sig == "StateUpdate")

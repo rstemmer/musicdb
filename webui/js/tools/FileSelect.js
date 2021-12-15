@@ -163,9 +163,17 @@ class AlbumDirectorySelect extends DirectorySelect
         // Filter for the selected file group
         let groupid;
         groupid = super.onFileSelected(event);
+
+        // FIXME: Potential race condition.
+        // onFileSelected triggers the upload process.
+        // Only then the group ID is known.
+        // Now, AFTER starting the upload process, the code to handle the status update of uploads get initialized.
+        // This is a bit late, but hopefully fast enough to not miss any important information.
         albumuploadprogress.ResetUI();
         albumuploadprogress.SetGroupIDFilter(groupid);
         albumuploadprogress.Show();
+        albumintegrationlayer.ResetUI();
+        albumintegrationlayer.SetGroupIDFilter(groupid);
     }
 }
 
