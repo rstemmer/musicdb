@@ -48,6 +48,7 @@ class FileSelect extends Element
 
 
 
+    // This method returns the task.id of the upload task
     onFileSelected(event)
     {
         let fileinfos = event.target.files[0];
@@ -63,11 +64,14 @@ class FileSelect extends Element
         window.console && console.log(date);
 
         // Start Upload
-        uploadmanager.UploadFile(this.contenttype, fileinfos, this.annotations);
+        let taskid;
+        taskid = uploadmanager.UploadFile(this.contenttype, fileinfos, this.annotations);
 
         // Update Label
         let newlabel = `${name}&nbsp;<span class="hlcolor">${size}&#8239;MiB</span>`;
         this.text.SetInnerHTML(newlabel);
+
+        return taskid;
     }
 }
 
@@ -83,6 +87,7 @@ class DirectorySelect extends FileSelect
 
 
 
+    // This method returns the groupid of the selected files (this ID is annotated to the upload tasks)
     onFileSelected(event)
     {
         let files = event.target.files;
@@ -117,6 +122,8 @@ class DirectorySelect extends FileSelect
         {
             uploadmanager.UploadFile(this.contenttype, fileinfos, this.annotations);
         }
+
+        return groupid;
     }
 }
 

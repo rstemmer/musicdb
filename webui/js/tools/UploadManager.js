@@ -65,6 +65,7 @@ class UploadManager
 
 
 
+    // This method returns the generated task ID (task.id)
     async StartUpload(contenttype, filedescription, rawdata, initialannotations=null)
     {
         
@@ -99,6 +100,7 @@ class UploadManager
             MusicDB_Call("AnnotateUpload", {taskid: task.id, ...initialannotations});
 
         window.console && console.log(task);
+        return task.id;
     }
 
 
