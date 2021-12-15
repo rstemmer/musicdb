@@ -43,6 +43,7 @@ class AlbumUploadProgress extends Layer
         this.integratebutton    = new TextButton("MusicDB", "Continue",
             ()=>{this.onClick_Integrate();},
             "Go to the integration layer to stores the uploaded files inside the music dicretory. After integration the album can be imported into MusicDB.");
+        this.integratebutton.Disable();
 
         this.toolbar.AddButton(this.cancelbutton);
         this.toolbar.AddSpacer(true); // grow
@@ -56,7 +57,10 @@ class AlbumUploadProgress extends Layer
     ResetUI()
     {
         this.RemoveChilds();
+
         this.uploadstable.Clear();
+        this.integratebutton.Disable();
+
         this.AppendChild(this.uploadheadline);
         this.AppendChild(this.uploadstable);
         this.AppendChild(this.toolbar);
@@ -87,6 +91,18 @@ class AlbumUploadProgress extends Layer
 
 
 
+    // Check if all tasks are in readyforintegration state.
+    // If so, enable the integrate-button
+    ValidateCompleteness()
+    {
+        if(this.uploadstable.CheckCompleteness() == true)
+            this.integratebutton.Enable();
+        else
+            this.integratebutton.Disable();
+    }
+
+
+
     onMusicDBNotification(fnc, sig, data)
     {
         if(fnc == "MusicDB:Task")
@@ -112,6 +128,7 @@ class AlbumUploadProgress extends Layer
             || sig == "InternalError")
                 this.uploadstable.UpdateRow(task);
 
+            this.ValidateCompleteness();
             return;
         }
     }
