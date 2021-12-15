@@ -26,7 +26,7 @@ class AlbumUploadProgress extends Layer
     {
         super(background, id)
 
-        this.groupid = null;    // This ID is used as filter to only show uploads of a certain file group if not null
+        this.selectorid = null; // This ID is used as filter to only show uploads of a certain file group if not null
 
         // Headlines
         this.uploadheadline = new LayerHeadline("Album Files Upload",
@@ -64,11 +64,11 @@ class AlbumUploadProgress extends Layer
 
 
 
-    // group ID as specified for task.annotations.groupid.
+    // group ID as specified for task.annotations.selectorid.
     // null when upload progress of all upload tasks shall be shown
-    SetGroupIDFilter(groupid)
+    SetSelectorFilter(selectorid)
     {
-        this.groupid = groupid;
+        this.selectorid = selectorid;
     }
 
 
@@ -101,9 +101,9 @@ class AlbumUploadProgress extends Layer
                 return;
 
             // Only consider tasks of a certain group
-            if(this.groupid != null)
+            if(this.selectorid != null)
             {
-                if(task.annotations?.groupid !== this.groupid)
+                if(task.annotations?.selectorid !== this.selectorid)
                     return;
             }
 

@@ -38,6 +38,12 @@ class FileSelect extends Element
         else
             this.annotations = new Object();
 
+        // Unique identifier to distinguish which process got triggered by which selector
+        // This ID is allow annotated to the upload task
+        this.selectorid = crypto.randomUUID();
+        this.annotations["selectorid"] = this.selectorid;
+
+
         this.AddCSSClass("flex-row");
         this.SetTooltip(tooltip);
 
@@ -159,21 +165,17 @@ class AlbumDirectorySelect extends DirectorySelect
 
     onFileSelected(event)
     {
+        // To avoid race conditions, do not filter for specific uploads.
+        // Just listen to all status updated.
+        albumuploadprogress.SetSelectorFilter(this.selectorid);
+        albumuploadprogress.ResetUI();
+        albumintegrationlayer.SetSelectorFilter(this.selectorid);
+        albumintegrationlayer.ResetUI();
+
         // Start the upload but also show the progress layer for album upload.
-        // Filter for the selected file group
         let groupid;
         groupid = super.onFileSelected(event);
-
-        // FIXME: Potential race condition.
-        // onFileSelected triggers the upload process.
-        // Only then the group ID is known.
-        // Now, AFTER starting the upload process, the code to handle the status update of uploads get initialized.
-        // This is a bit late, but hopefully fast enough to not miss any important information.
-        albumuploadprogress.ResetUI();
-        albumuploadprogress.SetGroupIDFilter(groupid);
         albumuploadprogress.Show();
-        albumintegrationlayer.ResetUI();
-        albumintegrationlayer.SetGroupIDFilter(groupid);
     }
 }
 
