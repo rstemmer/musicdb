@@ -163,6 +163,7 @@ class AlbumDirectorySelect extends DirectorySelect
         // Filter for the selected file group
         let groupid;
         groupid = super.onFileSelected(event);
+        albumuploadprogress.ResetUI();
         albumuploadprogress.SetGroupIDFilter(groupid);
         albumuploadprogress.Show();
     }

@@ -56,6 +56,7 @@ class AlbumUploadProgress extends Layer
     ResetUI()
     {
         this.RemoveChilds();
+        this.uploadstable.Clear();
         this.AppendChild(this.uploadheadline);
         this.AppendChild(this.uploadstable);
         this.AppendChild(this.toolbar);
