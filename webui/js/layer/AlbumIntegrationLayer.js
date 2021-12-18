@@ -128,7 +128,7 @@ class AlbumIntegrationLayer extends Layer
 
             this.tasks.AddTask(`New File: ${musicpath}`,
                 (webuitaskid)=>{
-                    MusicDB_Request("IntegrateMusicFile", "ConfirmAlbumIntegrationTask",
+                    MusicDB_Request("IntegrateContent", "ConfirmAlbumIntegrationTask",
                         {taskid: albumfileid, musicpath: musicpath},
                         {webuitaskid: webuitaskid});
                     return "active";
