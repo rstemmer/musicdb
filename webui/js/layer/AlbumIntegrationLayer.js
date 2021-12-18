@@ -95,6 +95,7 @@ class AlbumIntegrationLayer extends Layer
 
     onClick_Integrate()
     {
+        albumintegrationprogress.ExecuteTasks(this.tasks); // Will also Show the layer
         this.Hide();
     }
 
