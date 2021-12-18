@@ -39,12 +39,34 @@ class AlbumIntegrationProgress extends Layer
         this.toolbar     = new ToolBar();
         this.closebutton = new TextButton("MusicDB", "Close",
             ()=>{this.onClick_Close();},
-            "Close album integration layer.");
+            "Close album integration layer. Import Album later.");
+        this.importbutton = new TextButton("MusicDB", "Continue with Import",
+            ()=>{this.onClick_Import();},
+            "Show the Album Import form for importing the uploaded album.");
         this.toolbar.AddSpacer(true); // grow
         this.toolbar.AddButton(this.closebutton);
-        this.toolbar.AddSpacer(true); // grow
+        this.toolbar.AddButton(this.importbutton);
 
-        this.tasks = null;
+        this.tasks     = null;
+        this.albumpath = null;
+    }
+
+
+
+    ResetUI()
+    {
+        this.RemoveChilds();
+
+        this.closebutton.Disable();
+        this.importbutton.Disable();
+        this.successmessage.Hide();
+        this.errormessage.Hide();
+
+        this.AppendChild(this.headline);
+        this.AppendChild(this.tasks);
+        this.AppendChild(this.successmessage);
+        this.AppendChild(this.errormessage);
+        this.AppendChild(this.toolbar);
     }
 
 
@@ -55,39 +77,40 @@ class AlbumIntegrationProgress extends Layer
         this.Hide();
     }
 
-
-
-    onExecutionFinished(success=true)
+    onClick_Import()
     {
-        if(success)
-            this.successmessage.Show();
-        else
-            this.errormessage.Show();
-        this.closebutton.Enable();
+        // album path must be given via ExecuteTasks from the Integration layer
+        if(typeof this.albumpath !== "string")
+        {
+            window.console?.warn("Cannot trigger import, no album path was known");
+            return;
+        }
+
+        albumimportlayer.Show(); // Hand over to the overlay
+        this.Hide();
+
+        MusicDB_Request("FindAlbumSongFiles", "ShowAlbumSongFiles", {albumpath:this.albumpath});
     }
 
 
 
-    // tasks: AlbumImportTasks object
+    // Required to trigger the import process
+    SetAlbumPath(albumpath)
+    {
+        this.albumpath = albumpath;
+    }
+
+
+    // tasks: Album Integration Tasks object (type: BatchExecution)
     ExecuteTasks(tasks)
     {
-        // Reset UI
-        this.RemoveChilds();
-        this.closebutton.Disable();
-        this.successmessage.Hide();
-        this.errormessage.Hide();
-
         // Prepare Tasks for being executed
         this.tasks = tasks;
         this.tasks.SetListenSignature("ConfirmAlbumIntegrationTask");
         this.tasks.SetOnFinishCallback((opentasks, finishedtasks)=>{this.onFinish(opentasks, finishedtasks);});
 
-        // Rebuild UI
-        this.AppendChild(this.headline);
-        this.AppendChild(this.tasks);
-        this.AppendChild(this.successmessage);
-        this.AppendChild(this.errormessage);
-        this.AppendChild(this.toolbar);
+        // Reset UI
+        this.ResetUI();
 
         // And Fire
         this.Show();
@@ -102,7 +125,9 @@ class AlbumIntegrationProgress extends Layer
             this.successmessage.Show();
         else
             this.errormessage.Show();
+
         this.closebutton.Enable();
+        this.importbutton.Enable();
     }
 
 
@@ -111,8 +136,6 @@ class AlbumIntegrationProgress extends Layer
     {
         if(sig == "ConfirmAlbumIntegrationTask")
         {
-            window.console?.log(args);
-            window.console?.log(pass);
             this.tasks?.onMusicDBMessage(fnc, sig, args, pass);
         }
     }

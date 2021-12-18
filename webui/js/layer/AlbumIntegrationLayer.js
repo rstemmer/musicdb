@@ -103,6 +103,8 @@ class AlbumIntegrationLayer extends Layer
 
     onClick_Integrate()
     {
+        let albumpath = this.GetAlbumPath();
+        albumintegrationprogress.SetAlbumPath(albumpath);
         albumintegrationprogress.ExecuteTasks(this.tasks); // Will also Show the layer
         this.Hide();
     }
@@ -121,13 +123,21 @@ class AlbumIntegrationLayer extends Layer
 
 
 
+    GetAlbumPath()
+    {
+        let albumdirectory  = this.albumsettingstable.GetAlbumDirectoryName();
+        let artistdirectory = this.albumsettingstable.GetArtistDirectoryName();
+        let albumpath       = artistdirectory + "/" + albumdirectory;
+        return albumpath;
+    }
+
+
+
     PrepareIntegrationTasks()
     {
         this.tasks.Clear();
 
-        let albumdirectory  = this.albumsettingstable.GetAlbumDirectoryName();
-        let artistdirectory = this.albumsettingstable.GetArtistDirectoryName();
-        let albumpath       = artistdirectory + "/" + albumdirectory;
+        let albumpath = this.GetAlbumPath();
 
         for(let albumfile of this.albumfiles)
         {
