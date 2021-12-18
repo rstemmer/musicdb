@@ -22,9 +22,9 @@ class AlbumIntegrationProgress extends Layer
 {
     // background: Instance of the Curtain class that lays behind the Layer.
     // When the layer is made visible, then also the background will be shown
-    constructor(background, id)
+    constructor(background)
     {
-        super(background, id)
+        super(background, "AlbumIntegrationProgress")
         // Headline
         this.headline = new LayerHeadline("Album Integration Tasks Execution Progress",
             "This is an overview of the files that will be copied into the Music Directory.");

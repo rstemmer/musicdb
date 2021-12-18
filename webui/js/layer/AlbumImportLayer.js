@@ -22,9 +22,9 @@ class AlbumImportLayer extends Layer
 {
     // background: Instance of the Curtain class that lays behind the Layer.
     // When the layer is made visible, then also the background will be shown
-    constructor(background, id)
+    constructor(background)
     {
-        super(background, id)
+        super(background, "AlbumImportLayer")
 
         this.oldartistdirectoryname = null;
         this.oldalbumdirectoryname  = null;

@@ -22,9 +22,9 @@ class AlbumImportProgress extends Layer
 {
     // background: Instance of the Curtain class that lays behind the Layer.
     // When the layer is made visible, then also the background will be shown
-    constructor(background, id)
+    constructor(background)
     {
-        super(background, id)
+        super(background, "AlbumImportProgress")
         // Headline
         this.headline = new LayerHeadline("Album Import Tasks Execution Progress",
             "This is an overview of the Tasks that are executed to import the new album. "+

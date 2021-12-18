@@ -25,11 +25,11 @@ let artistscache        = new ArtistsCache();
 // Create some Layers on top of the main layout
 let curtain             = new Curtain();
 let layerbackground     = new LayerBackground();
-let albumimportlayer    = new AlbumImportLayer(layerbackground, "AlbumImportLayer");
-let albumintegrationlayer=new AlbumIntegrationLayer(layerbackground, "AlbumIntegrationLayer");
-let albumuploadprogress = new AlbumUploadProgress(layerbackground, "AlbumUploadProgress");
-let albumintegrationprogress = new AlbumIntegrationProgress(layerbackground, "AlbumIntegrationProgress");
-let albumimportprogress = new AlbumImportProgress(layerbackground, "AlbumImportProgress");
+let albumimportlayer    = new AlbumImportLayer(layerbackground);
+let albumintegrationlayer=new AlbumIntegrationLayer(layerbackground);
+let albumuploadprogress = new AlbumUploadProgress(layerbackground);
+let albumintegrationprogress = new AlbumIntegrationProgress(layerbackground);
+let albumimportprogress = new AlbumImportProgress(layerbackground);
 
 // Create Basic MusicDB WebUI Components
 let musicdbhud          = new MusicDBHUD();

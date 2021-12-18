@@ -22,9 +22,9 @@ class AlbumIntegrationLayer extends Layer
 {
     // background: Instance of the Curtain class that lays behind the Layer.
     // When the layer is made visible, then also the background will be shown
-    constructor(background, id)
+    constructor(background)
     {
-        super(background, id)
+        super(background, "AlbumIntegrationLayer")
 
         this.selectorid = null;    // This ID is used as filter to only show uploads of a certain file group if not null
 
