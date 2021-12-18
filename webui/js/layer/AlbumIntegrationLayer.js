@@ -91,6 +91,14 @@ class AlbumIntegrationLayer extends Layer
     onClick_Cancel()
     {
         this.Hide();
+
+        // Trigger removing uploaded files
+        for(let albumfile of this.albumfiles)
+        {
+            let taskid = albumfile.id;
+            MusicDB_Call("RemoveUpload", {taskid: taskid});
+        }
+        this.ResetUI();
     }
 
     onClick_Integrate()
