@@ -22,22 +22,18 @@
 }
 
 
-/*
-.UploadTableRow:nth-child(1) > td
-{
-    margin:             auto;
-    text-align:         center;
-}
-*/
-
 .UploadTableRow td:nth-child(2)
 {
     width:              50%;
 }
+
+
 .UploadTableRow td:nth-child(3)
 {
     width:              20%;
 }
+
+
 .UploadTableRow td:not(:nth-child(2))
 {
     white-space:        nowrap;
