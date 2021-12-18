@@ -120,6 +120,13 @@ class UploadTable extends Table
 
 
 
+    GetAllUploadIDs()
+    {
+        return Object.keys(this.entries);
+    }
+
+
+
     Update(uploads)
     {
         if(typeof uploads !== "object" || uploads === null)
