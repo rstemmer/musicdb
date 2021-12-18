@@ -30,7 +30,7 @@ class AlbumUploadProgress extends Layer
 
         // Headlines
         this.uploadheadline = new LayerHeadline("Album Files Upload",
-            "This list shows the progress of the upload of all files of the ablum.");
+            "This list shows the progress of the upload of all files of the selected ablum.");
 
         // Forms
         this.uploadstable = new UploadTable();
@@ -68,7 +68,8 @@ class AlbumUploadProgress extends Layer
 
 
 
-    // group ID as specified for task.annotations.selectorid.
+    // ID as specified for task.annotations.selectorid.
+    // Only tasks with that ID will be considered in this view
     // null when upload progress of all upload tasks shall be shown
     SetSelectorFilter(selectorid)
     {
