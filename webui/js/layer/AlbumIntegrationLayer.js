@@ -34,9 +34,16 @@ class AlbumIntegrationLayer extends Layer
             "These settings can also be updated after the upload is complete. "+ 
             "After integrating the uploaded album, the path follows the MusicDB Naming Scheme for Albums: "+
             "\"{ArtistName}/{ReleaseYear} - {AlbumName}\"");
+        this.tasksheadline = new LayerHeadline("Integration Tasks Overview",
+            "This is an overview of the files that will be copied into the Music Directory when the Integration process gets started. "+
+            "During integration, the status of each task will be visualized.");
 
         // Forms
         this.albumsettingstable = new AlbumSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
+
+        // Data
+        this.tasks              = new BatchExecution();
+        this.albumfiles         = new Array();
 
         // Tool Bar
         this.toolbar            = new ToolBar();
@@ -59,8 +66,14 @@ class AlbumIntegrationLayer extends Layer
     ResetUI()
     {
         this.RemoveChilds();
+
+        this.tasks.Clear();
+        this.albumfiles = new Array();
+
         this.AppendChild(this.albumheadline);
         this.AppendChild(this.albumsettingstable);
+        this.AppendChild(this.tasksheadline);
+        this.AppendChild(this.tasks);
         this.AppendChild(this.toolbar);
     }
 
@@ -99,6 +112,35 @@ class AlbumIntegrationLayer extends Layer
 
 
 
+    PrepareIntegrationTasks()
+    {
+        this.tasks.Clear();
+
+        let albumdirectory  = this.albumsettingstable.GetAlbumDirectoryName();
+        let artistdirectory = this.albumsettingstable.GetArtistDirectoryName();
+        let albumpath       = artistdirectory + "/" + albumdirectory;
+
+        for(let albumfile of this.albumfiles)
+        {
+            let albumfileid = albumfile.id;
+            let musicpath   = albumpath + "/" + albumfile.sourcefilename;
+
+            this.tasks.AddTask(`New File: ${musicpath}`,
+                (webuitaskid)=>{
+                    MusicDB_Request("IntegrateMusicFile", "ConfirmAlbumIntegrationTask",
+                        {taskid: albumfileid, musicpath: musicpath},
+                        {webuitaskid: webuitaskid});
+                    return "active";
+                },
+                (fnc, sig, args, pass)=>{
+                    if(args === true) return "good";
+                    else              return "bad";
+                });
+        }
+    }
+
+
+
     onMusicDBNotification(fnc, sig, rawdata)
     {
         if(fnc == "MusicDB:Task")
@@ -120,6 +162,7 @@ class AlbumIntegrationLayer extends Layer
             // FIXME: Check if this belongs to the expected album
             if(state == "readyforintegration")
             {
+                this.albumfiles.push(task);
                 let artistname  = task.annotations.artist;
                 let albumname   = task.annotations.album;
                 let releaseyear = task.annotations.releaseyear;
@@ -128,6 +171,8 @@ class AlbumIntegrationLayer extends Layer
                 window.console?.log("Updating integration album settings table");
                 if(typeof artistname === "string" || typeof albumname === "string")
                     this.albumsettingstable.Update(artistname, albumname, releaseyear);
+
+                this.PrepareIntegrationTasks();
             }
 
             if(sig == "StateUpdate")
