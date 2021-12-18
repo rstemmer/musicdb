@@ -357,9 +357,7 @@ class AlbumSettingsTable extends Table
 
 
 
-    // Returns a array with two objects with two attributes: .newname, .oldname
-    // First object is for the artist, second for the album directory name
-    // If for one or all of them the directories are the same, null will be set instead of an object.
+    // Returns an object with two attributes: .newname, .oldname
     GetAlbumRenameRequest()
     {
         let newdirectoryname  = this.GetAlbumDirectoryName();
