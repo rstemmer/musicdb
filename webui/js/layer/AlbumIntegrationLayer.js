@@ -31,7 +31,7 @@ class AlbumIntegrationLayer extends Layer
         // Headlines
         this.albumheadline = new LayerHeadline("Album Directory Settings",
             "These settings can be used to initialize the naming of the Album and to define to which Artist the Album belongs. "+
-            "These settings can also be updated after the upload is complete. "+ 
+            "These settings can also be updated after the upload is complete.\n"+
             "After integrating the uploaded album, the path follows the MusicDB Naming Scheme for Albums: "+
             "\"{ArtistName}/{ReleaseYear} - {AlbumName}\"");
         this.tasksheadline = new LayerHeadline("Integration Tasks Overview",
@@ -79,7 +79,7 @@ class AlbumIntegrationLayer extends Layer
 
 
 
-    // group ID as specified for task.annotations.selectorid.
+    // ID as specified for task.annotations.selectorid.
     // null when upload progress of all upload tasks shall be shown
     SetSelectorFilter(selectorid)
     {
