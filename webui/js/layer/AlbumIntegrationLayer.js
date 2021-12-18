@@ -111,7 +111,7 @@ class AlbumIntegrationLayer extends Layer
 
     onAlbumSettingsValidation(isvalid)
     {
-        //this.PrepareImportTasks();
+        this.PrepareIntegrationTasks();
 
         if(isvalid)
             this.integratebutton.Enable();
