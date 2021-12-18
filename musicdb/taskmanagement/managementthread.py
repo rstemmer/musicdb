@@ -46,6 +46,7 @@ Possible Task states:
         * ``"preprocessing"``: The file is currently in preprocessing state. For example if an archive gets unpacked.
     * Integration related states:
         * ``"readyforintegration"``: The integration of the file can be started
+        * ``"startintegration"``: Start the integration process
         * ``"integrating"``: The integration process has started
         * ``"integrationfailed"``: Integrating the uploaded file into the music directory failed
     * Import related states:
@@ -76,6 +77,7 @@ The following keys are in dictionary that represent a task:
     * Integration related information (May not be valid if the file is not yet integrated into the Music Directory)
         * ``"videopath"`` (str): Path to a video file, relative to the Music Directory
         * ``"albumpath"`` (str): Path to an album directory, relative to the Music Directory
+        * ``"albumfilepath"`` (str): Path to file of an album, relative to the Music Directory
     * Artwork related
         * ``"awsourcetype"`` (str): Type of the artwork source: ``"imagefile"``, ``"songfile"`` or ``"videofile"``.
         * ``"awsourcepath"`` (str): Path to the artwork source
@@ -263,6 +265,9 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
     elif state == "readyforintegration":
         # further steps should be triggered by the user!
         pass
+
+    elif state == "startintegration":
+        integrationmanager.IntegrateUploadedFile(task)
 
     elif state == "readyforimport":
         # further steps should be triggered by the user!

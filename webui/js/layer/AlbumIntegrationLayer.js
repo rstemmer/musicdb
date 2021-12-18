@@ -134,8 +134,28 @@ class AlbumIntegrationLayer extends Layer
                     return "active";
                 },
                 (fnc, sig, args, pass)=>{
-                    if(args === true) return "good";
-                    else              return "bad";
+                    if(args == null)
+                        return "bad";
+                    else
+                        return "active";
+                },
+                (fnc, sig, rawdata)=>{
+                    if(fnc != "MusicDB:Task")
+                        return null;
+
+                    if(sig == "InternalError")
+                    {
+                        window.console?.warn(`Integrating album file failed with error: "${rawdata["message"]}"`)
+                        return "bad";
+                    }
+                    if(sig == "StateUpdate")
+                    {
+                        if(rawdata["state"] == "integrationfailed")
+                            return "bad";
+                        else if(rawdata["state"] == "readyforimport")
+                            return "good";
+                    }
+                    return "active";
                 });
         }
     }
