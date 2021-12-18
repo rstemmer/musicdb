@@ -81,7 +81,12 @@ class AlbumUploadProgress extends Layer
     onClick_Cancel()
     {
         this.Hide();
-        // TODO: Trigger removing partially uploaded files and cancel upload tasks
+
+        // Trigger removing partially uploaded files and cancel upload tasks
+        let taskids = this.uploadstable.GetAllUploadIDs();
+        for(let taskid of taskids)
+            MusicDB_Call("RemoveUpload", {taskid: taskid});
+        this.uploadstable.Clear();
     }
 
     onClick_Integrate()
