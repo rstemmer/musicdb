@@ -435,12 +435,13 @@ class Filesystem(object):
         If the source file does not exist, ``False`` gets returned.
         If the destination file exists, it gets overwritten!
         When the destination path is a directory, the file gets copied into the directory.
-        Filesystem metadata are copied as well.
+        All parent directories must exist, otherwise a ``FileNotFoundError`` exception gets raised.
+
         The UNIX shell alternative would be like the following line:
 
         .. code-block:: bash
 
-            cp -p $SRCPATH $DSTPATH
+            cp $SRCPATH $DSTPATH
 
         Args:
             xsrcpath (str/Path): A relative or absolute path of the source
@@ -448,6 +449,10 @@ class Filesystem(object):
 
         Returns:
             ``False`` if the file does not exist.
+
+        Excpetions:
+            PermissionError: When there is no write access to the destination directory
+            FileNotFoundError: When the destination directory does not exist
         """
         abssource = self.AbsolutePath(xsrcpath)
         absdest   = self.AbsolutePath(xdstpath)
