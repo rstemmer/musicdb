@@ -22,21 +22,21 @@
 }
 
 
-
+/*
 .UploadTableRow:nth-child(1) > td
 {
     margin:             auto;
     text-align:         center;
 }
-.UploadTableRow td:nth-child(4) > div
-{
-    margin-left:        auto;
-    justify-content:    flex-end;
-}
+*/
 
 .UploadTableRow td:nth-child(2)
 {
     width:              50%;
+}
+.UploadTableRow td:nth-child(3)
+{
+    width:              20%;
 }
 .UploadTableRow td:not(:nth-child(2))
 {

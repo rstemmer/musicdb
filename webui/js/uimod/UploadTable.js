@@ -16,11 +16,10 @@
 
 "use strict";
 
-const UPLOADTABLEHEADLINE = ["Source Path", "Upload Progress", "Status", "Controls"];
+const UPLOADTABLEHEADLINE = ["Source File Name", "Upload Progress", "Status"];
 const UT_PATH_COLUMN      = 0;
 const UT_PROGRESS_COLUMN  = 1;
 const UT_STATUS_COLUMN    = 2;
-const UT_BUTTON_COLUMN    = 3;
 
 
 
@@ -36,7 +35,7 @@ class UploadTableRowBase extends TableRow
 
 class UploadTableHeadline extends UploadTableRowBase
 {
-    constructor(MDBMood)
+    constructor()
     {
         super();
         this.AddCSSClass("TableHeadline");
@@ -69,13 +68,7 @@ class UploadTableRow extends UploadTableRowBase
 
         // Create text cells
         let pathelement  = document.createTextNode(path);
-        let stateelement = this._CreateStateElement(state);
-
-        //// Control buttons
-        // TODO: Pause/Continue
-        //let importbutton = new SVGButton("Remove", ()=>{this.onRemove();}, "Delete this uploaded file");
-        //let buttonbox    = new ButtonBox()
-        //buttonbox.AddButton(importbutton);
+        let stateelement = new UploadStatusText(state)
 
         // Update progress
         let progress = Math.round((offset / filesize) * 100);
@@ -83,26 +76,8 @@ class UploadTableRow extends UploadTableRowBase
 
         // Set cells
         this.SetContent(UT_PATH_COLUMN,     pathelement);
-        this.SetContent(UT_PROGRESS_COLUMN, this.progressbar.GetHTMLElement());
-        this.SetContent(UT_STATUS_COLUMN,   stateelement.GetHTMLElement());
-        //this.SetContent(UT_BUTTON_COLUMN, buttonbox.GetHTMLElement());
-    }
-
-
-
-    _CreateStateElement(state)
-    {
-        return new UploadStatusText(state);
-    }
-
-
-
-    onRemove()
-    {
-        event.preventDefault();
-        event.stopPropagation();
-        //MusicDB_Request("DeleteTag", "UpdateTags", {tagid: MDBMood.id}, {origin: "MoodSettings"});
-        window.console && console.log("Remove Upload");
+        this.SetContent(UT_PROGRESS_COLUMN, this.progressbar);
+        this.SetContent(UT_STATUS_COLUMN,   stateelement);
     }
 }
 
@@ -110,15 +85,13 @@ class UploadTableRow extends UploadTableRowBase
 
 class UploadTable extends Table
 {
-    constructor(uploads=null)
+    constructor()
     {
         super(["UploadTable"]);
         this.headline = new UploadTableHeadline();
         this.Clear();
-        this.AddRow(this.headline);
 
-        this.entries       = new Object();
-        this.hascontextrow = false;
+        this.entries = new Object();
     }
 
 
@@ -171,17 +144,13 @@ class UploadTable extends Table
         if(state == "remove")
         {
             let tablerow = this.entries[key].row;
-            this.RemoveRow(tablerow, this.hascontextrow); // Remove row including context row
+            this.RemoveRow(tablerow);
             delete this.entries[key];
         }
         else
         {
-            // Update the row and, if available, the controls form
             this.entries[key].row.Update(upload);
-            this.entries[key].form?.UpdateUploadTask(upload);
-            this.entries[key].form?.ValidateForm();
         }
-        // TODO: Update annotations
     }
 
 
@@ -192,47 +161,10 @@ class UploadTable extends Table
         let  newrow = new UploadTableRow(upload);
         this.AddRow(newrow);
 
-        // Check/define meta information about the file
-        let artistname = "Unknown Artist"; // TODO
-        let sourcefile = upload.sourcefilename;
-        let extindex   = sourcefile.lastIndexOf(".")
-        let musicname  = sourcefile.slice(0, extindex);
-        let origin     = "Internet";
-        let release    = 2000;
-        if("annotations" in upload)
-        {
-            let annotations = upload.annotations;
-            if("artistname" in annotations)
-                artistname = annotations.artistname;
-            if("name" in annotations)
-                musicname = annotations.name;
-            if("origin" in annotations)
-                origin = annotations.origin;
-            if("release" in annotations)
-                release = annotations.release;
-        }
-
-        // Create import form
-        let importform = null;
-        switch(upload.contenttype)
-        {
-            case "video":
-                importform = new VideoImportForm(artistname, musicname, origin, release, upload);
-                break;
-        }
-
-        if(importform != null)
-        {
-            this.hascontextrow = true;
-            this.AddContextView(importform.GetHTMLElement());
-            importform.ValidateForm();
-        }
-
         // Save row
         let key = upload.id;
         this.entries[key] = new Object();
         this.entries[key].row  = newrow;
-        this.entries[key].form = importform;
     }
 }
 
