@@ -40,7 +40,7 @@ class AlbumIntegrationProgress extends Layer
         this.closebutton = new TextButton("MusicDB", "Close",
             ()=>{this.onClick_Close();},
             "Close album integration layer. Import Album later.");
-        this.importbutton = new TextButton("MusicDB", "Continue with Import",
+        this.importbutton = new TextButton("Import", "Continue with Import",
             ()=>{this.onClick_Import();},
             "Show the Album Import form for importing the uploaded album.");
         this.toolbar.AddSpacer(true); // grow
