@@ -176,6 +176,7 @@ class IntegrationManager(TaskManager):
             uploadedfile = task["preprocessedpath"]
         else:
             uploadedfile  = task["uploadpath"]
+        absuploadpath = self.uploaddirectory.AbsolutePath(uploadedfile)
 
         try:
             artistname    = task["annotations"]["artistname"]
@@ -209,7 +210,7 @@ class IntegrationManager(TaskManager):
 
         # Copy file, create Artist directory if not existing
         try:
-            success = self.musicdirectory.CopyFile(uploadedfile, videofile)
+            success = self.musicdirectory.CopyFile(absuploadpath, videofile)
         except PermissionError:
             logging.error("Copying video file to \"%s\" failed! - Permission denied! \033[1;30m(MusicDB requires write permission to the music file tree)", str(videofile))
             self.NotifyClient("InternalError", task, "Copying failed - Permission denied")
@@ -246,7 +247,8 @@ class IntegrationManager(TaskManager):
         else:
             uploadedfile  = task["uploadpath"]
 
-        albumfilepath = task["albumfilepath"]
+        absuploadedfile = self.uploaddirectory.AbsolutePath(uploadedfile)
+        albumfilepath   = task["albumfilepath"]
 
 
         # Check if video file already exists
@@ -263,7 +265,7 @@ class IntegrationManager(TaskManager):
         # Copy file
         logging.debug("Copying album file \"%s\" -> \"%s\"", uploadedfile, albumfilepath)
         try:
-            success = self.musicdirectory.CopyFile(uploadedfile, albumfilepath)
+            success = self.musicdirectory.CopyFile(absuploadedfile, albumfilepath)
         except FileNotFoundError:
             logging.error("Copying album file from \"%s\" to \"%s\" failed! - File not found! \033[1;30m", str(uploadedfile), str(albumfilepath))
             self.NotifyClient("InternalError", task, "Copying failed - File not found")

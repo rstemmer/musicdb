@@ -441,7 +441,8 @@ class TaskManager(object):
 
         fileextension   = self.uploaddirectory.GetFileExtension(sourcefilename)
         destinationname = contenttype + "-" + checksum + "." + fileextension
-        uploadpath = self.cfg.directories.uploads + "/" + destinationname
+        #uploadpath = self.cfg.directories.uploads + "/" + destinationname
+        uploadpath = destinationname
 
         # TODO: Check if there is already a task with the given ID.
         # If this task is in waitforchunk state, the upload can be continued instead of restarting it.
@@ -450,7 +451,8 @@ class TaskManager(object):
         self.uploaddirectory.RemoveFile(uploadpath)  # Removes file when it exists
         
         # Create File
-        with open(uploadpath, "w+b"):
+        absuploadpath  = self.uploaddirectory.AbsolutePath(uploadpath)
+        with open(absuploadpath, "w+b"):
             pass
 
         task = self.CreateNewTask()

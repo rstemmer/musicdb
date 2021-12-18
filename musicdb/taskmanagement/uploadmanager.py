@@ -138,7 +138,7 @@ class UploadManager(TaskManager):
             return False
 
         chunksize = len(rawdata)
-        filepath  = task["uploadpath"]
+        filepath  = self.uploaddirectory.AbsolutePath(task["uploadpath"])
 
         try:
             with open(filepath, "ab") as fd:
@@ -315,9 +315,10 @@ class UploadManager(TaskManager):
             task["mimetype"] = self.fileprocessing.GuessMimeType(uploadpath)
 
         # Read out some meta data and annotate them to the task
+        absuploadpath = self.uploaddirectory.AbsolutePath(task["uploadpath"])
         meta = MetaTags()
         try:
-            meta.Load(uploadpath)
+            meta.Load(absuploadpath)
         except ValueError:
             logging.debug("The file \"%s\" uploaded as part of an album to %s is not a song file.", task["sourcefilename"], task["uploadpath"])
         else:
@@ -341,17 +342,19 @@ class UploadManager(TaskManager):
         Returns:
             ``True`` on success, otherwise ``False``.
         """
-        origfile = task["uploadpath"]
-        extension= self.uploaddirectory.GetFileExtension(origfile)
-        jpegfile = origfile[:-len(extension)] + "jpg"
+        origfile      = task["uploadpath"]
+        extension     = self.uploaddirectory.GetFileExtension(origfile)
+        absuploadpath = self.uploaddirectory.AbsolutePath(task["uploadpath"])
+
+        jpegfile = absuploadpath[:-len(extension)] + "jpg"
         if extension != "jpg":
             logging.debug("Transcoding artwork file form %s (\"%s\") to JPEG (\"%s\")", extension, origfile, jpegfile);
             try:
-                im = Image.open(origfile)
+                im = Image.open(absuploadpath)
                 im = im.convert("RGB")
                 im.save(jpegfile, "JPEG", optimize=True, progressive=True)
             except Exception as e:
-                logging.error("Transcoding %s -> %s failed with exception: %s", origfile, jpegfile, str(e))
+                logging.error("Transcoding %s -> %s failed with exception: %s", absuploadpath, jpegfile, str(e))
                 return False
 
         task["preprocessedpath"] = jpegfile
