@@ -122,12 +122,17 @@ class AlbumIntegrationProgress extends Layer
     onFinish(opentasks, finishedtasks)
     {
         if(opentasks.length == 0)
+        {
             this.successmessage.Show();
+            this.importbutton.Enable();
+            this.closebutton.Enable();
+        }
         else
+        {
             this.errormessage.Show();
-
-        this.closebutton.Enable();
-        this.importbutton.Enable();
+            this.importbutton.Disable();
+            this.closebutton.Enable();
+        }
     }
 
 
