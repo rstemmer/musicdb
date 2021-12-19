@@ -56,7 +56,7 @@ function CreateSong {
 
     local number="$1"
     local maxsongs="$2"
-    local track="$songnumber/$maxsongs"
+    local track="$number/$maxsongs"
     local name="$3"
     local album="$albumname"
     local artist="$artistname"
