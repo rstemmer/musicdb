@@ -57,9 +57,12 @@ class SongFilesTableRow extends SongFilesTableRowBase
     constructor(fileinfos, maxcds, validationstatuscallback)
     {
         super();
+        let infosfrommeta = fileinfos.frommeta;
+        let infosfrompath = fileinfos.frompath;
 
-        this.fileinfos   = fileinfos;
-        this.oldfilename = this.fileinfos.path.split("/").slice(-1)[0];
+        this.filepath    = fileinfos.path;
+        this.fileinfos   = infosfrommeta;
+        this.oldfilename = this.filepath.split("/").slice(-1)[0];
         this.newfilename = this.oldfilename;
         this.htmldiff    = this.oldfilename;
         this.maxcds      = maxcds;
@@ -153,7 +156,7 @@ class SongFilesTableRow extends SongFilesTableRowBase
         newpathhtml += `${songname}${closespan}`;
 
         // Last is the extension
-        let fileextension = this.fileinfos.path.split(".").slice(-1)[0];
+        let fileextension = this.filepath.split(".").slice(-1)[0];
         newpathtext += `.${fileextension}`;
         newpathhtml += `${grayspan}.${fileextension}${closespan}`;
 
@@ -333,14 +336,41 @@ class SongFilesTable extends Table
 
 
 
+    // Tries to figure out how many CDs the album has.
+    // This method considers the meta data as well as the file name.
+    GetMaxCDs(files)
+    {
+        let cdnumbers = new Array();
+        for(let file of files)
+        {
+            let frommeta = file.frommeta;
+            let fromfile = file.fromfile;
+
+            let cdnumfrommeta = 0;
+            if(typeof frommeta?.cdnumber !== "undefined")
+                cdnumfrommeta = frommeta.cdnumber;
+
+            let cdnumfromfile = 0;
+            if(typeof fromfile?.cdnumber !== "undefined")
+                cdnumfromfile = fromfile.cdnumber;
+
+            let cdnum = Math.max(cdnumfromfile, cdnumfrommeta);
+            cdnumbers.push(cdnum);
+        }
+
+        let maxcds = Math.max(...cdnumbers);
+        return maxcds;
+    }
+
+
+
     Update(files)
     {
-        // Sort
-        files.sort((a,b)=>{return a.songnumber - b.songnumber;});
+        // Try to Sort
+        files.sort((a,b)=>{return a.frommeta.songnumber - b.frommeta.songnumber;});
 
         // Get max CDs
-        let allcdnumbers = files.map(a => a.cdnumber);
-        let maxcds       = Math.max(...allcdnumbers);
+        let maxcds = this.GetMaxCDs(files);
 
         // Create new table
         this.Clear();

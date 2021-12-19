@@ -337,9 +337,9 @@ class AlbumImportLayer extends Layer
             let albumpath = this.oldartistdirectoryname + "/" + this.oldalbumdirectoryname;
 
             this.albumsettingstable.Update(
-                args[0].artistname,
-                args[0].albumname,
-                args[0].releaseyear,
+                args[0].frommeta.artistname,
+                args[0].frommeta.albumname,
+                args[0].frommeta.releaseyear,
                 albumpath);
             this.songfilestable.Update(args);
             this.ValidateForm();

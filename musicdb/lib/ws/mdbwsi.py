@@ -3467,15 +3467,27 @@ class MusicDBWebSocketInterface(object):
         Each list entry is a dictionary with the following information:
 
         * ``path`` (string): relative path to the music file
-        * ``songname`` (string)
-        * ``albumname`` (string)
-        * ``artistname`` (string)
-        * ``releaseyear`` (integer)
-        * ``origin`` (string): Where the files comes from. Where it has been bought.
-        * ``cdnumber`` (integer)
-        * ``songnumber`` (integer)
-        * ``haslyrics`` (boolean): ``True`` when there are lyrics attached to the song file
-        * ``hasartwork`` (boolean): ``True`` when there is an album cover attached to the song file
+        * ``frommeta`` (dict): Song information collected from the files meta data
+            * ``songname`` (string)
+            * ``albumname`` (string)
+            * ``artistname`` (string)
+            * ``releaseyear`` (integer)
+            * ``origin`` (string): Where the files comes from. Where it has been bought.
+            * ``cdnumber`` (integer)
+            * ``songnumber`` (integer)
+            * ``haslyrics`` (boolean): ``True`` when there are lyrics attached to the song file
+            * ``hasartwork`` (boolean): ``True`` when there is an album cover attached to the song file
+        * ``frompath`` (dict): Song information collected from the file path (keep in mind that this path is not yet verified by the user to be correct).
+            * ``songname`` (string)
+            * ``albumname`` (string)
+            * ``artistname`` (string)
+            * ``releaseyear`` (integer)
+            * ``cdnumber`` (integer)
+            * ``songnumber`` (integer)
+
+        The information inside the ``"frompath"`` dictionary is collected via :meth:`musicdb.mdbapi.musicdirectory.MusicDirectory.AnalysePath`.
+        When this method fails, ``None`` is stored under that key.
+
 
         Args:
             albumpath (str): path to an album that may have new/unknown songs. The path must be relative to the music directory.
@@ -3491,18 +3503,36 @@ class MusicDBWebSocketInterface(object):
 
         songfiles = []
         for path in files:
-            entry = {}
+
+            # Read meta data
             metadata.Load(path)
-            entry["path"]        = str(path)
-            entry["songname"]    = metadata.GetSongname()
-            entry["albumname"]   = metadata.GetAlbumname()
-            entry["artistname"]  = metadata.GetArtistname()
-            entry["releaseyear"] = metadata.GetReleaseyear()
-            entry["origin"]      = metadata.GetOrigin()
-            entry["cdnumber"]    = metadata.GetCDNumber()
-            entry["songnumber"]  = metadata.GetTracknumber()
-            entry["haslyrics"]   = type(metadata.GetLyrics()) == str
-            entry["hasartwork"]  = metadata.CheckArtwork()
+            frommeta = {}
+            frommeta["songname"]    = metadata.GetSongname()
+            frommeta["albumname"]   = metadata.GetAlbumname()
+            frommeta["artistname"]  = metadata.GetArtistname()
+            frommeta["releaseyear"] = metadata.GetReleaseyear()
+            frommeta["origin"]      = metadata.GetOrigin()
+            frommeta["cdnumber"]    = metadata.GetCDNumber()
+            frommeta["songnumber"]  = metadata.GetTracknumber()
+            frommeta["haslyrics"]   = type(metadata.GetLyrics()) == str
+            frommeta["hasartwork"]  = metadata.CheckArtwork()
+
+            filedata = self.musicdirectory.AnalysePath(path)
+            if filedata:
+                fromfile = {}
+                fromfile["songname"]    = filedata["song"]
+                fromfile["albumname"]   = filedata["album"]
+                fromfile["artistname"]  = filedata["artist"]
+                fromfile["releaseyear"] = filedata["release"]
+                fromfile["cdnumber"]    = filedata["cdnumber"]
+                fromfile["songnumber"]  = filedata["songnumber"]
+            else:
+                fromfile = None
+
+            entry = {}
+            entry["path"]     = str(path)
+            entry["frommeta"] = frommeta
+            entry["fromfile"] = fromfile
             songfiles.append(entry)
 
         return songfiles
