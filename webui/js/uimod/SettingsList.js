@@ -19,7 +19,7 @@
 
 class SettingsList extends Element
 {
-    constructor(MDBTag)
+    constructor()
     {
         super("div", ["SettingsList", "flex-columns"]);
         this.settingslist = new Array();
