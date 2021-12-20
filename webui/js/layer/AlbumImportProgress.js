@@ -38,7 +38,7 @@ class AlbumImportProgress extends Layer
 
         // Tool Bar
         this.toolbar     = new ToolBar();
-        this.closebutton = new TextButton("MusicDB", "Close",
+        this.closebutton = new TextButton("Approve", "Close",
             ()=>{this.onClick_Close();},
             "Cancel album import. Nothing will be changed.");
         this.toolbar.AddSpacer(true); // grow

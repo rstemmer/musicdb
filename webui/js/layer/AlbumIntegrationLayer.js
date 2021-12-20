@@ -47,10 +47,10 @@ class AlbumIntegrationLayer extends Layer
 
         // Tool Bar
         this.toolbar            = new ToolBar();
-        this.cancelbutton       = new TextButton("MusicDB", "Cancel and Discard",
+        this.cancelbutton       = new TextButton("Remove", "Cancel and Remove",
             ()=>{this.onClick_Cancel();},
             "Cancel album integration. Nothing will be changed inside the Music directory. Uploaded data will be removed.");
-        this.integratebutton    = new TextButton("MusicDB", "Integrate Album",
+        this.integratebutton    = new TextButton("NextLayer", "Integrate Album",
             ()=>{this.onClick_Integrate();},
             "Apply some renaming and stores the uploaded files inside the Music dicretory. After integration the album can be imported into MusicDB.");
 

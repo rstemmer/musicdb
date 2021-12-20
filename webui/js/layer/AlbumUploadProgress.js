@@ -37,10 +37,10 @@ class AlbumUploadProgress extends Layer
 
         // Tool Bar
         this.toolbar            = new ToolBar();
-        this.cancelbutton       = new TextButton("MusicDB", "Cancel and Discard",
+        this.cancelbutton       = new TextButton("Remove", "Cancel and Remove",
             ()=>{this.onClick_Cancel();},
             "Cancel album upload. Nothing will be changed. Partialy uploaded data will be removed.");
-        this.integratebutton    = new TextButton("MusicDB", "Continue",
+        this.integratebutton    = new TextButton("NextLayer", "Continue",
             ()=>{this.onClick_Integrate();},
             "Go to the integration layer to stores the uploaded files inside the music dicretory. After integration the album can be imported into MusicDB.");
         this.integratebutton.Disable();

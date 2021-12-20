@@ -60,10 +60,10 @@ class AlbumImportLayer extends Layer
 
         // Tool Bar
         this.toolbar            = new ToolBar();
-        this.cancelbutton       = new TextButton("MusicDB", "Cancel and Discard",
+        this.cancelbutton       = new TextButton("Remove", "Cancel and Discard",
             ()=>{this.onClick_Cancel();},
             "Cancel album import. Nothing will be changed.");
-        this.importbutton       = new TextButton("MusicDB", "Import Album",
+        this.importbutton       = new TextButton("Import", "Import Album",
             ()=>{this.onClick_Import();},
             "Apply rename files and directories properly and import album into database. Create artis if not existing.");
 
