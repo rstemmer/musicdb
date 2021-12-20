@@ -352,6 +352,7 @@ class SongFilesTable extends Table
             this.AddRow(row);
         }
         this.AddRow(this.bottomrow);
+        this.onValidationUpdate(); // Refresh validation
     }
 }
 
