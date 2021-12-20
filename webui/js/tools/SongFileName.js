@@ -36,6 +36,7 @@ class SongFileName
     constructor(origname=null, maxcds=1, validate=false)
     {
         this.SetMaxCDs(maxcds);
+        this.origname = origname;
         this.parts  = new Object();
         this.parts.cdnum = "";
         this.parts.track = "";

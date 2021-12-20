@@ -196,12 +196,11 @@ class SongFilesTableRow extends SongFilesTableRowBase
     GetRenameRequest()
     {
         let retval = new Object();
-        retval.oldname  = this.oldsongfile.ComposeFileName();
+        retval.oldname  = this.oldsongfile.origname;
         retval.newname  = this.newsongfile.ComposeFileName();
         retval.htmldiff = this.diffelement.UpdateDiff(this.oldsongfile, this.newsongfile);
 
         // No rename request when the names are still equal
-        window.console?.log(`${retval.oldname} == ${retval.newname}`);
         if(retval.oldname == retval.newname)
             return null;
 

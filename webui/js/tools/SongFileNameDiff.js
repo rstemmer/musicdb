@@ -100,7 +100,7 @@ class SongFileNameDiff extends Element
                 newname.CheckCDNumber() == null,
                 oldname.parts.cdnum,
                 newname.parts.cdnum);
-            if(oldname.maxcds > 1)
+            if(oldname.parts.cdnum.length > 0)
                 this.AddDiffText("-");
             else
                 this.newdiff += this.FormatValid("-");
