@@ -344,7 +344,7 @@ class UploadManager(TaskManager):
         """
         origfile      = task["uploadpath"]
         extension     = self.uploaddirectory.GetFileExtension(origfile)
-        absuploadpath = self.uploaddirectory.AbsolutePath(task["uploadpath"])
+        absuploadpath = str(self.uploaddirectory.AbsolutePath(task["uploadpath"]))
 
         jpegfile = absuploadpath[:-len(extension)] + "jpg"
         if extension != "jpg":
