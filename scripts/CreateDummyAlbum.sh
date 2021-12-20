@@ -13,11 +13,6 @@ if [ ! -d "$repository/.git" ] ; then
 fi
 
 
-albumname="MusicDB Test Album"
-albumpath="$1/$albumname"
-artistname="Test Artist"
-
-
 function CreateEmptyMP3 {
     local path="$1"
 
@@ -86,6 +81,50 @@ function CreateSong {
     echo -e "\e[u\e[1;32m✔"
 }
 
+function CreateMultiCDSong {
+    # CreateSong CDNumber MaxCDs SongNumber MaxSongs SongName [FileName]
+    # example CreateSong "1" "2" "01" "3" "Song Name" ["Non conform file name"]
+    # Hack: if MaxSongs is "no header", then there will be no ID3 header added to the mp3 song
+
+    local number="$3"
+    local maxsongs="$4"
+    local track="$number/$maxsongs"
+    local name="$5"
+    local album="$albumname"
+    local artist="$artistname"
+    local release="2021"
+    local cd="$1/$2"
+
+    local songpath="$albumpath/$1-$number $name.mp3"
+    if [[ -n "$6" ]] ; then
+        songpath="$albumpath/$5.mp3"
+    fi
+
+    echo -e -n "\e[1;37m[\e[s ]\e[1;34m Creating $songpath\e[0m"
+    CreateEmptyMP3 "$songpath"
+
+    if [[ "$4" != "no header" ]] ; then
+        id3edit --create \
+                --set-name "$name" \
+                --set-album "$album" \
+                --set-artist "$artist" \
+                --set-artwork "$albumpath/artwork.jpg" \
+                --set-release "$release" \
+                --set-track "$track" \
+                --set-cd "$cd" \
+                "$songpath"
+    fi
+
+    echo -e "\e[u\e[1;32m✔"
+}
+
+
+## Album 1: Single CD
+
+albumname="MusicDB Test Album"
+albumpath="$1/$albumname"
+artistname="Test Artist"
+
 # Create Directory
 mkdir -p "$albumpath"
 
@@ -100,6 +139,33 @@ CreateSong "02" "5" "これはテストです"
 CreateSong "03" "5" "A 💩 Test Song"
 CreateSong "04" "5" "Non conform file name" "Non conform file name"
 CreateSong "05" "no header" "No ID3 Tag"
+
+# Create booklet
+echo -e -n "\e[1;37m[\e[s ]\e[1;34m Creating $albumpath/booklet.pdf\e[0m"
+convert "$albumpath/artwork.jpg" "$albumpath/booklet.pdf"
+echo -e "\e[u\e[1;32m✔"
+
+
+## Album 2: Multiple CDs
+
+albumname="Multi-CD Album"
+albumpath="$1/$albumname"
+artistname="Test Artist"
+
+# Create Directory
+mkdir -p "$albumpath"
+
+# Add Artwork
+echo -e -n "\e[1;37m[\e[s ]\e[1;34m Creating $albumpath/artwork.jpg\e[0m"
+cp ../share/default.jpg "$albumpath/artwork.jpg"
+echo -e "\e[u\e[1;32m✔"
+
+# Add Songs
+CreateMultiCDSong "1" "3" "01" "2" "Song Number 1"
+CreateMultiCDSong "1" "3" "02" "2" "これはテストです"
+CreateMultiCDSong "2" "3" "01" "2" "A 💩 Test Song"
+CreateMultiCDSong "2" "3" "02" "2" "Non conform file name" "Non conform file name"
+CreateMultiCDSong "3" "3" "01" "no header" "No ID3 Tag"
 
 # Create booklet
 echo -e -n "\e[1;37m[\e[s ]\e[1;34m Creating $albumpath/booklet.pdf\e[0m"
