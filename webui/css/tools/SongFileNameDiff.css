@@ -16,49 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.SongFilesTable
+.SongFileNameDiff
 {
 }
 
-
-.SongFilesTable td:not(:last-child)
+.SongFileNameDiff > span[data-state=normal]
 {
-    white-space: nowrap;
+    color:          var(--color-gray);
+}
+.SongFileNameDiff > span[data-state=valid]
+{
+    color:          var(--color-brightgreen);
+}
+.SongFileNameDiff > span[data-state=invalid]
+{
+    color:          var(--color-brightred);
+}
+.SongFileNameDiff > span[data-state=different]
+{
+    color:          var(--color-brightyellow);
 }
 
-.SongFilesTable td:last-child
-{
-    width: 99%;
-}
-
-.SongFilesTable td:nth-child(1) > input
-{
-    width:              4ch;
-}
-.SongFilesTable td:nth-child(2) > input
-{
-    width:              4ch;
-}
-.SongFilesTable td:nth-child(3) > input
-{
-    width:              50ch;
-}
-.SongFilesTable td:nth-child(4)
-{
-    width:              50ch;
-    /*
-    white-space:        normal;
-    */
-}
-.SongFilesTable td:nth-child(5) > span
-{
-}
-
-
-.SongFilesTable .songfilepath > .SVGIcon
-{
-    margin-right:       1ch;
-}
 
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 

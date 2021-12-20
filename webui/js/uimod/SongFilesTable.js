@@ -16,11 +16,12 @@
 
 "use strict";
 
-const SONGFILESTABLEHEADLINE = ["CD", "Song Nr.", "Song Name", "New File Name"];
+const SONGFILESTABLEHEADLINE = ["CD", "Song Nr.", "Song Name", "Status", "Song File Name"];
 const SFT_CDNUMBER_COLUMN   = 0;
 const SFT_SONGNUMBER_COLUMN = 1;
 const SFT_SONGNAME_COLUMN   = 2;
-const SFT_NEWPATH_COLUMN    = 3;
+const SFT_STATUS_COLUMN     = 3;
+const SFT_NEWPATH_COLUMN    = 4;
 
 
 
@@ -57,25 +58,27 @@ class SongFilesTableRow extends SongFilesTableRowBase
     constructor(fileinfos, maxcds, validationstatuscallback)
     {
         super();
+        
+        // Song File Information
         let infosfrommeta = fileinfos.frommeta;
-        let infosfrompath = fileinfos.frompath;
+        let infosfromfile = fileinfos.fromfile;
+        this.maxcds       = maxcds;
+        this.filepath     = fileinfos.path;
+        this.oldsongfile  = new SongFileName(this.filepath.split("/").slice(-1)[0], maxcds);
+        this.newsongfile  = new SongFileName(this.filepath.split("/").slice(-1)[0], maxcds); // gets updated by user
 
-        this.filepath    = fileinfos.path;
-        this.fileinfos   = infosfrommeta;
-        this.oldfilename = this.filepath.split("/").slice(-1)[0];
-        this.newfilename = this.oldfilename;
-        this.htmldiff    = this.oldfilename;
-        this.maxcds      = maxcds;
+        // Control Elements
+        this.namestatus  = new StatusText();
+        this.diffelement = new SongFileNameDiff();
 
         this.cdnumberinput   = new NumberInput();
         this.songnumberinput = new NumberInput();
         this.songnameinput   = new TextInput();
 
-        let  newpathcontainer= new Element("div", ["songfilepath", "flex-middle"]);
+        let  diffcontainer   = new Element("div", ["songfilepath", "flex-middle"]);
         let  songfileicon    = new SVGIcon("SongFile");
-        this.newpathelement  = new Element("span");
-        newpathcontainer.AppendChild(songfileicon);
-        newpathcontainer.AppendChild(this.newpathelement);
+        diffcontainer.AppendChild(songfileicon);
+        diffcontainer.AppendChild(this.diffelement);
 
         this.cdnumberinput.SetValidateEventCallback(  (value)=>{return this.ValidateCDNumber(value);  });
         this.songnumberinput.SetValidateEventCallback((value)=>{return this.ValidateSongNumber(value);});
@@ -84,126 +87,94 @@ class SongFilesTableRow extends SongFilesTableRowBase
         this.songnumberinput.SetAfterValidateEventCallback((value, valid)=>{this.EvaluateNewPath();});
         this.songnameinput.SetAfterValidateEventCallback(  (value, valid)=>{this.EvaluateNewPath();});
 
-        // If there is just one CD, no CD number should be given
-        if(this.maxcds == 1)
-        {
-            this.fileinfos.cdnumber = "";
-            this.cdnumberinput.SetEnabled(false);
-        }
 
         // First set initial data, that work with the callback function
         this.validationstatuscallback = null;
-        this.cdnumberinput.SetValue(  this.fileinfos.cdnumber);
-        this.songnumberinput.SetValue(this.fileinfos.songnumber);
-        this.songnameinput.SetValue(  this.fileinfos.songname);
+        this.songnumberinput.SetValue(infosfrommeta.songnumber || infosfromfile.songnumber);
+        this.songnameinput.SetValue(  infosfrommeta.songname || infosfromfile.songname);
+        if(this.maxcds == 1) // If there is just one CD, no CD number should be given
+        {
+            this.cdnumberinput.SetEnabled(false);
+            this.cdnumberinput.SetValue("");
+        }
+        else
+        {
+            this.cdnumberinput.SetValue(infosfrommeta.cdnumber || infosfromfile.cdnumber);
+        }
         this.validationstatuscallback = validationstatuscallback;
 
+        // Set Cell Content
         this.SetContent(SFT_CDNUMBER_COLUMN,   this.cdnumberinput);
         this.SetContent(SFT_SONGNUMBER_COLUMN, this.songnumberinput);
         this.SetContent(SFT_SONGNAME_COLUMN,   this.songnameinput);
-        this.SetContent(SFT_NEWPATH_COLUMN,    newpathcontainer);
+        this.SetContent(SFT_STATUS_COLUMN,     this.namestatus);
+        this.SetContent(SFT_NEWPATH_COLUMN,    diffcontainer);
     }
-
 
 
     EvaluateNewPath()
     {
-        const validspan = `<span style="color: var(--color-brightgreen)">`;
-        const errorspan = `<span style="color: var(--color-brightred)">`;
-        const grayspan  = `<span style="color: var(--color-gray)">`;
-        const closespan = `</span>`;
+        // Get Parts
+        let cdnum = this.cdnumberinput.GetValue();
+        let track = this.songnumberinput.GetValue();
+        let name  = this.songnameinput.GetValue();
 
-        let newpathtext = "";
-        let newpathhtml = "";
+        // Set Parts
+        this.newsongfile.SetCDNumber(cdnum);
+        this.newsongfile.SetTrackNumber(track);
+        this.newsongfile.SetSongName(name);
 
-        // First part is the optional CD number
-        if(this.maxcds > 1)
-        {
-            let cdnum = this.cdnumberinput.GetValue();
-            if(this.cdnumberinput.GetValidState() === true)
-                newpathhtml += validspan;
-            else
-                newpathhtml += errorspan;
+        // Check Parts
+        let cdnumerror = this.newsongfile.CheckCDNumber();
+        let trackerror = this.newsongfile.CheckTrackNumber();
+        let nameerror  = this.newsongfile.CheckSongName();
 
-            newpathtext += `${cdnum} - `;
-            newpathhtml += `${cdnum}&nbsp;-&nbsp;${closespan}`;
-        }
+        // Compose Error Message
+        let errors = "";
+        if(cdnumerror)
+            errors += `${cdnumerror} `;
+        if(trackerror)
+            errors += `${trackerror} `;
+        if(nameerror)
+            errors += `${nameerror}`;
 
-        // Next the song number
-        let songnum = this.songnumberinput.GetValue();
-        if(this.songnumberinput.GetValidState() === true)
-            newpathhtml += validspan;
+        // Set Error is existing
+        if(errors.length > 0)
+            this.namestatus.SetStatus("bad", errors);
         else
-            newpathhtml += errorspan;
+            this.namestatus.SetStatus("good", "File name is valid.");
 
-        if(songnum.length == 0)
-            songnum = `??`;
-        if(songnum.length == 1)
-            songnum = `0${songnum}`;
+        // Show current renaming status
+        this.diffelement.UpdateDiff(this.oldsongfile, this.newsongfile);
 
-        newpathtext += `${songnum} `;
-        newpathhtml += `${songnum}${closespan}&nbsp;`;
-
-        // Next comes song name
-        let songname = this.songnameinput.GetValue();
-        songname = songname.replace(/\//g,"∕" /*Division slash*/);
-        if(this.songnameinput.GetValidState() === true)
-            newpathhtml += validspan;
-        else
-            newpathhtml += errorspan;
-
-        newpathtext += `${songname}`;
-        newpathhtml += `${songname}${closespan}`;
-
-        // Last is the extension
-        let fileextension = this.filepath.split(".").slice(-1)[0];
-        newpathtext += `.${fileextension}`;
-        newpathhtml += `${grayspan}.${fileextension}${closespan}`;
-
-        // Show old file name if the new one is different
-        if(this.oldfilename != newpathtext)
-            newpathhtml = `${errorspan}${this.oldfilename}${closespan}${grayspan}&nbsp;➜&nbsp;${closespan}${newpathhtml}`;
-
-        this.htmldiff    = newpathhtml;
-        this.newfilename = newpathtext;
-        this.newpathelement.RemoveChilds();
-        this.newpathelement.SetInnerHTML(newpathhtml);
-
+        // Give error status to the parent
         let validationstatus = this.CheckIfValid();
         if(typeof this.validationstatuscallback === "function")
             this.validationstatuscallback(validationstatus);
-        return newpathtext;
     }
 
 
 
     ValidateCDNumber(value)
     {
-        if(value.length == 0 && this.maxcds > 1)
-            return false;
-        if(this.maxcds == 1 && value.length > 0)
-            return false;
-
-        value = parseInt(value, 10);
-        if(value < 1 || value > this.maxcds)
-            return false;
-        return true;
+        let error = this.newsongfile.CheckCDNumber(value);
+        if(error === null)
+            return true;
+        return false;
     }
     ValidateSongNumber(value)
     {
-        if(value.length == 0)
-            return false;
-
-        value = parseInt(value, 10);
-        if(value < 1 || value > 1000)
-            return false;
-        return true;
+        let error = this.newsongfile.CheckTrackNumber(value);
+        if(error === null)
+            return true;
+        return false;
     }
     ValidateSongName(value)
     {
-        if(value.length == 0)
-            return false;
-        return true;
+        let error = this.newsongfile.CheckSongName(value);
+        if(error === null)
+            return true;
+        return false;
     }
 
 
@@ -213,9 +184,9 @@ class SongFilesTableRow extends SongFilesTableRowBase
     GetRenameRequest()
     {
         let retval = new Object();
-        retval.oldname  = this.oldfilename;
-        retval.newname  = this.newfilename;
-        retval.htmldiff = this.htmldiff;
+        retval.oldname  = this.oldsongfile.ComposeFileName();
+        retval.newname  = this.newsongfile.ComposeFileName();
+        retval.htmldiff = this.diffelement.UpdateDiff(this.oldsongfile, this.newsongfile);
 
         // No rename request when the names are still equal
         if(retval.oldname == retval.newname)
@@ -228,7 +199,7 @@ class SongFilesTableRow extends SongFilesTableRowBase
 
     GetNewSongFileName()
     {
-        return this.newfilename;
+        return this.newsongfile.ComposeFileName();
     }
 
 
@@ -265,7 +236,7 @@ class SongFilesTable extends Table
 
         // Table
         this.headlinerow = new SongFilesTableHeadline();
-        this.bottomrow   = new TableSpanRow(4, [], this.datainvalidmessage.GetHTMLElement());
+        this.bottomrow   = new TableSpanRow(SONGFILESTABLEHEADLINE.length, [], this.datainvalidmessage.GetHTMLElement());
         this.AddRow(this.headlinerow);
         this.AddRow(this.bottomrow);
     }
