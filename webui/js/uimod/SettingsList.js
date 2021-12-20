@@ -30,7 +30,7 @@ class SettingsList extends Element
     // entry: SettingsEntry object
     AddEntry(entry)
     {
-        this.element.appendChild(entry.GetHTMLElement());
+        this.AppendChild(entry);
     }
 }
 
