@@ -227,7 +227,7 @@ class SongFileName
     {
         let filename = "";
 
-        if(this.parts.maxcds > 1)
+        if(this.maxcds > 1)
             filename += `${this.parts.cdnum}-`;
         filename += `${this.parts.track} ${this.parts.name}.${this.parts.ext}`;
 

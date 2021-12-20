@@ -60,8 +60,8 @@ class SongFilesTableRow extends SongFilesTableRowBase
         super();
         
         // Song File Information
-        let infosfrommeta = fileinfos.frommeta;
-        let infosfromfile = fileinfos.fromfile;
+        this.infosfrommeta = fileinfos.frommeta;
+        this.infosfromfile = fileinfos.fromfile;
         this.maxcds       = maxcds;
         this.filepath     = fileinfos.path;
         this.oldsongfile  = new SongFileName(this.filepath.split("/").slice(-1)[0], maxcds);
@@ -90,17 +90,9 @@ class SongFilesTableRow extends SongFilesTableRowBase
 
         // First set initial data, that work with the callback function
         this.validationstatuscallback = null;
-        this.songnumberinput.SetValue(infosfrommeta.songnumber || infosfromfile.songnumber);
-        this.songnameinput.SetValue(  infosfrommeta.songname || infosfromfile.songname);
-        if(this.maxcds == 1) // If there is just one CD, no CD number should be given
-        {
-            this.cdnumberinput.SetEnabled(false);
-            this.cdnumberinput.SetValue("");
-        }
-        else
-        {
-            this.cdnumberinput.SetValue(infosfrommeta.cdnumber || infosfromfile.cdnumber);
-        }
+        this.songnumberinput.SetValue(this.infosfrommeta.songnumber || this.infosfromfile.songnumber);
+        this.songnameinput.SetValue(  this.infosfrommeta.songname   || this.infosfromfile.songname);
+        this.UpdateMaxCDs(maxcds); // also updates cdumerinput
         this.validationstatuscallback = validationstatuscallback;
 
         // Set Cell Content
@@ -110,6 +102,26 @@ class SongFilesTableRow extends SongFilesTableRowBase
         this.SetContent(SFT_STATUS_COLUMN,     this.namestatus);
         this.SetContent(SFT_NEWPATH_COLUMN,    diffcontainer);
     }
+
+
+
+    UpdateMaxCDs(maxcds)
+    {
+        this.maxcds = maxcds;
+        this.newsongfile.SetMaxCDs(this.maxcds);
+
+        if(this.maxcds <= 1) // If there is just one CD, no CD number should be given
+        {
+            this.cdnumberinput.SetEnabled(false);
+            this.cdnumberinput.SetValue("");
+        }
+        else
+        {
+            this.cdnumberinput.SetEnabled(true);
+            this.cdnumberinput.SetValue(this.infosfrommeta.cdnumber || this.infosfromfile.cdnumber);
+        }
+    }
+
 
 
     EvaluateNewPath()
@@ -189,6 +201,7 @@ class SongFilesTableRow extends SongFilesTableRowBase
         retval.htmldiff = this.diffelement.UpdateDiff(this.oldsongfile, this.newsongfile);
 
         // No rename request when the names are still equal
+        window.console?.log(`${retval.oldname} == ${retval.newname}`);
         if(retval.oldname == retval.newname)
             return null;
 
@@ -331,6 +344,17 @@ class SongFilesTable extends Table
 
         let maxcds = Math.max(...cdnumbers);
         return maxcds;
+    }
+
+
+
+    SetMaxCDs(maxcds)
+    {
+        for(let row of this.rows)
+        {
+            if(typeof row.UpdateMaxCDs === "function")
+                row.UpdateMaxCDs(maxcds);
+        }
     }
 
 
