@@ -102,7 +102,7 @@ class SettingsMenu extends LeftView
 
         this.views.push(tasklistview);
         this.AddMenuEntry(
-            new SVGIcon("MusicDB"),
+            new SVGIcon("TaskList"),
             "Task List",
             ()=>{
                 MusicDB_Request("GetCurrentTasks", "ShowCurrentTasks");
