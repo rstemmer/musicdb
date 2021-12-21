@@ -20,8 +20,10 @@ class TaskListView extends MainSettingsView
 {
     constructor()
     {
-        super("TaskListView", "Open and Running MusicDB Tasks",
-            "A list of tasks that are currently processed by the MusicDB server. Tasks can be cancled or further processing steps triggered.");
+        let title = "Open and Running MusicDB Tasks";
+        let descr = "A list of tasks that are currently processed by the MusicDB server. Tasks can be cancled or further processing steps triggered.";
+        super("TaskListView", title, descr);
+        let headline = new SettingsHeadline(title, descr);
 
         this.ResetUI();
     }
@@ -37,6 +39,7 @@ class TaskListView extends MainSettingsView
         this.taskcache     = new Object();
         this.groupelements = new Object();
 
+        this.AppendChild(this.headline);
         this.AppendChild(this.tasktable);
     }
 
@@ -111,6 +114,9 @@ class TaskListView extends MainSettingsView
 
         if(!(groupid in this.taskgroups))
         {
+            if(task.state == "remove") // When the task shall be removed anyway, just ignore it
+                return;
+
             if(task.contenttype === "albumfile")
                 this.CreateNewGroup(groupid, "album");
             else
