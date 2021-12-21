@@ -180,6 +180,21 @@ class AlbumIntegrationLayer extends Layer
 
 
 
+    Integrate(mdbtask)
+    {
+        this.albumfiles.push(mdbtask);
+        let artistname  = mdbtask.annotations.artist;
+        let albumname   = mdbtask.annotations.album;
+        let releaseyear = mdbtask.annotations.releaseyear;
+
+        // If there are valid artist and album names, update the settings table
+        if(typeof artistname === "string" || typeof albumname === "string")
+            this.albumsettingstable.Update(artistname, albumname, releaseyear);
+
+        this.PrepareIntegrationTasks();
+    }
+
+
     onMusicDBNotification(fnc, sig, rawdata)
     {
         if(fnc == "MusicDB:Task")
@@ -201,17 +216,7 @@ class AlbumIntegrationLayer extends Layer
             // FIXME: Check if this belongs to the expected album
             if(state == "readyforintegration")
             {
-                this.albumfiles.push(task);
-                let artistname  = task.annotations.artist;
-                let albumname   = task.annotations.album;
-                let releaseyear = task.annotations.releaseyear;
-
-                // If there are valid artist and album names, update the settings table
-                window.console?.log("Updating integration album settings table");
-                if(typeof artistname === "string" || typeof albumname === "string")
-                    this.albumsettingstable.Update(artistname, albumname, releaseyear);
-
-                this.PrepareIntegrationTasks();
+                this.Integrate(task);
             }
 
             if(sig == "StateUpdate")
