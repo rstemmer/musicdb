@@ -90,7 +90,15 @@ class TaskTableRow extends TaskTableRowBase
         starttimeelement.SetInnerText(new Date(inittime * 1000).toLocaleString());
 
         let updatetimeelement = new Element("span");
-        updatetimeelement.SetInnerText(new Date(updatetime * 1000).toLocaleString());
+        let updatetimetext    = new Date(updatetime * 1000).toLocaleString();
+        let currenttime       = Math.floor(Date.now() / 1000);
+        let timediff          = currenttime - updatetime; // How long ago is the last update?
+        let age               = Math.floor(timediff / 60);; // in full minutes
+
+        if(age > 10) // older than 10 minute
+            updatetimeelement = new StatusText(`${age} min ago`, "warn") // Narrow no-break space
+        else
+            updatetimeelement = new StatusText(`${age} min ago)`, "good")
 
         let buttonbox = new ButtonBox();
         if(content == "albumfile" && taskstate == "readyforintegration")
