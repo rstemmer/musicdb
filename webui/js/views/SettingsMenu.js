@@ -100,6 +100,15 @@ class SettingsMenu extends LeftView
                 MusicDB_Request("GetUploads",     "ShowUploads");
                 },
             "Upload and/or Import Music Videos");
+
+        this.views.push(tasklistview);
+        this.AddMenuEntry(
+            new SVGIcon("MusicDB"),
+            "Task List",
+            ()=>{
+                MusicDB_Request("GetCurrentTasks", "ShowCurrentTasks");
+                },
+            "Show open and running MusicDB tasks");
     }
 
 

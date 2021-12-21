@@ -171,6 +171,10 @@ class MainViewManager extends ViewManager
         {
             this.MountView(videoimport);
         }
+        else if(fnc == "GetCurrentTasks" && sig == "ShowCurrentTasks")
+        {
+            this.MountView(tasklistview);
+        }
         return;
     }
 
