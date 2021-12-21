@@ -84,12 +84,23 @@ class TaskTableRow extends TaskTableRowBase
         contentelement.AppendChild(contenticon);
         contentelement.AppendChild(contentname);
 
+        let buttonbox = new ButtonBox();
+        buttonbox.AddButton(new SVGButton("Remove", ()=>{this.onRemoveTask(task);}, "Remove task and delete temporary data."));
+
         // Set Cell Content
         this.SetContent(TT_TYPE_COLUMN   , contentelement);
         this.SetContent(TT_STATUS_COLUMN , statuselement);
         //this.SetContent(TT_START_COLUMN  , this.);
         //this.SetContent(TT_AGE_COLUMN    , this.);
-        //this.SetContent(TT_ACTIONS_COLUMN, this.);
+        this.SetContent(TT_ACTIONS_COLUMN, buttonbox);
+    }
+
+
+
+    onRemoveTask(task)
+    {
+        this.Hide(); // be responsive and already hide even if the task got not yet removed.
+        MusicDB_Call("RemoveUpload", {taskid: task.id});
     }
 }
 
