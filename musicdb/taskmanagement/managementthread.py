@@ -217,6 +217,16 @@ def TaskManagementThread():
         deletekeys = []
         # Process all tasks
         for taskid, task in tasks.items():
+
+            # Remove tasks older than 24h
+            lastupdate  = task["updatetime"]
+            currenttime = int(time.time())
+            age         = currenttime-lastupdate
+            if(age > 24*60*60): # older than 24h
+                logging.warning("Task \"%s\" is older than 24h. Most likely there went something wrong with this task. \033[1;30m(Task will be removed)", task["id"])
+                taskmanager.UpdateTaskState(task, "remove");
+
+            # Process task
             try:
                 keeptask = ProcessTask(taskid, task,
                         taskmanager,
