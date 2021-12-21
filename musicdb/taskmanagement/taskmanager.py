@@ -20,6 +20,7 @@ import json
 import logging
 import threading
 import uuid
+import time
 from pathlib            import Path
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
@@ -302,6 +303,8 @@ class TaskManager(object):
         task["contenttype"    ] = None
         task["mimetype"       ] = None
         task["annotations"    ] = {}
+        task["initializationtime"] = int(time.time())
+        task["updatetime"     ] = None
         # Upload Related
         task["filesize"       ] = None
         task["offset"         ] = None
@@ -364,6 +367,7 @@ class TaskManager(object):
         This method updates and saves the state of an task.
         An ``"StateUpdate"`` notification gets send as well.
         If the task already is in the state, nothing happens.
+        The ``"updatetime"`` value will be updated to the current unix time stamp.
 
         If *errormessage* is not ``None``, the notification gets send as ``"InternalError"`` with the message
 
@@ -378,7 +382,8 @@ class TaskManager(object):
         if task["state"] == state:
             return
 
-        task["state"] = state
+        task["state"]      = state
+        task["updatetime"] = int(time.time())
         self.SaveTask(task)
 
         if errormessage:
