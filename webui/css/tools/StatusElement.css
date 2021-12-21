@@ -50,6 +50,11 @@ li.StatusElement
     mask:               url("../../img/icons/StatusGood.svg");
     background-color:   var(--color-brightgreen);
 }
+.StatusElement[data-state=warn]::before
+{
+    mask:               url("../../img/icons/StatusWarning.svg");
+    background-color:   var(--color-brightyellow);
+}
 .StatusElement[data-state=bad]::before
 {
     mask:               url("../../img/icons/StatusBad.svg");

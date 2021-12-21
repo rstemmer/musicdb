@@ -31,7 +31,7 @@ class StatusElementBase extends Element
     }
 
 
-    // state: unknown, good, bad, active, open
+    // state: unknown, good, bad, active, open, warn, info
     SetState(state)
     {
         this.SetData("state", state);
