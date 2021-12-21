@@ -32,7 +32,7 @@ class ArtworkUploader extends Element
 
         this.listenontaskid = null;
 
-        this.fileselect = new ArtworkFileSelect("Select Artwork File", "Select an artwork file (.jpg) form your local computer.", annotations);
+        this.fileselect = new ArtworkFileSelect("Select Artwork File", "Select an artwork file (.jpg) from your local computer.", annotations);
         let  statustext = new StatusText(); // Empty UploadStatusText as place holder
 
         this.AppendChild(this.fileselect);
