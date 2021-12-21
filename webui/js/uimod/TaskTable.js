@@ -86,6 +86,8 @@ class TaskTableRow extends TaskTableRowBase
 
         let buttonbox = new ButtonBox();
         buttonbox.AddButton(new SVGButton("Remove", ()=>{this.onRemoveTask(task);}, "Remove task and delete temporary data."));
+        if(content == "albumfile" && taskstate == "readyforintegration")
+            buttonbox.AddButton(new SVGButton("MusicDB", ()=>{this.onIntegrateAlbumFile(task);}, "Integrate this file into the Music Directory."));
 
         // Set Cell Content
         this.SetContent(TT_TYPE_COLUMN   , contentelement);
@@ -101,6 +103,13 @@ class TaskTableRow extends TaskTableRowBase
     {
         this.Hide(); // be responsive and already hide even if the task got not yet removed.
         MusicDB_Call("RemoveUpload", {taskid: task.id});
+    }
+
+    onIntegrateAlbumFile(task)
+    {
+        albumintegrationlayer.ResetUI();
+        albumintegrationlayer.Integrate(task);
+        albumintegrationlayer.Show();
     }
 }
 
