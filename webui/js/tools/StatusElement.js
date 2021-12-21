@@ -84,19 +84,19 @@ class StatusHTMLText extends StatusText
 
 
 
-class UploadStatusText extends StatusText
+class TaskStatusText extends StatusText
 {
-    constructor(uploadstatus="")
+    constructor(taskstatus="nostatus")
     {
         // This is a complete list from the MusicDB Task Management Task States
-        switch(uploadstatus)
+        switch(taskstatus)
         {
             case "notexisting"          : super("Internal Chaos",           "bad");    break;
             case "waitforchunk"         : super("Uploading …",              "active"); break;
             case "uploadcomplete"       : super("Upload Succeeded",         "good");   break;
             case "uploadfailed"         : super("Upload Failed",            "bad");    break;
             case "preprocessing"        : super("Preprocessing Upload …",   "active"); break;
-            case "readyforintegration"  : super("Upload Succeeded",         "good");   break;
+            case "readyforintegration"  : super("Ready for Integration",    "open");   break;
             case "integrating"          : super("Integrating …",            "active"); break;
             case "invalidcontent"       : super("Invalid Content",          "bad");    break;
             case "readyforimport"       : super("Integration Succeeded",    "good");   break;
@@ -108,8 +108,16 @@ class UploadStatusText extends StatusText
             case "importfailed"         : super("Import Failed",            "bad");    break;
             case "importcomplete"       : super("Import Succeeded",         "good");   break;
             case "remove"               : super("Removing Upload",          "active"); break;
-            default                     : super("No upload processing",     "open");   break;
+            default                     : super(`Invalid State \"${uploadstatus}\"!`, "bad"); break;
         }
+    }
+}
+
+class UploadStatusText extends TaskStatusText
+{
+    constructor(uploadstatus)
+    {
+        super(uploadstatus);
     }
 }
 
