@@ -23,6 +23,15 @@ class TaskListView extends MainSettingsView
         super("TaskListView", "Open and Running MusicDB Tasks",
             "A list of tasks that are currently processed by the MusicDB server. Tasks can be cancled or further processing steps triggered.");
 
+        this.ResetUI();
+    }
+
+
+
+    ResetUI()
+    {
+        this.RemoveChilds();
+
         this.tasktable     = new TaskTable();
         this.taskgroups    = new Object();
         this.taskcache     = new Object();
@@ -144,7 +153,7 @@ class TaskListView extends MainSettingsView
     {
         if(fnc == "GetCurrentTasks" && sig == "ShowCurrentTasks")
         {
-            window.console?.log(args);
+            this.ResetUI();
             let alltasks = [...args.albumfiles, ...args.videos, ...args.artworks];
             for(let task of alltasks)
                 this.UpdateTask(task);
