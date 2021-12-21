@@ -24,6 +24,7 @@ Run  git log --oneline  for more details
 │ + [WebUI] Audio stream player + settings form added
 │ + [WebUI] Allow uploading albums via web front-end
 │ + [WebUI] Allow importing albums via web front-end
+│ + [WebUI] List background tasks in the settings menu
 │ + Web API:
 │    * notification "MusicDB:Upload" is now called "MusicDB:Task"
 │    * Removed functions: GetLyricsCrawlerCache, RunLyricsCrawler, IntegrateUpload
