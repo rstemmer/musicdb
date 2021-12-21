@@ -146,6 +146,13 @@ class TaskTable extends Table
 
 
 
+    GetTaskIDs()
+    {
+        return Object.keys(this.tasks);
+    }
+
+
+
     UpdateTask(task)
     {
         let taskid = task.id;
@@ -157,15 +164,6 @@ class TaskTable extends Table
             this.AddNewTask(task);
         else
             this.tasks[taskid].Update(task);
-    }
-
-
-
-    Update(tasks)
-    {
-        let alltasks = [...tasks.albumfiles, ...tasks.videos, ...tasks.artworks];
-        for(let task of alltasks)
-            this.UpdateTask(task);
     }
 }
 
