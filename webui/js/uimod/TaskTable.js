@@ -75,11 +75,17 @@ class TaskTableRow extends TaskTableRowBase
         let taskstate = task.state;
 
         let statuselement = new TaskStatusText(taskstate);
-        let contenticon   = new SVGIcon(contenticonmap[content]);
+
+        let contentelement = new Element("div", ["flex", "flex-row", "flex-middle"]);
+        let contenticon    = new SVGIcon(contenticonmap[content]);
+        let contentname    = new Element("span");
         contenticon.SetTooltip(`Task ID: ${taskid}`);
+        contentname.SetInnerText(content);
+        contentelement.AppendChild(contenticon);
+        contentelement.AppendChild(contentname);
 
         // Set Cell Content
-        this.SetContent(TT_TYPE_COLUMN   , contenticon);
+        this.SetContent(TT_TYPE_COLUMN   , contentelement);
         this.SetContent(TT_STATUS_COLUMN , statuselement);
         //this.SetContent(TT_START_COLUMN  , this.);
         //this.SetContent(TT_AGE_COLUMN    , this.);

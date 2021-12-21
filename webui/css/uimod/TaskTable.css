@@ -31,9 +31,9 @@
     width: 99%;
 }
 
-.TaskTable td:nth-child(1) > input
+.TaskTable td:nth-child(1) span
 {
-    width:              4ch;
+    margin-left:        1ch;
 }
 .TaskTable td:nth-child(2) > input
 {
