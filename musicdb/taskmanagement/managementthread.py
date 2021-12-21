@@ -217,14 +217,16 @@ def TaskManagementThread():
         deletekeys = []
         # Process all tasks
         for taskid, task in tasks.items():
+            #logging.debug("Processing task %s in state %s", task["id"], task["state"])
 
             # Remove tasks older than 24h
-            lastupdate  = task["updatetime"]
-            currenttime = int(time.time())
-            age         = currenttime-lastupdate
-            if(age > 24*60*60): # older than 24h
-                logging.warning("Task \"%s\" is older than 24h. Most likely there went something wrong with this task. \033[1;30m(Task will be removed)", task["id"])
-                taskmanager.UpdateTaskState(task, "remove");
+            try:
+                age = CalculateAge(task)
+                if(age > 24*60*60): # older than 24h
+                    logging.warning("Task \"%s\" is older than 24h. Most likely there went something wrong with this task. \033[1;30m(Task will be removed)", task["id"])
+                    taskmanager.UpdateTaskState(task, "remove");
+            except Exception as e:
+                logging.exception("Checking age of task (ID: %s) failed with exception: %s \033[1;30m(Task will be removed, its files remain.)", str(taskid), str(e))
 
             # Process task
             try:
@@ -247,6 +249,26 @@ def TaskManagementThread():
                 logging.exception("Removing task (ID: %s) failed with exception: %s \033[1;30m(Oh.)", str(taskid), str(e))
 
     return
+
+
+
+def CalculateAge(task):
+    """
+    This method calculates how old the task is (in seconds).
+    If the task is new created (``"updatetime"`` is ``None``), ``0`` gets returned.
+
+    Args:
+        task (dict): Task dictionary
+
+    Returns:
+        age as integer in seconds
+    """
+    lastupdate = task["updatetime"]
+    if type(lastupdate) != int:
+        return 0
+
+    currenttime = int(time.time())
+    return currenttime - lastupdate
 
 
 

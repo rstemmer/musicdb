@@ -529,6 +529,7 @@ class TaskManager(object):
         global Tasks
         with TaskManagerLock:
             if taskid in Tasks:
+                logging.debug("Removing internal data")
                 Tasks.pop(taskid)
 
         logging.debug("Removing %s", self.tasksdirectory.AbsolutePath(taskfile))
