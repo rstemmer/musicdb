@@ -118,6 +118,10 @@ class UploadStatusText extends TaskStatusText
     constructor(uploadstatus)
     {
         super(uploadstatus);
+
+        // Special case where something is good in context of uploading files
+        if(uploadstatus === "readyforintegration")
+            this.SetStatus("good");
     }
 }
 
