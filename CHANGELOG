@@ -28,6 +28,7 @@ Run  git log --oneline  for more details
 │    * notification "MusicDB:Upload" is now called "MusicDB:Task"
 │    * Removed functions: GetLyricsCrawlerCache, RunLyricsCrawler, IntegrateUpload
 │    * New functions: CreateArtist, IntegrateContent, InitiateMusicImport, InitiateArtworkImport, FindAlbumSongFiles, RenameMusicFile, RenameAlbumDirectory, ChangeArtistDirectory
+│    * Renamed: GetUploads -> GetCurrentTasks
 │ * Solved Issues: #68, #66, #65, #22, #27
 │
 ┝━ MINOR CHANGES

@@ -97,7 +97,6 @@ class SettingsMenu extends LeftView
             "Import Video",
             ()=>{
                 MusicDB_Request("FindNewContent", "ShowVideoImport");
-                MusicDB_Request("GetUploads",     "ShowUploads");
                 },
             "Upload and/or Import Music Videos");
 

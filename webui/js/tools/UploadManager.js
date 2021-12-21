@@ -146,7 +146,7 @@ class UploadManager
             }
             else // "StateUpdate", "InternalError"
             {
-                this.videouploads.Update(data.uploadslist.videos);
+                //this.videouploads.Update(data.uploadslist.videos);
             }
 
             if(sig == "StateUpdate")
@@ -175,13 +175,6 @@ class UploadManager
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "GetUploads" && sig == "ShowUploads")
-        {
-            window.console && console.log(args);
-            window.console && console.log(pass);
-            this.videouploads.Update(args.videos);
-        }
-
         return;
     }
 }

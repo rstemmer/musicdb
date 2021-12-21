@@ -106,7 +106,7 @@ Uploading
 
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateUpload`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UploadChunk`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetCurrentTasks`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.AnnotateUpload`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.IntegrateContent`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateMusicImport`
@@ -269,7 +269,7 @@ class MusicDBWebSocketInterface(object):
 
         # Append uploads to notification except for high frequent ChunkRequest
         if notification != "ChunkRequest":
-            data["uploadslist"] = self.GetUploads()
+            data["tasklist"] = self.GetCurrentTasks()
 
         response    = {}
         response["method"]      = "notification"
@@ -352,8 +352,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.CreateArtist(args["name"])
         elif fncname == "ChangeArtistDirectory":
             retval = self.ChangeArtistDirectory(args["oldalbumpath"], args["newartistdirectory"])
-        elif fncname == "GetUploads":
-            retval = self.GetUploads()
+        elif fncname == "GetCurrentTasks":
+            retval = self.GetCurrentTasks()
         elif fncname == "AnnotateUpload":
             retval = self.AnnotateUpload(args["taskid"], args)
         elif fncname == "IntegrateContent":
@@ -3957,14 +3957,14 @@ class MusicDBWebSocketInterface(object):
         return
 
 
-    def GetUploads(self):
+    def GetCurrentTasks(self):
         """
-        This method gets all tasks from the :mod:`~musicdb.mdbapi.uploadmanager`.
+        This method gets all tasks from the :mod:`~musicdb.taskmanagement.taskmanager`.
         This list then gets split into three lists:
 
-            * *videos*: A list of all available video uploads
-            * *albumfiles*: A song or any other album content uploaded as part of an album upload
-            * *artworks*: Artwork uploads
+            * *videos*: A list of all video related tasks
+            * *albumfiles*: A song or any other album content processed as part of an album upload
+            * *artworks*: Artwork uploads and import
 
         Returns:
             a list with information about all yet unprocessed uploads
@@ -3973,18 +3973,18 @@ class MusicDBWebSocketInterface(object):
 
             .. code-block:: javascript
 
-                MusicDB_Request("GetUploads", "ShowUploads");
+                MusicDB_Request("GetCurrentTasks", "ShowTasks");
 
                 // …
 
                 function onMusicDBMessage(fnc, sig, args, pass)
                 {
-                    console.log(args.albumfiless);
+                    console.log(args.albumfiles);
                     console.log(args.videos);
                     console.log(args.artworks);
                 }
         """
-        tasksdict = self.uploadmanager.GetTasks()
+        tasksdict = self.taskmanager.GetTasks()
         retval    = {}
         retval["videos"]     = []
         retval["albumfiles"] = []

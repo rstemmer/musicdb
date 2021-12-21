@@ -343,7 +343,7 @@ Uploading
 .. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members:   InitiateUpload,
       UploadChunk,
-      GetUploads,
+      GetCurrentTasks,
       AnnotateUpload,
       IntegrateContent,
       InitiateMusicImport,

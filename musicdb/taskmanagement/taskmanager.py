@@ -132,7 +132,7 @@ class TaskManager(object):
             * state: The current state of the upload task
             * message: ``null``/``None`` or a message from the server
             * task: The task dictionary itself
-            * uploadslist: Except for ``ChunkRequest`` events, the WebSocket server append the result of :meth:`musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads` to the notification
+            * tasklist: Except for ``ChunkRequest`` events, the WebSocket server append the result of :meth:`musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetCurrentTasks` to the notification
 
         *task* can be ``None`` in case the notification is meant to be an information that a given upload ID is invalid.
 
