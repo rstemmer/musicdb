@@ -30,26 +30,22 @@ class TaskListView extends MainSettingsView
 
 
 
-    UpdateView(tasks)
-    {
-        this.tasktable.Update(tasks);
-        return;
-    }
-
-
-
     onMusicDBMessage(fnc, sig, args, pass)
     {
         if(fnc == "GetCurrentTasks" && sig == "ShowCurrentTasks")
         {
             window.console?.log(args);
-            this.UpdateView(args);
+            this.tasktable.Update(args);
         }
         return;
     }
 
-    onMusicDBNotification(fnc, sig, rawdata)
+    onMusicDBNotification(fnc, sig, data)
     {
+        if(fnc == "MusicDB:Task" && sig == "StateUpdate")
+        {
+            this.tasktable.UpdateTask(data.task);
+        }
         return;
     }
 }
