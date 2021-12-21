@@ -93,9 +93,9 @@ class TaskTableRow extends TaskTableRowBase
         updatetimeelement.SetInnerText(new Date(updatetime * 1000).toLocaleString());
 
         let buttonbox = new ButtonBox();
-        buttonbox.AddButton(new SVGButton("Remove", ()=>{this.onRemoveTask(task);}, "Remove task and delete temporary data."));
         if(content == "albumfile" && taskstate == "readyforintegration")
             buttonbox.AddButton(new SVGButton("MusicDB", ()=>{this.onIntegrateAlbumFile(task);}, "Integrate this file into the Music Directory."));
+        buttonbox.AddButton(new SVGButton("Remove", ()=>{this.onRemoveTask(task);}, "Remove task and delete temporary data."));
 
         // Set Cell Content
         this.SetContent(TT_TYPE_COLUMN   , contentelement);
