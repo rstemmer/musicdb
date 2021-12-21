@@ -16,11 +16,11 @@
 
 "use strict";
 
-const TASKTABLEHEADLINE = ["Type", "Status", "Start time", "Running time", "Actions"];
+const TASKTABLEHEADLINE = ["Type", "Status", "Start Time", "Last Update", "Actions"];
 const TT_TYPE_COLUMN    = 0;
 const TT_STATUS_COLUMN  = 1;
 const TT_START_COLUMN   = 2;
-const TT_AGE_COLUMN     = 3;
+const TT_UPDATE_COLUMN  = 3;
 const TT_ACTIONS_COLUMN = 4;
 
 
@@ -73,6 +73,8 @@ class TaskTableRow extends TaskTableRowBase
         let mimetype  = task.mimetype;    // audio/*, video/*, image/*, …
         let content   = task.contenttype; // artwork, video, albumfile
         let taskstate = task.state;
+        let inittime  = task.initializationtime;
+        let updatetime= task.updatetime;
 
         let statuselement = new TaskStatusText(taskstate);
 
@@ -84,6 +86,12 @@ class TaskTableRow extends TaskTableRowBase
         contentelement.AppendChild(contenticon);
         contentelement.AppendChild(contentname);
 
+        let starttimeelement = new Element("span");
+        starttimeelement.SetInnerText(new Date(inittime * 1000).toLocaleString());
+
+        let updatetimeelement = new Element("span");
+        updatetimeelement.SetInnerText(new Date(updatetime * 1000).toLocaleString());
+
         let buttonbox = new ButtonBox();
         buttonbox.AddButton(new SVGButton("Remove", ()=>{this.onRemoveTask(task);}, "Remove task and delete temporary data."));
         if(content == "albumfile" && taskstate == "readyforintegration")
@@ -92,8 +100,8 @@ class TaskTableRow extends TaskTableRowBase
         // Set Cell Content
         this.SetContent(TT_TYPE_COLUMN   , contentelement);
         this.SetContent(TT_STATUS_COLUMN , statuselement);
-        //this.SetContent(TT_START_COLUMN  , this.);
-        //this.SetContent(TT_AGE_COLUMN    , this.);
+        this.SetContent(TT_START_COLUMN  , starttimeelement);
+        this.SetContent(TT_UPDATE_COLUMN    , updatetimeelement);
         this.SetContent(TT_ACTIONS_COLUMN, buttonbox);
     }
 
