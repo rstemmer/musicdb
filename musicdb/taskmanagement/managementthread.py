@@ -50,7 +50,7 @@ Possible Task states:
         * ``"integrating"``: The integration process has started
         * ``"integrationfailed"``: Integrating the uploaded file into the music directory failed
     * Import related states:
-        * ``"readyforimport"``: The uploaded file was successfully integrated into the music directory. The content can now be imported into the MusicDB Database
+        * ``"readyforimport"``: The uploaded file was successfully integrated into the music directory. The content can now be imported into the MusicDB Database. Everything is now based on file management inside the managed Music Directory. From this state, ``"remove"`` gets triggered.
         * ``"startmusicimport"``: Importing the integrated file into the music database started
         * ``"importingmusic"``: The music import process has started
         * ``"importfailed"``: Import process failed (importing the music or generating the artwork)
@@ -273,7 +273,9 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
 
     elif state == "readyforimport":
         # further steps should be triggered by the user!
-        pass
+        # From this moment on, the task manager is no longer needed.
+        # Everything is now based on file management inside the managed Music Directory
+        taskmanager.UpdateTaskState(task, "remove")
 
     elif state == "startmusicimport":
         importmanager.ImportMusic(task)
