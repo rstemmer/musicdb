@@ -55,6 +55,13 @@ class Element
         else
             this.element.appendChild(child);
     }
+    RemoveChild(child)
+    {
+        if(typeof child.GetHTMLElement === "function")
+            this.element.removeChild(child.GetHTMLElement());
+        else
+            this.element.removeChild(child);
+    }
     RemoveChilds()
     {
         this.element.innerHTML = "";
