@@ -98,7 +98,7 @@ class TaskTableRow extends TaskTableRowBase
         if(age > 10) // older than 10 minute
             updatetimeelement = new StatusText(`${age} min ago`, "warn") // Narrow no-break space
         else
-            updatetimeelement = new StatusText(`${age} min ago)`, "good")
+            updatetimeelement = new StatusText(`${age} min ago`, "good")
 
         let buttonbox = new ButtonBox();
         if(content == "albumfile" && taskstate == "readyforintegration")
