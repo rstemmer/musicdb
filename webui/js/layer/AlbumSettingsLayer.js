@@ -34,6 +34,11 @@ class AlbumSettingsLayer extends Layer
         this.currentalbumid = null;
 
         // Controls
+        this.albumsettings  = new AlbumEntrySettingsTable((isvalid)=>{this.onAlbumPathValidation(isvalid);});
+        this.artworksettings= new Element("div", ["flex", "flex-row"]); // color | artwork
+        this.colorsettings  = new Element("div", ["flex", "flex-column"]); // Uploader and color settings
+        this.artworkuploader= null;
+        this.albumartwork   = null;
         this.genreedit      = null;
         this.subgenreedit   = null;
         this.hidealbum      = new SettingsCheckbox(
@@ -56,6 +61,12 @@ class AlbumSettingsLayer extends Layer
 
 
 
+    onAlbumPathValidation(isvalid)
+    {
+    }
+
+
+
     ResetUI()
     {
         this.RemoveChilds();
@@ -64,9 +75,11 @@ class AlbumSettingsLayer extends Layer
         this.subgenreedit   = new TagListEdit("subgenre");
 
         this.AppendChild(this.headline);
+        this.AppendChild(this.albumsettings);
         this.AppendChild(this.genreedit);
         this.AppendChild(this.subgenreedit);
         this.AppendChild(this.hidealbum);
+        this.AppendChild(this.artworksettings);
         this.AppendChild(this.toolbar);
     }
 
@@ -80,7 +93,7 @@ class AlbumSettingsLayer extends Layer
 
 
 
-    UpdateAlbumInformation(MDBAlbum)
+    UpdateAlbumInformation(MDBArtist, MDBAlbum)
     {
         this.currentalbumid = MDBAlbum.id;
 
@@ -90,6 +103,19 @@ class AlbumSettingsLayer extends Layer
                 MusicDB_Broadcast("HideAlbum", "UpdateArtists", {albumid: this.currentalbumid, hide: state});
             }
         );
+
+        this.artworkuploader= new ArtworkUploader("album", MDBAlbum.path, MDBAlbum.id);
+        this.colorselect    = new ColorSchemeSelection("audio", this.currentalbumid);
+        this.colorselect.SetColors(MDBAlbum.bgcolor, MDBAlbum.fgcolor, MDBAlbum.hlcolor);
+        this.colorsettings.RemoveChilds();
+        this.colorsettings.AppendChild(this.artworkuploader);
+        this.colorsettings.AppendChild(this.colorselect);
+        this.albumartwork   = new AlbumArtwork(MDBAlbum, "large");
+        this.artworksettings.RemoveChilds();
+        this.artworksettings.AppendChild(this.colorsettings);
+        this.artworksettings.AppendChild(this.albumartwork);
+
+        this.albumsettings.Update(MDBArtist.name, MDBAlbum.name, MDBAlbum.release, MDBAlbum.path, MDBAlbum.origin, MDBAlbum.added);
     }
 
 
@@ -113,8 +139,9 @@ class AlbumSettingsLayer extends Layer
     {
         if(fnc == "GetAlbum" && sig == "ShowAlbumSettingsLayer")
         {
+            window.console?.log(args);
             this.ResetUI();
-            this.UpdateAlbumInformation(args.album);
+            this.UpdateAlbumInformation(args.artist, args.album);
             this.UpdateAlbumTags(args.tags);
             this.Show();
         }
