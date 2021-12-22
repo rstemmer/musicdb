@@ -400,39 +400,111 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
     {
         super();
         this.oldpath = "";
+        this.oldorigin     = "";
+        this.oldimportdate = "";
         this.oldalbumname  = new AlbumDirectoryName();
         this.newalbumname  = new AlbumDirectoryName();
         this.albumdiff     = new AlbumDirectoryNameDiff();
 
         // Load / Save buttons
-        let loadbutton = new TextButton("Load", "Reset Table",
+        this.loadbutton = new TextButton("Load", "Reset Table",
             ()=>{this.onLoad();},
             "Reset all changes made inside the album settings table.");
-        let savebutton = new TextButton("Save", "Save Changes",
+        this.savebutton = new TextButton("Save", "Save Changes",
             ()=>{this.onSave();},
             "Save all changes made inside the album settinsg tabke.\n"+
             "If the ablum name or release year has been changed,\n"+
             "the album directory inside the Music Diretory gets renamed as well.");
         this.toolbar   = new ToolBar();
-        this.toolbar.AddButton(loadbutton);
+        this.toolbar.AddButton(this.loadbutton);
         this.toolbar.AddSpacer(true /*grow*/);
-        this.toolbar.AddButton(savebutton);
+        this.toolbar.AddButton(this.savebutton);
 
         this.datainvalidmessage = new MessageBarError("Invalid album directory name. Check red input fields.");
+        this.datainvalidmessage.HideCloseButton();
+        this.changesmessage     = new MessageBarInfo("Changes in the settings table not yet saved.");
+        this.changesmessage.HideCloseButton();
         this.newpathelement     = new Element("span");
 
         this.AddRow(this.headlinerow);
         this.AddAlbumNameRow();
         this.AddReleaseYearRow();
         this.AddRow(new TableSpanRow(3, [], this.newpathelement));
-        this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage));
         this.AddOriginRow();
         this.AddImportDateRow();
+        this.AddRow(new TableSpanRow(3, [], this.changesmessage));
+        this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage));
         this.AddRow(new TableSpanRow(3, [], this.toolbar));
 
-        this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
-        this.releaseyearinput.SetAfterValidateEventCallback((value, valid)=>{return this.EvaluateNewPath();});
+        this.albumnameinput.SetAfterValidateEventCallback(
+            (value, valid)=>
+            {
+                this.EvaluateNewPath();
+                this.CheckChanges();
+            });
+        this.releaseyearinput.SetAfterValidateEventCallback(
+            (value, valid)=>
+            {
+                this.EvaluateNewPath();
+                this.CheckChanges();
+            });
+        this.origininput.SetAfterValidateEventCallback(
+            (value, valid)=>
+            {
+                this.CheckChanges();
+            });
+        this.importdateinput.SetAfterValidateEventCallback(
+            (value, valid)=>
+            {
+                this.CheckChanges();
+            });
 
+    }
+
+
+
+    CheckChanges()
+    {
+        let origin       = this.origininput.GetValue();
+        let importdate   = this.importdateinput.GetValue();
+        let olddirectory = this.oldalbumname.ComposeDirectoryName();
+        let newdirectory = this.newalbumname.ComposeDirectoryName();
+
+        let changes = false;
+        if(origin != this.oldorigin)
+            changes = true;
+        if(importdate != this.oldimportdate)
+            changes = true;
+        if(newdirectory != olddirectory)
+            changes = true;
+
+        if(changes)
+        {
+            this.changesmessage.Show();
+            this.loadbutton.Enable();
+            this.savebutton.Enable();
+        }
+        else
+        {
+            this.changesmessage.Hide();
+            this.loadbutton.Disable();
+            this.savebutton.Disable();
+        }
+
+        // Check if data is valid. If not, disable the save button
+        let yearcheck = this.newalbumname.CheckReleaseYear();
+        let namecheck = this.newalbumname.CheckAlbumName();
+
+        if(yearcheck === null && namecheck === null)
+        {
+            this.datainvalidmessage.Hide();
+        }
+        else
+        {
+            this.datainvalidmessage.UpdateMessage(`${yearcheck||""} ${namecheck||""}`);
+            this.datainvalidmessage.Show();
+            this.savebutton.Disable();
+        }
     }
 
 
@@ -468,20 +540,6 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
         this.newpathelement.RemoveChilds();
         this.newpathelement.SetInnerHTML(pathdiff);
 
-        // Check and propagate validation status
-        let yearcheck = this.newalbumname.CheckReleaseYear();
-        let namecheck = this.newalbumname.CheckAlbumName();
-
-        if(yearcheck === null && namecheck === null)
-        {
-            this.datainvalidmessage.Hide();
-        }
-        else
-        {
-            this.datainvalidmessage.UpdateMessage(`${yearcheck||""} ${namecheck||""}`);
-            this.datainvalidmessage.Show();
-        }
-
         return;
     }
 
@@ -489,7 +547,9 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
 
     Update(artistname, albumname, releasedate, albumpath, origin, importdate)
     {
-        this.oldpath = albumpath;
+        this.oldpath       = albumpath;
+        this.oldorigin     = origin;
+        this.oldimportdate = importdate;
 
         this.oldalbumname = new AlbumDirectoryName( this.oldpath.split("/")[1]);
 
@@ -497,6 +557,8 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
         this.releaseyearinput.SetValue(releasedate);
         this.origininput.SetValue(origin);
         this.importdateinput.SetValue(importdate);
+
+        this.CheckChanges(); // Reset State
     }
 
 
