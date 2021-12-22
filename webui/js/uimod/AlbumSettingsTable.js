@@ -213,20 +213,24 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
     {
         super();
         this.validationstatuscallback = validationstatuscallback;
-        this.artistdiff = ""; // old artist -> new artist
-        this.albumdiff  = ""; // old album -> new album
-        this.pathdiff   = ""; // old path -> new path
-        this.oldpath    = "";
-        this.oldalbumname = new AlbumDirectoryName();
-        this.newalbumname = new AlbumDirectoryName();
+        this.oldpath = "";
+
+        this.oldartistname = new ArtistDirectoryName();
+        this.newartistname = new ArtistDirectoryName();
+        this.oldalbumname  = new AlbumDirectoryName();
+        this.newalbumname  = new AlbumDirectoryName();
+
+        this.artistdiff    = new ArtistDirectoryNameDiff();
+        this.albumdiff     = new AlbumDirectoryNameDiff();
 
         this.AddRow(this.headlinerow);
         this.AddArtistNameRow();
         this.AddAlbumNameRow();
         this.AddReleaseYearRow();
 
-        this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
-        this.releaseyearinput.SetAfterValidateEventCallback((value, valid)=>{return this.EvaluateNewPath();});
+        this.artistnameinput.SetAfterValidateEventCallback( (value, valid)=>{this.EvaluateNewPath();});
+        this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{this.EvaluateNewPath();});
+        this.releaseyearinput.SetAfterValidateEventCallback((value, valid)=>{this.EvaluateNewPath();});
 
         this.datainvalidmessage = new MessageBarError("Invalid Album Settings. Check red input fields.");
 
@@ -254,150 +258,44 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
 
     EvaluateNewPath()
     {
-        const validspan = `<span style="color: var(--color-brightgreen)">`;
-        const errorspan = `<span style="color: var(--color-brightred)">`;
-        const grayspan  = `<span style="color: var(--color-gray)">`;
-        const closespan = `</span>`;
-        let   openspan  = grayspan;
-        let   grayslash = `${grayspan}/${closespan}`;
-        let   grayarrow = `${grayspan}&nbsp;➜&nbsp;${closespan}`;
-
-        let oldartistdir  = this.oldpath.split("/")[0] || "";
-        let oldalbumdir   = this.oldpath.split("/")[1] || "";
-        let oldartistname = oldartistdir;
-        let oldalbumname  = oldalbumdir;
-        if(oldalbumname.slice(4,7) == " - ")
-            oldalbumname = oldalbumname.slice(7);
-
-        let newpath = "";
-
-        // Artist
-        // Defines:
-        //  -> this.artistdiff
-        //  -> artistdiffold
-        //  -> artistdiffnew
-        let newartistname = this.artistnameinput.GetValue();
-        newartistname = newartistname.replace(/\//g,"∕" /*Division slash*/);
-
-        if(this.artistnameinput.GetValidState() === true)
-            openspan = validspan;
-        else
-            openspan = errorspan;
-
-        newpath += `${newartistname}/`;
-        this.artistdiff = "";
-        let artistdiffold = "";
-        let artistdiffnew = "";
-        if(newartistname != oldartistname)
-        {
-            artistdiffold = `${errorspan}${oldartistname}${closespan}`;
-            artistdiffnew = `${openspan}${newartistname}${closespan}`;
-            this.artistdiff += artistdiffold;
-            this.artistdiff += grayslash;
-            this.artistdiff += grayarrow;
-            this.artistdiff += artistdiffnew;
-            this.artistdiff += grayslash;
-        }
-        else
-        {
-            artistdiffold = `${grayspan}${oldartistname}${closespan}`;
-            artistdiffnew = `${grayspan}${newartistname}${closespan}`;
-            this.artistdiff += artistdiffnew;
-            this.artistdiff += grayslash;
-        }
-
-        // Release Year
-        // Defines:
-        //  -> releasediffold
-        //  -> releasediffnew
+        // Get new values
+        let artistname  = this.artistnameinput.GetValue();
+        let albumname   = this.albumnameinput.GetValue();
         let releaseyear = this.releaseyearinput.GetValue();
 
-        if(this.releaseyearinput.GetValidState() === true)
-            openspan = validspan;
-        else
-            openspan = errorspan;
+        // Update new*name objects
+        this.newartistname.SetArtistName(artistname);
+        this.newalbumname.SetAlbumName(albumname);
+        this.newalbumname.SetReleaseYear(releaseyear, false); // do not validate for life preview
 
-        newpath += `${releaseyear} - `;
+        // Update diffs
+        this.artistdiff.UpdateDiff(this.oldartistname, this.newartistname);
+        this.albumdiff.UpdateDiff(this.oldalbumname, this.newalbumname);
 
-        let oldrelease  = oldalbumdir.substr(0, oldalbumdir.indexOf(" "));
-        let releasediffold = "";
-        let releasediffnew = "";
-        if(oldrelease != releaseyear)
-        {
-            releasediffold = `${errorspan}${oldrelease}${closespan}`;
-            releasediffnew = `${openspan}${releaseyear}${closespan}`;
-        }
-        else
-        {
-            releasediffold = `${grayspan}${oldrelease}${closespan}`;
-            releasediffnew = `${grayspan}${releaseyear}${closespan}`;
-        }
+        // Full path diff
+        const grayspan  = `<span style="color: var(--color-gray)">`;
+        const closespan = `</span>`;
+        const grayslash = `${grayspan}/${closespan}`;
+        const grayarrow = `${grayspan}&nbsp;➜&nbsp;${closespan}`;
 
-        // Album name
-        //  -> albumdiffold
-        //  -> albumdiffnew
-        let newalbumname = this.albumnameinput.GetValue();
-        newalbumname = newalbumname.replace(/\//g,"∕" /*Division slash*/);
-
-        if(this.albumnameinput.GetValidState() === true)
-            openspan = validspan;
-        else
-            openspan = errorspan;
-
-        newpath += `${newalbumname}`;
-
-        let albumnamediffold = "";
-        let albumnamediffnew = "";
-        if(oldalbumname != newalbumname)
-        {
-            albumnamediffold = `${errorspan}${oldalbumname}${closespan}`;
-            albumnamediffnew = `${openspan}${newalbumname}${closespan}`;
-        }
-        else
-        {
-            albumnamediffold = `${grayspan}${oldalbumname}${closespan}`;
-            albumnamediffnew = `${grayspan}${newalbumname}${closespan}`;
-        }
-
-        // Album Directory
-        // Defines:
-        //  -> this.albumdiff
-        let albumdirdiffold = releasediffold + `${grayspan}&nbsp;-&nbsp;${closespan}` + albumnamediffold;
-        let albumdirdiffnew = releasediffnew + `${grayspan}&nbsp;-&nbsp;${closespan}` + albumnamediffnew;
-        albumdirdiffold += grayslash;
-        albumdirdiffnew += grayslash;
-
-        let newartistdir;
-        let newalbumdir;
-        [newartistdir, newalbumdir] = newpath.split("/");
-
-        this.albumdiff = "";
-        if(newalbumdir != oldalbumdir)
-            this.albumdiff = albumdirdiffold + grayarrow + albumdirdiffnew;
-        else
-            this.albumdiff = albumdirdiffnew;
-
-        // Full path
-        // Defines:
-        //  -> this.pathdiff
         let oldpathhtml = "";
-        oldpathhtml += artistdiffold;
+        oldpathhtml += this.artistdiff.olddiff;
         oldpathhtml += grayslash;
-        oldpathhtml += albumdirdiffold;
+        oldpathhtml += this.albumdiff.olddiff;
         let newpathhtml = "";
-        newpathhtml += artistdiffnew;
+        newpathhtml += this.artistdiff.newdiff;
         newpathhtml += grayslash;
-        newpathhtml += albumdirdiffnew;
+        newpathhtml += this.albumdiff.newdiff;
 
-        this.pathdiff = "";
-        if(this.oldpath != newpath)
-            this.pathdiff = `${oldpathhtml}${grayarrow}${newpathhtml}`;
+        let pathdiff = "";
+        if(oldpathhtml != newpathhtml)
+            pathdiff = `${oldpathhtml}${grayarrow}${newpathhtml}`;
         else
-            this.pathdiff = newpathhtml;
+            pathdiff = newpathhtml;
 
         // Update visualisation of path validation
         this.newpathelement.RemoveChilds();
-        this.newpathelement.SetInnerHTML(this.pathdiff);
+        this.newpathelement.SetInnerHTML(pathdiff);
 
         // Check and propagate validation status
         let validationstatus = this.CheckIfValid();
@@ -408,7 +306,7 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
 
         if(typeof this.validationstatuscallback === "function")
             this.validationstatuscallback(validationstatus);
-        return newpath;
+        return;
     }
 
 
@@ -416,17 +314,20 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
     GetArtistDirectoryName()
     {
         let artistname = this.artistnameinput.GetValue();
-        artistname = artistname.replace(/\//g,"∕" /*Division slash*/);
+        artistname = this.newartistname.MakeValidArtistName(artistname);
         return artistname;
     }
 
     GetAlbumDirectoryName()
     {
-        // Release Year
         let releaseyear = this.releaseyearinput.GetValue();
         let albumname   = this.albumnameinput.GetValue();
-        albumname = albumname.replace(/\//g,"∕" /*Division slash*/);
-        return `${releaseyear} - ${albumname}`;
+        let albumdirectoryname = new AlbumDirectoryName();
+
+        albumdirectoryname.SetReleaseYear(releaseyear);
+        albumdirectoryname.SetAlbumName(albumname);
+
+        return albumdirectoryname.ComposeDirectoryName();
     }
 
 
@@ -476,6 +377,10 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
             this.oldpath = `${artistname}/${releasedate} - ${albumname}`;
         else
             this.oldpath = albumpath;
+
+        this.oldartistname = new ArtistDirectoryName(this.oldpath.split("/")[0]);
+        this.oldalbumname  = new AlbumDirectoryName( this.oldpath.split("/")[1]);
+
         this.artistnameinput.SetValue(artistname);
         this.albumnameinput.SetValue(albumname);
         this.releaseyearinput.SetValue(releasedate);
