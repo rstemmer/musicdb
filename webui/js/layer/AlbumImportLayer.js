@@ -48,7 +48,7 @@ class AlbumImportLayer extends Layer
             "During import, the status of each task will be visualized.");
 
         // Forms
-        this.albumsettingstable = new AlbumSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
+        this.albumsettingstable = new AlbumPathSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
         this.songfilessettings  = new SettingsList();
         this.multicdsetting     = new SettingsCheckbox(
             "Multiple CDs",

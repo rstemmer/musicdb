@@ -60,15 +60,22 @@ class AlbumSettingsTableRow extends AlbumSettingsTableRowBase
     }
 }
 
-
-
 class AlbumSettingsTable extends Table
+{
+    constructor()
+    {
+        super(["AlbumSettingsTable"]);
+    }
+}
+
+
+class AlbumPathSettingsTable extends AlbumSettingsTable
 {
     // validationstatuscallback if a function called whenever data is validated.
     // It gets one argument (boolean) that, if true, tells that all data in this table is valid.
     constructor(validationstatuscallback)
     {
-        super(["AlbumSettingsTable"]);
+        super();
         this.validationstatuscallback = validationstatuscallback;
         this.artistdiff = ""; // old artist -> new artist
         this.albumdiff  = ""; // old album -> new album
@@ -407,6 +414,7 @@ class AlbumSettingsTable extends Table
         this.releasedateinput.SetValue(releasedate);
     }
 }
+
 
 
 

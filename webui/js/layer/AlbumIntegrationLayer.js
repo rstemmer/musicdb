@@ -39,7 +39,7 @@ class AlbumIntegrationLayer extends Layer
             "During integration, the status of each task will be visualized.");
 
         // Forms
-        this.albumsettingstable = new AlbumSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
+        this.albumsettingstable = new AlbumPathSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
 
         // Data
         this.tasks              = new BatchExecution();
