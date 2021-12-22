@@ -36,7 +36,7 @@ class AlbumSettingsLayer extends Layer
         // Controls
         this.albumsettings  = new AlbumEntrySettingsTable((isvalid)=>{this.onAlbumPathValidation(isvalid);});
         this.artworksettings= new Element("div", ["flex", "flex-row"]); // color | artwork
-        this.colorsettings  = new Element("div", ["flex", "flex-column"]); // Uploader and color settings
+        this.colorsettings  = new Element("div", ["colorsettings", "flex", "flex-column"]); // Uploader and color settings
         this.artworkuploader= null;
         this.albumartwork   = null;
         this.genreedit      = null;

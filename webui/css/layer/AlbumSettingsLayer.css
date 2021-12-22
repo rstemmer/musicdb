@@ -20,6 +20,12 @@
 {
 }
 
+#AlbumSettingsLayer .colorsettings
+{
+    flex-grow:      1;
+    padding:        5%;
+}
+
 
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
