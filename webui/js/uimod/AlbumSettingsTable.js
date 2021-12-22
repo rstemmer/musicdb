@@ -60,28 +60,37 @@ class AlbumSettingsTableRow extends AlbumSettingsTableRowBase
     }
 }
 
+
+
 class AlbumSettingsTable extends Table
 {
     constructor()
     {
         super(["AlbumSettingsTable"]);
+        this.headlinerow     = new AlbumSettingsTableHeadline();
+
+        this.newartistinfos  = null;
+        this.knownartistinfo = null;
+        this.artistnameinput = null;
+        this.artistnamerow   = null;
+
+        this.albumnameinput  = null;
+        this.albumnamerow    = null;
+
+        this.releaseyearinput= null;
+        this.releaseyearrow  = null;
+
+        this.origininput     = null;
+        this.originrow       = null;
+
+        this.importdateinput = null;
+        this.importdaterow   = null;
     }
-}
 
 
-class AlbumPathSettingsTable extends AlbumSettingsTable
-{
-    // validationstatuscallback if a function called whenever data is validated.
-    // It gets one argument (boolean) that, if true, tells that all data in this table is valid.
-    constructor(validationstatuscallback)
+
+    AddArtistNameRow()
     {
-        super();
-        this.validationstatuscallback = validationstatuscallback;
-        this.artistdiff = ""; // old artist -> new artist
-        this.albumdiff  = ""; // old album -> new album
-        this.pathdiff   = ""; // old path -> new path
-        this.oldpath    = "";
-
         this.newartistinfo   = new MessageBarInfo("Artist unknown. New artist will be created.");
         this.newartistinfo.HideCloseButton();
         this.knownartistinfo = new MessageBarConfirm("Artist known. It already has an entry in the database.");
@@ -90,42 +99,55 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
         artistinfos.AppendChild(this.newartistinfo);
         artistinfos.AppendChild(this.knownartistinfo);
 
-        // Text Inputs
-        this.artistnameinput     = new TextInput(  (value)=>{return this.ValidateArtistName(value);  });
-        this.albumnameinput      = new TextInput(  (value)=>{return this.ValidateAlbumName(value);   });
-        this.releasedateinput    = new NumberInput((value)=>{return this.ValidateReleaseDate(value); });
+        this.artistnameinput = new TextInput((value)=>{return this.ValidateArtistName(value);});
 
-        this.artistnameinput.SetAfterValidateEventCallback( (value, valid)=>{return this.EvaluateNewPath();});
-        this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
-        this.releasedateinput.SetAfterValidateEventCallback((value, valid)=>{return this.EvaluateNewPath();});
-
-        this.datainvalidmessage = new MessageBarError("Invalid Album Settings. Check red input fields.");
-
-        // Table
-        this.headlinerow  = new AlbumSettingsTableHeadline();
-        this.artistnamerow = new AlbumSettingsTableRow(
+        this.artistnamerow   = new AlbumSettingsTableRow(
             "Artist Name",
             this.artistnameinput,
             "Correct name of the album artist");
-        this.albumnamerow = new AlbumSettingsTableRow(
+
+        this.AddRow(this.artistnamerow   );
+        this.AddRow(new TableSpanRow(3, [], artistinfos));
+    }
+
+    AddAlbumNameRow()
+    {
+        this.albumnameinput = new TextInput((value)=>{return this.ValidateAlbumName(value);});
+        this.albumnamerow   = new AlbumSettingsTableRow(
             "Album Name",
             this.albumnameinput,
             "Correct name of the album (without release year)");
-        this.releasedaterow = new AlbumSettingsTableRow(
-            "Release Date",
-            this.releasedateinput,
+        this.AddRow(this.albumnamerow);
+    }
+
+    AddReleaseYearRow()
+    {
+        this.releaseyearinput = new NumberInput((value)=>{return this.ValidateReleaseYear(value);});
+        this.releaseyearrow   = new AlbumSettingsTableRow(
+            "Release Year",
+            this.releaseyearinput,
             "Release year with 4 digits (like \"2021\")");
+        this.AddRow(this.releaseyearrow);
+    }
 
-        this.newpathelement = new Element("span");
-        let  newpathnode    = this.newpathelement.GetHTMLElement();
+    AddOriginRow()
+    {
+        this.origininput        = new TextInput(  (value)=>{return this.ValidateOrigin(value);      });
+        this.originrow = new AlbumSettingsTableRow(
+            "Album Origin",
+            this.origininput,
+            "Where the data comes from (like \"internet\", \"iTunes\", \"bandcamp\", \"CD\")");
+        this.AddRow(this.originrow);
+    }
 
-        this.AddRow(this.headlinerow     );
-        this.AddRow(this.artistnamerow   );
-        this.AddRow(new TableSpanRow(3, [], artistinfos));
-        this.AddRow(this.albumnamerow    );
-        this.AddRow(this.releasedaterow  );
-        this.AddRow(new TableSpanRow(3, [], newpathnode));
-        this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage));
+    AddImportDateRow()
+    {
+        this.importdateinput    = new TextInput(  (value)=>{return this.ValidateImportDate(value);  });
+        this.importdaterow = new AlbumSettingsTableRow(
+            "Import Date",
+            this.importdateinput,
+            "Import date (like \"30.12.2021\")");
+        this.AddRow(this.importdaterow);
     }
 
 
@@ -151,13 +173,15 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
         }
         return true;
     }
+
     ValidateAlbumName(value)
     {
         if(value.length <= 0)
             return false;
         return true;
     }
-    ValidateReleaseDate(value)
+
+    ValidateReleaseYear(value)
     {
         let thisyear = new Date().getFullYear();
 
@@ -165,9 +189,50 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
             return false
         return true;
     }
+
     ValidateOrigin(value)
     {
+        if(value.length <= 0)
+            return false;
         return true;
+    }
+
+    ValidateImportDate(value)
+    {
+        return true;
+    }
+}
+
+
+
+class AlbumPathSettingsTable extends AlbumSettingsTable
+{
+    // validationstatuscallback if a function called whenever data is validated.
+    // It gets one argument (boolean) that, if true, tells that all data in this table is valid.
+    constructor(validationstatuscallback)
+    {
+        super();
+        this.validationstatuscallback = validationstatuscallback;
+        this.artistdiff = ""; // old artist -> new artist
+        this.albumdiff  = ""; // old album -> new album
+        this.pathdiff   = ""; // old path -> new path
+        this.oldpath    = "";
+
+        this.AddRow(this.headlinerow);
+        this.AddArtistNameRow();
+        this.AddAlbumNameRow();
+        this.AddReleaseYearRow();
+
+        this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
+        this.releaseyearinput.SetAfterValidateEventCallback((value, valid)=>{return this.EvaluateNewPath();});
+
+        this.datainvalidmessage = new MessageBarError("Invalid Album Settings. Check red input fields.");
+
+        // Table
+        this.newpathelement = new Element("span");
+
+        this.AddRow(new TableSpanRow(3, [], this.newpathelement));
+        this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage));
     }
 
 
@@ -178,7 +243,7 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
             return false;
         if(this.albumnameinput.GetValidState() == false)
             return false;
-        if(this.releasedateinput.GetValidState() == false)
+        if(this.releaseyearinput.GetValidState() == false)
             return false;
         return true;
     }
@@ -243,9 +308,9 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
         // Defines:
         //  -> releasediffold
         //  -> releasediffnew
-        let releaseyear = this.releasedateinput.GetValue();
+        let releaseyear = this.releaseyearinput.GetValue();
 
-        if(this.releasedateinput.GetValidState() === true)
+        if(this.releaseyearinput.GetValidState() === true)
             openspan = validspan;
         else
             openspan = errorspan;
@@ -356,7 +421,7 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
     GetAlbumDirectoryName()
     {
         // Release Year
-        let releaseyear = this.releasedateinput.GetValue();
+        let releaseyear = this.releaseyearinput.GetValue();
         let albumname   = this.albumnameinput.GetValue();
         albumname = albumname.replace(/\//g,"∕" /*Division slash*/);
         return `${releaseyear} - ${albumname}`;
@@ -411,10 +476,54 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
             this.oldpath = albumpath;
         this.artistnameinput.SetValue(artistname);
         this.albumnameinput.SetValue(albumname);
-        this.releasedateinput.SetValue(releasedate);
+        this.releaseyearinput.SetValue(releasedate);
     }
 }
 
+
+
+/*
+ * Adds origin and import date settings
+ * Handles path renaming internal by providing a "Rename" button
+ *   using the RenameAlbumDirectory API
+ */
+class AlbumEntrySettingsTable extends AlbumSettingsTable
+{
+    constructor()
+    {
+        super();
+        this.oldpath = "";
+
+        this.AddRow(this.headlinerow);
+        this.AddAlbumNameRow();
+        this.AddReleaseYearRow();
+        this.AddOriginRow();
+        this.AddImportDateRow();
+
+        this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
+        this.releaseyearinput.SetAfterValidateEventCallback((value, valid)=>{return this.EvaluateNewPath();});
+    }
+
+
+
+    EvaluateNewPath()
+    {
+    }
+
+
+
+    Update(artistname, albumname, releasedate, albumpath, origin, importdate)
+    {
+        this.oldpath = albumpath;
+        this.albumnameinput.SetValue(albumname);
+        this.releaseyearinput.SetValue(releasedate);
+        this.origininput.SetValue(origin);
+        this.importdateinput.SetValue(importdate);
+    }
+
+
+
+}
 
 
 
