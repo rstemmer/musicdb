@@ -545,6 +545,37 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
 
 
 
+    onLoad()
+    {
+        this.albumnameinput.SetValue(this.oldalbumname.parts.name);
+        this.releaseyearinput.SetValue(this.oldalbumname.parts.year);
+        this.origininput.SetValue(this.oldorigin);
+        this.importdateinput.SetValue(this.oldimportdate);
+    }
+
+    onSave()
+    {
+        let olddirectory = this.oldalbumname.ComposeDirectoryName();
+        let newdirectory = this.newalbumname.ComposeDirectoryName();
+        let origin       = this.origininput.GetValue();
+        let importdate   = this.importdateinput.GetValue();
+
+        if(newdirectory != olddirectory)
+        {
+            // TODO Rename
+        }
+        if(origin != this.oldorigin)
+        {
+            // TODO Change value
+        }
+        if(importdate != this.oldimportdate)
+        {
+            // TODO Change value
+        }
+    }
+
+
+
     Update(artistname, albumname, releasedate, albumpath, origin, importdate)
     {
         this.oldpath       = albumpath;
