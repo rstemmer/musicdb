@@ -52,6 +52,7 @@ class NameDiffBase extends Element
     // --------+---------+-----------+-------------
     // valid   | valid   | equal     | gray/gray
     // valid   | valid   | different | yellow/green
+    // valid   | invalid | *         | yellow/red
     // invalid | valid   | *         | red/green
     // invalid | invalid | *         | red/red
     AddDiffPart(oldvalid, newvalid, oldvalue, newvalue)
@@ -65,6 +66,11 @@ class NameDiffBase extends Element
         {
             this.olddiff += this.FormatDifferent(oldvalue);
             this.newdiff += this.FormatValid(newvalue);
+        }
+        else if(oldvalid && !newvalid)
+        {
+            this.olddiff += this.FormatDifferent(oldvalue);
+            this.newdiff += this.FormatInvalid(newvalue);
         }
         else if(!oldvalid && newvalid)
         {
