@@ -39,14 +39,17 @@ class AlbumDirectoryName
 
 
 
-    SetReleaseYear(year)
+    SetReleaseYear(year, validate=true)
     {
-        this.parts.year = this.MakeValidReleaseYear(year);
+        if(validate)
+            this.parts.year = this.MakeValidReleaseYear(year);
+        else
+            this.parts.year = year;
     }
 
     SetAlbumName(albumname)
     {
-        this.parts.name = albumname;
+        this.parts.name = this.MakeValidAlbumName(albumname);
     }
 
 
@@ -56,9 +59,9 @@ class AlbumDirectoryName
         let validyear = `${this.currentyear}`;
 
         if(typeof year === "number")
-            validcdnum = `0000${cdnumber}`.slice(-4);
+            validyear = `0000${year}`.slice(-4);
         else if(typeof year === "string" && !isNaN(year))
-            validcdnum = `0000${cdnumber}`.slice(-4);
+            validyear = `0000${year}`.slice(-4);
 
         return validyear;
     }
@@ -108,7 +111,7 @@ class AlbumDirectoryName
 
 
 
-    DecomposeAlbumName(name, validate=true)
+    DecomposeDirectoryName(name, validate=true)
     {
         let parts   = new Object();
 
@@ -125,7 +128,7 @@ class AlbumDirectoryName
     }
 
 
-    ComposeAlbumName()
+    ComposeDirectoryName()
     {
         let name = `${this.parts.year} - ${this.parts.name}`;
         return name;

@@ -39,7 +39,7 @@ class ArtistDirectoryName
 
     SetArtistName(artistname)
     {
-        this.parts.name = artistname;
+        this.parts.name = this.MakeValidArtistName(artistname);
     }
 
 
@@ -69,22 +69,22 @@ class ArtistDirectoryName
 
 
 
-    DecomposeArtistName(name, validate=true)
+    DecomposeDirectoryName(name, validate=true)
     {
-        let parts   = new Object();
+        let parts = new Object();
 
         parts.name = name;
 
         if(validate)
         {
-            parts.name = this.MakeValidAlbumName(parts.name);
+            parts.name = this.MakeValidArtistName(parts.name);
         }
 
         return parts;
     }
 
 
-    ComposeArtistName()
+    ComposeDirectoryName()
     {
         let name = `${this.parts.name}`;
         return name;
