@@ -17,11 +17,11 @@
 "use strict";
 
 
-class SongFileNameDiff extends Element
+class NameDiffBase extends Element
 {
-    constructor()
+    constructor(classes)
     {
-        super("span", ["SongFileNameDiff"]);
+        super("span", classes);
         this.olddiff = "";
         this.newdiff = "";
     }
@@ -84,13 +84,29 @@ class SongFileNameDiff extends Element
         this.newdiff += this.FormatNormal(text);
     }
 
+    ClearDiff()
+    {
+        this.olddiff = "";
+        this.newdiff = "";
+    }
+
+}
+
+
+
+class SongFileNameDiff extends NameDiffBase
+{
+    constructor()
+    {
+        super(["SongFileNameDiff"]);
+    }
+
 
 
     // Expects object of class SongFileName
     UpdateDiff(oldname, newname)
     {
-        this.olddiff = "";
-        this.newdiff = "";
+        this.ClearDiff();
 
         // CD Prefix
         if(newname.maxcds > 1)
