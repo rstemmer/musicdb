@@ -217,6 +217,8 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
         this.albumdiff  = ""; // old album -> new album
         this.pathdiff   = ""; // old path -> new path
         this.oldpath    = "";
+        this.oldalbumname = new AlbumDirectoryName();
+        this.newalbumname = new AlbumDirectoryName();
 
         this.AddRow(this.headlinerow);
         this.AddArtistNameRow();
