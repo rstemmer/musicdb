@@ -131,8 +131,15 @@ class AlbumView extends MainView2
                 MusicDB_Broadcast("HideAlbum", "UpdateArtists", {albumid: MDBAlbum.id, hide: state});
             }
         );
+        this.opensettings = new TextButton("Settings", "Show Advanced Settings", ()=>
+            {
+                MusicDB_Request("GetAlbum", "ShowAlbumSettingsLayer", {albumid: MDBAlbum.id});
+            },
+            "Open advanced settings layer to review and change all details of this album stored in the database.");
+
         this.settings_more.RemoveChilds();
         this.settings_more.AppendChild(this.hidealbum);
+        this.settings_more.AppendChild(this.opensettings);
 
         this.genreedit          = new TagListEdit("genre");
         this.subgenreedit       = new TagListEdit("subgenre");
