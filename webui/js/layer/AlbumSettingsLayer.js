@@ -33,6 +33,13 @@ class AlbumSettingsLayer extends Layer
         // General Information
         this.currentalbumid = null;
 
+        // Controls
+        this.genreedit      = null;
+        this.subgenreedit   = null;
+        this.hidealbum      = new SettingsCheckbox(
+            "Hide Album",
+            "When the album is hidden, it will not be shown in the Artists list.</br>Furthermore it is not considered by the random song selection algorithm.</br>You can make the album visible again with the MusicDB Management tools (See Main Menu).");
+
         // Tool Bar
         this.toolbar     = new ToolBar();
         this.closebutton = new TextButton("Remove", "Close Layer",
@@ -53,7 +60,13 @@ class AlbumSettingsLayer extends Layer
     {
         this.RemoveChilds();
 
+        this.genreedit      = new TagListEdit("genre");
+        this.subgenreedit   = new TagListEdit("subgenre");
+
         this.AppendChild(this.headline);
+        this.AppendChild(this.genreedit);
+        this.AppendChild(this.subgenreedit);
+        this.AppendChild(this.hidealbum);
         this.AppendChild(this.toolbar);
     }
 
@@ -61,6 +74,7 @@ class AlbumSettingsLayer extends Layer
 
     onClose()
     {
+        this.currentalbumid = null;
         this.Hide();
     }
 
@@ -69,12 +83,21 @@ class AlbumSettingsLayer extends Layer
     UpdateAlbumInformation(MDBAlbum)
     {
         this.currentalbumid = MDBAlbum.id;
+
+        this.hidealbum.SetState(MDBAlbum.hidden);
+        this.hidealbum.SetHandler((state)=>
+            {
+                MusicDB_Broadcast("HideAlbum", "UpdateArtists", {albumid: this.currentalbumid, hide: state});
+            }
+        );
     }
 
 
 
     UpdateAlbumTags(MDBTags)
     {
+        this.genreedit.Update(   "album", this.currentalbumid, MDBTags);
+        this.subgenreedit.Update("album", this.currentalbumid, MDBTags);
     }
 
 
