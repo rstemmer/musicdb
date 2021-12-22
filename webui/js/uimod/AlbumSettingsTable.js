@@ -142,8 +142,8 @@ class AlbumSettingsTable extends Table
 
     AddImportDateRow()
     {
-        this.importdateinput    = new TextInput(  (value)=>{return this.ValidateImportDate(value);  });
-        this.importdaterow = new AlbumSettingsTableRow(
+        this.importdateinput = new DateInput((value)=>{return this.ValidateImportDate(value);});
+        this.importdaterow   = new AlbumSettingsTableRow(
             "Import Date",
             this.importdateinput,
             "Import date (like \"30.12.2021\")");
