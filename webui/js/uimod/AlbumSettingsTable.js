@@ -400,21 +400,74 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
     {
         super();
         this.oldpath = "";
+        this.oldalbumname  = new AlbumDirectoryName();
+        this.newalbumname  = new AlbumDirectoryName();
+        this.albumdiff     = new AlbumDirectoryNameDiff();
+
+        this.datainvalidmessage = new MessageBarError("Invalid album directory name. Check red input fields.");
+        this.newpathelement     = new Element("span");
 
         this.AddRow(this.headlinerow);
         this.AddAlbumNameRow();
         this.AddReleaseYearRow();
+        this.AddRow(new TableSpanRow(3, [], this.newpathelement));
+        this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage));
         this.AddOriginRow();
         this.AddImportDateRow();
 
         this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
         this.releaseyearinput.SetAfterValidateEventCallback((value, valid)=>{return this.EvaluateNewPath();});
+
     }
 
 
 
     EvaluateNewPath()
     {
+        // Get new values
+        let albumname   = this.albumnameinput.GetValue();
+        let releaseyear = this.releaseyearinput.GetValue();
+
+        // Update new*name objects
+        this.newalbumname.SetAlbumName(albumname);
+        this.newalbumname.SetReleaseYear(releaseyear, false); // do not validate for life preview
+
+        // Update diffs
+        this.albumdiff.UpdateDiff(this.oldalbumname, this.newalbumname);
+
+        // Full path diff
+        const grayspan  = `<span style="color: var(--color-gray)">`;
+        const closespan = `</span>`;
+        const grayslash = `${grayspan}/${closespan}`;
+        const grayarrow = `${grayspan}&nbsp;➜&nbsp;${closespan}`;
+
+        let oldpathhtml = this.albumdiff.olddiff;
+        let newpathhtml = this.albumdiff.newdiff;
+        let pathdiff    = "";
+        if(oldpathhtml != newpathhtml)
+            pathdiff = `${oldpathhtml}${grayarrow}${newpathhtml}`;
+        else
+            pathdiff = newpathhtml;
+
+        // Update visualisation of path validation
+        this.newpathelement.RemoveChilds();
+        this.newpathelement.SetInnerHTML(pathdiff);
+
+        // Check and propagate validation status
+        let yearcheck = this.newalbumname.CheckReleaseYear();
+        let namecheck = this.newalbumname.CheckAlbumName();
+
+        if(yearcheck === null && namecheck === null)
+        {
+            this.datainvalidmessage.Hide();
+        }
+        else
+        {
+            this.datainvalidmessage.UpdateMessage(`${yearcheck||""} ${namecheck||""}`);
+            this.datainvalidmessage.Show();
+        }
+
+        return;
     }
 
 
@@ -422,6 +475,9 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
     Update(artistname, albumname, releasedate, albumpath, origin, importdate)
     {
         this.oldpath = albumpath;
+
+        this.oldalbumname = new AlbumDirectoryName( this.oldpath.split("/")[1]);
+
         this.albumnameinput.SetValue(albumname);
         this.releaseyearinput.SetValue(releasedate);
         this.origininput.SetValue(origin);
