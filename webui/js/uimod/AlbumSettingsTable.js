@@ -404,6 +404,20 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
         this.newalbumname  = new AlbumDirectoryName();
         this.albumdiff     = new AlbumDirectoryNameDiff();
 
+        // Load / Save buttons
+        let loadbutton = new TextButton("Load", "Reset Table",
+            ()=>{this.onLoad();},
+            "Reset all changes made inside the album settings table.");
+        let savebutton = new TextButton("Save", "Save Changes",
+            ()=>{this.onSave();},
+            "Save all changes made inside the album settinsg tabke.\n"+
+            "If the ablum name or release year has been changed,\n"+
+            "the album directory inside the Music Diretory gets renamed as well.");
+        this.toolbar   = new ToolBar();
+        this.toolbar.AddButton(loadbutton);
+        this.toolbar.AddSpacer(true /*grow*/);
+        this.toolbar.AddButton(savebutton);
+
         this.datainvalidmessage = new MessageBarError("Invalid album directory name. Check red input fields.");
         this.newpathelement     = new Element("span");
 
@@ -414,6 +428,7 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
         this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage));
         this.AddOriginRow();
         this.AddImportDateRow();
+        this.AddRow(new TableSpanRow(3, [], this.toolbar));
 
         this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
         this.releaseyearinput.SetAfterValidateEventCallback((value, valid)=>{return this.EvaluateNewPath();});
