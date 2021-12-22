@@ -30,6 +30,7 @@ let albumintegrationlayer=new AlbumIntegrationLayer(layerbackground);
 let albumuploadprogress = new AlbumUploadProgress(layerbackground);
 let albumintegrationprogress = new AlbumIntegrationProgress(layerbackground);
 let albumimportprogress = new AlbumImportProgress(layerbackground);
+let albumsettingslayer  = new AlbumSettingsLayer(layerbackground);
 
 // Create Basic MusicDB WebUI Components
 let musicdbhud          = new MusicDBHUD();
@@ -110,6 +111,7 @@ window.onload = function ()
     body.AppendChild(albumuploadprogress);
     body.AppendChild(albumintegrationprogress);
     body.AppendChild(albumimportprogress);
+    body.AppendChild(albumsettingslayer);
 
     leftviewmanager     = new LeftViewManager();
     mainviewmanager     = new MainViewManager();
@@ -159,6 +161,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
     albumuploadprogress.onMusicDBNotification(fnc, sig, rawdata);
     albumintegrationprogress.onMusicDBNotification(fnc, sig, rawdata);
     albumimportprogress.onMusicDBNotification(fnc, sig, rawdata);
+    albumsettingslayer.onMusicDBNotification(fnc, sig, rawdata);
 
     if(fnc == "MusicDB:AudioStream")
     {
@@ -247,6 +250,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     albumuploadprogress.onMusicDBMessage(fnc, sig, args, pass);
     albumintegrationprogress.onMusicDBMessage(fnc, sig, args, pass);
     albumimportprogress.onMusicDBMessage(fnc, sig, args, pass);
+    albumsettingslayer.onMusicDBMessage(fnc, sig, args, pass);
     
 
 
