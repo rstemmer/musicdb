@@ -369,6 +369,7 @@ class AlbumView extends MainView2
 
         // Set actual tile to true
         this.songtiles[currentsongid].tile.SetPlayingState(true);
+        this.songtiles[currentsongid].tile.ScrollIntoView();
         return;
     }
 

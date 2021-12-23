@@ -39,6 +39,7 @@ Run  git log --oneline  for more details
 │ + [Filesystem] Filesystem class refactored. Uses now pathlib and type hinting
 │ + [Upload] Upload management refactored into task management
 │ * [WebUI] Fixes a bug that lead to not show the album release date in the ArtistView even when enabled
+│ + [WebUI] Scrolls current playing song into view when opening a big album that provides the current playing song
 └───────────────────────────────────────╌╌
 
 
