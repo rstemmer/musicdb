@@ -258,6 +258,8 @@ Albums
       GetSortedAlbumCDs,
       GetAlbum,
       HideAlbum,
+      SetAlbumOrigin,
+      SetAlbumImportTime,
       SetAlbumColor,
       AddAlbumToQueue
 

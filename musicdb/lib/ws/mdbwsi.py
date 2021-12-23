@@ -33,6 +33,8 @@ Albums
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.HideAlbum`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumOrigin`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumImportTime`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue`
 
@@ -437,6 +439,10 @@ class MusicDBWebSocketInterface(object):
             fncname= "GetSong"
         elif fncname == "HideAlbum":
             retval = self.HideAlbum(args["albumid"], args["hide"])
+        elif fncname == "SetAlbumOrigin":
+            retval = self.SetAlbumOrigin(args["albumid"], args["origin"])
+        elif fncname == "SetAlbumImportTime":
+            retval = self.SetAlbumImportTime(args["albumid"], args["importtime"])
         elif fncname == "SetAlbumColor":
             retval = self.SetAlbumColor(args["albumid"], args["colorname"], args["color"])
         elif fncname == "SetVideoColor":
@@ -2733,6 +2739,67 @@ class MusicDBWebSocketInterface(object):
             logging.warning("Hide-state is not a boolean, it is of type %s!", str(type(hide)));
 
         self.database.SetAlbumHiddenState(albumid, hide)
+        return None
+
+
+
+    def SetAlbumOrigin(self, albumid, origin):
+        """
+        This method updates the origin of an album.
+        The origin must be a string like ``"iTunes"``, ``"Amazon"``, ``"CD"`` or ``"internet"``.
+        Any string is possible.
+
+        The origin describes where the album files come from - where they have be bought.
+        Usually the string stored in *origin* is the name of the online shop. Avoid URLs.
+
+        Args:
+            albumid (int): ID of the album to update
+            origin (str): Origin of the album
+
+        Returns:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("SetAlbumOrigin", {albumid: 1000, origin: "internet"});
+        """
+        try:
+            self.database.SetAlbumOrigin(albumid, origin)
+        except TypeError as e:
+            logging.warning("SetAlbumOrigin failed with exception: %s", str(e));
+        return None
+
+
+
+    def SetAlbumImportTime(self, albumid, importtime):
+        """
+        This method updates the import time ("added" entry) of an album.
+        This is the time at which the album has been imported into the MusicDB Database.
+        It is expected that the ``importtime`` is a unix time stamp in seconds.
+
+        Usually this time gets set by the import routines.
+        Do only change this value if it is obviously wrong.
+
+        Args:
+            albumid (int): ID of the album to update
+            importtime (str|int): Time at which the album has been imported
+
+        Returns:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                let jstimestamp   = Date.now();                     // milliseconds
+                let unixtimestamp = Math.floor(jstimestamp / 1000); // seconds
+
+                MusicDB_Call("SetAlbumImportTime", {albumid: 1000, importtime: unixtimestamp});
+        """
+        try:
+            self.database.SetAlbumAddedTime(albumid, int(importtime));
+        except TypeError as e:
+            logging.warning("SetAlbumAddedTime called by SetAlbumImportTime failed with exception: %s", str(e));
         return None
 
 
