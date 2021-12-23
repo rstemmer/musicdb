@@ -570,8 +570,8 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
             this.tasks.AddTask("Update Import Date",
                 (webuitaskid)=>
                 {
-                    MusicDB_Request("SetAlbumImportDate", "ConfirmAlbumSettingsTask",
-                        {albumid: this.albumid, importdate: importdate},
+                    MusicDB_Request("SetAlbumImportTime", "ConfirmAlbumSettingsTask",
+                        {albumid: this.albumid, importtime: importdate},
                         {webuitaskid: webuitaskid});
                 },
                 (fnc, sig, args, pass)=>
