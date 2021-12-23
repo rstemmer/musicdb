@@ -146,6 +146,11 @@ class AlbumSettingsLayer extends Layer
             this.UpdateAlbumTags(args.tags);
             this.Show();
         }
+        else if(fnc == "GetAlbum" && sig == "AlbumRenamed")
+        {
+            if(this.currentalbumid === args.album.id)
+                this.albumsettings.Update(args.artist, args.album);
+        }
         else if(fnc == "GetAlbum" && sig == "UpdateTags")
         {
             if(this.currentalbumid === args.album.id)

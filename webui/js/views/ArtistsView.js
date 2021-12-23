@@ -237,6 +237,11 @@ class ArtistsView extends LeftView
             else
                 MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
         }
+        else if(fnc == "GetAlbum" && sig == "AlbumRenamed")
+        {
+            if(mdbmodemanager.GetCurrentMode() == "audio")
+                MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+        }
         return;
     }
 }
