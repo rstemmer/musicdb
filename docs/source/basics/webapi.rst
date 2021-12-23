@@ -239,6 +239,12 @@ Server side API
 
 .. automodule:: musicdb.lib.ws.mdbwsi
 
+Special Functions
+^^^^^^^^^^^^^^^^^
+
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
+   :members: Bounce
+
 
 Artists
 ^^^^^^^

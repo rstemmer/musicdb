@@ -287,7 +287,9 @@ class MusicDBWebSocketInterface(object):
         retval = None
 
         # Request-Methods
-        if fncname == "GetArtists":
+        if fncname == "Bounce":
+            retval = self.Bounce(args)
+        elif fncname == "GetArtists":
             retval = self.GetArtists()
         elif fncname == "GetArtistsWithAlbums":
             retval = self.GetArtistsWithAlbums()
@@ -563,6 +565,27 @@ class MusicDBWebSocketInterface(object):
             return False
 
         return True
+
+
+
+    def Bounce(self, args):
+        """
+        This is a special method that does nothing but returning the arguments given to it.
+        It can be used to propagate information between different clients or trigger certain events inside a client.
+
+        Args:
+            args (dict): A dictionary with any data
+
+        Returns:
+            The dictionary given as argument
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Broadcast("Bounce", "UpdateValue", {value: 42}); // Tell all clients that value is 42
+                MusicDB_Request("Bounce", "TriggerEvent");               // Trigger an event inside the client
+        """
+        return args
 
 
 
@@ -3726,6 +3749,8 @@ class MusicDBWebSocketInterface(object):
 
         If the album has an entry in the Music Database, its entry is updated as well.
         In this case the new path must fulfill the Music Naming Scheme.
+        The update triggers :meth:`musicdb.mdbapi.database.MusicDBDatabase.UpdateAlbum`.
+        This leads to updating the path, name, release and origin of an album.
 
         The position of the album should be plausible anyway.
         So it must be placed inside an artist directory.
