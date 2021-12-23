@@ -69,8 +69,8 @@ let configuration       = null; // Needs to be loaded from the Server
 
 // Create Main Menu
 let mainmenu           = new MainMenu(curtain);
-mainmenu.AddSection("MusicDB Stream", audiostreamplayer);
-mainmenu.AddSection("MusicDB Status", musicdbstatus);
+mainmenu.AddSection("Audio Stream",  audiostreamplayer);
+mainmenu.AddSection("System Status", musicdbstatus);
 
 
 
