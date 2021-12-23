@@ -201,9 +201,9 @@ class MainMenu extends Menu
                 this.HideEntry("modeswitch");
 
             if(args.WebUI.showstreamplayer == true)
-                this.ShowSection("MusicDB Stream");
+                this.ShowSection("Audio Stream");
             else
-                this.HideSection("MusicDB Stream");
+                this.HideSection("Audio Stream");
         }
 
         return;
