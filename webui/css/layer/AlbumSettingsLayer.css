@@ -27,6 +27,20 @@
 }
 
 
+#AlbumSettingsLayer > .TagListEdit, .artworksettings
+{
+    margin:         0 5%;
+}
+
+#AlbumSettingsLayer > .TagListEdit + .TagListEdit
+{
+    margin-top:     1rem;
+}
+
+#AlbumSettingsLayer > .ToolBar
+{
+    margin-top:     2rem;
+}
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
