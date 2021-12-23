@@ -20,6 +20,7 @@ Run  git log --oneline  for more details
 │ - [lycra] Lyrics Crawler feature removed (Data quality was bad, feature was never used)
 │ + [logging] Allow logging to journald
 │ + [artwork] Long broken app-cache manifest generation removed
+│ * [database] musicdb.mdbapi.database.MusicDBDatabase is now called musicdb.mdbapi.music.MusicDBMusic
 │ + [tracker] Configuration added to decide if random songs shall be tracked: [tracker]->trackrandom
 │ + [WebUI] Audio stream player + settings form added
 │ + [WebUI] Allow uploading albums via web front-end
