@@ -159,6 +159,13 @@ class Element
 
 
 
+    ScrollIntoView()
+    {
+        this.element.scrollIntoView({behavior: "smooth", block: "nearest"});
+    }
+
+
+
     SetColor(htmlcolor)
     {
         this.element.style.color = htmlcolor;
