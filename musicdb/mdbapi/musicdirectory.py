@@ -33,6 +33,8 @@ class MusicDirectory(Filesystem):
     The whole class assumes that it is used with an Unicode capable UNIX-style filesystem.
     It is derived from :class:`musicdb.lib.filesystem.Filesystem`.
 
+    In comparison to the :class:`~musicdb.mdbapi.music.MusicDBMusic`, only the files are on focus, not the music database.
+    Keep in mind that applying some of the methods of this class can harm the connection between the database entries and their associated files.
 
     Args:
         config: MusicDB configuration object

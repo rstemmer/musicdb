@@ -26,7 +26,6 @@ from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.fileprocessing import Fileprocessing
 from musicdb.lib.metatags       import MetaTags
-from musicdb.mdbapi.database    import MusicDBDatabase
 from musicdb.mdbapi.artwork     import MusicDBArtwork
 from musicdb.mdbapi.videoframes import VideoFrames
 from musicdb.mdbapi.musicdirectory      import MusicDirectory
@@ -54,7 +53,6 @@ class UploadManager(TaskManager):
         self.artworkfs  = Filesystem(self.cfg.directories.artwork)
         # TODO: check write permission of all directories
         self.fileprocessing = Fileprocessing(self.cfg.directories.uploads)
-        self.dbmanager  = MusicDBDatabase(config, database)
 
 
 

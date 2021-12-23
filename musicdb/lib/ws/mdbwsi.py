@@ -149,7 +149,7 @@ from musicdb.lib.cfg.webui      import WebUIConfig
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.metatags       import MetaTags
 import os
-from musicdb.mdbapi.database    import MusicDBDatabase
+from musicdb.mdbapi.music       import MusicDBMusic
 from musicdb.mdbapi.musicdirectory  import MusicDirectory
 from musicdb.mdbapi.mise        import MusicDBMicroSearchEngine
 from musicdb.mdbapi.tags        import MusicDBTags
@@ -186,7 +186,7 @@ class MusicDBWebSocketInterface(object):
             self.videostream= VideoStreamManager(self.cfg, self.database)
             self.songqueue  = SongQueue(self.cfg, self.database)
             self.videoqueue = VideoQueue(self.cfg, self.database)
-            self.music      = MusicDBDatabase(self.cfg, self.database)
+            self.music      = MusicDBMusic(self.cfg, self.database)
             self.musicdirectory = MusicDirectory(self.cfg)
 
             self.taskmanager    = TaskManager(self.cfg, self.database)
@@ -3441,7 +3441,7 @@ class MusicDBWebSocketInterface(object):
 
     def FindNewContent(self):
         """
-        This method uses :meth:`musicdb.mdbapi.database.MusicDBDatabase.FindNewPaths` to get all new albums and videos.
+        This method uses :meth:`musicdb.mdbapi.music.MusicDBMusic.FindNewPaths` to get all new albums and videos.
 
         The lists of albums and videos contain objects with the following keys:
 
@@ -3749,7 +3749,7 @@ class MusicDBWebSocketInterface(object):
 
         If the album has an entry in the Music Database, its entry is updated as well.
         In this case the new path must fulfill the Music Naming Scheme.
-        The update triggers :meth:`musicdb.mdbapi.database.MusicDBDatabase.UpdateAlbum`.
+        The update triggers :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateAlbum`.
         This leads to updating the path, name, release and origin of an album.
 
         The position of the album should be plausible anyway.

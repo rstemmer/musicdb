@@ -25,7 +25,7 @@ from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.fileprocessing import Fileprocessing
 from musicdb.lib.metatags       import MetaTags
-from musicdb.mdbapi.database    import MusicDBDatabase
+from musicdb.mdbapi.music       import MusicDBMusic
 from musicdb.mdbapi.artwork     import MusicDBArtwork
 from musicdb.mdbapi.videoframes import VideoFrames
 from musicdb.mdbapi.musicdirectory      import MusicDirectory
@@ -51,7 +51,7 @@ class ImportManager(TaskManager):
         self.musicdirectory   = MusicDirectory(self.cfg)
         self.artworkdirectory = Filesystem(self.cfg.directories.artwork)
         self.fileprocessing   = Fileprocessing(self.cfg.directories.uploads)
-        self.databasemanager  = MusicDBDatabase(config, database)
+        self.musicmanager     = MusicDBMusic(config, database)
 
 
 
@@ -146,7 +146,7 @@ class ImportManager(TaskManager):
     def ImportAlbum(self, task):
         """
         Task state must be ``"importingmusic"`` and content type must be ``"album"``.
-        This method calls :meth:`musicdb.mdbapi.MusicDBDatabase.AddAlbum`.
+        This method calls :meth:`musicdb.mdbapi.music.MusicDBMusic.AddAlbum`.
 
         Returns:
             ``True`` on success, otherwise ``False``.
@@ -166,7 +166,7 @@ class ImportManager(TaskManager):
 
         # Start importing Album
         try:
-            self.databasemanager.AddAlbum(task["albumpath"])
+            self.musicmanager.AddAlbum(task["albumpath"])
         except ValueError as e:
             logging.warning("Importing Album failed with error: %s \033[1;30m(Album will not be imported)", str(e))
             self.NotifyClient("InternalError", task, "Importing album failed")

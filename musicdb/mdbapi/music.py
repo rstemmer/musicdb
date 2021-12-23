@@ -30,8 +30,13 @@ from musicdb.lib.db.trackerdb   import TrackerDatabase      # To update when a s
 from musicdb.mdbapi.musicdirectory  import MusicDirectory
 
 
-class MusicDBDatabase(object):
+class MusicDBMusic(object):
     """
+    This class provides tools to manage the music database and its files.
+    The main purpose is to act as interface between the database and the files associated to the entries inside the database.
+
+    In comparison to the :class:`~musicdb.mdbapi.musicdirectory.MusicDirectory` a link between a file and the database is assumed.
+
     This class supports the following features
 
         * File management
@@ -261,7 +266,7 @@ class MusicDBDatabase(object):
             #. Extract the artist name from the path
             #. Set file attributes and ownership using :meth:`~musicdb.mdbapi.musicdirectory.MusicDirectory.FixAttributes`
             #. Add artist to database
-            #. Call :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AddAlbum` for all subdirectories of the artistpath. (Except for the directory-names in the *ignorealbum* list)
+            #. Call :meth:`~musicdb.mdbapi.music.MusicDBMusic.AddAlbum` for all subdirectories of the artistpath. (Except for the directory-names in the *ignorealbum* list)
 
         Args:
             artistpath (str): Absolute or relative (to the music directory) path to the artist that shall be added to the database.
@@ -360,12 +365,12 @@ class MusicDBDatabase(object):
             #. Get modification date using :meth:`~musicdb.lib.filesystem.FileSystem.GetModificationDate`
             #. Set file attributes and ownership using :meth:`~musicdb.mdbapi.musicdirectory.MusicDirectory.FixAttributes`
             #. Create new entry for the new album in the database and get the default values
-            #. Add each song of the album to the database by calling :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AddSong`
+            #. Add each song of the album to the database by calling :meth:`~musicdb.mdbapi.music.MusicDBMusic.AddSong`
             #. Write all collected information of the album into the database
 
         If adding the songs to the database raises an exception, that song gets skipped.
         The *numofsongs* value for the album is the number of actual existing songs for this album in the database.
-        It is save to add the failed song later by using the :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AddSong` method.
+        It is save to add the failed song later by using the :meth:`~musicdb.mdbapi.music.MusicDBMusic.AddSong` method.
 
         Args:
             albumpath (str): Absolute path, or path relative to the music root directory, to the album that shall be added to the database.
@@ -564,7 +569,7 @@ class MusicDBDatabase(object):
             #. If the parameter *albumid* was ``None`` the *numofsongs* entry of the determined album gets incremented
             #. If there are lyrics in the song file, they get also inserted into the database
 
-        In case the album ID is set, this method assumes that its database entry gets managed by the :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AddAlbum` method.
+        In case the album ID is set, this method assumes that its database entry gets managed by the :meth:`~musicdb.mdbapi.music.MusicDBMusic.AddAlbum` method.
         So, nothing will be changed regarding the album.
         If album ID was ``None``, this method also updates the album-entry, namely the *numofsongs* value gets incremented.
 

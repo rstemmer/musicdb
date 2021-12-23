@@ -290,7 +290,7 @@ class Fileprocessing(Filesystem):
     def OptimizeM4ATags(self, mdbsong, mdbalbum, mdbartist, srcpath, dstpath):
         """
         This method fixes the Tags of an m4a file.
-        The data for the Tags come from the MusicDBDatabase.
+        The data for the Tags come from the MusicDB Database.
         For writing the new tags, ``ffmpeg`` is used.
 
         Source and destination path must be different.
