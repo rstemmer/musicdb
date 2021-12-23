@@ -402,9 +402,17 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
         this.oldpath = "";
         this.oldorigin     = "";
         this.oldimportdate = "";
+        this.artistpath    = "";
+        this.albnumid      = null;
         this.oldalbumname  = new AlbumDirectoryName();
         this.newalbumname  = new AlbumDirectoryName();
         this.albumdiff     = new AlbumDirectoryNameDiff();
+        this.tasks         = new BatchExecution();
+        this.tasks.SetListenSignature("ConfirmAlbumSettingsTask");
+        this.tasks.SetOnFinishCallback((opentasks, finishedtasks)=>
+            {
+                this.onTasksFinished(opentasks, finishedtasks);
+            });
 
         // Load / Save buttons
         this.loadbutton = new TextButton("Load", "Reset Table",
@@ -434,6 +442,7 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
         this.AddImportDateRow();
         this.AddRow(new TableSpanRow(3, [], this.changesmessage));
         this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage));
+        this.AddRow(new TableSpanRow(3, [], this.tasks));
         this.AddRow(new TableSpanRow(3, [], this.toolbar));
 
         this.albumnameinput.SetAfterValidateEventCallback(
@@ -498,13 +507,103 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
         if(yearcheck === null && namecheck === null)
         {
             this.datainvalidmessage.Hide();
+            this.UpdateTasks();
         }
         else
         {
             this.datainvalidmessage.UpdateMessage(`${yearcheck||""} ${namecheck||""}`);
             this.datainvalidmessage.Show();
             this.savebutton.Disable();
+            this.tasks.Clear(); // Just be sure to not mess up anything
         }
+    }
+
+
+
+    UpdateTasks()
+    {
+        let olddirectory = this.oldalbumname.ComposeDirectoryName();
+        let newdirectory = this.newalbumname.ComposeDirectoryName();
+        let origin       = this.origininput.GetValue();
+        let importdate   = this.importdateinput.GetValue();
+
+        this.tasks.Clear();
+
+        // Renaming includes updating name, release and origin of an album.
+        // So to not override the origin settings, do renaming first.
+        if(newdirectory != olddirectory)
+        {
+            let oldpath = `${this.artistpath}/${olddirectory}`;
+            let newpath = `${this.artistpath}/${newdirectory}`;
+            this.tasks.AddTask(`Rename Album Directory to "${newdirectory}"`,
+                (webuitaskid)=>
+                {
+                    MusicDB_Request("RenameAlbumDirectory", "ConfirmAlbumSettingsTask",
+                        {oldpath: oldpath, newpath: newpath},
+                        {webuitaskid: webuitaskid});
+                    return "active";
+                },
+                (fnc, sig, args, pass)=>
+                {
+                    if(args === true) return "good";
+                    else              return "bad";
+                },
+                null /*on notification*/, true /*can fail*/);
+        }
+        if(origin != this.oldorigin)
+        {
+            this.tasks.AddTask(`Update Origin to ${origin}`,
+                (webuitaskid)=>
+                {
+                    MusicDB_Request("SetAlbumOrigin", "ConfirmAlbumSettingsTask",
+                        {albumid: this.albumid, origin: origin},
+                        {webuitaskid: webuitaskid});
+                },
+                (fnc, sig, args, pass)=>
+                {
+                    return "good";
+                },
+                null /*on notification*/, true /*can fail*/);
+        }
+        if(importdate != this.oldimportdate)
+        {
+            this.tasks.AddTask("Update Import Date",
+                (webuitaskid)=>
+                {
+                    MusicDB_Request("SetAlbumImportDate", "ConfirmAlbumSettingsTask",
+                        {albumid: this.albumid, importdate: importdate},
+                        {webuitaskid: webuitaskid});
+                },
+                (fnc, sig, args, pass)=>
+                {
+                    return "good";
+                },
+                null /*on notification*/, true /*can fail*/);
+        }
+
+        // If renaming took place, update all instances of the WebUI
+        if(newdirectory != olddirectory)
+        {
+            // Force all WebUIs reloading their album information (broadcast)
+            this.tasks.AddTask("Propagate new album directory to all clients",
+                (webuitaskid)=>
+                {
+                    // Propagate album renaming to all clients
+                    MusicDB_Broadcast("GetAlbum", "AlbumRenamed",
+                        {albumid: this.albumid});
+                    // Dummy call to trigger batch execution
+                    MusicDB_Request("Bounce", "ConfirmAlbumSettingsTask",
+                        {},
+                        {webuitaskid: webuitaskid});
+                },
+                (fnc, sig, args, pass)=>
+                {
+                    return "good";
+                },
+                null /*on notification*/, true /*can fail*/);
+        }
+
+        return;
     }
 
 
@@ -555,45 +654,62 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
 
     onSave()
     {
-        let olddirectory = this.oldalbumname.ComposeDirectoryName();
-        let newdirectory = this.newalbumname.ComposeDirectoryName();
-        let origin       = this.origininput.GetValue();
-        let importdate   = this.importdateinput.GetValue();
+        this.loadbutton.Disable();
+        this.savebutton.Disable();
+        this.UpdateTasks(); // Just make sure all changes are considered
+        this.tasks.ExecuteTasks();
+    }
 
-        if(newdirectory != olddirectory)
+    onTasksFinished(opentasks, finishedtasks)
+    {
+        if(opentasks.length === 0)
         {
-            // TODO Rename
+            // All tasks successfully processed.
+            // Refresh whole view
+            this.changesmessage.Hide();
+            this.tasks.Clear();
+            MusicDB_Request("GetAlbum", "ShowAlbumSettingsLayer", {albumid: this.albumid});
         }
-        if(origin != this.oldorigin)
+        else
         {
-            // TODO Change value
-        }
-        if(importdate != this.oldimportdate)
-        {
-            // TODO Change value
+            // Save has been tried without success. User should change something or reload.
+            this.savebutton.Disable();
         }
     }
 
 
 
-    Update(artistname, albumname, releasedate, albumpath, origin, importdate)
+    Update(MDBArtist, MDBAlbum)
     {
-        this.oldpath       = albumpath;
-        this.oldorigin     = origin;
-        this.oldimportdate = importdate;
+        this.oldpath       = MDBAlbum.path
+        this.oldorigin     = MDBAlbum.origin;
+        this.oldimportdate = MDBAlbum.added;
+        this.artistpath    = MDBArtist.path;
+        this.albumid       = MDBAlbum.id;
 
         this.oldalbumname = new AlbumDirectoryName( this.oldpath.split("/")[1]);
 
-        this.albumnameinput.SetValue(albumname);
-        this.releaseyearinput.SetValue(releasedate);
-        this.origininput.SetValue(origin);
-        this.importdateinput.SetValue(importdate);
+        this.albumnameinput.SetValue(MDBAlbum.name);
+        this.releaseyearinput.SetValue(MDBAlbum.release);
+        this.origininput.SetValue(MDBAlbum.origin);
+        this.importdateinput.SetValue(MDBAlbum.added);
 
         this.CheckChanges(); // Reset State
     }
 
 
 
+    onMusicDBMessage(fnc, sig, args, pass)
+    {
+        if(sig == "ConfirmAlbumSettingsTask")
+        {
+            this.tasks?.onMusicDBMessage(fnc, sig, args, pass);
+        }
+    }
+    onMusicDBNotification(fnc, sig, rawdata)
+    {
+        this.tasks?.onMusicDBNotification(fnc, sig, rawdata);
+    }
 }
 
 

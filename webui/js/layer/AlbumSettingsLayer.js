@@ -115,7 +115,7 @@ class AlbumSettingsLayer extends Layer
         this.artworksettings.AppendChild(this.colorsettings);
         this.artworksettings.AppendChild(this.albumartwork);
 
-        this.albumsettings.Update(MDBArtist.name, MDBAlbum.name, MDBAlbum.release, MDBAlbum.path, MDBAlbum.origin, MDBAlbum.added);
+        this.albumsettings.Update(MDBArtist, MDBAlbum);
     }
 
 
@@ -131,6 +131,7 @@ class AlbumSettingsLayer extends Layer
     onMusicDBNotification(fnc, sig, rawdata)
     {
         this.artworkuploader?.onMusicDBNotification(fnc, sig, rawdata);
+        this.albumsettings?.onMusicDBNotification(fnc, sig, rawdata);
     }
 
 
@@ -152,6 +153,7 @@ class AlbumSettingsLayer extends Layer
         }
 
         this.artworkuploader?.onMusicDBMessage(fnc, sig, args, pass);
+        this.albumsettings?.onMusicDBMessage(fnc, sig, args, pass);
     }
 }
 
