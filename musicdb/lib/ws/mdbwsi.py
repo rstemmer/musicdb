@@ -4072,6 +4072,7 @@ class MusicDBWebSocketInterface(object):
                 function onMusicDBMessage(fnc, sig, args, pass)
                 {
                     console.log(args.albumfiles);
+                    console.log(args.albums);
                     console.log(args.videos);
                     console.log(args.artworks);
                 }
@@ -4080,6 +4081,7 @@ class MusicDBWebSocketInterface(object):
         retval    = {}
         retval["videos"]     = []
         retval["albumfiles"] = []
+        retval["albums"]     = []
         retval["artworks"]   = []
         for key, task in tasksdict.items():
             contenttype = task["contenttype"]
@@ -4087,8 +4089,14 @@ class MusicDBWebSocketInterface(object):
                 contentlist = "videos"
             elif contenttype == "albumfile":
                 contentlist = "albumfiles"
+            elif contenttype == "album":
+                contentlist = "albums"
             elif contenttype == "artwork":
                 contentlist = "artworks"
+            else:
+                logging.debug("Unexpected content type \"%s\" will be ignored", contenttype);
+                continue
+
             retval[contentlist].append(task)
 
         return retval
