@@ -85,6 +85,9 @@ class AlbumSettingsTable extends Table
 
         this.importdateinput = null;
         this.importdaterow   = null;
+
+        this.hidealbuminput  = null;
+        this.hidealbumrow    = null;
     }
 
 
@@ -148,6 +151,16 @@ class AlbumSettingsTable extends Table
             this.importdateinput,
             "Import date (like \"30.12.2021\")");
         this.AddRow(this.importdaterow);
+    }
+
+    AddHideAlbumRow()
+    {
+        this.hidealbuminput = new BooleanInput((value)=>{return true;}); // TODO
+        this.hidealbumrow   = new AlbumSettingsTableRow(
+            "Hide Album",
+            this.hidealbuminput,
+            "When the album is hidden, it will not be shown in the Artists list or considered as random music source.");
+        this.AddRow(this.hidealbumrow);
     }
 
 
@@ -402,6 +415,7 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
         this.oldpath = "";
         this.oldorigin     = "";
         this.oldimportdate = "";
+        this.oldhidealbum  = null;
         this.artistpath    = "";
         this.albnumid      = null;
         this.oldalbumname  = new AlbumDirectoryName();
@@ -440,6 +454,7 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
         this.AddRow(new TableSpanRow(3, [], this.newpathelement));
         this.AddOriginRow();
         this.AddImportDateRow();
+        this.AddHideAlbumRow();
         this.AddRow(new TableSpanRow(3, [], this.changesmessage));
         this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage));
         this.AddRow(new TableSpanRow(3, [], this.tasks));
@@ -467,6 +482,11 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
             {
                 this.CheckChanges();
             });
+        this.hidealbuminput.SetAfterValidateEventCallback(
+            (value, valid)=>
+            {
+                this.CheckChanges();
+            });
 
     }
 
@@ -476,10 +496,13 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
     {
         let origin       = this.origininput.GetValue();
         let importdate   = this.importdateinput.GetValue();
+        let hidealbum    = this.hidealbuminput.GetValue();
         let olddirectory = this.oldalbumname.ComposeDirectoryName();
         let newdirectory = this.newalbumname.ComposeDirectoryName();
 
         let changes = false;
+        if(hidealbum != this.oldhidealbum)
+            changes = true;
         if(origin != this.oldorigin)
             changes = true;
         if(importdate != this.oldimportdate)
@@ -526,6 +549,7 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
         let newdirectory = this.newalbumname.ComposeDirectoryName();
         let origin       = this.origininput.GetValue();
         let importdate   = this.importdateinput.GetValue();
+        let hidealbum    = this.hidealbuminput.GetValue();
 
         this.tasks.Clear();
 
@@ -572,6 +596,25 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
                 {
                     MusicDB_Request("SetAlbumImportTime", "ConfirmAlbumSettingsTask",
                         {albumid: this.albumid, importtime: importdate},
+                        {webuitaskid: webuitaskid});
+                },
+                (fnc, sig, args, pass)=>
+                {
+                    return "good";
+                },
+                null /*on notification*/, true /*can fail*/);
+        }
+        if(hidealbum != this.oldhidealbum)
+        {
+            this.tasks.AddTask("Update Hide-Album State",
+                (webuitaskid)=>
+                {
+                    // This needs to be a broadcast to all clients to make them update
+                    MusicDB_Broadcast("HideAlbum", "UpdateArtists",
+                        {albumid: this.albumid, hide: hidealbum});
+                    // Dummy call to trigger batch execution
+                    MusicDB_Request("Bounce", "ConfirmAlbumSettingsTask",
+                        {},
                         {webuitaskid: webuitaskid});
                 },
                 (fnc, sig, args, pass)=>
@@ -684,6 +727,7 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
         this.oldpath       = MDBAlbum.path
         this.oldorigin     = MDBAlbum.origin;
         this.oldimportdate = MDBAlbum.added;
+        this.oldhidealbum  = MDBAlbum.hidden;
         this.artistpath    = MDBArtist.path;
         this.albumid       = MDBAlbum.id;
 

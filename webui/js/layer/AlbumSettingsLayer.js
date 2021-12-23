@@ -41,9 +41,6 @@ class AlbumSettingsLayer extends Layer
         this.albumartwork   = null;
         this.genreedit      = null;
         this.subgenreedit   = null;
-        this.hidealbum      = new SettingsCheckbox(
-            "Hide Album",
-            "When the album is hidden, it will not be shown in the Artists list.</br>Furthermore it is not considered by the random song selection algorithm.</br>You can make the album visible again with the MusicDB Management tools (See Main Menu).");
 
         // Tool Bar
         this.toolbar     = new ToolBar();
@@ -78,7 +75,6 @@ class AlbumSettingsLayer extends Layer
         this.AppendChild(this.albumsettings);
         this.AppendChild(this.genreedit);
         this.AppendChild(this.subgenreedit);
-        this.AppendChild(this.hidealbum);
         this.AppendChild(this.artworksettings);
         this.AppendChild(this.toolbar);
     }
@@ -96,13 +92,6 @@ class AlbumSettingsLayer extends Layer
     UpdateAlbumInformation(MDBArtist, MDBAlbum)
     {
         this.currentalbumid = MDBAlbum.id;
-
-        this.hidealbum.SetState(MDBAlbum.hidden);
-        this.hidealbum.SetHandler((state)=>
-            {
-                MusicDB_Broadcast("HideAlbum", "UpdateArtists", {albumid: this.currentalbumid, hide: state});
-            }
-        );
 
         this.artworkuploader= new ArtworkUploader("album", MDBAlbum.path, MDBAlbum.id);
         this.colorselect    = new ColorSchemeSelection("audio", this.currentalbumid);
