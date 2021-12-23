@@ -109,6 +109,28 @@ class NumberInput extends Input
     }
 }
 
+class BooleanInput extends Input
+{
+    constructor(oninput="", initvalue=false, tooltip="")
+    {
+        super("checkbox", oninput, initvalue, tooltip)
+    }
+
+    SetValue(checked)
+    {
+        this.element.checked == true
+        this.onInput();
+        return;
+    }
+
+    GetValue()
+    {
+        if(this.element.checked == true)
+            return true;
+        return false;
+    }
+}
+
 // SetValue/GetValue use unix time stamps as integer in seconds
 // Only the date (day, month, year) will be available as input.
 // The time of the day will be preserved
