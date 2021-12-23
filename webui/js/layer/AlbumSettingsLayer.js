@@ -27,8 +27,12 @@ class AlbumSettingsLayer extends Layer
         super(background, "AlbumSettingsLayer")
 
         // Headlines
-        this.headline = new LayerHeadline("Album Settings",
+        this.mainheadline = new LayerHeadline("Album Settings",
             "This layer provides all information of an album stored in the MusicDB database.");
+        this.tagsheadline = new LayerHeadline("Album Tags",
+            "Update the tags associated to this album. Add and remove genre and sub-genre tags.");
+        this.artworkheadline = new LayerHeadline("Album Artwork",
+            "Upload a new album cover and change the color theme associated to this album.");
 
         // General Information
         this.currentalbumid = null;
@@ -71,10 +75,12 @@ class AlbumSettingsLayer extends Layer
         this.genreedit      = new TagListEdit("genre");
         this.subgenreedit   = new TagListEdit("subgenre");
 
-        this.AppendChild(this.headline);
+        this.AppendChild(this.mainheadline);
         this.AppendChild(this.albumsettings);
+        this.AppendChild(this.tagsheadline);
         this.AppendChild(this.genreedit);
         this.AppendChild(this.subgenreedit);
+        this.AppendChild(this.artworkheadline);
         this.AppendChild(this.artworksettings);
         this.AppendChild(this.toolbar);
     }
