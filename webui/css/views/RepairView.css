@@ -29,6 +29,23 @@
 }
 
 
+.RepairBox
+{
+}
+
+.RepairBox > .listbox
+{
+    justify-content:    space-evenly;
+    height:             20rem;
+    margin-bottom:      1rem;
+}
+
+.RepairBox .List
+{
+    width:              45%;
+}
+
+
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 

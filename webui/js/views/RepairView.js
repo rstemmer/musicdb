@@ -16,6 +16,52 @@
 
 "use strict";
 
+class RepairBox extends Element
+{
+    constructor()
+    {
+        super("div", ["RepairBox", "flex", "flex-column"]);
+
+        this.listbox = new Element("div", ["listbox", "flex", "flex-row"]);
+        this.listold = new List();
+        this.listnew = new List();
+        this.listbox.AppendChild(this.listold);
+        this.listbox.AppendChild(this.listnew);
+
+        this.repairbutton = new TextButton("MusicDB", "Repair",
+            ()=>{return;},
+            "Todo");
+        this.toolbar = new ToolBar();
+        this.toolbar.AddSpacer(true);
+        this.toolbar.AddButton(this.repairbutton);
+        this.toolbar.AddSpacer(true);
+
+        this.AppendChild(this.listbox);
+        this.AppendChild(this.toolbar);
+    }
+
+    Update(oldlist, newlist, namekey)
+    {
+        this.listold.Clear();
+        for(let olddata of oldlist)
+        {
+            let entry = new ListEntry();
+            entry.SetInnerText(olddata[namekey]);
+            entry.SetClickEventCallback((event)=>{return;});
+            this.listold.AddEntry(entry);
+        }
+        for(let newdata of newlist)
+        {
+            let entry = new ListEntry();
+            entry.SetInnerText(newdata[namekey]);
+            entry.SetClickEventCallback((event)=>{return;});
+            this.listnew.AddEntry(entry);
+        }
+    }
+}
+
+
+
 class RepairView extends MainSettingsView
 {
     constructor()
@@ -27,6 +73,8 @@ class RepairView extends MainSettingsView
         super("TaskListView", title, descr);
         let headline = new SettingsHeadline(title, descr);
 
+        this.songrepairbox = new RepairBox();
+
         this.ResetUI();
     }
 
@@ -37,6 +85,14 @@ class RepairView extends MainSettingsView
         this.RemoveChilds();
 
         this.AppendChild(this.headline);
+        this.AppendChild(this.songrepairbox);
+    }
+
+
+
+    UpdateLostFilesList(lostfiles, newfiles)
+    {
+        this.songrepairbox.Update(lostfiles["songs"], newfiles["songs"], "path");
     }
 
 
@@ -52,11 +108,19 @@ class RepairView extends MainSettingsView
 
     onMusicDBNotification(fnc, sig, data)
     {
-        if(fnc == "MusicDB:Task" && sig == "StatusUpdate")
+        if(fnc == "MusicDB:Task" && sig == "StateUpdate")
         {
-            let state = data["state"];
+            let task  = data["task"];
+            let state = task["state"];
             if(state == "fsscancomplete")
+            {
+                let annotations = task["annotations"];
+                let lostpaths   = annotations["lostpaths"];
+                let newpaths    = annotations["newpaths"];
                 window.console?.log(data);
+                this.UpdateLostFilesList(lostpaths, newpaths);
+                this.ResetUI();
+            }
         }
         return;
     }
