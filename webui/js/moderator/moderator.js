@@ -63,6 +63,7 @@ let hiddenalbums        = new HiddenAlbums();
 let albumimport         = new AlbumImport();
 let videoimport         = new VideoImport();
 let tasklistview        = new TaskListView();
+let repairview          = new RepairView();
 let settingsmenu        = new SettingsMenu(); // Accesses references to settings views
 
 let configuration       = null; // Needs to be loaded from the Server
@@ -155,6 +156,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
     queuetimemanager.onMusicDBNotification(fnc, sig, rawdata);
     streamview.onMusicDBNotification(fnc, sig, rawdata);
     tasklistview.onMusicDBNotification(fnc, sig, rawdata);
+    repairview.onMusicDBNotification(fnc, sig, rawdata);
     uploadmanager.onMusicDBNotification(fnc, sig, rawdata);
     albumview.onMusicDBNotification(fnc, sig, rawdata);
     albumintegrationlayer.onMusicDBNotification(fnc, sig, rawdata);
@@ -244,6 +246,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     albumimport.onMusicDBMessage(fnc, sig, args, pass);
     videoimport.onMusicDBMessage(fnc, sig, args, pass);
     tasklistview.onMusicDBMessage(fnc, sig, args, pass);
+    repairview.onMusicDBMessage(fnc, sig, args, pass);
     // Layer
     albumimportlayer.onMusicDBMessage(fnc, sig, args, pass);
     albumintegrationlayer.onMusicDBMessage(fnc, sig, args, pass);

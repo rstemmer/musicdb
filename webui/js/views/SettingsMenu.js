@@ -100,6 +100,15 @@ class SettingsMenu extends LeftView
                 },
             "Upload and/or Import Music Videos");
 
+        this.views.push(repairview);
+        this.AddMenuEntry(
+            new SVGIcon("MusicDB"),
+            "Repair Database",
+            ()=>{
+                MusicDB_Request("InitiateFilesystemScan", "ShowRepairView");
+                },
+            "Show Invalid Database Enties");
+
         this.views.push(tasklistview);
         this.AddMenuEntry(
             new SVGIcon("TaskList"),

@@ -171,6 +171,10 @@ class MainViewManager extends ViewManager
         {
             this.MountView(videoimport);
         }
+        else if(fnc == "InitiateFilesystemScan" && sig == "ShowRepairView")
+        {
+            this.MountView(repairview);
+        }
         else if(fnc == "GetCurrentTasks" && sig == "ShowCurrentTasks")
         {
             this.MountView(tasklistview);
