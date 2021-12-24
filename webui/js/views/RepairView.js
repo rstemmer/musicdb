@@ -30,21 +30,21 @@ class RepairBox extends Element
         this.listbox.AppendChild(this.listold);
         this.listbox.AppendChild(this.listnew);
 
-        this.removefilebutton = new TextButton("MusicDB", "Remove File",
+        this.removefilebutton = new TextButton("Remove", "Remove File",
             ()=>{return;},
-            "Todo");
-        this.removeentrybutton = new TextButton("MusicDB", "Remove Entry",
+            "Remove this file from the Music Directory");
+        this.removeentrybutton = new TextButton("Remove", "Remove Database Entry",
             ()=>{return;},
-            "Todo");
-        this.renamefilebutton = new TextButton("MusicDB", "Rename File",
+            "Remove this entry from the MusicDB Database.");
+        this.renamefilebutton = new TextButton("MusicDB", "Move File",
             ()=>{return;},
-            "Todo");
+            "Move the new file to the old place where the old file has been.");
         this.updatepathbutton = new TextButton("MusicDB", "Update Path Value",
             ()=>{return;},
-            "Todo");
-        this.updateentrybutton = new TextButton("MusicDB", "Update Song Entry",
+            "Update only the path value of the MusicDB Database entry to match the new file path.");
+        this.updateentrybutton = new TextButton("Import", "Update Song Entry",
             ()=>{return;},
-            "Todo");
+            "Update the old MusicDB Database entry with all information from the new file.");
         this.toolbar = new ToolBar();
         this.toolbar.AddButton(this.removeentrybutton);
         this.toolbar.AddSpacer(true);
