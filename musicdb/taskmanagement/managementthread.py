@@ -14,19 +14,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-The import management is responsible for managing Uploads, Integration and Import of music into the MuiscDB system.
+The task management is responsible for managing
+    * Uploads new content to the server (:doc:`/taskmanagement/uploadmanager`)
+    * Integration of new content into the Music Directory (:doc:`/taskmanagement/integrationmanager`)
+    * Import of music into the MuiscDB Database (:doc:`/taskmanagement/importmanager`)
+    * Importing artwork for an album (:doc:`/taskmanagement/artworkmanager`)
+    * Scanning the file system for new or invalid data (:doc:`/taskmanagement/filesystemmanager`)
+
 The whole process is split into several tasks managed by the :meth:`~TaskManagementThread`.
 
-The communication is handled via notification to allow continuing uploading even when the connection gets lost in the meanwhile.
+The communication is handled via notification to allow continuing reporting of status updates
+without blocking and even when the connection gets lost in the meanwhile.
 
 Furthermore uploading a file, integrating it into the music directory and importing it into the Music Database
-shall be possible in separate steps.
-
-The upload is performed chunk-wise.
-After initiating an Upload, this upload manager (:doc:`/taskmanagement/uploadmanager`)
-requests chunks of data via MusicDB Notifications from the clients.
-All clients are informed about the upload process, not only the client that initiated the upload.
-So each client can show the progress and state.
+is possible in separate steps.
 
 The whole process is split into several tasks. Each task has its own state.
 The task state is persistently stored inside the uploads directory within a JSON file in a *tasks* sub-directory.
@@ -57,6 +58,11 @@ Possible Task states:
         * ``"startartworkimport"``: Importing succeeded and generating the artwork started
         * ``"importingartwork"``: The artwork import process has started
         * ``"importcomplete"``: Import process complete and successful
+    * File system scanning states:
+        * ``"startfsscan"``:
+        * ``"scanningfs"``:
+        * ``"fsscanfailed"``:
+        * ``"fsscancomplete"``:
 
 To each task, there are several additional information, also stored in the JSON file.
 The following keys are in dictionary that represent a task:
@@ -109,6 +115,7 @@ from musicdb.taskmanagement.uploadmanager   import UploadManager
 from musicdb.taskmanagement.integrationmanager  import IntegrationManager
 from musicdb.taskmanagement.importmanager   import ImportManager
 from musicdb.taskmanagement.artworkmanager  import ArtworkManager
+from musicdb.taskmanagement.filesystemmanager   import FilesystemManager
 
 Config      = None
 Thread      = None
@@ -198,6 +205,7 @@ def TaskManagementThread():
         integrationmanager = IntegrationManager(Config, musicdb)
         importmanager   = ImportManager(Config, musicdb)
         artworkmanager  = ArtworkManager(Config, musicdb)
+        filesystemmanager  = FilesystemManager(Config, musicdb)
     except Exception as e:
         logging.exception("Initializing Task Management Thread failed with exception: %s", str(e))
 
@@ -235,7 +243,8 @@ def TaskManagementThread():
                         uploadmanager,
                         integrationmanager,
                         importmanager,
-                        artworkmanager)
+                        artworkmanager,
+                        filesystemmanager)
                 if not keeptask:
                     deletekeys.append(taskid)
             except Exception as e:
@@ -272,7 +281,7 @@ def CalculateAge(task):
 
 
 
-def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, importmanager, artworkmanager):
+def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, importmanager, artworkmanager, filesystemmanager):
     """
     After an import is completed successfully, all clients connected to the server get a ``"sys:refresh"`` notification
     to update their caches.
@@ -318,11 +327,14 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
     elif state == "importcomplete":
         server.UpdateCaches(); # Trigger all Clients to update their caches
 
+    elif state == "startfsscan":
+        filesystemmanager.ScanFilesystem(task)
+
     elif state == "remove":
         return False
 
     # Now check if the task can be removed
-    if state == "uploadfailed" or state == "importfailed" or state == "importcomplete" or state == "invalidcontent":
+    if state in ["uploadfailed", "importfailed", "importcomplete", "invalidcontent", "fsscanfailed", "fsscancomplete"]:
         taskmanager.UpdateTaskState(task, "remove")
 
     return True

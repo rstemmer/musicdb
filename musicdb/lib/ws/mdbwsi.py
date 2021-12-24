@@ -124,6 +124,7 @@ File Handling
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RenameMusicFile`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RenameAlbumDirectory`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.ChangeArtistDirectory`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateFilesystemScan`
 
 Other
 
@@ -163,6 +164,7 @@ from musicdb.taskmanagement.uploadmanager   import UploadManager
 from musicdb.taskmanagement.integrationmanager import IntegrationManager
 from musicdb.taskmanagement.importmanager   import ImportManager
 from musicdb.taskmanagement.artworkmanager  import ArtworkManager
+from musicdb.taskmanagement.filesystemmanager  import FilesystemManager
 import logging
 from threading          import Thread
 import traceback
@@ -194,6 +196,7 @@ class MusicDBWebSocketInterface(object):
             self.integrationmanager = IntegrationManager(self.cfg, self.database)
             self.importmanager  = ImportManager(self.cfg, self.database)
             self.artworkmanager = ArtworkManager(self.cfg, self.database)
+            self.filesystemmanager  = FilesystemManager(self.cfg, self.database)
         except Exception as e:
             logging.exception(e)
             raise e
@@ -366,6 +369,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.InitiateMusicImport(args["contenttype"], args["contentpath"])
         elif fncname == "InitiateArtworkImport":
             retval = self.InitiateArtworkImport(args["sourcepath"], args["targetpath"])
+        elif fncname == "InitiateFilesystemScan":
+            retval = self.InitiateFilesystemScan()
         elif fncname == "RemoveUpload":
             retval = self.RemoveUpload(args["taskid"])
         # Call-Methods (retval will be ignored unless method gets not changed)
@@ -4208,6 +4213,50 @@ class MusicDBWebSocketInterface(object):
             The task ID as string
         """
         taskid = self.artworkmanager.InitiateImport(sourcepath, targetpath)
+        return taskid
+
+
+
+    def InitiateFilesystemScan(self):
+        """
+        This method can be used to scan the file system and find lost paths inside the database.
+        It does the following steps:
+
+        #. Check all database entries if the associated files and directories can be found via :meth:`musicdb.mdbapi.music.MusicDBMusic.FindLostPaths`
+        #. If not, collect their database entry
+        #. Find all new files and directories via :meth:`musicdb.mdbapi.music.MusicDBMusic.FindNewPaths`
+        #. Collect their path and check sum (this may take some time)
+
+        The returned information has the following structure
+        * `"newpaths"`
+            * `"artists"`, `"albums"`, `"songs"`, `"videos"`
+                * Each entry is a list of paths as string
+        * `"lostpaths"`
+            * `"artists"`, `"albums"`, `"songs"`, `"videos"`
+                * Each entry is a list of database entries as dictionary
+
+        The found information are annotated to the task
+
+        Returns:
+            The task ID as string
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("InitiateFilesystemScan");
+
+                // …
+
+                function onMuiscDBNotification(fnc, sig, task)
+                {
+                    if(fnc == "MusicDB:Task" && sig == "StateUpdate")
+                    {
+                        if(task["state"] == "fsscancomplete")
+                            console.log(task["annotations"]);
+                    }
+                }
+        """
+        taskid = self.filesystemmanager.InitiateFilesystemScan()
         return taskid
 
 

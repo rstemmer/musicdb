@@ -16,6 +16,13 @@
 """
 This module organizes the uploading process to data from the WebUI into the MusicDB Upload directory
 where it can then be further processed.
+
+The upload is performed chunk-wise.
+After initiating an Upload, the management thread (:doc:`/taskmanagement/managementthread`)
+requests chunks of data via MusicDB Notifications from the clients.
+All clients are informed about the upload process, not only the client that initiated the upload.
+So each client can show the progress and state.
+
 """
 
 import logging
