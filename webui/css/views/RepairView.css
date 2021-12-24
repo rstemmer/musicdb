@@ -36,7 +36,7 @@
 .RepairBox > .listbox
 {
     justify-content:    space-evenly;
-    height:             20rem;
+    max-height:         20rem;
     margin-bottom:      1rem;
 }
 

@@ -23,8 +23,10 @@ class RepairBox extends Element
         super("div", ["RepairBox", "flex", "flex-column"]);
 
         this.listbox = new Element("div", ["listbox", "flex", "flex-row"]);
-        this.listold = new List();
-        this.listnew = new List();
+        this.listold = new List("Invalid Paths");
+        this.listnew = new List("New Paths");
+        this.listold.MakeSelectable();
+        this.listnew.MakeSelectable();
         this.listbox.AppendChild(this.listold);
         this.listbox.AppendChild(this.listnew);
 
@@ -56,24 +58,67 @@ class RepairBox extends Element
         this.AppendChild(this.toolbar);
     }
 
-    Update(oldlist, newlist, namekey)
+
+
+    Clear()
     {
         this.listold.Clear();
         this.listnew.Clear();
+        // Refresh UI
+        this.onListEntryClick();
+    }
+
+
+
+    Update(oldlist, newlist, namekey)
+    {
+        this.Clear();
         for(let olddata of oldlist)
         {
             let entry = new ListEntry();
             entry.SetInnerText(olddata[namekey]);
-            entry.SetClickEventCallback((event)=>{return;});
+            entry.SetClickEventCallback(()=>{this.onListEntryClick();});
             this.listold.AddEntry(entry);
         }
         for(let newdata of newlist)
         {
             let entry = new ListEntry();
             entry.SetInnerText(newdata[namekey]);
-            entry.SetClickEventCallback((event)=>{return;});
+            entry.SetClickEventCallback(()=>{this.onListEntryClick();});
             this.listnew.AddEntry(entry);
         }
+
+        // Refresh UI
+        this.onListEntryClick();
+    }
+
+
+
+    onListEntryClick()
+    {
+        let entriesold = this.listold.GetSelectedEntries();
+        let entriesnew = this.listnew.GetSelectedEntries();
+
+        this.removeentrybutton.Enable();
+        this.updateentrybutton.Enable();
+        this.updatepathbutton.Enable();
+        this.renamefilebutton.Enable();
+        this.removefilebutton.Enable();
+        if(entriesold.length < 1)
+        {
+            this.removeentrybutton.Disable();
+            this.updateentrybutton.Disable();
+            this.updatepathbutton.Disable();
+            this.renamefilebutton.Disable();
+        }
+        if(entriesnew.length < 1)
+        {
+            this.updateentrybutton.Disable();
+            this.updatepathbutton.Disable();
+            this.renamefilebutton.Disable();
+            this.removefilebutton.Disable();
+        }
+
     }
 }
 
@@ -119,6 +164,9 @@ class RepairView extends MainSettingsView
         if(fnc == "InitiateFilesystemScan" && sig == "ShowRepairView")
         {
             window.console?.log(args);
+
+            this.songrepairbox.Clear();
+            this.ResetUI();
         }
         return;
     }
