@@ -18,9 +18,20 @@
 
 .List
 {
+}
+
+.List > .listhead
+{
+    margin-bottom:      1rem;
+}
+
+.List > .listbody
+{
     overflow:           scroll;
     padding:            0.5rem;
 }
+
+
 
 .ListEntry
 {

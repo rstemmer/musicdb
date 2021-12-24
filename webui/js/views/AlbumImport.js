@@ -27,7 +27,7 @@ class AlbumImport extends MainSettingsView
 
         this.importheadline = new SettingsHeadline("New Albums Inside Music Directory",
             "This is a list of albums found inside the Music Directory that have not yet been imported into the MusicDB Music Database.");
-        this.albumlist = new List();
+        this.albumlist = new List("New Album Directories");
         this.AppendChild(this.importheadline);
         this.AppendChild(this.albumlist);
     }
