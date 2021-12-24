@@ -204,8 +204,11 @@ class repair(MDBModule, MusicDBMusic):
         Returns:
             *Nothing*
         """
-        self.lostartists, self.lostalbums, self.lostsongs = self.FindLostPaths()
-        self.newpaths = self.FindNewPaths()
+        self.lostpaths = self.FindLostPaths()
+        self.lostartists = self.lostpaths["artists"]
+        self.lostalbums  = self.lostpaths["albums"]
+        self.lostsongs   = self.lostpaths["songs"]
+        self.lostpaths = self.FindNewPaths()
         self.newartists = self.newpaths["artists"]
         self.newalbums  = self.newpaths["albums"]
         self.newsongs   = self.newpaths["songs"]

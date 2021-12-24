@@ -109,17 +109,16 @@ class MusicDBMusic(object):
 
     def FindLostPaths(self):
         """
-        This method checks all artist, album and song entries if the paths to their related directories and files are still valid.
-        Entries with invalid paths gets returned in three lists: ``artists, albums, songs``
-
-        This method does not check if the song is cached in the Song Cache.
+        This method checks all artist, album song and video entries if the paths to their related directories and files are still valid.
+        Entries with invalid paths gets returned in as a list inside a dictionary.
 
         Returns:
-            A three lists of database entries with invalid paths. Empty lists if there is no invalid entrie.
+            A dictionary with 4 entries: ``"artists"``, ``"albums"``, ``"songs"`` and ``"videos"``.
         """
         lostartists = []
         lostalbums  = []
         lostsongs   = []
+        lostvideos  = []
 
         # Check Artists
         artists = self.db.GetAllArtists()
@@ -139,7 +138,18 @@ class MusicDBMusic(object):
             if not self.musicdirectory.IsFile(song["path"]):
                 lostsongs.append(song)
 
-        return lostartists, lostalbums, lostsongs
+        # Check Videos
+        videos = self.db.GetVideos()
+        for video in videos:
+            if not self.musicdirectory.IsFile(video["path"]):
+                lostvideos.append(video)
+
+        lostpaths = {}
+        lostpaths["artists"] = lostartists
+        lostpaths["albums"]  = lostalbums
+        lostpaths["songs"]   = lostsongs
+        lostpaths["videos"]  = lostvideos
+        return lostpaths
 
 
 
