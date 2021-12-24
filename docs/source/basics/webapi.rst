@@ -267,7 +267,8 @@ Albums
       SetAlbumOrigin,
       SetAlbumImportTime,
       SetAlbumColor,
-      AddAlbumToQueue
+      AddAlbumToQueue,
+      RemoveAlbumFromDatabase
 
 Songs
 ^^^^^
@@ -281,7 +282,8 @@ Songs
       GetSongRelationship,
       UpdateSongStatistic,
       CutSongRelationship,
-      PlayNextSong
+      PlayNextSong,
+      RemoveSongFromDatabase
 
 Videos
 ^^^^^^

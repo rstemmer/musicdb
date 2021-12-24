@@ -37,6 +37,7 @@ Albums
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumImportTime`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumFromDatabase`
 
 Songs
 
@@ -49,6 +50,7 @@ Songs
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromDatabase`
 
 Videos
 
@@ -490,6 +492,10 @@ class MusicDBWebSocketInterface(object):
             retval = self.RemoveSongFromQueue(args["entryid"])
         elif fncname == "RemoveVideoFromQueue":
             retval = self.RemoveVideoFromQueue(args["entryid"])
+        elif fncname == "RemoveSongFromDatabase":
+            retval = self.RemoveSongFromDatabase(args["songid"])
+        elif fncname == "RemoveAlbumFromDatabase":
+            retval = self.RemoveAlbumFromDatabase(args["albumid"])
         elif fncname == "CutSongRelationship":
             retval = self.CutSongRelationship(args["songid"], args["relatedsongid"])
             if method == "request":
@@ -3440,6 +3446,50 @@ class MusicDBWebSocketInterface(object):
             trackerdb.RemoveRelation("video", videoid, relatedvideoid)
         except Exception as e:
             logging.warning("Removing video relations failed with error: %s", str(e))
+        return None
+
+
+
+    def RemoveSongFromDatabase(self, songid):
+        """
+        This method removes a song from the database.
+        The related file in the Music Directory remains untouched.
+        All other information related to the song entry will be removed from the database as well.
+
+        Args:
+            songid (int): ID of the song to remove
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("RemoveSongFromDatabase", {songid: 23});
+        """
+        try:
+            self.music.RemoveSong(songid)
+        except Exception as e:
+            logging.warning("Removing song entry (%s) from database failed with error: %s", str(songid), str(e))
+        return None
+
+
+
+    def RemoveAlbumFromDatabase(self, albumid):
+        """
+        This method removes an album and all its songs from the database.
+        The related directory and files in the Music Directory remains untouched.
+        All other information related to the songs will be removed from the database as well.
+
+        Args:
+            albumid (int): ID of the album to remove
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("RemoveAlbumFromDatabase", {albumid: 42});
+        """
+        try:
+            self.music.RemoveAlbum(albumid)
+        except Exception as e:
+            logging.warning("Removing album entry (%s) from database failed with error: %s", str(albumid), str(e))
         return None
 
 
