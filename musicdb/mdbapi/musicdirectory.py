@@ -24,14 +24,14 @@ import logging
 import subprocess
 from pathlib import Path
 from typing  import Union, Optional
-from musicdb.lib.filesystem import Filesystem
+from musicdb.lib.fileprocessing import Fileprocessing
 
 
-class MusicDirectory(Filesystem):
+class MusicDirectory(Fileprocessing):
     """
     This class provides an interface to the Music Directory.
     The whole class assumes that it is used with an Unicode capable UNIX-style filesystem.
-    It is derived from :class:`musicdb.lib.filesystem.Filesystem`.
+    It is derived from :class:`musicdb.lib.fileprocessing.Fileprocessing`.
 
     In comparison to the :class:`~musicdb.mdbapi.music.MusicDBMusic`, only the files are on focus, not the music database.
     Keep in mind that applying some of the methods of this class can harm the connection between the database entries and their associated files.
@@ -40,7 +40,7 @@ class MusicDirectory(Filesystem):
         config: MusicDB configuration object
     """
     def __init__(self, config):
-        Filesystem.__init__(self, config.directories.music)
+        Fileprocessing.__init__(self, config.directories.music)
 
         self.cfg = config
 
