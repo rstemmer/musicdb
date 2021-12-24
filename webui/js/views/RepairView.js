@@ -59,6 +59,7 @@ class RepairBox extends Element
     Update(oldlist, newlist, namekey)
     {
         this.listold.Clear();
+        this.listnew.Clear();
         for(let olddata of oldlist)
         {
             let entry = new ListEntry();
