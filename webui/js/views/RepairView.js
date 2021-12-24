@@ -92,7 +92,7 @@ class RepairView extends MainSettingsView
 
     UpdateLostFilesList(lostfiles, newfiles)
     {
-        this.songrepairbox.Update(lostfiles["songs"], newfiles["songs"], "path");
+        this.songrepairbox.Update(lostfiles["songs"], newfiles["filteredsongs"], "path");
     }
 
 

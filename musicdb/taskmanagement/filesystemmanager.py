@@ -80,13 +80,13 @@ class FilesystemManager(TaskManager):
         #. Find all new files and directories via :meth:`musicdb.mdbapi.music.MusicDBMusic.FindNewPaths`
         #. Collect their path and check sum (this may take some time)
 
-        * `"newpaths"`
-            * `"artists"`, `"albums"`, `"songs"`, `"videos"`
+        * ``"newpaths"``
+            * ``"artists"``, ``"albums"``, ``"songs"``, ``"filteredsongs"``, ``"videos"``
                 * Each entry is a list of dictionaries
                 * All dictionaries have the entry `"path"`
                 * for `"songs"` and `"videos"` one entry is `"checksum"`
-        * `"lostpaths"`
-            * `"artists"`, `"albums"`, `"songs"`, `"videos"`
+        * ``"lostpaths"``
+            * ``"artists"``, ``"albums"``, ``"songs"``, ``"videos"``
                 * Each entry is a list of database entries as dictionary
 
         The found information are annotated to the task
@@ -140,9 +140,9 @@ class FilesystemManager(TaskManager):
 
         The returned dictionary has the following structure:
 
-        * `"artists"`, `"albums"`, `"songs"`, `"videos"` each a list of further dictionaries
-        * These dictionaries have a key `"path"` with paths relative to the Music Directory
-        * Song and Video entries have a key `"checksum"` that contains the checksum of the files for comparing them with the database entries
+        * ``"artists"``, ``"albums"``, ``"songs"``, ``"videos"`` each a list of further dictionaries
+        * These dictionaries have a key ``"path"`` with paths relative to the Music Directory
+        * Song and Video entries have a key ``"checksum"`` that contains the checksum of the files for comparing them with the database entries
 
         Return:
             A dictionary with lists as described above
@@ -167,6 +167,7 @@ class FilesystemManager(TaskManager):
         newpathinfos["artists"] = MakeDict(newpaths["artists"])
         newpathinfos["albums"]  = MakeDict(newpaths["albums"])
         newpathinfos["songs"]   = MakeDict(newpaths["songs"])
+        newpathinfos["filteredsongs"]   = MakeDict(newpaths["filteredsongs"])
         newpathinfos["videos"]  = MakeDict(newpaths["videos"])
         return newpathinfos
 

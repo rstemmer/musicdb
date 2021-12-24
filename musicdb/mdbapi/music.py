@@ -163,6 +163,11 @@ class MusicDBMusic(object):
 
         If a new directory was found, the subdirectories will also be added!
         So for a new album, the new songs are explicit added as well.
+        There is a special list called ``"filteredsongs"`` that is a subset of the songs list,
+        only listing new songs of known albums.
+        So if you rename a song inside an album that is imported in the database,
+        this song gets listed in the ``"songs"`` and ``"filteredsongs"`` list.
+        Songs inside a new album directory are only listed in the ``"songs"`` list.
 
         This method is very optimistic. It will also list empty directories.
         The user may want to check if the results of this method are valid for him.
@@ -172,13 +177,14 @@ class MusicDBMusic(object):
         It does not lead to an error that the old path is still in the database.
 
         Returns:
-            A dictionary with 4 entries: ``"artists"``, ``"albums"``, ``"songs"`` and ``"videos"``.
+            A dictionary with 5 entries: ``"artists"``, ``"albums"``, ``"songs"``, ``"filteredsongs"`` and ``"videos"``.
             Each a list of paths that are valid but unknown by the database. Empty lists if there is no valid entry.
         """
         newpaths = {}
         newpaths["artists"] = []
         newpaths["albums"]  = []
         newpaths["songs"]   = []
+        newpaths["filteredsongs"] = []
         newpaths["videos"]  = []
 
         self._UpdatePathsCaches()
@@ -206,6 +212,9 @@ class MusicDBMusic(object):
         for albumpath in albumpaths:
             newsongpaths = self.FindNewSongs(albumpath)
             newpaths["songs"].extend(newsongpaths)
+
+            if albumpath in knownalbumpaths:
+                newpaths["filteredsongs"].extend(newsongpaths)
 
         # Check Videos
         knownvideopaths = self.videopathscache

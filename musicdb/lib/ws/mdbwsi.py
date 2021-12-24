@@ -4228,11 +4228,11 @@ class MusicDBWebSocketInterface(object):
         #. Collect their path and check sum (this may take some time)
 
         The returned information has the following structure
-        * `"newpaths"`
-            * `"artists"`, `"albums"`, `"songs"`, `"videos"`
+        * ``"newpaths"``
+            * ``"artists"``, ``"albums"``, ``"songs"``, ``"filteredsongs"``, ``"videos"``
                 * Each entry is a list of paths as string
-        * `"lostpaths"`
-            * `"artists"`, `"albums"`, `"songs"`, `"videos"`
+        * ``"lostpaths"``
+            * ``"artists"``, ``"albums"``, ``"songs"``, ``"videos"``
                 * Each entry is a list of database entries as dictionary
 
         The found information are annotated to the task
