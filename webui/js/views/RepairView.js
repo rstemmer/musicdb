@@ -28,13 +28,29 @@ class RepairBox extends Element
         this.listbox.AppendChild(this.listold);
         this.listbox.AppendChild(this.listnew);
 
-        this.repairbutton = new TextButton("MusicDB", "Repair",
+        this.removefilebutton = new TextButton("MusicDB", "Remove File",
+            ()=>{return;},
+            "Todo");
+        this.removeentrybutton = new TextButton("MusicDB", "Remove Entry",
+            ()=>{return;},
+            "Todo");
+        this.renamefilebutton = new TextButton("MusicDB", "Rename File",
+            ()=>{return;},
+            "Todo");
+        this.updatepathbutton = new TextButton("MusicDB", "Update Path Value",
+            ()=>{return;},
+            "Todo");
+        this.updateentrybutton = new TextButton("MusicDB", "Update Song Entry",
             ()=>{return;},
             "Todo");
         this.toolbar = new ToolBar();
+        this.toolbar.AddButton(this.removeentrybutton);
         this.toolbar.AddSpacer(true);
-        this.toolbar.AddButton(this.repairbutton);
+        this.toolbar.AddButton(this.updateentrybutton);
+        this.toolbar.AddButton(this.updatepathbutton);
+        this.toolbar.AddButton(this.renamefilebutton);
         this.toolbar.AddSpacer(true);
+        this.toolbar.AddButton(this.removefilebutton);
 
         this.AppendChild(this.listbox);
         this.AppendChild(this.toolbar);
