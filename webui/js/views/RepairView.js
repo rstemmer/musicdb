@@ -31,19 +31,19 @@ class RepairBox extends Element
         this.listbox.AppendChild(this.listnew);
 
         this.removefilebutton = new TextButton("Remove", "Remove File",
-            ()=>{return;},
+            ()=>{this.onButtonClick("RemoveFile");},
             "Remove this file from the Music Directory");
         this.removeentrybutton = new TextButton("Remove", "Remove Database Entry",
-            ()=>{return;},
+            ()=>{this.onButtonClick("RemoveEntry");},
             "Remove this entry from the MusicDB Database.");
         this.renamefilebutton = new TextButton("MusicDB", "Move File",
-            ()=>{return;},
+            ()=>{this.onButtonClick("MoveFile");},
             "Move the new file to the old place where the old file has been.");
         this.updatepathbutton = new TextButton("MusicDB", "Update Path Value",
-            ()=>{return;},
+            ()=>{this.onButtonClick("UpdatePath");},
             "Update only the path value of the MusicDB Database entry to match the new file path.");
         this.updateentrybutton = new TextButton("Import", "Update Song Entry",
-            ()=>{return;},
+            ()=>{this.onButtonClick("UpdateEntry");},
             "Update the old MusicDB Database entry with all information from the new file.");
         this.toolbar = new ToolBar();
         this.toolbar.AddButton(this.removeentrybutton);
@@ -118,7 +118,31 @@ class RepairBox extends Element
             this.renamefilebutton.Disable();
             this.removefilebutton.Disable();
         }
+    }
 
+
+
+    onButtonClick(action)
+    {
+        let dbentry = this.listold.GetSelectedEntries()[0]; // \_ Either entry or undefined
+        let path    = this.listnew.GetSelectedEntries()[0]; // /
+
+        // TODO: Get song id…
+
+        switch(action)
+        {
+            case "RemoveFile":
+                break;
+            case "RemoveEntry":
+                //MusicDB_Call("RemoveSongFromDatabase", {songid: songid});
+                break;
+            case "MoveFile":
+                break;
+            case "UpdatePath":
+                break;
+            case "UpdateEntry":
+                break;
+        }
     }
 }
 
