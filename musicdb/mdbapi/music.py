@@ -714,10 +714,10 @@ class MusicDBMusic(object):
         This method updates a song entry and parts of the related album entry.
         The following steps will be done to do this:
 
-            #. Update the *path* entry of the album to the new path
+            #. Update the *path* entry of the song to the new path
             #. Reading the song files meta data
-            #. Analyse the path to collect further information from the filesystem
-            #. Update database entry with the new collected information
+            #. Analyse the path to collect further information from the file system
+            #. Update database entry with the new collected information including number of songs and CDs of the album entry.
 
         Updates information are:
 
@@ -729,7 +729,7 @@ class MusicDBMusic(object):
             * bitrate
             * checksum
 
-        Further more the following album information get updted:
+        Further more the following album information get updated:
 
             * numofsongs
             * numofcds
