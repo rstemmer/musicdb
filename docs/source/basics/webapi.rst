@@ -268,7 +268,7 @@ Albums
       SetAlbumImportTime,
       SetAlbumColor,
       AddAlbumToQueue,
-      RemoveAlbumFromDatabase
+      RemoveAlbumEntry
 
 Songs
 ^^^^^
@@ -283,8 +283,8 @@ Songs
       UpdateSongStatistic,
       CutSongRelationship,
       PlayNextSong,
-      RemoveSongFromDatabase,
-      UpdateSongDatabaseEntry
+      RemoveSongEntry,
+      UpdateSongEntry
 
 Videos
 ^^^^^^

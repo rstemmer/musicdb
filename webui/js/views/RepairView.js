@@ -252,7 +252,7 @@ class RepairBox extends Element
             case "RemoveEntry":
                 if(this.contenttype == "song")
                 {
-                    MusicDB_Call("RemoveSongFromDatabase", {songid: dbentry.id});
+                    MusicDB_Call("RemoveSongEntry", {songid: dbentry.id});
                     this.listold.RemoveEntry(entryold);
                 }
                 else
@@ -286,7 +286,7 @@ class RepairBox extends Element
             case "UpdateEntry":
                 if(this.contenttype == "song")
                 {
-                    MusicDB_Call("UpdateSongDatabaseEntry", {songid: dbentry.id, newpath: pathentry.path});
+                    MusicDB_Call("UpdateSongEntry", {songid: dbentry.id, newpath: pathentry.path});
                     this.listold.RemoveEntry(entryold);
                     this.listnew.RemoveEntry(entrynew);
                 }

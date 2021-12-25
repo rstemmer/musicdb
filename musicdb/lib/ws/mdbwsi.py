@@ -37,7 +37,7 @@ Albums
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumImportTime`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumFromDatabase`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumEntry`
 
 Songs
 
@@ -50,8 +50,8 @@ Songs
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromDatabase`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongDatabaseEntry`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongEntry`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongEntry`
 
 Videos
 
@@ -493,12 +493,12 @@ class MusicDBWebSocketInterface(object):
             retval = self.RemoveSongFromQueue(args["entryid"])
         elif fncname == "RemoveVideoFromQueue":
             retval = self.RemoveVideoFromQueue(args["entryid"])
-        elif fncname == "RemoveSongFromDatabase":
-            retval = self.RemoveSongFromDatabase(args["songid"])
-        elif fncname == "UpdateSongDatabaseEntry":
-            retval = self.UpdateSongDatabaseEntry(args["songid"], args["newpath"])
-        elif fncname == "RemoveAlbumFromDatabase":
-            retval = self.RemoveAlbumFromDatabase(args["albumid"])
+        elif fncname == "RemoveSongEntry":
+            retval = self.RemoveSongEntry(args["songid"])
+        elif fncname == "UpdateSongEntry":
+            retval = self.UpdateSongEntry(args["songid"], args["newpath"])
+        elif fncname == "RemoveAlbumEntry":
+            retval = self.RemoveAlbumEntry(args["albumid"])
         elif fncname == "CutSongRelationship":
             retval = self.CutSongRelationship(args["songid"], args["relatedsongid"])
             if method == "request":
@@ -3453,7 +3453,7 @@ class MusicDBWebSocketInterface(object):
 
 
 
-    def RemoveSongFromDatabase(self, songid):
+    def RemoveSongEntry(self, songid):
         """
         This method removes a song from the database.
         The related file in the Music Directory remains untouched.
@@ -3465,7 +3465,7 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB_Call("RemoveSongFromDatabase", {songid: 23});
+                MusicDB_Call("RemoveSongEntry", {songid: 23});
         """
         try:
             self.music.RemoveSong(songid)
@@ -3475,7 +3475,7 @@ class MusicDBWebSocketInterface(object):
 
 
 
-    def UpdateSongDatabaseEntry(self, songid, newpath):
+    def UpdateSongEntry(self, songid, newpath):
         """
         This method updates the database entry of the song with the ID *songid*.
         The information for the update come from the song file addressed by *newpath*.
@@ -3488,7 +3488,7 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB_Call("UpdateSongDatabaseEntry", {songid: 23, newpath: "Artist/2020 - Album/01 Updated Song.flac"});
+                MusicDB_Call("UpdateSongEntry", {songid: 23, newpath: "Artist/2020 - Album/01 Updated Song.flac"});
         """
         try:
             self.music.UpdateSong(songid, newpath)
@@ -3498,7 +3498,7 @@ class MusicDBWebSocketInterface(object):
 
 
 
-    def RemoveAlbumFromDatabase(self, albumid):
+    def RemoveAlbumEntry(self, albumid):
         """
         This method removes an album and all its songs from the database.
         The related directory and files in the Music Directory remains untouched.
@@ -3510,7 +3510,7 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB_Call("RemoveAlbumFromDatabase", {albumid: 42});
+                MusicDB_Call("RemoveAlbumEntry", {albumid: 42});
         """
         try:
             self.music.RemoveAlbum(albumid)
