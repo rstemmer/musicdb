@@ -281,6 +281,13 @@ class RepairBox extends Element
                 break;
 
             case "ImportFile":
+                if(this.contenttype == "song")
+                {
+                    MusicDB_Call("CreateSongEntry", {newpath: pathentry.path});
+                    this.listnew.RemoveEntry(entrynew);
+                }
+                else
+                    window.console?.warn(`Content type ${this.contenttype} cannot be imported.`);
                 break;
 
             case "UpdateEntry":

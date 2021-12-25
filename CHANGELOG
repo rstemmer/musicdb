@@ -35,7 +35,7 @@ Run  git log --oneline  for more details
 │    * New functions: CreateArtist,
 │       IntegrateContent, InitiateMusicImport, InitiateArtworkImport, InitiateFileystemScan,
 │       FindAlbumSongFiles, RenameMusicFile, RenameAlbumDirectory, ChangeArtistDirectory,
-│       RemoveSongEntry, RemoveAlbumEntry, UpdateSongEntry,
+│       RemoveSongEntry, RemoveAlbumEntry, UpdateSongEntry, CreateSongEntry,
 │       SetAlbumOrigin, SetAlbumImportTime, Bounce
 │    * Renamed: GetUploads -> GetCurrentTasks
 │ * Solved Issues: #68, #66, #65, #22, #27

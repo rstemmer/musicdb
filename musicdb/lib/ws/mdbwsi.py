@@ -50,8 +50,9 @@ Songs
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongEntry`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CreateSongEntry`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongEntry`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongEntry`
 
 Videos
 
@@ -497,6 +498,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.RemoveSongEntry(args["songid"])
         elif fncname == "UpdateSongEntry":
             retval = self.UpdateSongEntry(args["songid"], args["newpath"])
+        elif fncname == "CreateSongEntry":
+            retval = self.CreateSongEntry(args["newpath"])
         elif fncname == "RemoveAlbumEntry":
             retval = self.RemoveAlbumEntry(args["albumid"])
         elif fncname == "CutSongRelationship":
@@ -3471,6 +3474,34 @@ class MusicDBWebSocketInterface(object):
             self.music.RemoveSong(songid)
         except Exception as e:
             logging.warning("Removing song entry (%s) from database failed with error: %s", str(songid), str(e))
+        return None
+
+
+
+    def CreateSongEntry(self, newpath):
+        """
+        This method creates a new song entry in the database.
+        The song file is addressed by *newpath*.
+        This file must fulfill the MusicDB name scheme for song files.
+        The import is done via :meth:`musicdb.mdbapi.music.MusicDBMusic.AddSong`.
+
+        It is important that the album already exists in the database.
+        This method does not replace the :meth:`~InitiateMusicImport` which imports new albums or videos.
+        This method is supposed to be used to add a new song to an existing album.
+        The album entry gets updated as well (number of songs).
+
+        Args:
+            newpath (str): Path to the new song file relative to the music directory
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("CreateSongEntry", {newpath: "Artist/2020 - Album/01 Updated Song.flac"});
+        """
+        try:
+            self.music.AddSong(newpath)
+        except Exception as e:
+            logging.warning("Creating new song entry for \"%s\" failed with error: %s", str(newpath), str(e))
         return None
 
 
