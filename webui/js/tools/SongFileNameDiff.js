@@ -21,7 +21,7 @@ class NameDiffBase extends Element
 {
     constructor(classes)
     {
-        super("span", classes);
+        super("span", ["NameDiff", ...classes]);
         this.olddiff = "";
         this.newdiff = "";
     }
@@ -94,6 +94,7 @@ class NameDiffBase extends Element
     {
         this.olddiff = "";
         this.newdiff = "";
+        this.SetInnerHTML("");
     }
 
 }
@@ -102,9 +103,10 @@ class NameDiffBase extends Element
 
 class SongFileNameDiff extends NameDiffBase
 {
-    constructor()
+    constructor(oldname=null, newname=null)
     {
         super(["SongFileNameDiff"]);
+        this.UpdateDiff(oldname, newname);
     }
 
 
@@ -113,6 +115,10 @@ class SongFileNameDiff extends NameDiffBase
     UpdateDiff(oldname, newname)
     {
         this.ClearDiff();
+        if(oldname === null)
+            return "";
+        if(newname === null)
+            return "";
 
         // CD Prefix
         if(newname.maxcds > 1)
@@ -132,6 +138,10 @@ class SongFileNameDiff extends NameDiffBase
             this.olddiff += this.FormatInvalid(oldname.parts.cdnum);
             this.olddiff += this.FormatInvalid("-");
         }
+        else if(newname.parts.cdnum.length > 0)
+        {
+            this.newdiff += this.FormatInvalid(`${newname.parts.cdnum}-`);
+        }
         
         // Track Number
         this.AddDiffPart(
@@ -147,7 +157,15 @@ class SongFileNameDiff extends NameDiffBase
             newname.CheckSongName() == null,
             oldname.parts.name,
             newname.parts.name);
-        this.AddDiffText(`.${newname.parts.ext}`);
+        this.AddDiffText(".");
+
+        // Extension
+        let extvalid = newname.parts.ext == oldname.parts.ext;
+        this.AddDiffPart(
+            extvalid,
+            extvalid,
+            oldname.parts.ext,
+            newname.parts.ext);
 
         let diff = `${this.olddiff}&nbsp;➜&nbsp;${this.newdiff}`;
         this.SetInnerHTML(diff);
