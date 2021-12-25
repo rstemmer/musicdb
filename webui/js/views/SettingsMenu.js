@@ -102,7 +102,7 @@ class SettingsMenu extends LeftView
 
         this.views.push(repairview);
         this.AddMenuEntry(
-            new SVGIcon("MusicDB"),
+            new SVGIcon("Repair"),
             "Repair Database",
             ()=>{
                 MusicDB_Request("InitiateFilesystemScan", "ShowRepairView");

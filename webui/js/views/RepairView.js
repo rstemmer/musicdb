@@ -41,7 +41,7 @@ class RepairBox extends Element
         this.renamefilebutton = new TextButton("MusicDB", "Move File",
             ()=>{this.onButtonClick("MoveFile");},
             "Move the new file to the old place where the old file has been.");
-        this.updateentrybutton = new TextButton("Import", "Update Song Entry",
+        this.updateentrybutton = new TextButton("Repair", "Update Song Entry",
             ()=>{this.onButtonClick("UpdateEntry");},
             "Update the old MusicDB Database entry with all information from the new file.");
         this.importfilebutton = new TextButton("Import", "Import File",
