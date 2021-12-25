@@ -58,7 +58,7 @@ class RepairBox extends Element
         this.toolbar.AddButton(this.renamefilebutton);
         this.toolbar.AddSpacer(true);
         this.toolbar.AddButton(this.importfilebutton);
-        this.toolbar.AddButton(this.removefilebutton);
+        //this.toolbar.AddButton(this.removefilebutton);
 
         this.AppendChild(this.listbox);
         this.AppendChild(this.toolbar);
@@ -109,6 +109,29 @@ class RepairBox extends Element
         this.renamefilebutton.Enable();
         this.removefilebutton.Enable();
         this.importfilebutton.Enable();
+
+        if(entriesold.length === 1 && entriesnew.length === 1)
+        {
+            // Check if the entries are in the same album directory
+            let slicelength = 0;
+            if(this.contenttype == "song")
+                slicelength = 2;
+            else if(this.contenttype == "album" || this.contenttype == "video")
+                slicelength = 1;
+
+            let oldpath = entriesold[0].data.path;
+            let newpath = entriesnew[0].data.path;
+            let oldroot = oldpath.split("/").slice(0, slicelength).join("/");
+            let newroot = newpath.split("/").slice(0, slicelength).join("/");
+
+            if(oldroot !== newroot)
+            {
+                this.updateentrybutton.Disable();
+                this.updatepathbutton.Disable();
+                this.renamefilebutton.Disable();
+            }
+        }
+
         if(entriesold.length < 1)
         {
             this.removeentrybutton.Disable();
@@ -142,6 +165,7 @@ class RepairBox extends Element
         {
             case "RemoveFile":
                 break;
+
             case "RemoveEntry":
                 if(this.contenttype == "song")
                 {
@@ -151,8 +175,28 @@ class RepairBox extends Element
                 else
                     window.console?.warn(`Content type ${this.contenttype} cannot be removed from database.`);
                 break;
+
             case "MoveFile":
+                // Move file from new path to the old one
+                // So the new path should be the old one stored in the music database
+                let oldpath = dbentry.path;
+                let newpath = pathentry.path;
+                if(this.contenttype == "song")
+                {
+                    MusicDB_Call("RenameMusicFile", {oldpath: newpath, newpath: oldpath});
+                    this.listold.RemoveEntry(entryold);
+                    this.listnew.RemoveEntry(entrynew);
+                }
+                else if(this.contenttype == "album")
+                {
+                    MusicDB_Call("RenameAlbumDirectory", {oldpath: newpath, newpath: oldpath});
+                    this.listold.RemoveEntry(entryold);
+                    this.listnew.RemoveEntry(entrynew);
+                }
+                else
+                    window.console?.warn(`Files of content type ${this.contenttype} cannot be moved.`);
                 break;
+
             case "ImportFile":
                 break;
             case "UpdatePath":
