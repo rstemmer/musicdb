@@ -228,7 +228,16 @@ class RepairBox extends Element
                 break;
             case "UpdatePath":
                 break;
+
             case "UpdateEntry":
+                if(this.contenttype == "song")
+                {
+                    MusicDB_Call("UpdateSongDatabaseEntry", {songid: dbentry.id, newpath: pathentry.path});
+                    this.listold.RemoveEntry(entryold);
+                    this.listnew.RemoveEntry(entrynew);
+                }
+                else
+                    window.console?.warn(`Content type ${this.contenttype} cannot be updated.`);
                 break;
         }
     }

@@ -283,7 +283,8 @@ Songs
       UpdateSongStatistic,
       CutSongRelationship,
       PlayNextSong,
-      RemoveSongFromDatabase
+      RemoveSongFromDatabase,
+      UpdateSongDatabaseEntry
 
 Videos
 ^^^^^^

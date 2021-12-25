@@ -51,6 +51,7 @@ Songs
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromDatabase`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongDatabaseEntry`
 
 Videos
 
@@ -494,6 +495,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.RemoveVideoFromQueue(args["entryid"])
         elif fncname == "RemoveSongFromDatabase":
             retval = self.RemoveSongFromDatabase(args["songid"])
+        elif fncname == "UpdateSongDatabaseEntry":
+            retval = self.UpdateSongDatabaseEntry(args["songid"], args["newpath"])
         elif fncname == "RemoveAlbumFromDatabase":
             retval = self.RemoveAlbumFromDatabase(args["albumid"])
         elif fncname == "CutSongRelationship":
@@ -3468,6 +3471,29 @@ class MusicDBWebSocketInterface(object):
             self.music.RemoveSong(songid)
         except Exception as e:
             logging.warning("Removing song entry (%s) from database failed with error: %s", str(songid), str(e))
+        return None
+
+
+
+    def UpdateSongDatabaseEntry(self, songid, newpath):
+        """
+        This method updates the database entry of the song with the ID *songid*.
+        The information for the update come from the song file addressed by *newpath*.
+        The update is done via :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateSong`.
+
+        Args:
+            songid (int): ID of the song to update
+            newpath (str): Path to the new song file relative to the music directory
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("UpdateSongDatabaseEntry", {songid: 23, newpath: "Artist/2020 - Album/01 Updated Song.flac"});
+        """
+        try:
+            self.music.UpdateSong(songid, newpath)
+        except Exception as e:
+            logging.warning("Updating song entry (%s) to \"%s\" failed with error: %s", str(songid), str(newpath), str(e))
         return None
 
 
