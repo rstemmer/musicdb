@@ -45,6 +45,12 @@
     width:              45%;
 }
 
+.RepairBox .NameDiff
+{
+    display:            flex;
+    justify-content:    center;
+}
+
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */

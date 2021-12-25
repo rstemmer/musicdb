@@ -58,10 +58,17 @@ class RepairBox extends Element
 
         this.message_differentroot = new MessageBarWarning("Selected entries have different root directories!");
         this.message_differenttype = new MessageBarInfo("Selected entries have different file formats!");
+        this.message_invalidname   = new MessageBarError("Invalid file name");
+
+        this.namediff = null;
+        if(contenttype == "song")
+            this.namediff = new SongFileNameDiff();
 
         this.AppendChild(this.listbox);
         this.AppendChild(this.message_differentroot);
         this.AppendChild(this.message_differenttype);
+        this.AppendChild(this.message_invalidname);
+        this.AppendChild(this.namediff);
         this.AppendChild(this.toolbar);
     }
 
@@ -152,20 +159,77 @@ class RepairBox extends Element
                 }
             }
         }
+        else
+        {
+            this.message_differentroot.Hide();
+            this.message_differenttype.Hide();
+        }
 
-        if(entriesold.length < 1)
+        // Handle old list entry
+        let oldname = null;
+        if(entriesold.length === 1)
+        {
+            let oldpath = entriesold[0].data.path;
+            let oldfile = oldpath.split("/").slice(-1)[0];
+            window.console?.log(oldfile);
+            if(this.contenttype == "song")
+                oldname = new SongFileName(oldfile);
+        }
+        else
         {
             this.removeentrybutton.Disable();
             this.updateentrybutton.Disable();
             this.renamefilebutton.Disable();
         }
-        if(entriesnew.length < 1)
+
+        // Handle new list entry
+        let newname = null;
+        if(entriesnew.length === 1)
         {
+            let newpath = entriesnew[0].data.path;
+            let newfile = newpath.split("/").slice(-1)[0];
+            window.console?.log(newfile);
+            if(this.contenttype == "song")
+            {
+                newname = new SongFileName(newfile);
+                // Check Parts
+                let cdnumerror = newname.CheckCDNumber();
+                let trackerror = newname.CheckTrackNumber();
+                let nameerror  = newname.CheckSongName();
+
+                // Compose Error Message
+                let errors = "";
+                if(cdnumerror)
+                    errors += `${cdnumerror} `;
+                if(trackerror)
+                    errors += `${trackerror} `;
+                if(nameerror)
+                    errors += `${nameerror}`;
+
+                // Set Error is existing
+                if(errors.length > 0)
+                {
+                    this.message_invalidname.UpdateMessage(`Invalid file name: ${errors}`);
+                    this.message_invalidname.Show();
+                    this.importfilebutton.Disable();
+                    this.updateentrybutton.Disable();
+                }
+                else
+                    this.message_invalidname.Hide();
+            }
+        }
+        else
+        {
+            this.message_invalidname.Hide();
+
             this.updateentrybutton.Disable();
             this.renamefilebutton.Disable();
             this.removefilebutton.Disable();
             this.importfilebutton.Disable();
         }
+
+        // Update name difference information
+        this.namediff.UpdateDiff(oldname, newname);
     }
 
 
