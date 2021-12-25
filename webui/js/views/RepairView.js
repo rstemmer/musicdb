@@ -18,9 +18,11 @@
 
 class RepairBox extends Element
 {
-    constructor()
+    // contenttype: "song", "album"
+    constructor(contenttype)
     {
         super("div", ["RepairBox", "flex", "flex-column"]);
+        this.contenttype = contenttype;
 
         this.listbox = new Element("div", ["listbox", "flex", "flex-row"]);
         this.listold = new List("Invalid Paths");
@@ -75,15 +77,13 @@ class RepairBox extends Element
         this.Clear();
         for(let olddata of oldlist)
         {
-            let entry = new ListEntry();
-            entry.SetInnerText(olddata[namekey]);
+            let entry = new ListEntry(olddata[namekey], olddata);
             entry.SetClickEventCallback(()=>{this.onListEntryClick();});
             this.listold.AddEntry(entry);
         }
         for(let newdata of newlist)
         {
-            let entry = new ListEntry();
-            entry.SetInnerText(newdata[namekey]);
+            let entry = new ListEntry(newdata[namekey], newdata);
             entry.SetClickEventCallback(()=>{this.onListEntryClick();});
             this.listnew.AddEntry(entry);
         }
@@ -124,17 +124,26 @@ class RepairBox extends Element
 
     onButtonClick(action)
     {
-        let dbentry = this.listold.GetSelectedEntries()[0]; // \_ Either entry or undefined
-        let path    = this.listnew.GetSelectedEntries()[0]; // /
+        let entryold  = this.listold.GetSelectedEntries()[0]; // \_ Either entry or undefined
+        let entrynew  = this.listnew.GetSelectedEntries()[0]; // /
+        let dbentry   = entryold?.data;
+        let pathentry = entrynew?.data;
 
-        // TODO: Get song id…
+        window.console?.log(dbentry);
+        window.console?.log(pathentry);
 
         switch(action)
         {
             case "RemoveFile":
                 break;
             case "RemoveEntry":
-                //MusicDB_Call("RemoveSongFromDatabase", {songid: songid});
+                if(this.contenttype == "song")
+                {
+                    MusicDB_Call("RemoveSongFromDatabase", {songid: dbentry.id});
+                    this.listold.RemoveEntry(entryold);
+                }
+                else
+                    window.console?.warn(`Content type ${this.contenttype} cannot be removed from database.`);
                 break;
             case "MoveFile":
                 break;
@@ -159,7 +168,7 @@ class RepairView extends MainSettingsView
         super("TaskListView", title, descr);
         let headline = new SettingsHeadline(title, descr);
 
-        this.songrepairbox = new RepairBox();
+        this.songrepairbox = new RepairBox("song"); // content type is songs
 
         this.ResetUI();
     }
