@@ -108,8 +108,8 @@ class TaskStatusText extends StatusText
             case "importfailed"         : super("Import Failed",            "bad");    break;
             case "importcomplete"       : super("Import Succeeded",         "good");   break;
             case "scanningfs"           : super("Scanning File System",     "active"); break;
-            case "scanfsfailed"         : super("File System Scan Succeeded","good");  break;
-            case "scanfscomplete"       : super("File System Scan Failed",  "bad");    break;
+            case "fsscancomplete"       : super("File System Scan Succeeded","good");  break;
+            case "fsscanfailed"         : super("File System Scan Failed",  "bad");    break;
             case "remove"               : super("Removing Upload",          "active"); break;
             default                     : super(`Invalid State \"${taskstatus}\"!`, "bad"); break;
         }
