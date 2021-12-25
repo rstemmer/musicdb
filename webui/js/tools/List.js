@@ -124,14 +124,35 @@ class List extends Element
 
 class ListEntry extends Element
 {
-    constructor(onclick=null, classes=[], id=null)
+    // Data: data annotated to the entry
+    constructor(label="", data=null, onclick=null, classes=[], id=null)
     {
         super("div", ["ListEntry", "hoverframe", ...classes], id);
         this.onclickusercallback   = null;
         this.onclickparentcallback = null; // expects one parameter: this entry
         this.element.onclick       = ()=>{this.onClick();};
+        this.data                  = data;
 
+        this.SetLabel(label);
         this.SetClickEventCallback(onclick);
+    }
+
+
+
+    SetLabel(label)
+    {
+        let labelelement;
+        if(typeof label === "string")
+        {
+            labelelement = new Element("span");
+            labelelement.SetInnerText(label);
+        }
+        else
+        {
+            labelelement = label;
+        }
+        this.RemoveChilds();
+        this.AppendChild(labelelement);
     }
 
 
