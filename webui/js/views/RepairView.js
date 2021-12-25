@@ -47,6 +47,9 @@ class RepairBox extends Element
         this.updateentrybutton = new TextButton("Import", "Update Song Entry",
             ()=>{this.onButtonClick("UpdateEntry");},
             "Update the old MusicDB Database entry with all information from the new file.");
+        this.importfilebutton = new TextButton("Import", "Import File",
+            ()=>{this.onButtonClick("ImportFile");},
+            "Import this file into the MusicDB Database. It will be add to the existing Album.");
         this.toolbar = new ToolBar();
         this.toolbar.AddButton(this.removeentrybutton);
         this.toolbar.AddSpacer(true);
@@ -54,6 +57,7 @@ class RepairBox extends Element
         this.toolbar.AddButton(this.updatepathbutton);
         this.toolbar.AddButton(this.renamefilebutton);
         this.toolbar.AddSpacer(true);
+        this.toolbar.AddButton(this.importfilebutton);
         this.toolbar.AddButton(this.removefilebutton);
 
         this.AppendChild(this.listbox);
@@ -104,6 +108,7 @@ class RepairBox extends Element
         this.updatepathbutton.Enable();
         this.renamefilebutton.Enable();
         this.removefilebutton.Enable();
+        this.importfilebutton.Enable();
         if(entriesold.length < 1)
         {
             this.removeentrybutton.Disable();
@@ -117,6 +122,7 @@ class RepairBox extends Element
             this.updatepathbutton.Disable();
             this.renamefilebutton.Disable();
             this.removefilebutton.Disable();
+            this.importfilebutton.Disable();
         }
     }
 
@@ -146,6 +152,8 @@ class RepairBox extends Element
                     window.console?.warn(`Content type ${this.contenttype} cannot be removed from database.`);
                 break;
             case "MoveFile":
+                break;
+            case "ImportFile":
                 break;
             case "UpdatePath":
                 break;
