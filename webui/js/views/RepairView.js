@@ -41,9 +41,6 @@ class RepairBox extends Element
         this.renamefilebutton = new TextButton("MusicDB", "Move File",
             ()=>{this.onButtonClick("MoveFile");},
             "Move the new file to the old place where the old file has been.");
-        this.updatepathbutton = new TextButton("MusicDB", "Update Path Value",
-            ()=>{this.onButtonClick("UpdatePath");},
-            "Update only the path value of the MusicDB Database entry to match the new file path.");
         this.updateentrybutton = new TextButton("Import", "Update Song Entry",
             ()=>{this.onButtonClick("UpdateEntry");},
             "Update the old MusicDB Database entry with all information from the new file.");
@@ -54,7 +51,6 @@ class RepairBox extends Element
         this.toolbar.AddButton(this.removeentrybutton);
         this.toolbar.AddSpacer(true);
         this.toolbar.AddButton(this.updateentrybutton);
-        this.toolbar.AddButton(this.updatepathbutton);
         this.toolbar.AddButton(this.renamefilebutton);
         this.toolbar.AddSpacer(true);
         this.toolbar.AddButton(this.importfilebutton);
@@ -110,7 +106,6 @@ class RepairBox extends Element
 
         this.removeentrybutton.Enable();
         this.updateentrybutton.Enable();
-        this.updatepathbutton.Enable();
         this.renamefilebutton.Enable();
         this.removefilebutton.Enable();
         this.importfilebutton.Enable();
@@ -132,7 +127,6 @@ class RepairBox extends Element
             if(oldroot !== newroot)
             {
                 this.updateentrybutton.Disable();
-                this.updatepathbutton.Disable();
                 this.renamefilebutton.Disable();
 
                 this.message_differentroot.Show();
@@ -163,13 +157,11 @@ class RepairBox extends Element
         {
             this.removeentrybutton.Disable();
             this.updateentrybutton.Disable();
-            this.updatepathbutton.Disable();
             this.renamefilebutton.Disable();
         }
         if(entriesnew.length < 1)
         {
             this.updateentrybutton.Disable();
-            this.updatepathbutton.Disable();
             this.renamefilebutton.Disable();
             this.removefilebutton.Disable();
             this.importfilebutton.Disable();
@@ -225,8 +217,6 @@ class RepairBox extends Element
                 break;
 
             case "ImportFile":
-                break;
-            case "UpdatePath":
                 break;
 
             case "UpdateEntry":
