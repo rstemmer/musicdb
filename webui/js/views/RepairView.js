@@ -60,7 +60,12 @@ class RepairBox extends Element
         this.toolbar.AddButton(this.importfilebutton);
         //this.toolbar.AddButton(this.removefilebutton);
 
+        this.message_differentroot = new MessageBarWarning("Selected entries have different root directories!");
+        this.message_differenttype = new MessageBarInfo("Selected entries have different file formats!");
+
         this.AppendChild(this.listbox);
+        this.AppendChild(this.message_differentroot);
+        this.AppendChild(this.message_differenttype);
         this.AppendChild(this.toolbar);
     }
 
@@ -129,6 +134,28 @@ class RepairBox extends Element
                 this.updateentrybutton.Disable();
                 this.updatepathbutton.Disable();
                 this.renamefilebutton.Disable();
+
+                this.message_differentroot.Show();
+            }
+            else
+            {
+                this.message_differentroot.Hide();
+            }
+
+            // Check if both entries have the same file type
+            if(this.contenttype == "song" || this.contenttype == "video")
+            {
+                let oldtype = oldpath.split(".").slice(-1)[0]
+                let newtype = newpath.split(".").slice(-1)[0]
+                if(oldtype !== newtype)
+                {
+                    this.renamefilebutton.Disable();
+                    this.message_differenttype.Show();
+                }
+                else
+                {
+                    this.message_differenttype.Hide();
+                }
             }
         }
 
