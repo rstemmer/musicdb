@@ -24,7 +24,7 @@ Artists
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums` (Alternative: GetFilteredArtistsWithAlbums)
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetFilteredArtistsWithVideos`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CreateArtist`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CreateArtistEntry`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateArtistEntry`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveArtistEntry`
 
@@ -365,8 +365,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.RenameAlbumDirectory(args["oldpath"], args["newpath"])
         elif fncname == "RenameArtistDirectory":
             retval = self.RenameArtistDirectory(args["oldpath"], args["newpath"])
-        elif fncname == "CreateArtist":
-            retval = self.CreateArtist(args["name"])
+        elif fncname == "CreateArtistEntry":
+            retval = self.CreateArtistEntry(args["name"])
         elif fncname == "RemoveArtistEntry":
             retval = self.RemoveArtistEntry(args["artistid"])
         elif fncname == "UpdateArtistEntry":
@@ -4141,7 +4141,7 @@ class MusicDBWebSocketInterface(object):
 
 
 
-    def CreateArtist(self, name):
+    def CreateArtistEntry(self, name):
         """
         This method creates a new Artist with the name ``name``.
 

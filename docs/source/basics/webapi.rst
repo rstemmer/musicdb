@@ -253,7 +253,7 @@ Artists
    :members: GetArtists,
       GetArtistsWithAlbums,
       GetFilteredArtistsWithVideos,
-      CreateArtist,
+      CreateArtistEntry,
       UpdateArtistEntry,
       RemoveArtistEntry
 

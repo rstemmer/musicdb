@@ -37,7 +37,7 @@ Run  git log --oneline  for more details
 │       FindAlbumSongFiles, RenameMusicFile, RenameAlbumDirectory, RenameArtistDirectory, ChangeArtistDirectory,
 │       RemoveSongEntry, RemoveAlbumEntry, RemoveArtistEntry,
 │       UpdateAlbumEntry, UpdateSongEntry, UpdateArtistEntry,
-│       CreateSongEntry, CreateArtist,
+│       CreateSongEntry, CreateArtistEntry,
 │       SetAlbumOrigin, SetAlbumImportTime, Bounce
 │    * Renamed: GetUploads -> GetCurrentTasks
 │ * Solved Issues: #68, #66, #65, #22, #27

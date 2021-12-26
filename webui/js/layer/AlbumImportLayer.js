@@ -226,7 +226,7 @@ class AlbumImportLayer extends Layer
         {
             this.tasks.AddTask(`Create Artist: ${artistdirectoryname}`,
                 (webuitaskid)=>{
-                    MusicDB_Request("CreateArtist", "ConfirmAlbumImportTask",
+                    MusicDB_Request("CreateArtistEntry", "ConfirmAlbumImportTask",
                         {name: artistdirectoryname},
                         {webuitaskid: webuitaskid});
                     return "active";},
