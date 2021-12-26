@@ -226,10 +226,10 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
         this.validationstatuscallback = validationstatuscallback;
         this.oldpath = "";
 
-        this.oldartistname = new ArtistDirectoryName();
-        this.newartistname = new ArtistDirectoryName();
-        this.oldalbumname  = new AlbumDirectoryName();
-        this.newalbumname  = new AlbumDirectoryName();
+        this.oldartistdir = new ArtistDirectoryName();
+        this.newartistdir = new ArtistDirectoryName();
+        this.oldalbumdir  = new AlbumDirectoryName();
+        this.newalbumdir  = new AlbumDirectoryName();
 
         this.artistdiff    = new ArtistDirectoryNameDiff();
         this.albumdiff     = new AlbumDirectoryNameDiff();
@@ -275,19 +275,37 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
         let releaseyear = this.releaseyearinput.GetValue();
 
         // Update new*name objects
-        this.newartistname.SetArtistName(artistname);
-        this.newalbumname.SetAlbumName(albumname);
-        this.newalbumname.SetReleaseYear(releaseyear, false); // do not validate for life preview
+        this.newartistdir.SetArtistName(artistname);
+        this.newalbumdir.SetAlbumName(albumname);
+        this.newalbumdir.SetReleaseYear(releaseyear, false); // do not validate for life preview
+
+        // Check Parts
+        let artistnameerror = this.newartistdir.CheckArtistName();
+        let albumnameerror  = this.newalbumdir.CheckAlbumName();
+        let releaseerror    = this.newalbumdir.CheckReleaseYear();
+
+        // Compose Error Message
+        let errors = "";
+        if(artistnameerror)
+            errors += `${artistnameerror} `;
+        if(albumnameerror)
+            errors += `${albumnameerror} `;
+        if(releaseerror)
+            errors += `${releaseerror}`;
+
+        // Set Error if existing
+        if(errors.length > 0)
+            this.datainvalidmessage.Show();
+        else
+            this.datainvalidmessage.Hide();
 
         // Update diffs
-        this.artistdiff.UpdateDiff(this.oldartistname, this.newartistname);
-        this.albumdiff.UpdateDiff(this.oldalbumname, this.newalbumname);
-
-        // Full path diff
         const grayspan  = `<span style="color: var(--color-gray)">`;
         const closespan = `</span>`;
         const grayslash = `${grayspan}/${closespan}`;
         const grayarrow = `${grayspan}&nbsp;➜&nbsp;${closespan}`;
+        this.artistdiff.UpdateDiff(this.oldartistdir, this.newartistdir);
+        this.albumdiff.UpdateDiff(this.oldalbumdir, this.newalbumdir);
 
         let oldpathhtml = "";
         oldpathhtml += this.artistdiff.olddiff;
@@ -303,18 +321,11 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
             pathdiff = `${oldpathhtml}${grayarrow}${newpathhtml}`;
         else
             pathdiff = newpathhtml;
-
-        // Update visualisation of path validation
         this.newpathelement.RemoveChilds();
         this.newpathelement.SetInnerHTML(pathdiff);
 
         // Check and propagate validation status
         let validationstatus = this.CheckIfValid();
-        if(validationstatus !== true)
-            this.datainvalidmessage.Show();
-        else
-            this.datainvalidmessage.Hide();
-
         if(typeof this.validationstatuscallback === "function")
             this.validationstatuscallback(validationstatus);
         return;
@@ -325,7 +336,7 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
     GetArtistDirectoryName()
     {
         let artistname = this.artistnameinput.GetValue();
-        artistname = this.newartistname.MakeValidArtistName(artistname);
+        artistname = this.newartistdir.MakeValidArtistName(artistname);
         return artistname;
     }
 
@@ -357,7 +368,10 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
             renamerequest = new Object();
             renamerequest.newname = newdirectoryname;
             renamerequest.oldname = olddirectoryname;
-            renamerequest.htmldiff= this.albumdiff;
+
+            let oldalbumdir = new AlbumDirectoryName(olddirectoryname);
+            let newalbumdir = new AlbumDirectoryName(newdirectoryname);
+            renamerequest.htmldiff= this.albumdiff.UpdateDiff(oldalbumdir, newalbumdir);
         }
         return renamerequest;
     }
@@ -374,7 +388,10 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
             renamerequest = new Object();
             renamerequest.newname = newdirectoryname;
             renamerequest.oldname = olddirectoryname;
-            renamerequest.htmldiff= this.artistdiff;
+
+            let oldartistdir = new ArtistDirectoryName(olddirectoryname);
+            let newartistdir = new ArtistDirectoryName(newdirectoryname);
+            renamerequest.htmldiff= this.artistdiff.UpdateDiff(oldartistdir, newartistdir);
         }
         return renamerequest;
     }
@@ -389,8 +406,8 @@ class AlbumPathSettingsTable extends AlbumSettingsTable
         else
             this.oldpath = albumpath;
 
-        this.oldartistname = new ArtistDirectoryName(this.oldpath.split("/")[0]);
-        this.oldalbumname  = new AlbumDirectoryName( this.oldpath.split("/")[1]);
+        this.oldartistdir = new ArtistDirectoryName(this.oldpath.split("/")[0]);
+        this.oldalbumdir  = new AlbumDirectoryName( this.oldpath.split("/")[1]);
 
         this.artistnameinput.SetValue(artistname);
         this.albumnameinput.SetValue(albumname);
