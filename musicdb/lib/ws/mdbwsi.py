@@ -37,6 +37,7 @@ Albums
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumImportTime`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateAlbumEntry`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumEntry`
 
 Songs
@@ -502,6 +503,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.CreateSongEntry(args["newpath"])
         elif fncname == "RemoveAlbumEntry":
             retval = self.RemoveAlbumEntry(args["albumid"])
+        elif fncname == "UpdateAlbumEntry":
+            retval = self.UpdateAlbumEntry(args["albumid"], args["newpath"])
         elif fncname == "CutSongRelationship":
             retval = self.CutSongRelationship(args["songid"], args["relatedsongid"])
             if method == "request":
@@ -3525,6 +3528,30 @@ class MusicDBWebSocketInterface(object):
             self.music.UpdateSong(songid, newpath)
         except Exception as e:
             logging.warning("Updating song entry (%s) to \"%s\" failed with error: %s", str(songid), str(newpath), str(e))
+        return None
+
+
+
+    def UpdateAlbumEntry(self, albumid, newpath):
+        """
+        This method updates the database entry of the album with the ID *albumid*.
+        The information for the update come from the directory addressed by *newpath*.
+        The update is done via :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateAlbum`.
+        All songs inside the directory get updated via :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateSong` as well.
+
+        Args:
+            songid (int): ID of the album to update
+            newpath (str): Path to the new album directory relative to the music directory
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("UpdateAlbumEntry", {albumid: 1337, newpath: "Artist/2020 - Updated Album"});
+        """
+        try:
+            self.music.UpdateAlbum(albumid, newpath)
+        except Exception as e:
+            logging.warning("Updating album entry (%s) to \"%s\" failed with error: %s", str(albumid), str(newpath), str(e))
         return None
 
 

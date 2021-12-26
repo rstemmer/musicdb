@@ -268,6 +268,7 @@ Albums
       SetAlbumImportTime,
       SetAlbumColor,
       AddAlbumToQueue,
+      UpdateAlbumEntry,
       RemoveAlbumEntry
 
 Songs
