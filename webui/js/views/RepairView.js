@@ -75,7 +75,8 @@ class RepairBox extends Element
         this.toolbar.AddButton(this.updateentrybutton);
         this.toolbar.AddButton(this.renamefilebutton);
         this.toolbar.AddSpacer(true);
-        this.toolbar.AddButton(this.importfilebutton);
+        if(contenttype != "artist")
+            this.toolbar.AddButton(this.importfilebutton);
         //this.toolbar.AddButton(this.removefilebutton);
 
         this.message_differentroot = new MessageBarWarning("Selected entries have different root directories!");
@@ -88,6 +89,8 @@ class RepairBox extends Element
             this.namediff = new SongFileNameDiff();
         else if(contenttype == "album")
             this.namediff = new AlbumDirectoryNameDiff();
+        else if(contenttype == "artist")
+            this.namediff = new ArtistDirectoryNameDiff();
 
         this.AppendChild(this.listbox);
         this.AppendChild(this.message_differentroot);
@@ -215,6 +218,8 @@ class RepairBox extends Element
                 oldname = new SongFileName(oldfile);
             else if(this.contenttype == "album")
                 oldname = new AlbumDirectoryName(oldfile);
+            else if(this.contenttype == "artist")
+                oldname = new ArtistDirectoryName(oldfile);
         }
         else
         {
@@ -283,6 +288,28 @@ class RepairBox extends Element
                 else
                     this.message_invalidname.Hide();
             }
+            else if(this.contenttype == "artist")
+            {
+                newname = new ArtistDirectoryName(newfile);
+                // Check Parts
+                let nameerror = newname.CheckArtistName();
+
+                // Compose Error Message
+                let errors = "";
+                if(nameerror)
+                    errors += `${nameerror}`;
+
+                // Set Error is existing
+                if(errors.length > 0)
+                {
+                    this.message_invalidname.UpdateMessage(`Invalid directory name: ${errors}`);
+                    this.message_invalidname.Show();
+                    this.importfilebutton.Disable();
+                    this.updateentrybutton.Disable();
+                }
+                else
+                    this.message_invalidname.Hide();
+            }
         }
         else
         {
@@ -336,6 +363,8 @@ class RepairBox extends Element
                     MusicDB_Call("RenameMusicFile", {oldpath: newpath, newpath: oldpath});
                 else if(this.contenttype == "album")
                     MusicDB_Call("RenameAlbumDirectory", {oldpath: newpath, newpath: oldpath});
+                else if(this.contenttype == "artist")
+                    MusicDB_Call("RenameArtistDirectory", {oldpath: newpath, newpath: oldpath});
                 else
                     window.console?.warn(`${this.databaseelement} ${this.filesystemelement} cannot be moved.`);
 
@@ -386,8 +415,9 @@ class RepairView extends MainSettingsView
         let headline = new SettingsHeadline(title, descr);
 
         this.message_loading = new MessageBarProcessing("Scanning file system and database …");
-        this.songrepairbox   = new RepairBox("song"); // content type is songs
-        this.albumrepairbox  = new RepairBox("album"); // content type is songs
+        this.songrepairbox   = new RepairBox("song");   // content type is songs
+        this.albumrepairbox  = new RepairBox("album");  // content type is album
+        this.artistrepairbox = new RepairBox("artist"); // content type is artist
 
         this.ResetUI();
     }
@@ -409,6 +439,7 @@ class RepairView extends MainSettingsView
         this.AppendChild(this.message_loading);
         this.AppendChild(this.songrepairbox);
         this.AppendChild(this.albumrepairbox);
+        this.AppendChild(this.artistrepairbox);
     }
 
 
@@ -417,12 +448,14 @@ class RepairView extends MainSettingsView
     {
         this.songrepairbox.Update(lostfiles["songs"], newfiles["filteredsongs"], "path");
         this.albumrepairbox.Update(lostfiles["albums"], newfiles["albums"], "path");
+        this.artistrepairbox.Update(lostfiles["artists"], newfiles["artists"], "path");
     }
 
     ClearLostFilesLists()
     {
         this.songrepairbox.Clear();
         this.albumrepairbox.Clear();
+        this.artistrepairbox.Clear();
     }
 
 
