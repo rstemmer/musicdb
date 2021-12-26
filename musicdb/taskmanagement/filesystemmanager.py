@@ -49,6 +49,7 @@ class FilesystemManager(TaskManager):
     def InitiateFilesystemScan(self):
         """
         This method initiates a file system scan.
+        It sets the task state to ``"startfsscan"`` and the content type to ``"any"``.
 
         Args:
             taskid (str): ID of the task that performed the upload
@@ -62,7 +63,8 @@ class FilesystemManager(TaskManager):
             ValueError: When one of the parameters has an unexpected value
         """
         task = self.CreateNewTask()
-        task["state"] = "startfsscan"
+        task["state"]       = "startfsscan"
+        task["contenttype"] = "any"
 
         self.SaveTask(task)
         self.ScheduleTask(task)

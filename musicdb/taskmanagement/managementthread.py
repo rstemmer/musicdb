@@ -70,7 +70,7 @@ The following keys are in dictionary that represent a task:
     * Unrelated information
         * ``"id"`` (str): The task ID
         * ``"state"`` (str): One of the task states listed above
-        * ``"contenttype"`` (str): Type of the content: (``"video"``, ``"albumfile"``, ``"artwork"``). An album file can a song but also a booklet PDF, a video clip or any other additional content of an album.
+        * ``"contenttype"`` (str): Type of the content: (``"video"``, ``"albumfile"``, ``"artwork"``, ``"any"``). An album file can a song but also a booklet PDF, a video clip or any other additional content of an album.
         * ``"mimetype"`` (str): MIME-Type of the file (For example ``"image/png"``)
         * ``"annotations"`` (dict): Additional annotations that can be provided by the user and be optionally used by some task processing.
         * ``"initializationtime"`` (int): The unix time stamp when the task has been created

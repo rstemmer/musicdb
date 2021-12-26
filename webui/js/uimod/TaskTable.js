@@ -67,7 +67,8 @@ class TaskTableRow extends TaskTableRowBase
     {
         const contenticonmap = {video:     "VideoFile",
                                 artwork:   "ArtworkFile",
-                                albumfile: "AlbumFile"};
+                                albumfile: "AlbumFile",
+                                any:       "MusicDB"};
 
         let taskid    = task.id;
         let mimetype  = task.mimetype;    // audio/*, video/*, image/*, …

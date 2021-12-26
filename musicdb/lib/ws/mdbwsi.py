@@ -4347,6 +4347,7 @@ class MusicDBWebSocketInterface(object):
             * *videos*: A list of all video related tasks
             * *albumfiles*: A song or any other album content processed as part of an album upload
             * *artworks*: Artwork uploads and import
+            * *any*: Can be anything. Depends on the task.
 
         Returns:
             a list with information about all yet unprocessed uploads
@@ -4365,6 +4366,7 @@ class MusicDBWebSocketInterface(object):
                     console.log(args.albums);
                     console.log(args.videos);
                     console.log(args.artworks);
+                    console.log(args["any"]);
                 }
         """
         tasksdict = self.taskmanager.GetTasks()
@@ -4373,6 +4375,7 @@ class MusicDBWebSocketInterface(object):
         retval["albumfiles"] = []
         retval["albums"]     = []
         retval["artworks"]   = []
+        retval["any"]        = []
         for key, task in tasksdict.items():
             contenttype = task["contenttype"]
             if contenttype == "video":
@@ -4383,6 +4386,8 @@ class MusicDBWebSocketInterface(object):
                 contentlist = "albums"
             elif contenttype == "artwork":
                 contentlist = "artworks"
+            elif contenttype == "any":
+                contentlist = "any"
             else:
                 logging.debug("Unexpected content type \"%s\" will be ignored", contenttype);
                 continue
