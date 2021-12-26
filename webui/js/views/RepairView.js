@@ -347,6 +347,8 @@ class RepairBox extends Element
                     MusicDB_Call("RemoveSongEntry", {songid: dbentry.id});
                 else if(this.contenttype == "album")
                     MusicDB_Call("RemoveAlbumEntry", {albumid: dbentry.id});
+                else if(this.contenttype == "artist")
+                    MusicDB_Call("RemoveArtistEntry", {artistid: dbentry.id});
                 else
                     window.console?.warn(`${this.databaseelement} ${this.filesystemelement} cannot be removed from database.`);
 
@@ -391,6 +393,8 @@ class RepairBox extends Element
                     MusicDB_Call("UpdateSongEntry", {songid: dbentry.id, newpath: pathentry.path});
                 else if(this.contenttype == "album")
                     MusicDB_Call("UpdateAlbumEntry", {albumid: dbentry.id, newpath: pathentry.path});
+                else if(this.contenttype == "artist")
+                    MusicDB_Call("UpdateArtistEntry", {artistid: dbentry.id, newpath: pathentry.path});
                 else
                     window.console?.warn(`${this.databaseelement} ${this.filesystemelement} cannot be updated.`);
 
