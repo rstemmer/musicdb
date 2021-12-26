@@ -32,21 +32,43 @@ class RepairBox extends Element
         this.listbox.AppendChild(this.listold);
         this.listbox.AppendChild(this.listnew);
 
-        this.removefilebutton = new TextButton("Remove", "Remove File",
+        this.filesystemelement;
+        if(contenttype == "song" || contenttype == "video")
+            this.filesystemelement = "File";
+        else
+            this.filesystemelement = "Directory";
+
+        this.databaseelement;
+        if(contenttype == "song")
+            this.databaseelement = "Song";
+        else if(contenttype == "video")
+            this.databaseelement = "Vide";
+        else if(contenttype == "album")
+            this.databaseelement = "Album";
+        else if(contenttype == "artist")
+            this.databaseelement = "Artist";
+
+
+        this.removefilebutton = new TextButton("Remove", `Remove ${this.filesystemelement}`,
             ()=>{this.onButtonClick("RemoveFile");},
-            "Remove this file from the Music Directory");
-        this.removeentrybutton = new TextButton("Remove", "Remove Database Entry",
+            `Remove this ${this.filesystemelement} from the Music Directory`);
+
+        this.removeentrybutton = new TextButton("Remove", `Remove Database Entry`,
             ()=>{this.onButtonClick("RemoveEntry");},
-            "Remove this entry from the MusicDB Database.");
-        this.renamefilebutton = new TextButton("MusicDB", "Move File",
+            `Remove this ${this.databaseelement} entry from the MusicDB Database.`);
+
+        this.renamefilebutton = new TextButton("MusicDB", `Move ${this.filesystemelement}`,
             ()=>{this.onButtonClick("MoveFile");},
-            "Move the new file to the old place where the old file has been.");
-        this.updateentrybutton = new TextButton("Repair", "Update Song Entry",
+            `Move the new ${this.filesystemelement} to the old place where the old ${this.filesystemelement} has been.`);
+
+        this.updateentrybutton = new TextButton("Repair", `Update ${this.databaseelement} Entry`,
             ()=>{this.onButtonClick("UpdateEntry");},
-            "Update the old MusicDB Database entry with all information from the new file.");
-        this.importfilebutton = new TextButton("Import", "Import File",
+            `Update the old MusicDB Database entry with all information from the new ${this.filesystemelement}.`);
+
+        this.importfilebutton = new TextButton("Import", `Import ${this.filesystemelement}`,
             ()=>{this.onButtonClick("ImportFile");},
-            "Import this file into the MusicDB Database. It will be add to the existing Album.");
+            `Import this ${this.filesystemelement} as new ${this.databaseelement} into the MusicDB Database.`);
+
         this.toolbar = new ToolBar();
         this.toolbar.AddButton(this.removeentrybutton);
         this.toolbar.AddSpacer(true);
@@ -58,12 +80,14 @@ class RepairBox extends Element
 
         this.message_differentroot = new MessageBarWarning("Selected entries have different root directories!");
         this.message_differenttype = new MessageBarInfo("Selected entries have different file formats!");
-        this.message_invalidname   = new MessageBarError("Invalid file name!");
+        this.message_invalidname   = new MessageBarError(`Invalid ${this.filesystemelement} name!`);
         this.message_samechecksum  = new MessageBarConfirm("The new file has the exact same content the missing file had.");
 
         this.namediff = null;
         if(contenttype == "song")
             this.namediff = new SongFileNameDiff();
+        else if(contenttype == "album")
+            this.namediff = new AlbumDirectoryNameDiff();
 
         this.AppendChild(this.listbox);
         this.AppendChild(this.message_differentroot);
@@ -145,7 +169,7 @@ class RepairBox extends Element
                 this.message_differentroot.Hide();
             }
 
-            // Check if both entries have the same file type
+            // Check if both entries have the same file type or check sum
             if(this.contenttype == "song" || this.contenttype == "video")
             {
                 let oldtype = oldpath.split(".").slice(-1)[0]
@@ -189,6 +213,8 @@ class RepairBox extends Element
             window.console?.log(oldfile);
             if(this.contenttype == "song")
                 oldname = new SongFileName(oldfile);
+            else if(this.contenttype == "album")
+                oldname = new AlbumDirectoryName(oldfile);
         }
         else
         {
@@ -232,6 +258,31 @@ class RepairBox extends Element
                 else
                     this.message_invalidname.Hide();
             }
+            else if(this.contenttype == "album")
+            {
+                newname = new AlbumDirectoryName(newfile);
+                // Check Parts
+                let yearerror = newname.CheckReleaseYear();
+                let nameerror = newname.CheckAlbumName();
+
+                // Compose Error Message
+                let errors = "";
+                if(yearerror)
+                    errors += `${yearerror} `;
+                if(nameerror)
+                    errors += `${nameerror}`;
+
+                // Set Error is existing
+                if(errors.length > 0)
+                {
+                    this.message_invalidname.UpdateMessage(`Invalid directory name: ${errors}`);
+                    this.message_invalidname.Show();
+                    this.importfilebutton.Disable();
+                    this.updateentrybutton.Disable();
+                }
+                else
+                    this.message_invalidname.Hide();
+            }
         }
         else
         {
@@ -266,12 +317,13 @@ class RepairBox extends Element
 
             case "RemoveEntry":
                 if(this.contenttype == "song")
-                {
                     MusicDB_Call("RemoveSongEntry", {songid: dbentry.id});
-                    this.listold.RemoveEntry(entryold);
-                }
+                else if(this.contenttype == "album")
+                    MusicDB_Call("RemoveAlbumEntry", {albumid: dbentry.id});
                 else
-                    window.console?.warn(`Content type ${this.contenttype} cannot be removed from database.`);
+                    window.console?.warn(`${this.databaseelement} ${this.filesystemelement} cannot be removed from database.`);
+
+                this.listold.RemoveEntry(entryold);
                 break;
 
             case "MoveFile":
@@ -279,41 +331,42 @@ class RepairBox extends Element
                 // So the new path should be the old one stored in the music database
                 let oldpath = dbentry.path;
                 let newpath = pathentry.path;
+
                 if(this.contenttype == "song")
-                {
                     MusicDB_Call("RenameMusicFile", {oldpath: newpath, newpath: oldpath});
-                    this.listold.RemoveEntry(entryold);
-                    this.listnew.RemoveEntry(entrynew);
-                }
                 else if(this.contenttype == "album")
-                {
                     MusicDB_Call("RenameAlbumDirectory", {oldpath: newpath, newpath: oldpath});
-                    this.listold.RemoveEntry(entryold);
-                    this.listnew.RemoveEntry(entrynew);
-                }
                 else
-                    window.console?.warn(`Files of content type ${this.contenttype} cannot be moved.`);
+                    window.console?.warn(`${this.databaseelement} ${this.filesystemelement} cannot be moved.`);
+
+                this.listold.RemoveEntry(entryold);
+                this.listnew.RemoveEntry(entrynew);
                 break;
 
             case "ImportFile":
                 if(this.contenttype == "song")
-                {
                     MusicDB_Call("CreateSongEntry", {newpath: pathentry.path});
-                    this.listnew.RemoveEntry(entrynew);
+                else if(this.contenttype == "album")
+                {
+                    albumimportlayer.Show(); // Hand over to the overlay
+                    MusicDB_Request("FindAlbumSongFiles", "ShowAlbumSongFiles", {albumpath:pathentry.path});
                 }
                 else
-                    window.console?.warn(`Content type ${this.contenttype} cannot be imported.`);
+                    window.console?.warn(`${this.databaseelement} ${this.filesystemelement} cannot be impored.`);
+
+                this.listnew.RemoveEntry(entrynew);
                 break;
 
             case "UpdateEntry":
                 if(this.contenttype == "song")
-                {
                     MusicDB_Call("UpdateSongEntry", {songid: dbentry.id, newpath: pathentry.path});
-                    this.listold.RemoveEntry(entryold);
-                    this.listnew.RemoveEntry(entrynew);
-                }
+                else if(this.contenttype == "album")
+                    MusicDB_Call("UpdateAlbumEntry", {albumid: dbentry.id, newpath: pathentry.path});
                 else
-                    window.console?.warn(`Content type ${this.contenttype} cannot be updated.`);
+                    window.console?.warn(`${this.databaseelement} ${this.filesystemelement} cannot be updated.`);
+
+                this.listold.RemoveEntry(entryold);
+                this.listnew.RemoveEntry(entrynew);
                 break;
         }
     }
@@ -334,6 +387,7 @@ class RepairView extends MainSettingsView
 
         this.message_loading = new MessageBarProcessing("Scanning file system and database …");
         this.songrepairbox   = new RepairBox("song"); // content type is songs
+        this.albumrepairbox  = new RepairBox("album"); // content type is songs
 
         this.ResetUI();
     }
@@ -354,13 +408,21 @@ class RepairView extends MainSettingsView
         this.AppendChild(this.headline);
         this.AppendChild(this.message_loading);
         this.AppendChild(this.songrepairbox);
+        this.AppendChild(this.albumrepairbox);
     }
 
 
 
-    UpdateLostFilesList(lostfiles, newfiles)
+    UpdateLostFilesLists(lostfiles, newfiles)
     {
         this.songrepairbox.Update(lostfiles["songs"], newfiles["filteredsongs"], "path");
+        this.albumrepairbox.Update(lostfiles["albums"], newfiles["albums"], "path");
+    }
+
+    ClearLostFilesLists()
+    {
+        this.songrepairbox.Clear();
+        this.albumrepairbox.Clear();
     }
 
 
@@ -371,7 +433,7 @@ class RepairView extends MainSettingsView
         {
             window.console?.log(args);
 
-            this.songrepairbox.Clear();
+            this.ClearLostFilesLists();
             this.ResetUI();
         }
         return;
@@ -389,7 +451,7 @@ class RepairView extends MainSettingsView
                 let lostpaths   = annotations["lostpaths"];
                 let newpaths    = annotations["newpaths"];
                 window.console?.log(data);
-                this.UpdateLostFilesList(lostpaths, newpaths);
+                this.UpdateLostFilesLists(lostpaths, newpaths);
                 this.ResetUI();
                 this.message_loading.Hide();
             }
