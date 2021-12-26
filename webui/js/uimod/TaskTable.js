@@ -103,7 +103,7 @@ class TaskTableRow extends TaskTableRowBase
 
         let buttonbox = new ButtonBox();
         if(content == "albumfile" && taskstate == "readyforintegration")
-            buttonbox.AddButton(new SVGButton("MusicDB", ()=>{this.onIntegrateAlbumFile(task);}, "Integrate this file into the Music Directory."));
+            buttonbox.AddButton(new SVGButton("Integrate", ()=>{this.onIntegrateAlbumFile(task);}, "Integrate this file into the Music Directory."));
         buttonbox.AddButton(new SVGButton("Remove", ()=>{this.onRemoveTask(task);}, "Remove task and delete temporary data."));
 
         // Set Cell Content

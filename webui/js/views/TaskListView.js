@@ -58,7 +58,7 @@ class TaskListView extends MainSettingsView
         // Tool bar for remove and integrate
         let removebutton    = new SVGButton("Remove", ()=>{this.onRemoveGroup(groupid);},
             "Remove all tasks and delete all temporary data of this temporary album.");
-        let integratebutton = new SVGButton("MusicDB", ()=>{this.onIntegrateGroup(groupid);},
+        let integratebutton = new SVGButton("Integrate", ()=>{this.onIntegrateGroup(groupid);},
             "Try to integrate all files of this temprary album into the Music Directory.");
 
         let toolbar = new ToolBar();
