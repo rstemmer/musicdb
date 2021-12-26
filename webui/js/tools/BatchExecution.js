@@ -123,6 +123,8 @@ class BatchExecution extends StatusList
         {
             // The task failed.
             window.console?.warn("Finished task returned status \"bad\". Batch execution will be stopped.");
+            if(typeof this.onfinishcallback === "function")
+                this.onfinishcallback(this.tasks, this.finishedtasks);
         }
 
         if(newstate == "good" || (newstate == "bad" && this.currenttask["canfail"] == true))
