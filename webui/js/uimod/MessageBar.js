@@ -185,5 +185,16 @@ class MessageBarConfirmDelete extends MessageBar
     }
 }
 
+
+
+class MessageBarProcessing extends MessageBar
+{
+    constructor(htmlmessage=null)
+    {
+        super(new SVGIcon("StatusActive"), htmlmessage);
+        this.SetData("messagetype", "active");
+    }
+}
+
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
