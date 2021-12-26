@@ -33,7 +33,7 @@ Run  git log --oneline  for more details
 │    * notification "MusicDB:Upload" is now called "MusicDB:Task"
 │    * Removed functions: GetLyricsCrawlerCache, RunLyricsCrawler, IntegrateUpload
 │    * New functions:
-│       IntegrateContent, InitiateMusicImport, InitiateArtworkImport, InitiateFileystemScan,
+│       InitiateContentIntegration, InitiateMusicImport, InitiateArtworkImport, InitiateFileystemScan,
 │       FindAlbumSongFiles, RenameMusicFile, RenameAlbumDirectory, RenameArtistDirectory, ChangeArtistDirectory,
 │       RemoveSongEntry, RemoveAlbumEntry, RemoveArtistEntry,
 │       UpdateAlbumEntry, UpdateSongEntry, UpdateArtistEntry,

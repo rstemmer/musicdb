@@ -360,7 +360,7 @@ Uploading
       UploadChunk,
       GetCurrentTasks,
       AnnotateUpload,
-      IntegrateContent,
+      InitiateContentIntegration,
       InitiateMusicImport,
       InitiateArtworkImport,
       RemoveUpload

@@ -158,7 +158,7 @@ class UploadManager
                     if(state == "readyforintegration")
                     {
                         let musicpath = task.annotations.musicpath;
-                        MusicDB_Call("IntegrateContent", {taskid: taskid, musicpath: musicpath});
+                        MusicDB_Call("InitiateContentIntegration", {taskid: taskid, musicpath: musicpath});
                     }
                 }
 

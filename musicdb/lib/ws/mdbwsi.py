@@ -117,7 +117,7 @@ Uploading
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UploadChunk`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetCurrentTasks`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.AnnotateUpload`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.IntegrateContent`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateContentIntegration`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateMusicImport`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateArtworkImport`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveUpload`
@@ -377,8 +377,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetCurrentTasks()
         elif fncname == "AnnotateUpload":
             retval = self.AnnotateUpload(args["taskid"], args)
-        elif fncname == "IntegrateContent":
-            retval = self.IntegrateContent(args["taskid"], args["musicpath"])
+        elif fncname == "InitiateContentIntegration":
+            retval = self.InitiateContentIntegration(args["taskid"], args["musicpath"])
         elif fncname == "InitiateMusicImport":
             retval = self.InitiateMusicImport(args["contenttype"], args["contentpath"])
         elif fncname == "InitiateArtworkImport":
@@ -4413,7 +4413,7 @@ class MusicDBWebSocketInterface(object):
 
 
 
-    def IntegrateContent(self, taskid, musicpath):
+    def InitiateContentIntegration(self, taskid, musicpath):
         """
         This method integrates uploaded content into the Music Directory.
         The task with the ID ``taskid`` must be in state ``"readyforintegration"``.
