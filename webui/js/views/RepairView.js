@@ -331,9 +331,17 @@ class RepairView extends MainSettingsView
         super("TaskListView", title, descr);
         let headline = new SettingsHeadline(title, descr);
 
-        this.songrepairbox = new RepairBox("song"); // content type is songs
+        this.message_loading = new MessageBarProcessing("Scanning file system and database …");
+        this.songrepairbox   = new RepairBox("song"); // content type is songs
 
         this.ResetUI();
+    }
+
+
+
+    onViewMounted()
+    {
+        this.message_loading.Show();
     }
 
 
@@ -343,6 +351,7 @@ class RepairView extends MainSettingsView
         this.RemoveChilds();
 
         this.AppendChild(this.headline);
+        this.AppendChild(this.message_loading);
         this.AppendChild(this.songrepairbox);
     }
 
@@ -381,6 +390,7 @@ class RepairView extends MainSettingsView
                 window.console?.log(data);
                 this.UpdateLostFilesList(lostpaths, newpaths);
                 this.ResetUI();
+                this.message_loading.Hide();
             }
         }
         return;
