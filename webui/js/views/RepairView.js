@@ -177,6 +177,7 @@ class RepairBox extends Element
         {
             this.message_differentroot.Hide();
             this.message_differenttype.Hide();
+            this.message_samechecksum.Hide();
         }
 
         // Handle old list entry
