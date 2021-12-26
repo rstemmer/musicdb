@@ -30,6 +30,10 @@ class ArtistDirectoryNameDiff extends NameDiffBase
     UpdateDiff(oldname, newname)
     {
         this.ClearDiff();
+        if(oldname === null)
+            return "";
+        if(newname === null)
+            return "";
 
         // Name
         this.AddDiffPart(
