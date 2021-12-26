@@ -30,6 +30,10 @@ class AlbumDirectoryNameDiff extends NameDiffBase
     UpdateDiff(oldname, newname)
     {
         this.ClearDiff();
+        if(oldname === null)
+            return "";
+        if(newname === null)
+            return "";
 
         // Release Year
         this.AddDiffPart(
