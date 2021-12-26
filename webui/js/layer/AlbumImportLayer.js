@@ -324,7 +324,7 @@ class AlbumImportLayer extends Layer
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "FindAlbumSongFiles" && sig == "ShowAlbumSongFiles")
+        if(fnc == "FindAlbumSongFiles" && sig == "ShowAlbumImportLayer")
         {
             this.ResetUI();
 

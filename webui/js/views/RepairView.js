@@ -380,7 +380,7 @@ class RepairBox extends Element
                 else if(this.contenttype == "album")
                 {
                     albumimportlayer.Show(); // Hand over to the overlay
-                    MusicDB_Request("FindAlbumSongFiles", "ShowAlbumSongFiles", {albumpath:pathentry.path});
+                    MusicDB_Request("FindAlbumSongFiles", "ShowAlbumImportLayer", {albumpath:pathentry.path});
                 }
                 else
                     window.console?.warn(`${this.databaseelement} ${this.filesystemelement} cannot be impored.`);
