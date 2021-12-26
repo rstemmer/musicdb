@@ -33,10 +33,17 @@ class RepairBox extends Element
         this.listbox.AppendChild(this.listnew);
 
         this.filesystemelement;
+        this.renameiconname;
         if(contenttype == "song" || contenttype == "video")
+        {
             this.filesystemelement = "File";
+            this.renameiconname    = "RenameFile"
+        }
         else
+        {
             this.filesystemelement = "Directory";
+            this.renameiconname    = "RenameFolder"
+        }
 
         this.databaseelement;
         if(contenttype == "song")
@@ -49,17 +56,17 @@ class RepairBox extends Element
             this.databaseelement = "Artist";
 
 
-        this.removefilebutton = new TextButton("Remove", `Remove ${this.filesystemelement}`,
+        this.removefilebutton = new TextButton("Remove", `Delete ${this.filesystemelement}`,
             ()=>{this.onButtonClick("RemoveFile");},
-            `Remove this ${this.filesystemelement} from the Music Directory`);
+            `Delete this ${this.filesystemelement} from the Music Directory`);
 
-        this.removeentrybutton = new TextButton("Remove", `Remove Database Entry`,
+        this.removeentrybutton = new TextButton("Remove", `Delete Database Entry`,
             ()=>{this.onButtonClick("RemoveEntry");},
-            `Remove this ${this.databaseelement} entry from the MusicDB Database.`);
+            `Delete this ${this.databaseelement} entry from the MusicDB Database.`);
 
-        this.renamefilebutton = new TextButton("MusicDB", `Move ${this.filesystemelement}`,
+        this.renamefilebutton = new TextButton(this.renameiconname, `Rename ${this.filesystemelement}`,
             ()=>{this.onButtonClick("MoveFile");},
-            `Move the new ${this.filesystemelement} to the old place where the old ${this.filesystemelement} has been.`);
+            `Rename the new ${this.filesystemelement} to the old name where the old ${this.filesystemelement} has been.`);
 
         this.updateentrybutton = new TextButton("Repair", `Update ${this.databaseelement} Entry`,
             ()=>{this.onButtonClick("UpdateEntry");},
