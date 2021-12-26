@@ -62,6 +62,7 @@ class LyricsEdit extends Element
 
         this.msg_notsaved = new MessageBarWarning("Changes not yet saved!");
         this.msg_saved    = new MessageBarConfirm("Changes successfully saved");
+        this.msg_saved.ShowCloseButton();
 
         this.SetData("editable", false);
 

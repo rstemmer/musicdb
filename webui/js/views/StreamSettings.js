@@ -81,7 +81,6 @@ class StreamSettingsTable extends Table
 
         // Error messages
         this.urlerror    = new MessageBarError();
-        this.urlerror.HideCloseButton();
         this.urlerrorrow = new StreamSettingsTableSpanRow(this.urlerror);
 
         // Text Inputs
@@ -234,12 +233,12 @@ class StreamSettings extends MainSettingsView
 
         // Message bar for stream errors
         this.streamerror = new MessageBarError();
-        this.streamerror.HideCloseButton();
         this.streamplays = new MessageBarConfirm("Connection to the stream seems to work technically.");
+        this.streamplays.ShowCloseButton();
 
         this.saved   = new MessageBarConfirm("Audio stream connection settings successfully updated.");
+        this.saved.ShowCloseButton();
         this.unsaved = new MessageBarWarning("Audio stream changed but not yet saved!");
-        this.unsaved.HideCloseButton();
 
         // Load / Save buttons
         let loadbutton = new SVGButton("Load", ()=>{this.Reload()});

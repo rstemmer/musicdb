@@ -31,7 +31,6 @@ class AlbumImportLayer extends Layer
 
         // Message Bar
         this.invalidsourceinfo  = new MessageBarError("Invalid Album Source. There were no songs in the selected Album directory.");
-        this.invalidsourceinfo.HideCloseButton();
 
         // Headlines
         this.albumheadline = new LayerHeadline("Album Directory Settings",

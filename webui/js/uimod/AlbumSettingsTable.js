@@ -95,9 +95,7 @@ class AlbumSettingsTable extends Table
     AddArtistNameRow()
     {
         this.newartistinfo   = new MessageBarInfo("Artist unknown. New artist will be created.");
-        this.newartistinfo.HideCloseButton();
         this.knownartistinfo = new MessageBarConfirm("Artist known. It already has an entry in the database.");
-        this.knownartistinfo.HideCloseButton();
         let  artistinfos     = new Element("div", ["flex-column"]);
         artistinfos.AppendChild(this.newartistinfo);
         artistinfos.AppendChild(this.knownartistinfo);
@@ -443,9 +441,7 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
         this.toolbar.AddButton(this.savebutton);
 
         this.datainvalidmessage = new MessageBarError("Invalid album directory name. Check red input fields.");
-        this.datainvalidmessage.HideCloseButton();
         this.changesmessage     = new MessageBarInfo("Changes in the settings table not yet saved.");
-        this.changesmessage.HideCloseButton();
         this.newpathelement     = new Element("span");
 
         this.AddRow(this.headlinerow);

@@ -37,7 +37,7 @@ class MessageBar extends Element
         this.AppendChild(this.closebutton);
 
         this.autohidedelay   = null;
-        this.hideclosebutton = false;
+        this.hideclosebutton = true;
 
         this.Hide();
     }
