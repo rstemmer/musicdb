@@ -30,8 +30,9 @@ class AlbumIntegrationProgress extends Layer
             "This is an overview of the files that will be copied into the Music Directory.");
 
         // Finish-Messages
+        this.errormessagetext = "An error occured while copying the new album into the Music Directory";
         this.successmessage = new MessageBarConfirm("Copying the new album succeeded");
-        this.errormessage   = new MessageBarError("An error occured while copying the new album");
+        this.errormessage   = new MessageBarError(`${this.errormessagetext}.`);
 
         // Tool Bar
         this.toolbar     = new ToolBar();
@@ -127,6 +128,11 @@ class AlbumIntegrationProgress extends Layer
         }
         else
         {
+            let message = opentasks[0]?.lastmessage
+            if(typeof message === "string")
+                this.errormessage.UpdateMessage(`${this.errormessagetext}: ${message}`);
+            else
+                this.errormessage.UpdateMessage(`${this.errormessagetext}.`);
             this.errormessage.Show();
             this.importbutton.Disable();
             this.closebutton.Enable();

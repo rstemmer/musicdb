@@ -55,6 +55,7 @@ class BatchExecution extends StatusList
         task["resultevalfunction"]   = resultevalfunction;
         task["notificationfunction"] = notificationfunction;
         task["canfail"]              = canfail;
+        task["lastmessage"]          = null; // Last message from a task that is not null.
 
         this.tasks.push(task);
         this.AppendChild(task["statuselement"]);
@@ -123,8 +124,10 @@ class BatchExecution extends StatusList
         {
             // The task failed.
             window.console?.warn("Finished task returned status \"bad\". Batch execution will be stopped.");
+            // Because the current task is left open (as it failed), this needs to be considered as parameter
+            //   for the open tasks list as well.
             if(typeof this.onfinishcallback === "function")
-                this.onfinishcallback(this.tasks, this.finishedtasks);
+                this.onfinishcallback([this.currenttask, ...this.tasks], this.finishedtasks);
         }
 
         if(newstate == "good" || (newstate == "bad" && this.currenttask["canfail"] == true))
@@ -147,6 +150,8 @@ class BatchExecution extends StatusList
         let state = null;
         if(typeof this.currenttask["notificationfunction"] === "function")
             state = this.currenttask["notificationfunction"](fnc, sig, rawdata);
+        if(typeof rawdata.message === "string")
+            this.currenttask["lastmessage"] = rawdata.message;
 
         this.UpdateState(state);
     }
