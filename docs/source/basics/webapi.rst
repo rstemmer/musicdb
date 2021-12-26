@@ -252,8 +252,10 @@ Artists
 .. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members: GetArtists,
       GetArtistsWithAlbums,
-      GetFilteredArtistsWithVideos
-      CreateArtist
+      GetFilteredArtistsWithVideos,
+      CreateArtist,
+      UpdateArtistEntry,
+      RemoveArtistEntry
 
 Albums
 ^^^^^^

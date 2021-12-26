@@ -32,10 +32,12 @@ Run  git log --oneline  for more details
 │ + Web API:
 │    * notification "MusicDB:Upload" is now called "MusicDB:Task"
 │    * Removed functions: GetLyricsCrawlerCache, RunLyricsCrawler, IntegrateUpload
-│    * New functions: CreateArtist,
+│    * New functions:
 │       IntegrateContent, InitiateMusicImport, InitiateArtworkImport, InitiateFileystemScan,
 │       FindAlbumSongFiles, RenameMusicFile, RenameAlbumDirectory, RenameArtistDirectory, ChangeArtistDirectory,
-│       RemoveSongEntry, RemoveAlbumEntry, UpdateAlbumEntry, UpdateSongEntry, CreateSongEntry,
+│       RemoveSongEntry, RemoveAlbumEntry, RemoveArtistEntry,
+│       UpdateAlbumEntry, UpdateSongEntry, UpdateArtistEntry,
+│       CreateSongEntry, CreateArtist,
 │       SetAlbumOrigin, SetAlbumImportTime, Bounce
 │    * Renamed: GetUploads -> GetCurrentTasks
 │ * Solved Issues: #68, #66, #65, #22, #27

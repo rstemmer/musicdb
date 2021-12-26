@@ -25,6 +25,8 @@ Artists
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums` (Alternative: GetFilteredArtistsWithAlbums)
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetFilteredArtistsWithVideos`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CreateArtist`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateArtistEntry`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveArtistEntry`
 
 Albums
 
@@ -365,6 +367,10 @@ class MusicDBWebSocketInterface(object):
             retval = self.RenameArtistDirectory(args["oldpath"], args["newpath"])
         elif fncname == "CreateArtist":
             retval = self.CreateArtist(args["name"])
+        elif fncname == "RemoveArtistEntry":
+            retval = self.RemoveArtistEntry(args["artistid"])
+        elif fncname == "UpdateArtistEntry":
+            retval = self.UpdateArtistEntry(args["artistid"], args["newpath"])
         elif fncname == "ChangeArtistDirectory":
             retval = self.ChangeArtistDirectory(args["oldalbumpath"], args["newartistdirectory"])
         elif fncname == "GetCurrentTasks":
@@ -3577,6 +3583,53 @@ class MusicDBWebSocketInterface(object):
             self.music.RemoveAlbum(albumid)
         except Exception as e:
             logging.warning("Removing album entry (%s) from database failed with error: %s", str(albumid), str(e))
+        return None
+
+
+
+    def UpdateArtistEntry(self, artistid, newpath):
+        """
+        This method updates the database entry of the artist with the ID *artistid*.
+        The information for the update come from the directory addressed by *newpath*.
+        The update is done via :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateArtist`.
+        All albums inside the directory get updated via :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateAlbum` as well as
+        all their songs via :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateSong`.
+
+        Args:
+            artistid (int): ID of the artist to update
+            newpath (str): Path to the new artist directory relative to the music directory
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("UpdateArtisEntry", {artistid: 1337, newpath: "Moved Artist"});
+        """
+        try:
+            self.music.UpdateArtist(artistid, newpath)
+        except Exception as e:
+            logging.warning("Updating artist entry (%s) to \"%s\" failed with error: %s", str(artistid), str(newpath), str(e))
+        return None
+
+
+
+    def RemoveArtistEntry(self, artistid):
+        """
+        This method removes an artist and all its albums and songs from the database.
+        The related directory and files in the Music Directory remains untouched.
+        All other information related to the songs will be removed from the database as well.
+
+        Args:
+            artistid (int): ID of the album to remove
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("RemoveArtistEntry", {artistid: 42});
+        """
+        try:
+            self.music.RemoveArtist(artistid)
+        except Exception as e:
+            logging.warning("Removing artist entry (%s) from database failed with error: %s", str(artistid), str(e))
         return None
 
 
