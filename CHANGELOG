@@ -34,7 +34,7 @@ Run  git log --oneline  for more details
 │    * Removed functions: GetLyricsCrawlerCache, RunLyricsCrawler, IntegrateUpload
 │    * New functions: CreateArtist,
 │       IntegrateContent, InitiateMusicImport, InitiateArtworkImport, InitiateFileystemScan,
-│       FindAlbumSongFiles, RenameMusicFile, RenameAlbumDirectory, ChangeArtistDirectory,
+│       FindAlbumSongFiles, RenameMusicFile, RenameAlbumDirectory, RenameArtistDirectory, ChangeArtistDirectory,
 │       RemoveSongEntry, RemoveAlbumEntry, UpdateAlbumEntry, UpdateSongEntry, CreateSongEntry,
 │       SetAlbumOrigin, SetAlbumImportTime, Bounce
 │    * Renamed: GetUploads -> GetCurrentTasks

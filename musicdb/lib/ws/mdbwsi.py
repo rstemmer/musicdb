@@ -128,6 +128,7 @@ File Handling
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.FindAlbumSongFiles`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RenameMusicFile`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RenameAlbumDirectory`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RenameArtistDirectory`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.ChangeArtistDirectory`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateFilesystemScan`
 
@@ -360,6 +361,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.RenameMusicFile(args["oldpath"], args["newpath"])
         elif fncname == "RenameAlbumDirectory":
             retval = self.RenameAlbumDirectory(args["oldpath"], args["newpath"])
+        elif fncname == "RenameArtistDirectory":
+            retval = self.RenameArtistDirectory(args["oldpath"], args["newpath"])
         elif fncname == "CreateArtist":
             retval = self.CreateArtist(args["name"])
         elif fncname == "ChangeArtistDirectory":
@@ -3992,6 +3995,99 @@ class MusicDBWebSocketInterface(object):
 
 
 
+    def RenameArtistDirectory(self, oldpath, newpath):
+        """
+        Renames an artist directory.
+        In general it is not checked if the new path fulfills the Music Naming Scheme (See :doc:`/usage/music`).
+
+        If the artist has an entry in the Music Database, its entry is updated as well.
+        In this case the new path must fulfill the Music Naming Scheme.
+        The update triggers :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateArtist`.
+        This leads to updating the path, name, release and origin of all albums inside the artist directory.
+
+        The position of the artist should be plausible anyway.
+        So it must be placed inside the music directory and not being a sub directory.
+
+        If the old path does not address a directory, the Method returns ``False``.
+        If the new path does address an already existing file or directory, ``False`` gets returned.
+        No files will be overwritten.
+
+        To change the artist directory of an album see :meth:`~RenameArtistDirectory`.
+
+        Args:
+            oldpath (str): Path to the directory that shall be renamed
+            newpath (str): New name of the artist directory
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+
+        Example:
+            .. code-block:: javascript
+
+                # Will succeed
+                MusicDB_Request("RenameArtistDirectory", "ConfirmRename", {
+                        oldpath:"Old Artist",
+                        newpath:"New Artist"
+                        });
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "RenameArtistDirectory" && sig == "ConfirmRename")
+                    {
+                        if(args === true)
+                            console.log(`Renaming ${pass.oldfile} succeeded.`);
+                    }
+                }
+
+        """
+        # Check if old path is a valid path to a file in the Music Directory
+        if not self.musicdirectory.IsDirectory(oldpath):
+            logging.warning("Rename Artist Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
+            return False
+
+        # Check if new path addresses an already existing file
+        if self.musicdirectory.Exists(newpath):
+            logging.warning("Rename Artist Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
+            return False
+
+        # Check if path if path is plausible
+        oldcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldpath)
+        newcontenttype = self.musicdirectory.EstimateContentTypeByPath(newpath)
+        if oldcontenttype != newcontenttype:
+            logging.warning("Old path (\"%s\") was estimated as \"%s\", the new one (\"%s\") as \"%s\". \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype, newpath, newcontenttype)
+            return False
+
+        if oldcontenttype != "artist":
+            logging.warning("Old path (\"%s\") was estimated as \"%s\". An Artist was expected. \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype)
+            return False
+
+        # Check if exists in database
+        databaseentry = self.database.GetArtistByPath(oldpath)
+
+        # Rename path
+        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
+        try:
+            success = self.musicdirectory.Rename(oldpath, newpath)
+        except Exception as e:
+            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
+            success = False
+
+        if not success:
+            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
+            return False
+
+        # Update database if needed
+        if databaseentry != None:
+            targetid = databaseentry["id"]
+            logging.info("Updating database entry for \033[0;36m%s\033[1;34m with ID \033[0;36m%s", oldcontenttype, str(targetid))
+            self.music.UpdateArtist(targetid, newpath)
+
+        return True
+
+
+
     def CreateArtist(self, name):
         """
         This method creates a new Artist with the name ``name``.
@@ -4038,7 +4134,9 @@ class MusicDBWebSocketInterface(object):
         This method changes the artist directory of an album.
         If the new artist directory is not existing it will be created.
         If it exists, the album directory will just be moved into the existing artist directory.
-        The old artist directory will be not be touched, even if it becomes an empty directory. 
+        The old artist directory will not be touched, even if it becomes an empty directory. 
+
+        To rename an artist directory see :meth:`~RenameArtistDirectory`.
 
         If the album exists in the Music Database, its entry will be updated (including its songs).
         In this case, a possibly new artist will be imported into the database as well.

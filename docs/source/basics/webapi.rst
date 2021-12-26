@@ -372,6 +372,7 @@ File Handling
       FindAlbumSongFiles,
       RenameMusicFile,
       RenameAlbumDirectory,
+      RenameArtistDirectory,
       ChangeArtistDirectory,
       InitiateFilesystemScan
 
