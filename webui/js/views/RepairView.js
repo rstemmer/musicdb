@@ -58,7 +58,8 @@ class RepairBox extends Element
 
         this.message_differentroot = new MessageBarWarning("Selected entries have different root directories!");
         this.message_differenttype = new MessageBarInfo("Selected entries have different file formats!");
-        this.message_invalidname   = new MessageBarError("Invalid file name");
+        this.message_invalidname   = new MessageBarError("Invalid file name!");
+        this.message_samechecksum  = new MessageBarConfirm("The new file has the exact same content the missing file had.");
 
         this.namediff = null;
         if(contenttype == "song")
@@ -68,6 +69,7 @@ class RepairBox extends Element
         this.AppendChild(this.message_differentroot);
         this.AppendChild(this.message_differenttype);
         this.AppendChild(this.message_invalidname);
+        this.AppendChild(this.message_samechecksum);
         this.AppendChild(this.namediff);
         this.AppendChild(this.toolbar);
     }
@@ -157,6 +159,18 @@ class RepairBox extends Element
                 {
                     this.message_differenttype.Hide();
                 }
+
+                let oldchecksum = entriesold[0].data.checksum;
+                let newchecksum = entriesnew[0].data.checksum;
+                if(oldchecksum === newchecksum)
+                {
+                    this.message_samechecksum.Show();
+                }
+                else
+                {
+                    this.message_samechecksum.Hide();
+                }
+
             }
         }
         else
