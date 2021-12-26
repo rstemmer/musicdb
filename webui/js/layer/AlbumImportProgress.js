@@ -56,17 +56,6 @@ class AlbumImportProgress extends Layer
 
 
 
-    onExecutionFinished(success=true)
-    {
-        if(success)
-            this.successmessage.Show();
-        else
-            this.errormessage.Show();
-        this.closebutton.Enable();
-    }
-
-
-
     // tasks: AlbumImportTasks object
     ExecuteTasks(tasks)
     {

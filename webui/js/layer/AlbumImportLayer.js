@@ -272,6 +272,8 @@ class AlbumImportLayer extends Layer
                         return "bad";
                     else if(rawdata["state"] == "importcomplete")
                         return "good";
+                    else
+                        return null;
                 }
                 return "active";
             }
@@ -308,6 +310,8 @@ class AlbumImportLayer extends Layer
                         return "bad";
                     else if(rawdata["state"] == "importcomplete")
                         return "good";
+                    else
+                        return null;
                 }
                 return "active";
             },
@@ -322,7 +326,6 @@ class AlbumImportLayer extends Layer
     {
         if(fnc == "FindAlbumSongFiles" && sig == "ShowAlbumSongFiles")
         {
-            window.console?.log(args);
             this.ResetUI();
 
             // It can happen that a potential album directory does not contain any songs
