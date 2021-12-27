@@ -59,6 +59,11 @@ class TaskManager(object):
         self.uploaddirectory = Filesystem(self.cfg.directories.uploads)
         self.tasksdirectory  = Filesystem(self.cfg.directories.tasks)
 
+        if self.tasksdirectory.CheckAccessPermissions() != "rwx":
+            logging.error("Read/Write access to the task directory %s required!\033[1;30m(Task Management will not work properly under these conditions)", self.cfg.directories.tasks)
+        if self.uploaddirectory.CheckAccessPermissions() != "rwx":
+            logging.error("Read/Write access to the upload directory %s required!\033[1;30m(Uploading files is not possible under these conditions)", self.cfg.directories.uploads)
+
         global Tasks
         with TaskManagerLock:
             if Tasks == None:
