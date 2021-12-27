@@ -25,6 +25,7 @@ from pathlib            import Path
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.filesystem     import Filesystem
+from musicdb.mdbapi.accesspermissions   import AccessPermissions
 
 TaskManagerLock = threading.RLock() # RLock is mandatory for nested calls!
 Callbacks = []
@@ -59,10 +60,10 @@ class TaskManager(object):
         self.uploaddirectory = Filesystem(self.cfg.directories.uploads)
         self.tasksdirectory  = Filesystem(self.cfg.directories.tasks)
 
-        if self.tasksdirectory.CheckAccessPermissions() != "rwx":
-            logging.error("Read/Write access to the task directory %s required!\033[1;30m(Task Management will not work properly under these conditions)", self.cfg.directories.tasks)
-        if self.uploaddirectory.CheckAccessPermissions() != "rwx":
-            logging.error("Read/Write access to the upload directory %s required!\033[1;30m(Uploading files is not possible under these conditions)", self.cfg.directories.uploads)
+        # Check if the file system access permissions are correct set
+        accesspermissions = AccessPermissions(self.cfg)
+        accesspermissions.EvaluateTasksDirectory()
+        accesspermissions.EvaluateUploadsDirectory()
 
         global Tasks
         with TaskManagerLock:
