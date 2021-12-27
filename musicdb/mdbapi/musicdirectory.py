@@ -59,33 +59,27 @@ class MusicDirectory(Fileprocessing):
 
             * File permissions: ``rw-rw-r--``
             * Directory permissions: ``rwxrwxr-x``
-            * Ownership as configured in the settings: ``[music]->owner``:``[music]->group``
+
+        To update the access permissions the method :meth:`musicdb.lib.filesystem.Filesystem.SetAttributes` is used.
 
         Args:
             path (str/Path): Path to an artist, album or song, relative to the music directory
 
         Returns:
-            *Nothing*
+            ``True`` on success, otherwise ``False``
 
         Raises:
-            ValueError if path is neither a file nor a directory.
+            ValueError: if path is neither a file nor a directory.
         """
-        logging.warning("MusicDirectory.FixAttributes is DEPRECATED")
-        # -rw-rw-r--
-        filepermissions= stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH
-        # drwxrwxr-x
-        dirpermissions = stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH                 
-
-        # check if file or dir permissions must be used
         if self.IsDirectory(path):
-            permissions = dirpermissions
+            permissions = "rwxrwxr-x"
         elif self.IsFile(path):
-            permissions = filepermissions
+            permissions = "rw-rw-r--"
         else:
             raise ValueError("Path \""+str(path)+"\" is not a directory or file")
 
-        # change attributes and ownership
-        self.SetAttributes(path, self.cfg.music.owner, self.cfg.music.group, permissions)
+        success = self.SetAccessPermissions(path, permissions)
+        return success
 
 
 
