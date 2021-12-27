@@ -144,6 +144,22 @@ class AccessPermissions(object):
         return True
 
 
+    def EvaluateStateDirectory(self):
+        """
+        This method checks if the state directory has the correct permissions.
+
+        Returns:
+            ``True`` when the MusicDB has read and write access to that directory.
+        """
+        readaccess  = self.IsReadable(self.statedir)
+        writeaccess = self.IsWritable(self.statedir)
+
+        if not (readaccess or writeaccess):
+            logging.critical("MusicDB requires read and write access to the state directory at %s! \033[1;30m(MusicDB does not function properly without R/W access to the state directory)", self.uploadsdir.GetRoot());
+            return False
+        return True
+
+
 
     # TODO: This function is from mdbapi.musicdirectory. It is better placed in this class.
     #def FixAttributes(self, path: Union[str, Path]):
