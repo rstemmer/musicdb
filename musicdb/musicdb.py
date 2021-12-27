@@ -149,8 +149,15 @@ def AssertMusicDirectory(path):
 
     user, group = fs.GetOwner(path)
     if group != "musicdb":
-        logging.critical("Music directory %s does not belong to the UNIX group \"musicdb\". MusicDB needs to have permission to manage the music directory")
+        logging.critical("Music directory %s does not belong to the UNIX group \"musicdb\". MusicDB needs to have permission to manage the music directory", path)
         exit(1)
+
+    perm = fs.CheckAccessPermissions(path)
+    if perm[0] != "r" or perm[2] != "x":
+        logging.critical("Music directory %s is not accessible by MusicDB (No read and execute permissions). MusicDB needs to have permission to access the music directory", path)
+        exit(1)
+    if perm[1] != "w":
+        logging.critical("MusicDB has no write access to the Music directory %s. \033[1;30m(MusicDB execution continues, but some features will not work)", path);
     return
 
 
