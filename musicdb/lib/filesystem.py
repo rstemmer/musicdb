@@ -839,7 +839,7 @@ class Filesystem(object):
 
 
 
-    def CheckAccessPermissions(self, xpath: Union[str, Path]) -> str:
+    def CheckAccessPermissions(self, xpath: Union[str, Path] = ".") -> str:
         """
         This method can be used to check if a file or directory can be accessed.
         It returns a string with 3 characters that represent the read, write and execute flags.
@@ -853,7 +853,7 @@ class Filesystem(object):
         The access is checked for the user ID and group ID of the process that calls this method.
 
         Args:
-            xpath (str/Path): The file or directory that mode shall be changed
+            xpath (str/Path): The file or directory that mode shall be changed. (Optional, default is ``"."``)
         
         Returns:
             A 3 character string representing the ``"rwx"`` access permissions.
@@ -865,6 +865,7 @@ class Filesystem(object):
                 fs.CheckAccessPermissions("test.txt") # "rw-"
                 fs.CheckAccessPermissions("dir")      # "r-x"
                 fs.CheckAccessPermissions("mydir")    # "rwx"
+                fs.CheckAccessPermissions()           # "rwx"
         """
         # Get user, group
         owneruser, ownergroup = self.GetOwner(xpath)
