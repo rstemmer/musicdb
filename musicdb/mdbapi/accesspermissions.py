@@ -28,12 +28,12 @@ class AccessPermissions(object):
     """
     def __init__(self, config):
         self.cfg = config
-        self.musicdir   = Filesystem(self.cfg.directories.music)
-        self.artworkdir = Filesystem(self.cfg.directories.artwork)
-        self.webdatadir = Filesystem(self.cfg.directories.webdata)
-        self.tasksdir   = Filesystem(self.cfg.directories.tasks)
-        self.uploadsdir = Filesystem(self.cfg.directories.uploads)
-        self.statedir   = Filesystem(self.cfg.directories.state)
+        #self.musicdir   = Filesystem(self.cfg.directories.music)
+        #self.artworkdir = Filesystem(self.cfg.directories.artwork)
+        #self.webdatadir = Filesystem(self.cfg.directories.webdata)
+        #self.tasksdir   = Filesystem(self.cfg.directories.tasks)
+        #self.uploadsdir = Filesystem(self.cfg.directories.uploads)
+        #self.statedir   = Filesystem(self.cfg.directories.state)
 
 
 
@@ -119,11 +119,12 @@ class AccessPermissions(object):
         Returns:
             ``True`` when the MusicDB has read and write access to that directory.
         """
-        readaccess  = self.IsReadable(self.tasksdir)
-        writeaccess = self.IsWritable(self.tasksdir)
+        tasksdir    = Filesystem(self.cfg.directories.tasks)
+        readaccess  = self.IsReadable(tasksdir)
+        writeaccess = self.IsWritable(tasksdir)
 
         if not (readaccess or writeaccess):
-            logging.error("MusicDB requires read and write access to the tasks directory at %s! \033[1;30m(Task Management will not work properly without R/W access)", self.tasksdir.GetRoot());
+            logging.error("MusicDB requires read and write access to the tasks directory at %s! \033[1;30m(Task Management will not work properly without R/W access)", tasksdir.GetRoot());
             return False
         return True
 
@@ -135,11 +136,12 @@ class AccessPermissions(object):
         Returns:
             ``True`` when the MusicDB has read and write access to that directory.
         """
-        readaccess  = self.IsReadable(self.uploadsdir)
-        writeaccess = self.IsWritable(self.uploadsdir)
+        uploads     = Filesystem(self.cfg.directories.uploads)
+        readaccess  = self.IsReadable(uploadsdir)
+        writeaccess = self.IsWritable(uploadsdir)
 
         if not (readaccess or writeaccess):
-            logging.warning("MusicDB requires read and write access to the uploads directory at %s! \033[1;30m(Uploading files is not possible)", self.uploadsdir.GetRoot());
+            logging.warning("MusicDB requires read and write access to the uploads directory at %s! \033[1;30m(Uploading files is not possible)", uploadsdir.GetRoot());
             return False
         return True
 
@@ -151,11 +153,12 @@ class AccessPermissions(object):
         Returns:
             ``True`` when the MusicDB has read and write access to that directory.
         """
-        readaccess  = self.IsReadable(self.statedir)
-        writeaccess = self.IsWritable(self.statedir)
+        state       = Filesystem(self.cfg.directories.state)
+        readaccess  = self.IsReadable(statedir)
+        writeaccess = self.IsWritable(statedir)
 
         if not (readaccess or writeaccess):
-            logging.critical("MusicDB requires read and write access to the state directory at %s! \033[1;30m(MusicDB does not function properly without R/W access to the state directory)", self.uploadsdir.GetRoot());
+            logging.critical("MusicDB requires read and write access to the state directory at %s! \033[1;30m(MusicDB does not function properly without R/W access to the state directory)", statedir.GetRoot());
             return False
         return True
 
@@ -167,11 +170,12 @@ class AccessPermissions(object):
         Returns:
             ``True`` when the MusicDB has read and write access to that directory.
         """
+        artworkdir  = Filesystem(self.cfg.directories.artwork)
         readaccess  = self.IsReadable(self.artworkdir)
         writeaccess = self.IsWritable(self.artworkdir)
 
         if not (readaccess or writeaccess):
-            logging.critical("MusicDB requires read and write access to the artwork directory at %s! \033[1;30m(MusicDB does not function properly without R/W access to the artwork directory)", self.artworkdir.GetRoot());
+            logging.critical("MusicDB requires read and write access to the artwork directory at %s! \033[1;30m(MusicDB does not function properly without R/W access to the artwork directory)", artworkdir.GetRoot());
             return False
         return True
 
