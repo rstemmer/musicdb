@@ -497,7 +497,7 @@ class MusicDBMusic(object):
             success = self.musicdirectory.MoveDirectory(oldalbumpath, artistpath)
 
         # Update album
-        self.UpdateAlbum(albumid, newalbumpath)
+        self.UpdateAlbum(albumid, newalbumpath, artist["id"])
 
         return True
 
@@ -633,7 +633,7 @@ class MusicDBMusic(object):
 
 
 
-    def UpdateAlbum(self, albumid, newpath):
+    def UpdateAlbum(self, albumid, newpath, artistid=None):
         """
         This method updates an already existing album entry in the database.
         So in case some information in the filesystem were changed (renaming, new files, …) the database gets updated.
@@ -650,6 +650,7 @@ class MusicDBMusic(object):
             * name
             * release date
             * origin
+            * artistid
 
         All albums and songs of this artist will also be updated using
         :meth:`~UpdateSong`.
@@ -657,6 +658,7 @@ class MusicDBMusic(object):
         Args:
             albumid (int): ID of the album entry that shall be updated
             newpath (str): Relative path to the new album
+            artistid (int): Optional, default value is ``None``. The ID of the artist this song belongs to.
 
         Returns:
             ``None``
@@ -681,6 +683,15 @@ class MusicDBMusic(object):
         if fsmeta == None:
             raise AssertionError("Analysing path \"%s\" failed!", songpaths[0])
 
+        # artistid may be not given by the arguments of this method.
+        # In this case, it must be searched in the database
+        if artistid == None:
+            artist = self.db.GetArtistByPath(fsmeta["artist"])
+            if artist == None:
+                raise AssertionError("Artist for the album \"" + newpath + "\" is not available in the database.")
+            artistid = artist["id"]
+
+        album["artistid"]= artistid
         album["name"]    = fsmeta["album"]
         album["release"] = fsmeta["release"]
         album["origin"]  = tagmeta["origin"]
@@ -699,7 +710,7 @@ class MusicDBMusic(object):
             # It may fail because not only the album name changed,
             # but also the files inside
             if self.musicdirectory.IsFile(songpath):
-                self.UpdateSong(song["id"], songpath)
+                self.UpdateSong(song["id"], songpath, artistid)
 
         return None
 
@@ -841,7 +852,7 @@ class MusicDBMusic(object):
 
 
 
-    def UpdateSong(self, songid, newpath):
+    def UpdateSong(self, songid, newpath, artistid=None):
         """
         This method updates a song entry and parts of the related album entry.
         The following steps will be done to do this:
@@ -860,6 +871,7 @@ class MusicDBMusic(object):
             * playtime
             * bitrate
             * checksum
+            * artistid
 
         Further more the following album information get updated:
 
@@ -893,7 +905,16 @@ class MusicDBMusic(object):
         if fsmeta == None:
             raise AssertionError("Invalid path-format: " + songpath)
 
-        # Remember! The filesystem is always right
+        # artistid may be not given by the arguments of this method.
+        # In this case, it must be searched in the database
+        if artistid == None:
+            artist = self.db.GetArtistByPath(fsmeta["artist"])
+            if artist == None:
+                raise AssertionError("Artist for the album \"" + newpath + "\" is not available in the database.")
+            artistid = artist["id"]
+
+        # Remember! The files ystem is always right
+        song["artistid"] = artistid
         song["path"]     = songpath
         song["name"]     = fsmeta["song"] 
         song["number"]   = fsmeta["songnumber"]
