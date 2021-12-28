@@ -420,8 +420,10 @@ class RepairView extends MainSettingsView
     {
         let title = "Repair Database";
         let descr = "Find lost connections between files and database entries and repair them.\n"+
-            "Database entried can break when a file gets renamed in the file system so that the path stored in the database is no longer valid.\n"+
-            " Renaming a file in the file system is a considered use-case and this view is made to reassign the corresponding database entry to the renamed file.";
+            "Database entries can break when a file gets renamed in the file system so that the path stored in the database is no longer valid.\n"+
+            " Renaming a file in the file system is a considered use-case and this view is made to reassign the corresponding database entry to the renamed file.\n"+
+            " Keep in mind that only files and directories are listed that can be managed by MusicDB (Read/Write access),"+
+            " and that are reasonable artist and album directories.";
         super("TaskListView", title, descr);
         let headline = new SettingsHeadline(title, descr);
 
