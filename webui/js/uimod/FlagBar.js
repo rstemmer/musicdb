@@ -98,7 +98,7 @@ class FlagBar
         let icon;
         if(MDBMusic.favorite == 1)
         {
-            icon = new SVGIcon("Favorite")
+            icon = new SVGIcon("Favorite2")
             icon.SetTooltip("Favorite");
             icon.SetColor("var(--color-gold)");
             this.element.appendChild(icon.GetHTMLElement());
