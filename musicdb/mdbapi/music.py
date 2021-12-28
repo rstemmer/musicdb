@@ -294,6 +294,41 @@ class MusicDBMusic(object):
 
 
 
+    def CreateNewArtist(self, name):
+        """
+        This method creates a new Artist with the name ``name``.
+
+        If there is no directory with the same name in the music root directory,
+        a new directory will be created.
+        When creating the directory fails, so that there exists no directory with the artist name,
+        ``None`` will be returned.
+
+        If there is already an artist with the same name existing in the database,
+        its database entry will be returned.
+        If there the artist is unknown, a new entry will be created as well.
+        The new entry will be returned.
+
+        Args:
+            name (str): Name of the new artist.
+
+        Returns:
+            The artist entry, or ``None`` on error.
+        """
+        if not self.musicdirectory.Exists(name):
+            self.musicdirectory.CreateSubdirectory(name)
+
+        if not self.musicdirectory.IsDirectory(name):
+            logging.warning("File system entry for new artist \"%s\" exists and is a file. \033[1;30m(File will not be replaced by the Artist directory. Creating artist canceled.)", str(name))
+            return None
+
+        artist = self.db.GetArtistByPath(name)
+        if not artist:
+            self.db.AddArtist(name, name)
+            artist = self.db.GetArtistByPath(name)
+        return artist
+
+
+
     def AddArtist(self, artistpath):
         """
         The *AddArtist* method adds a new artist to the database.
@@ -388,6 +423,74 @@ class MusicDBMusic(object):
                 self.UpdateAlbum(album["id"], albumpath)
 
         return None
+
+
+
+    def ChangeAlbumArtist(self, albumid, newartist):
+        """
+        This method changes the artist associated to an album.
+        It is expected that the album addressed by its album ID exists in the database as well as in the file system.
+
+        If *newartist* is an integer, it is assumed to be an existing artist (existing in the database and the file system).
+
+        If *newartist* is a string, it is assumed that this string is the name, and so the directory of the new artist.
+        In this case, a new artist entry will be created via :meth:`~CreateNewArtist` if it does not exist in the database.
+        If it also does not exist in the Music Directory, a new artist directory will be created as well.
+
+        The album directory will be moved into the new artist directory and all paths of the album and its songs will be updated.
+
+        Args:
+            albumid (int): ID of the album that shall be associated to a new artist.
+            newartist (int/str): Artist ID if of type ``int`` or artist name if of type ``str``.
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+
+        Raises:
+            TypeError: If albumid is not an integer or newartist is not an integer or a string
+            ValueError: If albumid does not address an existing database entry
+
+        Examples:
+
+            .. code-block:: python
+
+                music.ChangeAlbumArtist(albumid_a, 42)
+                music.ChangeAlbumArtist(albumid_b, "New Artist")
+        """
+        # Create working environment
+        if type(albumid) == int:
+            album = self.db.GetAlbumById(albumid)
+        else:
+            raise TypeError("Album ID must be of type int. It was of type %s"%(str(type(albumid))))
+
+        if type(newartist) == int:
+            artist = self.db.GetArtistById(newartist)
+        elif type(newartist) == str:
+            artist = self.db.CreateNewArtist(newartist)
+        else:
+            raise TypeError("New Artist must be of type int or str. It was of type %s"%(str(type(newartist))))
+
+        # Check if album and artist exist
+        if not album:
+            logging.debug("Unable to find album %i", albumid)
+            return False
+
+        if not artist:
+            logging.debug("Unable to find or create artist %s", str(newartist));
+            return False
+
+        # Move album to new artist
+        albumpath  = album["path"]
+        artistpath = artist["path"]
+        success = self.musicdirectory.MoveDirectory(albumpath, artistpath)
+
+        # Update album
+        albumdirectory = self.musicdirectory.GetDirectoryName(albumpath)
+        newalbumpath   = artistpath + "/" + albumdirectory
+        self.UpdateAlbum(albumid, newalbumpath)
+
+        return True
+
 
 
 

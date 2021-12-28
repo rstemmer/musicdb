@@ -4155,29 +4155,15 @@ class MusicDBWebSocketInterface(object):
         If there the artist is unknown, a new entry will be created.
         The new entry will be returned.
 
+        For details see :meth:`musicdb.mdbapi.music.MusicDBMusic.CreateNewArtist`.
+
         Args:
             name (str): Name of the new artist.
 
         Returns:
             The artist entry, or ``None`` on error.
         """
-        if not self.musicdirectory.Exists(name):
-            logging.info("Creating new Artist directory \"%s\".", str(name))
-            self.musicdirectory.CreateSubdirectory(name)
-        else:
-            logging.debug("File system entry for new artist \"%s\" already exists.", str(name))
-
-        if not self.musicdirectory.IsDirectory(name):
-            logging.warning("File system entry for new artist \"%s\" exists and is a file. \033[1;30m(File will not be replaced by the Artist directory. Creating artist canceled.)", str(name))
-            return None
-
-        artist = self.database.GetArtistByPath(name)
-        if artist:
-            logging.debug("Artist \"%s\" already exists in the database. No need to create a new entry.", name)
-        else:
-            logging.info("New Artist \"%s\" will be added to the database.", name)
-            self.database.AddArtist(name, name)
-            artist = self.database.GetArtistByPath(name)
+        artist = self.music.CreateNewArtist(name)
         return artist
 
 
@@ -4200,6 +4186,9 @@ class MusicDBWebSocketInterface(object):
 
         If the old path does not address a directory, ``False`` gets returned.
         No files will be overwritten.
+
+        In case the album addressed by *oldalbumpath* exists in the database,
+        the function :meth:`musicdb.mdbapi.music.MusicDBMusic.ChangeAlbumArtist` is used to keep the database updated.
 
         Args:
             oldalbumpath (str): Path to the album directory inside the old artists directory
@@ -4263,38 +4252,29 @@ class MusicDBWebSocketInterface(object):
             logging.warning("New artist directory (\"%s\") was estimated as \"%s\". An artist directory was expected. \033[1;30m(Old path will not be renamed)", newartistdirectory, newcontenttype)
             return False
 
-        # Check if album exists in database
-        databaseentry = self.database.GetAlbumByPath(oldalbumpath)
-
-        # Check if artist exists. Create if not.
-        if not self.musicdirectory.IsDirectory(newartistdirectory):
-            self.musicdirectory.CreateSubdirectory(newartistdirectory)
-
-        # Move album into new artist directory
+        # Check if album exists in database or if this is only a "file system job"
         logging.info("Moving \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldalbumpath, newartistdirectory)
-        try:
-            success = self.musicdirectory.MoveDirectory(oldalbumpath, newartistdirectory)
-        except Exception as e:
-            logging.error("Moving Directory \"%s\" into \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldalbumpath, newartistdirectory, str(e))
-            success = False
+        albumentry = self.database.GetAlbumByPath(oldalbumpath)
+        if albumentry:
+            # Use proper API
+            albumid = albumentry["id"]
+            success = self.music.ChangeAlbumArtist(albumid, newartistdirectory)
+        else:
+            # Album does not exist, so only work on file system level
+            # Check if artist exists. Create if not.
+            if not self.musicdirectory.IsDirectory(newartistdirectory):
+                self.musicdirectory.CreateSubdirectory(newartistdirectory)
+
+            # Move album into new artist directory
+            try:
+                success = self.musicdirectory.MoveDirectory(oldalbumpath, newartistdirectory)
+            except Exception as e:
+                logging.error("Moving Directory \"%s\" into \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldalbumpath, newartistdirectory, str(e))
+                success = False
 
         if not success:
             logging.warning("Moving Directory \"%s\" into \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldalbumpath, newartistdirectory)
             return False
-
-        # Update database if needed
-        if databaseentry != None:
-            # Add new artist if needed
-            if not self.database.GetArtistByPath(newartistdirectory):
-                logging.info("Creating new Artist entry \033[0;36m%s\033[1;34m in the Music Database", newartistdirectory)
-                self.database.AddArtist(newartistdirectory, newartistdirectory)
-
-            # Update Album entry
-            targetid = databaseentry["id"]
-            logging.info("Updating database entry for \033[0;36m%s\033[1;34m with ID \033[0;36m%s", oldcontenttype, str(targetid))
-            albumname    = self.musicdirectory.GetDirectoryName(oldalbumpath)
-            newalbumpath = newartistdirectory + "/" + albumname
-            self.music.UpdateAlbum(targetid, newalbumpath)
 
         return True
 

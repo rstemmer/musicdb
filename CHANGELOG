@@ -23,6 +23,7 @@ Run  git log --oneline  for more details
 │ * [database] musicdb.mdbapi.database.MusicDBDatabase is now called musicdb.mdbapi.music.MusicDBMusic
 │ * [music] FindLostPaths now uses a similar interface to FindNewPaths and supports videos as well
 │ * [music] FindNewPaths now provides an additional list that contains only new songs of imported albums
+│ * [music] New functions: CreateNewArtist, ChangeAlbumArtist
 │ + [tracker] Configuration added to decide if random songs shall be tracked: [tracker]->trackrandom
 │ + [filesystem] New methods: SetOwner, SetAccessPermissions, GetAccessPermissions, CheckAccessPermissions
 │ + [accesspermissions] New module for high level access permission checks added
