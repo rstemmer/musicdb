@@ -438,6 +438,11 @@ class MusicDBMusic(object):
         If it also does not exist in the Music Directory, a new artist directory will be created as well.
 
         The album directory will be moved into the new artist directory and all paths of the album and its songs will be updated.
+        If the album directory already is inside the new artist directory this is also fine.
+        In this case it is important that the album directory name is still the same!
+        Otherwise the process gets canceled and ``False`` returned.
+        Then only the database entry will be updated.
+        This situation can happen if the user renamed the artist directory with the album sub-directory inside.
 
         Args:
             albumid (int): ID of the album that shall be associated to a new artist.
@@ -463,10 +468,18 @@ class MusicDBMusic(object):
         else:
             raise TypeError("Album ID must be of type int. It was of type %s"%(str(type(albumid))))
 
+        artistpath     = newartist
+        oldalbumpath   = album["path"]
+        albumdirectory = self.musicdirectory.GetDirectoryName(oldalbumpath)
+        newalbumpath   = artistpath + "/" + albumdirectory
+        if not self.musicdirectory.Exists(oldalbumpath) and not self.musicdirectory.Exists(newalbumpath):
+            logging.error("Cannot find album %i at its old path (%s) or its new path (%s)! \033[1;30m(Changing album artist canceled, nothing will be changed)", albumid, oldalbumpath, newalbumpath);
+
+
         if type(newartist) == int:
             artist = self.db.GetArtistById(newartist)
         elif type(newartist) == str:
-            artist = self.db.CreateNewArtist(newartist)
+            artist = self.CreateNewArtist(newartist) # if artist exists, it just will be returned
         else:
             raise TypeError("New Artist must be of type int or str. It was of type %s"%(str(type(newartist))))
 
@@ -480,13 +493,10 @@ class MusicDBMusic(object):
             return False
 
         # Move album to new artist
-        albumpath  = album["path"]
-        artistpath = artist["path"]
-        success = self.musicdirectory.MoveDirectory(albumpath, artistpath)
+        if self.musicdirectory.Exists(oldalbumpath):
+            success = self.musicdirectory.MoveDirectory(oldalbumpath, artistpath)
 
         # Update album
-        albumdirectory = self.musicdirectory.GetDirectoryName(albumpath)
-        newalbumpath   = artistpath + "/" + albumdirectory
         self.UpdateAlbum(albumid, newalbumpath)
 
         return True

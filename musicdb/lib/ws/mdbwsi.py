@@ -4212,6 +4212,12 @@ class MusicDBWebSocketInterface(object):
                         newartistdirectory: "New Artist"
                         });
 
+                # Will succeed if album is known by the database
+                MusicDB_Call("ChangeArtistDirectory", {
+                        oldalbumpath:       "Old Artist/2021 - Album Name", # That album has already been moved by the user
+                        newartistdirectory: "New Artist"
+                        });
+
 
                 # Will fail because new artist directory contains a sub directory
                 MusicDB_Request("ChangeArtistDirectory", "ConfirmRename", {
@@ -4231,14 +4237,9 @@ class MusicDBWebSocketInterface(object):
                 }
 
         """
-        # Check if old path is a valid path to a file in the Music Directory
-        if not self.musicdirectory.IsDirectory(oldalbumpath):
-            logging.warning("Changing Artist Directory failed because album path \"%s\" does not exists inside the Music Directory", str(oldalbumpath))
-            return False
-
         # Check if new path addresses an already existing file
         if self.musicdirectory.IsFile(newartistdirectory):
-            logging.warning("Changing Artist Directory failed because new path \"%s\" does an exist file inside the Music Directory", str(newartistdirectory))
+            logging.warning("Changing Artist Directory failed because new path \"%s\" is an exist file inside the Music Directory", str(newartistdirectory))
             return False
 
         # Check if path if path is plausible
@@ -4261,6 +4262,11 @@ class MusicDBWebSocketInterface(object):
             success = self.music.ChangeAlbumArtist(albumid, newartistdirectory)
         else:
             # Album does not exist, so only work on file system level
+            # Check if old path is a valid path to a file in the Music Directory
+            if not self.musicdirectory.IsDirectory(oldalbumpath):
+                logging.warning("Changing Artist Directory failed because album path \"%s\" does not exists inside the Music Directory", str(oldalbumpath))
+                return False
+
             # Check if artist exists. Create if not.
             if not self.musicdirectory.IsDirectory(newartistdirectory):
                 self.musicdirectory.CreateSubdirectory(newartistdirectory)
