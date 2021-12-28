@@ -115,7 +115,7 @@ class MessageBarWarning extends MessageBar
 {
     constructor(htmlmessage=null)
     {
-        super(new SVGIcon("StatusBad"), htmlmessage);
+        super(new SVGIcon("StatusWarning"), htmlmessage);
         this.SetData("messagetype", "warning");
     }
 }
