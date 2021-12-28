@@ -108,14 +108,14 @@ class FilesystemManager(TaskManager):
             lostpaths = self.music.FindLostPaths()
         except Exception as e:
             success = False
-            logging.warning("Scanning for lost paths failed with error \"%s\"", str(e))
+            logging.exception("Scanning for lost paths failed with error \"%s\"", str(e))
 
         # Scan for new paths
         try:
             newpaths  = self.FindNewPaths()
         except Exception as e:
             success = False
-            logging.warning("Scanning for new paths failed with error \"%s\"", str(e))
+            logging.exception("Scanning for new paths failed with error \"%s\"", str(e))
 
         # Response to clients
         if success == True:
