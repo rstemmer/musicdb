@@ -25,9 +25,11 @@ class AccessPermissions(object):
     """
     Args:
         config: MusicDB configuration object
+        rootdirectory: When paths are give, they are all considered relative to this root directory (optional, default is ``"/"``)
     """
-    def __init__(self, config):
+    def __init__(self, config, rootdirectory="/"):
         self.cfg = config
+        self.fs  = Filesystem(rootdirectory)
         #self.musicdir   = Filesystem(self.cfg.directories.music)
         #self.artworkdir = Filesystem(self.cfg.directories.artwork)
         #self.webdatadir = Filesystem(self.cfg.directories.webdata)
@@ -63,9 +65,8 @@ class AccessPermissions(object):
             isdir = True
             mode  = path.CheckAccessPermissions()
         else:
-            fs    = Filesystem()
-            isdir = fs.IsDirectory(path)
-            mode  = fs.CheckAccessPermissions(path)
+            isdir = self.fs.IsDirectory(path)
+            mode  = self.fs.CheckAccessPermissions(path)
 
         if isdir and mode[0] == "r" and mode[2] == "x":
             return True
@@ -100,9 +101,8 @@ class AccessPermissions(object):
             isdir = True
             mode  = path.CheckAccessPermissions()
         else:
-            fs    = Filesystem()
-            isdir = fs.IsDirectory(path)
-            mode  = fs.CheckAccessPermissions(path)
+            isdir = self.fs.IsDirectory(path)
+            mode  = self.fs.CheckAccessPermissions(path)
 
         if isdir and mode == "rwx":
             return True
@@ -136,7 +136,7 @@ class AccessPermissions(object):
         Returns:
             ``True`` when the MusicDB has read and write access to that directory.
         """
-        uploads     = Filesystem(self.cfg.directories.uploads)
+        uploadsdir  = Filesystem(self.cfg.directories.uploads)
         readaccess  = self.IsReadable(uploadsdir)
         writeaccess = self.IsWritable(uploadsdir)
 
@@ -153,7 +153,7 @@ class AccessPermissions(object):
         Returns:
             ``True`` when the MusicDB has read and write access to that directory.
         """
-        state       = Filesystem(self.cfg.directories.state)
+        statedir    = Filesystem(self.cfg.directories.state)
         readaccess  = self.IsReadable(statedir)
         writeaccess = self.IsWritable(statedir)
 
