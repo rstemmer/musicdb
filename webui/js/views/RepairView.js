@@ -426,6 +426,7 @@ class RepairView extends MainSettingsView
         let headline = new SettingsHeadline(title, descr);
 
         this.message_loading = new MessageBarProcessing("Scanning file system and database …");
+        this.message_scanfailed = new MessageBarError("Scanning file system and database failed! See MusicDB log files for details. Sorry.");
         this.songrepairbox   = new RepairBox("song");   // content type is songs
         this.albumrepairbox  = new RepairBox("album");  // content type is album
         this.artistrepairbox = new RepairBox("artist"); // content type is artist
@@ -448,6 +449,7 @@ class RepairView extends MainSettingsView
 
         this.AppendChild(this.headline);
         this.AppendChild(this.message_loading);
+        this.AppendChild(this.message_scanfailed);
         this.AppendChild(this.songrepairbox);
         this.AppendChild(this.albumrepairbox);
         this.AppendChild(this.artistrepairbox);
@@ -498,6 +500,13 @@ class RepairView extends MainSettingsView
                 this.UpdateLostFilesLists(lostpaths, newpaths);
                 this.ResetUI();
                 this.message_loading.Hide();
+                this.message_scanfailed.Hide();
+            }
+            else if(state == "fsscanfailed")
+            {
+                this.ResetUI();
+                this.message_loading.Hide();
+                this.message_scanfailed.Show();
             }
         }
         return;
