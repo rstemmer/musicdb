@@ -169,8 +169,10 @@ class MusicDBMusic(object):
         this song gets listed in the ``"songs"`` and ``"filteredsongs"`` list.
         Songs inside a new album directory are only listed in the ``"songs"`` list.
 
-        This method is very optimistic. It will also list empty directories.
-        The user may want to check if the results of this method are valid for him.
+        All directories are checked if they are valid album or artist directories.
+        This does not address their naming scheme which might be violated.
+        It is checked via :meth:`musicdb.mdbapi.musicdirectory.MusicDirectory.EvaluateArtistDirectory` and :meth:`musicdb.mdbapi.musicdirectory.MusicDirectory.EvaluateAlbumDirectory`
+        if MusicDB has write access to the content of those directories and if they fulfill certain criteria.
 
         Furthermore this method is error tolerant. This means, if in the database has an invalid entry,
         it does not lead to errors. For example, if an album path gets renamed, this path will be returned.
@@ -196,8 +198,11 @@ class MusicDBMusic(object):
         knownartistpaths = self.artistpathscache
 
         for path in artistpaths:
-            if path not in knownartistpaths:
-                newpaths["artists"].append(path)
+            if path in knownartistpaths:
+                continue
+            if not self.musicdirectory.EvaluateArtistDirectory(path):
+                continue
+            newpaths["artists"].append(path)
 
         # Check Albums
         knownalbumpaths = self.albumpathscache
@@ -205,8 +210,11 @@ class MusicDBMusic(object):
         albumpaths      = self.musicdirectory.ToString(albumpaths)
         
         for path in albumpaths:
-            if path not in knownalbumpaths:
-                newpaths["albums"].append(path)
+            if path in knownalbumpaths:
+                continue
+            if not self.musicdirectory.EvaluateAlbumDirectory(path):
+                continue
+            newpaths["albums"].append(path)
 
         # Check Songs
         for albumpath in albumpaths:
@@ -228,6 +236,9 @@ class MusicDBMusic(object):
             if extension not in ["mp4", "m4v", "webm"]:
                 continue
 
+            if not self.musicdirectory.EvaluateMusicFile(path):
+                continue
+
             if path not in knownvideopaths:
                 newpaths["videos"].append(path)
 
@@ -241,6 +252,9 @@ class MusicDBMusic(object):
         The album part can address an album that is known by the MusicDB, but it can also be an unknown one.
 
         The songs are filtered by the configured ignore list (see :doc:`/basics/config`).
+
+        Songs that can not be managed by MusicDB are also filtered out.
+        The files are checked via :meth:`musicdb.mdbapi.musicdirectory.MusicDirectory.EvaluateMusicFile`.
 
         Furthermore the songs are filtered by their extension.
         Only the following files are considered: .aac, .m4a, .mp3, .flac
@@ -269,8 +283,13 @@ class MusicDBMusic(object):
             if extension not in ["aac", "m4a", "mp3", "flac"]:
                 continue
 
-            if path not in knownsongpaths:
-                newpaths.append(path)
+            if path in knownsongpaths:
+                continue
+
+            if not self.musicdirectory.EvaluateMusicFile(path):
+                continue
+
+            newpaths.append(path)
         return newpaths
 
 
