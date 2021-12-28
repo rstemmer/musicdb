@@ -160,6 +160,22 @@ class AccessPermissions(object):
         return True
 
 
+    def EvaluateArtworkDirectory(self):
+        """
+        This method checks if the artwork directory has the correct permissions.
+
+        Returns:
+            ``True`` when the MusicDB has read and write access to that directory.
+        """
+        readaccess  = self.IsReadable(self.artworkdir)
+        writeaccess = self.IsWritable(self.artworkdir)
+
+        if not (readaccess or writeaccess):
+            logging.critical("MusicDB requires read and write access to the artwork directory at %s! \033[1;30m(MusicDB does not function properly without R/W access to the artwork directory)", self.artworkdir.GetRoot());
+            return False
+        return True
+
+
 
     # TODO: This function is from mdbapi.musicdirectory. It is better placed in this class.
     #def FixAttributes(self, path: Union[str, Path]):

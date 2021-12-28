@@ -113,6 +113,7 @@ from musicdb.lib.metatags       import MetaTags
 from musicdb.lib.cache          import ArtworkCache
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import *
+from musicdb.mdbapi.accesspermissions   import AccessPermissions
 
 class MusicDBArtwork(object):
     """
@@ -145,6 +146,9 @@ class MusicDBArtwork(object):
         for path in pathlist:
             if not self.fs.Exists(path):
                 raise ValueError("Path \""+ path +"\" does not exist.")
+
+        ap = AccessPermissions(self.cfg)
+        ap.EvaluateArtworkDirectory()
 
         # Instantiate dependent classes
         self.meta    = MetaTags(self.cfg.directories.music)
