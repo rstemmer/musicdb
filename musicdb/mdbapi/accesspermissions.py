@@ -171,8 +171,8 @@ class AccessPermissions(object):
             ``True`` when the MusicDB has read and write access to that directory.
         """
         artworkdir  = Filesystem(self.cfg.directories.artwork)
-        readaccess  = self.IsReadable(self.artworkdir)
-        writeaccess = self.IsWritable(self.artworkdir)
+        readaccess  = self.IsReadable(artworkdir)
+        writeaccess = self.IsWritable(artworkdir)
 
         if not (readaccess or writeaccess):
             logging.critical("MusicDB requires read and write access to the artwork directory at %s! \033[1;30m(MusicDB does not function properly without R/W access to the artwork directory)", artworkdir.GetRoot());
