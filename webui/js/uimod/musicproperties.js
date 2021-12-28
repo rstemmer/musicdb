@@ -29,7 +29,7 @@ class MusicProperties
         this.properties["liverecording"] = this._CreatePropertyButton("LiveRecording", "liverecording", "Live Recording");
         this.properties["love"         ] = this._CreatePropertyButton("Favorite",      "love",          "Loved Song");
         this.properties["hate"         ] = this._CreatePropertyButton("Hate",          "hate",          "Hated Song");
-        this.properties["badaudio"     ] = this._CreatePropertyButton("BadAudio",      "badaudio",      "Bad Audio");
+        this.properties["badaudio"     ] = this._CreatePropertyButton("BadFile",       "badaudio",      "Bad Audio");
         this.properties["disable"      ] = this._CreatePropertyButton("Disable",       "disable",       "Disable Song");
 
         this.propgrid.InsertElement(0, 0, this.properties["like"         ].GetHTMLElement());

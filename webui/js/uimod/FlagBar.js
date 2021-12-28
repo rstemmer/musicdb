@@ -111,7 +111,7 @@ class FlagBar
         }
         if(MDBMusic.badaudio == 1)
         {
-            icon = new SVGIcon("BadAudio")
+            icon = new SVGIcon("BadFile")
             icon.SetTooltip("Bad Audio");
             icon.SetColor("var(--color-red)");
             this.element.appendChild(icon.GetHTMLElement());
