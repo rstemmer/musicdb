@@ -30,7 +30,7 @@ let curtain         = WebUI.AddLayer("MenuBackground",  new Curtain());
 let mainmenu        = WebUI.AddLayer("MainMenu",        new MainMenu(curtain));
 let mainmenubutton  = WebUI.AddLayer("MainMenuButton",  new MenuButton("1rem", "1rem", "Menu", ()=>{mainmenu.ToggleMenu();}, "Show main menu"));
 
-let layerbackground     = new LayerBackground();
+let layerbackground = WebUI.AddLayer("LayerBackground", new LayerBackground());
 let albumimportlayer    = new AlbumImportLayer(layerbackground);
 let albumintegrationlayer=new AlbumIntegrationLayer(layerbackground);
 let albumuploadprogress = new AlbumUploadProgress(layerbackground);
@@ -108,7 +108,6 @@ window.onload = function ()
 
     let body = new Element(document.body);
     body.AppendChild(musicdbstatus.GetReconnectButtonHTMLElement());
-    body.AppendChild(layerbackground);
     body.AppendChild(albumimportlayer);
     body.AppendChild(albumintegrationlayer);
     body.AppendChild(albumuploadprogress);
