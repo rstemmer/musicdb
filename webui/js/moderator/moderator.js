@@ -26,7 +26,7 @@ WebUI.AddManager("MusicMode",   new MDBModeManager());
 WebUI.AddManager("Upload",      new UploadManager());
 
 // Create some Layers on top of the main layout
-let curtain             = new Curtain();
+let curtain         = WebUI.AddLayer("MenuBackground", new Curtain());
 let layerbackground     = new LayerBackground();
 let albumimportlayer    = new AlbumImportLayer(layerbackground);
 let albumintegrationlayer=new AlbumIntegrationLayer(layerbackground);
@@ -102,8 +102,9 @@ window.onload = function ()
 
     let mainmenubutton = new MenuButton("1rem", "1rem", "Menu", ()=>{mainmenu.ToggleMenu();}, "Show main menu");
 
+    WebUI.onWindowLoad();
+
     let body = new Element(document.body);
-    body.AppendChild(curtain);
     body.AppendChild(mainmenubutton);
     body.AppendChild(mainmenu);
     body.AppendChild(musicdbstatus.GetReconnectButtonHTMLElement());
@@ -119,8 +120,6 @@ window.onload = function ()
     mainviewmanager     = new MainViewManager();
     videopanelmanager   = new VideoPanelManager();
     streamview.ShowInVideoPanel();
-
-    WebUI.onWindowLoad();
 
     // Connect to MusicDB
     ConnectToMusicDB();
