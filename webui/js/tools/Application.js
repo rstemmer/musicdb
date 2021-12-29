@@ -71,7 +71,7 @@ class Application
     }
     GetLayer(id)
     {
-        return this.layer[id];
+        return this.layers[id];
     }
 
 
