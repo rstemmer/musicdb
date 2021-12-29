@@ -221,7 +221,7 @@ class AlbumImportLayer extends Layer
         }
 
         // Check if Artist needs to be created
-        let artistslist = artistscache.FindArtist(artistdirectoryname, "strcmp");
+        let artistslist = WebUI.GetManager("Artists").FindArtist(artistdirectoryname, "strcmp");
         if(artistslist.length !== 1)
         {
             this.tasks.AddTask(`Create Artist: ${artistdirectoryname}`,

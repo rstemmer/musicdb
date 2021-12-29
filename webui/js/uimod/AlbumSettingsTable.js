@@ -169,7 +169,7 @@ class AlbumSettingsTable extends Table
             return false;
 
         // New Artist?
-        let artistslist = artistscache.FindArtist(value, "strcmp");
+        let artistslist = WebUI.GetManager("Artists").FindArtist(value, "strcmp");
         if(artistslist.length == 1)
         {
             this.knownartistinfo.UpdateMessage(`Artist "${value}" known. It already has an entry in the database.`);
