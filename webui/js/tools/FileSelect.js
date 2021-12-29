@@ -169,6 +169,9 @@ class AlbumDirectorySelect extends DirectorySelect
 
     onFileSelected(event)
     {
+        let albumuploadprogress   = WebUI.GetLayer("AlbumUploadProgress");
+        let albumintegrationlayer = WebUI.GetLayer("AlbumIntegration");
+
         // To avoid race conditions, do not filter for specific uploads.
         // Just listen to all status updated.
         albumuploadprogress.SetSelectorFilter(this.selectorid);

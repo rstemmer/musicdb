@@ -124,6 +124,7 @@ class TaskTableRow extends TaskTableRowBase
 
     onIntegrateAlbumFile(task)
     {
+        let albumintegrationlayer = WebUI.GetLayer("AlbumIntegration");
         albumintegrationlayer.ResetUI();
         albumintegrationlayer.Integrate(task);
         albumintegrationlayer.Show();

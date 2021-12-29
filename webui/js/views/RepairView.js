@@ -409,7 +409,7 @@ class RepairBox extends Element
                     MusicDB_Call("CreateSongEntry", {newpath: pathentry.path});
                 else if(this.contenttype == "album")
                 {
-                    albumimportlayer.Show(); // Hand over to the overlay
+                    WebUI.ShowLayer("AlbumImport"); // Hand over to the overlay
                     MusicDB_Request("FindAlbumSongFiles", "ShowAlbumImportLayer", {albumpath:pathentry.path});
                 }
                 else

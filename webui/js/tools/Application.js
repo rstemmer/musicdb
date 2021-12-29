@@ -74,6 +74,20 @@ class Application
         return this.layers[id];
     }
 
+    ShowLayer(id)
+    {
+        let layer = this.GetLayer(id);
+        if(typeof layer.Show === "function")
+            layer.Show();
+    }
+    HideLayer(id)
+    {
+        let layer = this.GetLayer(id);
+        if(typeof layer.Hide === "function")
+            layer.Hide();
+    }
+
+
 
 
     AddHandler(component)

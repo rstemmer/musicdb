@@ -55,7 +55,7 @@ class AlbumImport extends MainSettingsView
 
     ImportAlbum(albumpath)
     {
-        albumimportlayer.Show(); // Hand over to the overlay
+        WebUI.ShowLayer("AlbumImport"); // Hand over to the overlay
         MusicDB_Request("FindAlbumSongFiles", "ShowAlbumImportLayer", {albumpath:albumpath});
     }
 

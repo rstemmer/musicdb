@@ -98,8 +98,8 @@ class AlbumImportLayer extends Layer
 
     onClick_Import()
     {
-        //this.tasks.ExecuteTasks();
-        albumimportprogress.ExecuteTasks(this.tasks); // Will also Show the layer
+        let progresslayer = WebUI.GetLayer("AlbumImportProgress");
+        progresslayer.ExecuteTasks(this.tasks); // Will also Show the layer
         this.Hide();
     }
 

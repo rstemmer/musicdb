@@ -31,12 +31,12 @@ let mainmenu        = WebUI.AddLayer("MainMenu",        new MainMenu(curtain));
 let mainmenubutton  = WebUI.AddLayer("MainMenuButton",  new MenuButton("1rem", "1rem", "Menu", ()=>{mainmenu.ToggleMenu();}, "Show main menu"));
 
 let layerbackground = WebUI.AddLayer("LayerBackground", new LayerBackground());
-let albumimportlayer    = new AlbumImportLayer(layerbackground);
-let albumintegrationlayer=new AlbumIntegrationLayer(layerbackground);
-let albumuploadprogress = new AlbumUploadProgress(layerbackground);
-let albumintegrationprogress = new AlbumIntegrationProgress(layerbackground);
-let albumimportprogress = new AlbumImportProgress(layerbackground);
-let albumsettingslayer  = new AlbumSettingsLayer(layerbackground);
+WebUI.AddLayer("AlbumImport",               new AlbumImportLayer(layerbackground));
+WebUI.AddLayer("AlbumIntegration",          new AlbumIntegrationLayer(layerbackground));
+WebUI.AddLayer("AlbumUploadProgress",       new AlbumUploadProgress(layerbackground));
+WebUI.AddLayer("AlbumIntegrationProgress",  new AlbumIntegrationProgress(layerbackground));
+WebUI.AddLayer("AlbumImportProgress",       new AlbumImportProgress(layerbackground));
+WebUI.AddLayer("AlbumSettings",             new AlbumSettingsLayer(layerbackground));
 
 // Create Basic MusicDB WebUI Components
 WebUI.AddView("MusicDBHUD", new MusicDBHUD(), "HUDBox");
@@ -108,12 +108,6 @@ window.onload = function ()
 
     let body = new Element(document.body);
     body.AppendChild(musicdbstatus.GetReconnectButtonHTMLElement());
-    body.AppendChild(albumimportlayer);
-    body.AppendChild(albumintegrationlayer);
-    body.AppendChild(albumuploadprogress);
-    body.AppendChild(albumintegrationprogress);
-    body.AppendChild(albumimportprogress);
-    body.AppendChild(albumsettingslayer);
 
     leftviewmanager     = new LeftViewManager();
     mainviewmanager     = new MainViewManager();
@@ -163,11 +157,6 @@ function onMusicDBNotification(fnc, sig, rawdata)
     repairview.onMusicDBNotification(fnc, sig, rawdata);
     //uploadmanager.onMusicDBNotification(fnc, sig, rawdata);
     albumview.onMusicDBNotification(fnc, sig, rawdata);
-    albumintegrationlayer.onMusicDBNotification(fnc, sig, rawdata);
-    albumuploadprogress.onMusicDBNotification(fnc, sig, rawdata);
-    albumintegrationprogress.onMusicDBNotification(fnc, sig, rawdata);
-    albumimportprogress.onMusicDBNotification(fnc, sig, rawdata);
-    albumsettingslayer.onMusicDBNotification(fnc, sig, rawdata);
 
     if(fnc == "MusicDB:AudioStream")
     {
@@ -244,14 +233,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
     videoimport.onMusicDBMessage(fnc, sig, args, pass);
     tasklistview.onMusicDBMessage(fnc, sig, args, pass);
     repairview.onMusicDBMessage(fnc, sig, args, pass);
-    // Layer
-    albumimportlayer.onMusicDBMessage(fnc, sig, args, pass);
-    albumintegrationlayer.onMusicDBMessage(fnc, sig, args, pass);
-    albumuploadprogress.onMusicDBMessage(fnc, sig, args, pass);
-    albumintegrationprogress.onMusicDBMessage(fnc, sig, args, pass);
-    albumimportprogress.onMusicDBMessage(fnc, sig, args, pass);
-    albumsettingslayer.onMusicDBMessage(fnc, sig, args, pass);
-    
 
 
     // Handle Messages form the server

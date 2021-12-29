@@ -85,7 +85,7 @@ class AlbumIntegrationProgress extends Layer
             return;
         }
 
-        albumimportlayer.Show(); // Hand over to the overlay
+        WebUI.ShowLayer("AlbumImport"); // Hand over to the overlay
         this.Hide();
 
         MusicDB_Request("FindAlbumSongFiles", "ShowAlbumImportLayer", {albumpath:this.albumpath});

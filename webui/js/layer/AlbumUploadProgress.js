@@ -92,7 +92,7 @@ class AlbumUploadProgress extends Layer
     onClick_Integrate()
     {
         this.Hide();
-        albumintegrationlayer.Show();
+        WebUI.ShowLayer("AlbumIntegration"); // Hand over to the overlay
     }
 
 

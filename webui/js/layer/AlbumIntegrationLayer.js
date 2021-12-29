@@ -103,9 +103,11 @@ class AlbumIntegrationLayer extends Layer
 
     onClick_Integrate()
     {
-        let albumpath = this.GetAlbumPath();
-        albumintegrationprogress.SetAlbumPath(albumpath);
-        albumintegrationprogress.ExecuteTasks(this.tasks); // Will also Show the layer
+        let albumpath     = this.GetAlbumPath();
+        let progresslayer = WebUI.GetLayer("AlbumIntegrationProgress");
+
+        progresslayer.SetAlbumPath(albumpath);
+        progresslayer.ExecuteTasks(this.tasks); // Will also Show the layer
         this.Hide();
     }
 

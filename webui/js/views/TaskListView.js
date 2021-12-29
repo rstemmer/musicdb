@@ -92,7 +92,9 @@ class TaskListView extends MainSettingsView
 
     onIntegrateGroup(groupid)
     {
+        let albumintegrationlayer = WebUI.GetLayer("AlbumIntegration");
         let taskids = this.taskgroups[groupid].GetTaskIDs();
+
         albumintegrationlayer.ResetUI();
         for(let taskid of taskids)
         {
