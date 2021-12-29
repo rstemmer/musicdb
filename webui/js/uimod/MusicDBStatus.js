@@ -87,6 +87,7 @@ class MusicDBStatus extends StatusList
         // Show / Hide reconnect button
         if(statename == "musicdb")
         {
+            let mainmenu = WebUI.GetLayer("MainMenu");
             if(state == "connected")
             {
                 if(typeof mainmenu === "object")

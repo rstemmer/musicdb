@@ -26,7 +26,10 @@ WebUI.AddManager("MusicMode",   new MDBModeManager());
 WebUI.AddManager("Upload",      new UploadManager());
 
 // Create some Layers on top of the main layout
-let curtain         = WebUI.AddLayer("MenuBackground", new Curtain());
+let curtain         = WebUI.AddLayer("MenuBackground",  new Curtain());
+let mainmenu        = WebUI.AddLayer("MainMenu",        new MainMenu(curtain));
+let mainmenubutton  = WebUI.AddLayer("MainMenuButton",  new MenuButton("1rem", "1rem", "Menu", ()=>{mainmenu.ToggleMenu();}, "Show main menu"));
+
 let layerbackground     = new LayerBackground();
 let albumimportlayer    = new AlbumImportLayer(layerbackground);
 let albumintegrationlayer=new AlbumIntegrationLayer(layerbackground);
@@ -71,8 +74,7 @@ let settingsmenu        = new SettingsMenu(); // Accesses references to settings
 
 let configuration       = null; // Needs to be loaded from the Server
 
-// Create Main Menu
-let mainmenu           = new MainMenu(curtain);
+// Extend Main Menu
 mainmenu.AddSection("Audio Stream",  audiostreamplayer);
 mainmenu.AddSection("System Status", musicdbstatus);
 
@@ -100,13 +102,11 @@ window.onload = function ()
     let queuecontrolsbox   = document.getElementById("QueueControl");
     queuecontrolsbox.appendChild(queuecontrolview.GetHTMLElement());
 
-    let mainmenubutton = new MenuButton("1rem", "1rem", "Menu", ()=>{mainmenu.ToggleMenu();}, "Show main menu");
+    //let mainmenubutton = new MenuButton("1rem", "1rem", "Menu", ()=>{mainmenu.ToggleMenu();}, "Show main menu");
 
     WebUI.onWindowLoad();
 
     let body = new Element(document.body);
-    body.AppendChild(mainmenubutton);
-    body.AppendChild(mainmenu);
     body.AppendChild(musicdbstatus.GetReconnectButtonHTMLElement());
     body.AppendChild(layerbackground);
     body.AppendChild(albumimportlayer);
@@ -157,7 +157,6 @@ function onMusicDBNotification(fnc, sig, rawdata)
 {
     WebUI.onMusicDBNotification(fnc, sig, rawdata);
 
-    //musicdbhud.onMusicDBNotification(fnc, sig, rawdata);
     musicdbstatus.onMusicDBNotification(fnc, sig, rawdata);
     queuetimemanager.onMusicDBNotification(fnc, sig, rawdata);
     streamview.onMusicDBNotification(fnc, sig, rawdata);
@@ -220,7 +219,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
     // Controls
     musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
     musicdbstatus.onMusicDBMessage(fnc, sig, args, pass);
-    mainmenu.onMusicDBMessage(fnc, sig, args, pass);
     audiostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
     // Views
     leftviewmanager.onMusicDBMessage(fnc, sig, args, pass);

@@ -71,6 +71,7 @@ class MDBModeManager
         // Show/Hide video panel
         let videopanel  = document.getElementById("VideoPanel");
         let panels      = document.getElementById("Panels");
+        let mainmenu    = WebUI.GetLayer("MainMenu");
 
         if(this.mode == "audio")
         {
