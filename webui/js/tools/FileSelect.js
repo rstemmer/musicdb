@@ -71,6 +71,8 @@ class FileSelect extends Element
 
         // Start Upload
         let taskid;
+        let uploadmanager;
+        uploadmanager = WebUI.GetManager("Upload");
         taskid = uploadmanager.UploadFile(this.contenttype, fileinfos, this.annotations);
 
         // Update Label
@@ -126,6 +128,8 @@ class DirectorySelect extends FileSelect
         // Trigger Upload
         for(let fileinfos of files)
         {
+            let uploadmanager;
+            uploadmanager = WebUI.GetManager("Upload");
             uploadmanager.UploadFile(this.contenttype, fileinfos, this.annotations);
         }
 

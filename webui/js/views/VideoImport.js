@@ -24,7 +24,8 @@ class VideoImport extends MainSettingsView
 
         // Upload Section
         this.upload      = new VideoFileSelect("Select Video File", "Select a video file from the local computer");
-        this.uploadtable = uploadmanager.GetVideoUploadsTable();
+        //this.uploadtable = uploadmanager.GetVideoUploadsTable();
+        this.uploadtable = new Element("table"); // Dummy. This needs to be refactored
         this.importtable = new VideoImportTable();
         this.element.appendChild(this.upload.GetHTMLElement());
         this.element.appendChild(this.uploadtable.GetHTMLElement());
