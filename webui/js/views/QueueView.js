@@ -185,7 +185,8 @@ class QueueView extends Element
         }
         else if(fnc == "GetAlbum" && sig == "AlbumRenamed")
         {
-            if(mdbmodemanager.GetCurrentMode() == "audio")
+            let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
+            if(mode == "audio")
                 MusicDB_Request("GetSongQueue", "ShowSongQueue");
         }
     }

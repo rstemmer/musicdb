@@ -148,7 +148,7 @@ class QueueTimeManager
     
     UpdateElement()
     {
-        let mode = mdbmodemanager.GetCurrentMode();
+        let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
 
         if(mode == "audio")
         {

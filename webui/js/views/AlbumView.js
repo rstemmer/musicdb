@@ -94,7 +94,7 @@ class AlbumView extends MainView2
 
     AddRandomSongToQueue(position)
     {
-        let currentalbumid = mdbmodemanager.GetCurrentAlbumID();
+        let currentalbumid = WebUI.GetManager("MusicMode").GetCurrentAlbumID();
         MusicDB_Call("AddRandomSongToQueue", {albumid: currentalbumid, position: position});
     }
 
@@ -102,7 +102,7 @@ class AlbumView extends MainView2
 
     UpdateInformation(MDBAlbum, MDBArtist, MDBTags, MDBCDs)
     {
-        let currentalbumid    = mdbmodemanager.GetCurrentAlbumID();
+        let currentalbumid    = WebUI.GetManager("MusicMode").GetCurrentAlbumID();
         this.currentalbumtags = MDBTags;
 
         // Update Headline
@@ -290,7 +290,7 @@ class AlbumView extends MainView2
 
     UpdateTagInformation(MDBTags)
     {
-        let currentalbumid    = mdbmodemanager.GetCurrentAlbumID();
+        let currentalbumid    = WebUI.GetManager("MusicMode").GetCurrentAlbumID();
         this.currentalbumtags = MDBTags;
 
         // Update existing tags
@@ -354,7 +354,7 @@ class AlbumView extends MainView2
             return
 
         // Get current song ID and check if it is available in the shown album
-        let currentsongid = mdbmodemanager.GetCurrentSongID();
+        let currentsongid = WebUI.GetManager("MusicMode").GetCurrentSongID();
         if(typeof this.songtiles[currentsongid] !== "object")
             return;
 
@@ -384,7 +384,7 @@ class AlbumView extends MainView2
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        let currentalbumid = mdbmodemanager.GetCurrentAlbumID();
+        let currentalbumid = WebUI.GetManager("MusicMode").GetCurrentAlbumID();
 
         if(fnc == "GetAlbum" && sig == "ShowAlbum")
         {

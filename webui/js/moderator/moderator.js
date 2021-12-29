@@ -14,9 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+// Create WebUI Application
+let WebUI = new Application();
+
 // Create Basic MusicDB Logic Components
-let fullscreenmanager   = new FullscreenManager();
-let mdbmodemanager      = new MDBModeManager();
+WebUI.AddManager("Fullscreen", new FullscreenManager());
+WebUI.AddManager("MusicMode", new MDBModeManager());
+//let mdbmodemanager      = new MDBModeManager();
 let uploadmanager       = new UploadManager();
 let colormanager        = new ColorManager();
 let tagmanager          = new TagManager();
@@ -33,7 +37,7 @@ let albumimportprogress = new AlbumImportProgress(layerbackground);
 let albumsettingslayer  = new AlbumSettingsLayer(layerbackground);
 
 // Create Basic MusicDB WebUI Components
-let musicdbhud          = new MusicDBHUD();
+WebUI.AddView("MusicDBHUD", new MusicDBHUD(), "HUDBox");
 let genreselectionview  = new GenreSelectionView();
 let alphabetbar         = new AlphabetBar();
 let searchinput         = new SearchInput(curtain);
@@ -78,8 +82,6 @@ mainmenu.AddSection("System Status", musicdbstatus);
 window.onload = function ()
 {
     // Do some last DOM changes
-    let HUDparent   = document.getElementById("HUDBox");
-    HUDparent.appendChild(musicdbhud.GetHTMLElement());
 
     let genrebox    = document.getElementById("GenreBox");
     genrebox.appendChild(genreselectionview.GetHTMLElement());
@@ -119,6 +121,7 @@ window.onload = function ()
     videopanelmanager   = new VideoPanelManager();
     streamview.ShowInVideoPanel();
 
+    WebUI.onWindowLoad();
 
     // Connect to MusicDB
     ConnectToMusicDB();
@@ -126,32 +129,37 @@ window.onload = function ()
 
 function onMusicDBConnectionOpen()
 {
-    window.console && console.log("[MDB] Open");
+    WebUI.onWebSocketOpen();
+
     musicdbstatus.onMusicDBConnectionOpen();
 
     MusicDB_Request("LoadWebUIConfiguration", "SetupWebUI");
 }
 function onMusicDBConnectionError()
 {
-    window.console && console.log("[MDB] Error");
+    WebUI.onWebSocketError();
+
     musicdbstatus.onMusicDBConnectionError();
     mainviewmanager.ShowWebSocketError();
 }
 function onMusicDBWatchdogBarks()
 {
-    window.console && console.log("[MDB] WD Barks");
+    WebUI.onWatchdogBarks();
+
     musicdbstatus.onMusicDBWatchdogBarks();
 }
 function onMusicDBConnectionClosed()
 {
-    window.console && console.log("[MDB] Closed");
+    WebUI.onWebSocketClosed();
+
     musicdbstatus.onMusicDBConnectionClosed();
 }
 
 function onMusicDBNotification(fnc, sig, rawdata)
 {
-    window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#c87a7a");
-    musicdbhud.onMusicDBNotification(fnc, sig, rawdata);
+    WebUI.onMusicDBNotification(fnc, sig, rawdata);
+
+    //musicdbhud.onMusicDBNotification(fnc, sig, rawdata);
     musicdbstatus.onMusicDBNotification(fnc, sig, rawdata);
     queuetimemanager.onMusicDBNotification(fnc, sig, rawdata);
     streamview.onMusicDBNotification(fnc, sig, rawdata);
@@ -209,12 +217,12 @@ function onMusicDBNotification(fnc, sig, rawdata)
 }
 function onMusicDBMessage(fnc, sig, args, pass)
 {
-    window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
+    WebUI.onMusicDBMessage(fnc, sig, args, pass);
 
     // Background objects
     tagmanager.onMusicDBMessage(fnc, sig, args, pass);
     artistscache.onMusicDBMessage(fnc, sig, args, pass);
-    mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
+    //mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
     colormanager.onMusicDBMessage(fnc, sig, args, pass);
     uploadmanager.onMusicDBMessage(fnc, sig, args, pass);
     // Controls
@@ -225,7 +233,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     // Views
     leftviewmanager.onMusicDBMessage(fnc, sig, args, pass);
     mainviewmanager.onMusicDBMessage(fnc, sig, args, pass);
-    musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
+    //musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
     genreselectionview.onMusicDBMessage(fnc, sig, args, pass);
     searchinput.onMusicDBMessage(fnc, sig, args, pass);
     searchresultsview.onMusicDBMessage(fnc, sig, args, pass);
