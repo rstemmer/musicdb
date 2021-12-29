@@ -20,12 +20,13 @@ let WebUI = new Application();
 // Create Basic MusicDB Logic Components
 WebUI.AddManager("Tags",        new TagManager());
 WebUI.AddManager("Artists",     new ArtistsCache());
+WebUI.AddManager("Color",       new ColorManager());
 WebUI.AddManager("Fullscreen",  new FullscreenManager());
 WebUI.AddManager("MusicMode",   new MDBModeManager());
 WebUI.AddManager("Upload",      new UploadManager());
 //let mdbmodemanager      = new MDBModeManager();
 //let uploadmanager       = new UploadManager();
-let colormanager        = new ColorManager();
+//let colormanager        = new ColorManager();
 //let tagmanager          = new TagManager();
 //let artistscache        = new ArtistsCache();
 
@@ -226,7 +227,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     //tagmanager.onMusicDBMessage(fnc, sig, args, pass);
     //artistscache.onMusicDBMessage(fnc, sig, args, pass);
     //mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
-    colormanager.onMusicDBMessage(fnc, sig, args, pass);
+    //colormanager.onMusicDBMessage(fnc, sig, args, pass);
     //uploadmanager.onMusicDBMessage(fnc, sig, args, pass);
     // Controls
     musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);

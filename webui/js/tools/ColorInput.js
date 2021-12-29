@@ -93,6 +93,8 @@ class ColorSchemeSelection extends Element
         this.musictype  = musictype;
         this.musicid    = musicid;
 
+        let colormanager = WebUI.GetManager("Color");
+
         // Color input elements
         this.bginput = new ColorInput(
             "Background Color",
@@ -201,7 +203,7 @@ class ColorSchemeSelection extends Element
         let fgcolor = this.fginput.GetColor();
         let hlcolor = this.hlinput.GetColor();
 
-        colormanager.UpdateColor(fgcolor, hlcolor, bgcolor);
+        WebUI.GetManager("Color").UpdateColor(fgcolor, hlcolor, bgcolor);
     }
 }
 
