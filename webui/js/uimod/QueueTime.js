@@ -173,7 +173,7 @@ class QueueTimeManager
             // rawdata is the currently played time of the current song
             // this method gets called every second by the audio streaming thread of MusicDB
             // This also updated the QueueTimeBar
-            queuetimemanager.SetTimePlayed("audio", rawdata);
+            this.SetTimePlayed("audio", rawdata);
         }
     }
 }

@@ -39,14 +39,15 @@ WebUI.AddLayer("AlbumImportProgress",       new AlbumImportProgress(layerbackgro
 WebUI.AddLayer("AlbumSettings",             new AlbumSettingsLayer(layerbackground));
 
 // Create Basic MusicDB WebUI Components
-WebUI.AddView("MusicDBHUD", new MusicDBHUD(), "HUDBox");
-let genreselectionview  = new GenreSelectionView();
-let alphabetbar         = new AlphabetBar();
-let searchinput         = new SearchInput(curtain);
-let musicdbstatus       = new MusicDBStatus();
-let audiostreamplayer   = new AudioStreamPlayer();
-let musicdbcontrols     = new MusicDBControls();
-let queuetimemanager    = new QueueTimeManager();
+WebUI.AddView("MusicDBControls",    new MusicDBControls(),      "ControlBox");
+WebUI.AddView("QueueTime",          new QueueTimeManager(),     "MDBQueueTimeBar");
+WebUI.AddView("QueueControl",       new QueueControlView(),     "QueueControl");
+WebUI.AddView("MusicDBHUD",         new MusicDBHUD(),           "HUDBox");
+WebUI.AddView("GenreSelection",     new GenreSelectionView(),   "GenreBox");
+WebUI.AddView("AlphabetBar",        new AlphabetBar(),          "AlphabetBox");
+WebUI.AddView("SearchInput",        new SearchInput(curtain),   "SearchBox");
+let musicdbstatus =     WebUI.AddView("MusicDBStatus",      new MusicDBStatus());
+let audiostreamplayer = WebUI.AddView("AudioStreamPlayer",  new AudioStreamPlayer());
 
 let leftviewmanager     = null; // \_
 let mainviewmanager     = null; // / Can only be created when the document is created
@@ -59,7 +60,6 @@ let searchresultsview   = new SearchResultsView();
 let songrelationsview   = new SongRelationsView();
 let videoview           = new VideoView();
 let queueview           = new QueueView();
-let queuecontrolview    = new QueueControlView();
 
 let webuisettings       = new WebUISettings();
 let streamsettings      = new StreamSettings();
@@ -83,27 +83,6 @@ mainmenu.AddSection("System Status", musicdbstatus);
 window.onload = function ()
 {
     // Do some last DOM changes
-
-    let genrebox    = document.getElementById("GenreBox");
-    genrebox.appendChild(genreselectionview.GetHTMLElement());
-
-    let alphabetbox    = document.getElementById("AlphabetBox");
-    alphabetbox.appendChild(alphabetbar.GetHTMLElement());
-
-    let searchbox    = document.getElementById("SearchBox");
-    searchbox.appendChild(searchinput.GetHTMLElement());
-
-    let controlsbox = document.getElementById("ControlBox");
-    controlsbox.appendChild(musicdbcontrols.GetHTMLElement());
-
-    let queuetimebar= document.getElementById("MDBQueueTimeBar");
-    queuetimebar.appendChild(queuetimemanager.GetHTMLElement());
-
-    let queuecontrolsbox   = document.getElementById("QueueControl");
-    queuecontrolsbox.appendChild(queuecontrolview.GetHTMLElement());
-
-    //let mainmenubutton = new MenuButton("1rem", "1rem", "Menu", ()=>{mainmenu.ToggleMenu();}, "Show main menu");
-
     WebUI.onWindowLoad();
 
     let body = new Element(document.body);
@@ -150,12 +129,9 @@ function onMusicDBNotification(fnc, sig, rawdata)
 {
     WebUI.onMusicDBNotification(fnc, sig, rawdata);
 
-    musicdbstatus.onMusicDBNotification(fnc, sig, rawdata);
-    queuetimemanager.onMusicDBNotification(fnc, sig, rawdata);
     streamview.onMusicDBNotification(fnc, sig, rawdata);
     tasklistview.onMusicDBNotification(fnc, sig, rawdata);
     repairview.onMusicDBNotification(fnc, sig, rawdata);
-    //uploadmanager.onMusicDBNotification(fnc, sig, rawdata);
     albumview.onMusicDBNotification(fnc, sig, rawdata);
 
     if(fnc == "MusicDB:AudioStream")
@@ -204,16 +180,9 @@ function onMusicDBMessage(fnc, sig, args, pass)
 {
     WebUI.onMusicDBMessage(fnc, sig, args, pass);
 
-    // Controls
-    musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
-    musicdbstatus.onMusicDBMessage(fnc, sig, args, pass);
-    audiostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
     // Views
     leftviewmanager.onMusicDBMessage(fnc, sig, args, pass);
     mainviewmanager.onMusicDBMessage(fnc, sig, args, pass);
-    //musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
-    genreselectionview.onMusicDBMessage(fnc, sig, args, pass);
-    searchinput.onMusicDBMessage(fnc, sig, args, pass);
     searchresultsview.onMusicDBMessage(fnc, sig, args, pass);
     songrelationsview.onMusicDBMessage(fnc, sig, args, pass);
     artistsview.onMusicDBMessage(fnc, sig, args, pass);

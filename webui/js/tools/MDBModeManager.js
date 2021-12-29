@@ -106,9 +106,8 @@ class MDBModeManager
                 MusicDB_Request("GetVideo",                 "ShowVideo", {videoid: MDBMusic.id});
         }
 
-
         // Update other elements
-        queuecontrolview.Update();
+        WebUI.GetView("QueueControl").Update();
     }
 
 

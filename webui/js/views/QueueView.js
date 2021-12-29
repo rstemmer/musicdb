@@ -94,6 +94,7 @@ class QueueView extends Element
     // musictype: "audio" or "video"
     Update(musictype, MDBQueue)
     {
+        let queuetimemanager = WebUI.GetView("QueueTime");
         // Nothing in the queue? -> Nothing to do
         // A fresh installed MusicDB may have no queue!
         if(MDBQueue.length === 0)

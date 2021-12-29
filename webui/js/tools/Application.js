@@ -58,7 +58,7 @@ class Application
     }
     GetView(id)
     {
-        return this.view[id];
+        return this.views[id];
     }
 
 
