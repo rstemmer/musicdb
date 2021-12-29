@@ -118,7 +118,7 @@ class FlagBar extends Element
     {
         // Set Mood Flags
         // Iterate over all existing mood IDs and check which of them was set for this song
-        let allmoods = tagmanager.GetMoods();
+        let allmoods = WebUI.GetManager("Tags").GetMoods();
         let moodids  = moods.map(mood => mood.id); // List of IDs of set moods for this song
         for(let mood of allmoods)
         {

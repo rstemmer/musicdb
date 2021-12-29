@@ -176,7 +176,7 @@ class ArtistsView extends LeftView
     {
         let musicid      = MDBMusic.id;
         let tile         = this.tiles[musicid];
-        let activegenres = tagmanager.GetActiveGenres();
+        let activegenres = WebUI.GetManager("Tags").GetActiveGenres();
 
         for(let genre of MDBGenres)
         {

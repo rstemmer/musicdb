@@ -38,7 +38,7 @@ class GenreSelectionView extends Element
 
         // Create all buttons
         super.RemoveChilds();
-        let genres = tagmanager.GetGenres();
+        let genres = WebUI.GetManager("Tags").GetGenres();
         for(let genre of genres)
         {
             // If Other-Genre shall be hidden, skip adding it to the View :)

@@ -41,7 +41,7 @@ class SongRelationsView extends MainView
             ()=>{MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});}
         );
 
-        let activegenres    = tagmanager.GetActiveGenres();
+        let activegenres    = WebUI.GetManager("Tags").GetActiveGenres();
         let currentartistid = -1;
         this.songtiles = new Object();
         for(let entry of songentries)
