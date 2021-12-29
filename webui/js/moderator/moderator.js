@@ -37,6 +37,7 @@ WebUI.AddLayer("AlbumUploadProgress",       new AlbumUploadProgress(layerbackgro
 WebUI.AddLayer("AlbumIntegrationProgress",  new AlbumIntegrationProgress(layerbackground));
 WebUI.AddLayer("AlbumImportProgress",       new AlbumImportProgress(layerbackground));
 WebUI.AddLayer("AlbumSettings",             new AlbumSettingsLayer(layerbackground));
+WebUI.AddLayer("SongsSettings",             new SongsSettingsLayer(layerbackground));
 
 // Create Basic MusicDB WebUI Components
 WebUI.AddView("MusicDBControls",    new MusicDBControls(),      "ControlBox");
