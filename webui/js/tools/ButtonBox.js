@@ -52,7 +52,7 @@ class ButtonBox_AddMusicToQueue extends ButtonBox
 
     _AddMusicToQueue(position)
     {
-        queueview.AddFakeEntry(this.musictype, position);
+        WebUI.GetView("Queue").AddFakeEntry(this.musictype, position);
         this.AddMusicToQueue(position);
     }
 

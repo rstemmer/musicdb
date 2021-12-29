@@ -49,17 +49,14 @@ WebUI.AddView("SearchInput",        new SearchInput(curtain),   "SearchBox");
 let musicdbstatus =     WebUI.AddView("MusicDBStatus",      new MusicDBStatus());
 let audiostreamplayer = WebUI.AddView("AudioStreamPlayer",  new AudioStreamPlayer());
 
-let leftviewmanager     = null; // \_
-let mainviewmanager     = null; // / Can only be created when the document is created
-let videopanelmanager   = null;
-let artistsview         = new ArtistsView();
-let albumview           = new AlbumView();
-let lyricsview          = new LyricsView();
-let streamview          = new StreamView();
-let searchresultsview   = new SearchResultsView();
-let songrelationsview   = new SongRelationsView();
-let videoview           = new VideoView();
-let queueview           = new QueueView();
+WebUI.AddView("Artists",        new ArtistsView());
+WebUI.AddView("Album",          new AlbumView());
+WebUI.AddView("Lyrics",         new LyricsView());
+WebUI.AddView("SearchResults",  new SearchResultsView());
+WebUI.AddView("SongRelations",  new SongRelationsView());
+WebUI.AddView("Video",          new VideoView());
+WebUI.AddView("Queue",          new QueueView());
+let streamview = WebUI.AddView("VideoStream", new StreamView());
 
 let webuisettings       = new WebUISettings();
 let streamsettings      = new StreamSettings();
@@ -71,6 +68,10 @@ let videoimport         = new VideoImport();
 let tasklistview        = new TaskListView();
 let repairview          = new RepairView();
 let settingsmenu        = new SettingsMenu(); // Accesses references to settings views
+
+let leftviewmanager     = null; // \_
+let mainviewmanager     = null; // / Can only be created when the document is created
+let videopanelmanager   = null;
 
 let configuration       = null; // Needs to be loaded from the Server
 
@@ -129,10 +130,8 @@ function onMusicDBNotification(fnc, sig, rawdata)
 {
     WebUI.onMusicDBNotification(fnc, sig, rawdata);
 
-    streamview.onMusicDBNotification(fnc, sig, rawdata);
     tasklistview.onMusicDBNotification(fnc, sig, rawdata);
     repairview.onMusicDBNotification(fnc, sig, rawdata);
-    albumview.onMusicDBNotification(fnc, sig, rawdata);
 
     if(fnc == "MusicDB:AudioStream")
     {
@@ -183,14 +182,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
     // Views
     leftviewmanager.onMusicDBMessage(fnc, sig, args, pass);
     mainviewmanager.onMusicDBMessage(fnc, sig, args, pass);
-    searchresultsview.onMusicDBMessage(fnc, sig, args, pass);
-    songrelationsview.onMusicDBMessage(fnc, sig, args, pass);
-    artistsview.onMusicDBMessage(fnc, sig, args, pass);
-    albumview.onMusicDBMessage(fnc, sig, args, pass);
-    lyricsview.onMusicDBMessage(fnc, sig, args, pass);
-    streamview.onMusicDBMessage(fnc, sig, args, pass);
-    videoview.onMusicDBMessage(fnc, sig, args, pass);
-    queueview.onMusicDBMessage(fnc, sig, args, pass);
     // Setting Views
     settingsmenu.onMusicDBMessage(fnc, sig, args, pass);
     webuisettings.onMusicDBMessage(fnc, sig, args, pass);

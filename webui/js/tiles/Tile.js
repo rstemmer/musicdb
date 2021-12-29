@@ -125,7 +125,7 @@ class Tile extends Draggable
         spacer.innerText = " – ";
         album.innerText  = albumname;
 
-        artist.onclick   = ()=>{artistsview.ScrollToArtist(MDBArtist.id);};
+        artist.onclick   = ()=>{WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);};
         album.onclick    = ()=>{MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});};
 
         songinfos.appendChild(artist);
@@ -147,7 +147,7 @@ class Tile extends Draggable
 
         let artist = document.createElement("span");
         artist.innerText = artistname;
-        artist.onclick   = ()=>{artistsview.ScrollToArtist(MDBArtist.id);};
+        artist.onclick   = ()=>{WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);};
 
         songinfos.appendChild(artist);
         return songinfos;

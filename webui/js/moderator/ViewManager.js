@@ -73,7 +73,7 @@ class LeftViewManager extends ViewManager
 
     ShowArtistsView()
     {
-        this.MountView(artistsview);
+        this.MountView(WebUI.GetView("Artists"));
     }
     ShowSettingsMenu()
     {
@@ -123,23 +123,23 @@ class MainViewManager extends ViewManager
     {
         if(fnc == "GetAlbum" && sig == "ShowAlbum")
         {
-            this.MountView(albumview);
+            this.MountView(WebUI.GetView("Album"));
         }
         else if(fnc == "GetVideo" && sig == "ShowVideo")
         {
-            this.MountView(videoview);
+            this.MountView(WebUI.GetView("Video"));
         }
         else if(fnc == "GetSongLyrics" && sig == "ShowLyrics")
         {
-            this.MountView(lyricsview);
+            this.MountView(WebUI.GetView("Lyrics"));
         }
         else if(fnc == "Find" && sig == "ShowResults")
         {
-            this.MountView(searchresultsview);
+            this.MountView(WebUI.GetView("SearchResults"));
         }
         else if(fnc == "GetSongRelationship" && sig == "ShowSongRelationship")
         {
-            this.MountView(songrelationsview);
+            this.MountView(WebUI.GetView("SongRelations"));
         }
 
         // Settings
