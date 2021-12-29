@@ -77,8 +77,8 @@ class LeftViewManager extends ViewManager
     }
     ShowSettingsMenu()
     {
-        settingsmenu.LockView()
-        this.MountView(settingsmenu);
+        WebUI.GetView("SettingsMenu").LockView()
+        this.MountView(WebUI.GetView("SettingsMenu"));
     }
 
 
@@ -145,39 +145,39 @@ class MainViewManager extends ViewManager
         // Settings
         else if(fnc == "LoadWebUIConfiguration" && sig == "ShowWebUISettings")
         {
-            this.MountView(webuisettings);
+            this.MountView(WebUI.GetView("WebUISettings"));
         }
         else if(fnc == "LoadWebUIConfiguration" && sig == "ShowStreamSettings")
         {
-            this.MountView(streamsettings);
+            this.MountView(WebUI.GetView("StreamSettings"));
         }
         else if(fnc == "GetTags" && sig == "ShowGenreSettings")
         {
-            this.MountView(genresettings);
+            this.MountView(WebUI.GetView("GenreSettings"));
         }
         else if(fnc == "GetTags" && sig == "ShowMoodManager")
         {
-            this.MountView(moodmanager);
+            this.MountView(WebUI.GetView("MoodSettings"));
         }
         else if(fnc == "GetHiddenAlbums" && sig == "ShowHiddenAlbums")
         {
-            this.MountView(hiddenalbums);
+            this.MountView(WebUI.GetView("HiddenAlbums"));
         }
         else if(fnc == "FindNewContent" && sig == "ShowAlbumImport")
         {
-            this.MountView(albumimport);
+            this.MountView(WebUI.GetView("AlbumImport"));
         }
         else if(fnc == "FindNewContent" && sig == "ShowVideoImport")
         {
-            this.MountView(videoimport);
+            this.MountView(WebUI.GetView("VideoImport"));
         }
         else if(fnc == "InitiateFilesystemScan" && sig == "ShowRepairView")
         {
-            this.MountView(repairview);
+            this.MountView(WebUI.GetView("Repair"));
         }
         else if(fnc == "GetCurrentTasks" && sig == "ShowCurrentTasks")
         {
-            this.MountView(tasklistview);
+            this.MountView(WebUI.GetView("TaskList"));
         }
         return;
     }

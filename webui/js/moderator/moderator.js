@@ -58,16 +58,16 @@ WebUI.AddView("Video",          new VideoView());
 WebUI.AddView("Queue",          new QueueView());
 let streamview = WebUI.AddView("VideoStream", new StreamView());
 
-let webuisettings       = new WebUISettings();
-let streamsettings      = new StreamSettings();
-let genresettings       = new GenreSettings();
-let moodmanager         = new MoodManager();
-let hiddenalbums        = new HiddenAlbums();
-let albumimport         = new AlbumImport();
-let videoimport         = new VideoImport();
-let tasklistview        = new TaskListView();
-let repairview          = new RepairView();
-let settingsmenu        = new SettingsMenu(); // Accesses references to settings views
+WebUI.AddView("WebUISettings",  new WebUISettings());
+WebUI.AddView("StreamSettings", new StreamSettings());
+WebUI.AddView("GenreSettings",  new GenreSettings());
+WebUI.AddView("MoodSettings",   new MoodManager());
+WebUI.AddView("HiddenAlbums",   new HiddenAlbums());
+WebUI.AddView("AlbumImport",    new AlbumImport());
+WebUI.AddView("VideoImport",    new VideoImport());
+WebUI.AddView("TaskList",       new TaskListView());
+WebUI.AddView("Repair",         new RepairView());
+WebUI.AddView("SettingsMenu",   new SettingsMenu()); // Accesses references to settings views
 
 let leftviewmanager     = null; // \_
 let mainviewmanager     = null; // / Can only be created when the document is created
@@ -130,9 +130,6 @@ function onMusicDBNotification(fnc, sig, rawdata)
 {
     WebUI.onMusicDBNotification(fnc, sig, rawdata);
 
-    tasklistview.onMusicDBNotification(fnc, sig, rawdata);
-    repairview.onMusicDBNotification(fnc, sig, rawdata);
-
     if(fnc == "MusicDB:AudioStream")
     {
         // Handle notifications
@@ -182,18 +179,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
     // Views
     leftviewmanager.onMusicDBMessage(fnc, sig, args, pass);
     mainviewmanager.onMusicDBMessage(fnc, sig, args, pass);
-    // Setting Views
-    settingsmenu.onMusicDBMessage(fnc, sig, args, pass);
-    webuisettings.onMusicDBMessage(fnc, sig, args, pass);
-    streamsettings.onMusicDBMessage(fnc, sig, args, pass);
-    genresettings.onMusicDBMessage(fnc, sig, args, pass);
-    moodmanager.onMusicDBMessage(fnc, sig, args, pass);
-    hiddenalbums.onMusicDBMessage(fnc, sig, args, pass);
-    albumimport.onMusicDBMessage(fnc, sig, args, pass);
-    videoimport.onMusicDBMessage(fnc, sig, args, pass);
-    tasklistview.onMusicDBMessage(fnc, sig, args, pass);
-    repairview.onMusicDBMessage(fnc, sig, args, pass);
-
 
     // Handle Messages form the server
     if(fnc == "LoadWebUIConfiguration" && sig == "SetupWebUI")

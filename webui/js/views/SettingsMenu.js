@@ -35,7 +35,7 @@ class SettingsMenu extends LeftView
                 },
             "Hide Management menu and show Artists");
 
-        this.views.push(webuisettings);
+        this.views.push(WebUI.GetView("WebUISettings"));
         this.AddMenuEntry(
             new SVGIcon("Settings"),
             "WebUI Settings",
@@ -44,7 +44,7 @@ class SettingsMenu extends LeftView
                 },
             "Show WebUI Settings");
 
-        this.views.push(streamsettings);
+        this.views.push(WebUI.GetView("StreamSettings"));
         this.AddMenuEntry(
             new SVGIcon("Song"),
             "Stream Settings",
@@ -53,7 +53,7 @@ class SettingsMenu extends LeftView
                 },
             "Show Stream Settings");
 
-        this.views.push(genresettings);
+        this.views.push(WebUI.GetView("GenreSettings"));
         this.AddMenuEntry(
             new SVGIcon("Tags"),
             "Genre Manager",
@@ -63,7 +63,7 @@ class SettingsMenu extends LeftView
                 },
             "Manage, Add and Remove Genres and Subgenres");
 
-        this.views.push(moodmanager);
+        this.views.push(WebUI.GetView("MoodSettings"));
         this.AddMenuEntry(
             new SVGIcon("Tags"),
             "Mood Manager",
@@ -73,7 +73,7 @@ class SettingsMenu extends LeftView
                 },
             "Manage, Add and Remove Mood Flags");
 
-        this.views.push(hiddenalbums);
+        this.views.push(WebUI.GetView("HiddenAlbums"));
         this.AddMenuEntry(
             new SVGIcon("Hide"),
             "Hidden Albums",
@@ -82,7 +82,7 @@ class SettingsMenu extends LeftView
                 },
             "Show list of hidden albums that can be made visible again");
 
-        this.views.push(albumimport);
+        this.views.push(WebUI.GetView("AlbumImport"));
         this.AddMenuEntry(
             new SVGIcon("Import"),
             "Import Album",
@@ -91,7 +91,7 @@ class SettingsMenu extends LeftView
                 },
             "Import Music Album");
 
-        this.views.push(videoimport);
+        this.views.push(WebUI.GetView("VideoImport"));
         this.AddMenuEntry(
             new SVGIcon("Import"),
             "Import Video",
@@ -100,7 +100,7 @@ class SettingsMenu extends LeftView
                 },
             "Upload and/or Import Music Videos");
 
-        this.views.push(repairview);
+        this.views.push(WebUI.GetView("Repair"));
         this.AddMenuEntry(
             new SVGIcon("Repair"),
             "Repair Database",
@@ -109,7 +109,7 @@ class SettingsMenu extends LeftView
                 },
             "Show Invalid Database Enties");
 
-        this.views.push(tasklistview);
+        this.views.push(WebUI.GetView("TaskList"));
         this.AddMenuEntry(
             new SVGIcon("TaskList"),
             "Task List",
@@ -154,13 +154,13 @@ class SettingsMenu extends LeftView
 
     ShowVideoEntry()
     {
-        let index = this.views.indexOf(videoimport);
+        let index = this.views.indexOf(WebUI.GetView("VideoImport"));
         if(typeof index === "number")
             this.entries[index].style.display= "flex";
     }
     HideVideoEntry()
     {
-        let index = this.views.indexOf(videoimport);
+        let index = this.views.indexOf(WebUI.GetView("VideoImport"));
         if(typeof index === "number")
             this.entries[index].style.display= "none";
     }
