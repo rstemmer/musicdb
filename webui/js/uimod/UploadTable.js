@@ -105,8 +105,12 @@ class UploadTable extends Table
 
 
     // Check if all upload tasks have been uploaded to 100%
+    // Returns false if there are no entries
     CheckCompleteness()
     {
+        if(Object.keys(this.entries).length === 0)
+            return false;
+
         for(let key in this.entries)
         {
             let row      = this.entries[key].row;

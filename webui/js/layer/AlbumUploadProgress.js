@@ -132,7 +132,22 @@ class AlbumUploadProgress extends Layer
             if(sig == "ChunkRequest"
             || sig == "StateUpdate"
             || sig == "InternalError")
+            {
+                if(sig == "InternalError")
+                {
+                    let message = new MessageBarError("Upload Failed");
+                    message.Show();
+                    this.AppendChild(message);
+                    window.console?.error(`${fnc}:${sig}`);
+                }
+                if(task.state == "invalidcontent")
+                {
+                    let message = new MessageBarError(`Uploading "${task.sourcefilename}" failed. Invalid Content.`);
+                    message.Show();
+                    this.AppendChild(message);
+                }
                 this.uploadstable.UpdateRow(task);
+            }
 
             this.ValidateCompleteness();
             return;
