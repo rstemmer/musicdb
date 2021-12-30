@@ -301,6 +301,42 @@ class AlbumImportLayer extends Layer
             /*canfail=*/ true // when importing artwork fails, it is not a big issue.
             );
 
+        // Identify new album ID and communicate it to the album import progress layer for later use
+        this.tasks.AddTask("Identify new Album ID",
+            (webuitaskid)=>
+            {
+                MusicDB_Request("GetArtistsWithAlbums", "ConfirmAlbumImportTask",
+                    {},
+                    {webuitaskid: webuitaskid});
+                return "active";
+            },
+            (fnc, sig, args, pass)=>
+            {
+                // Identify new album and load it
+                for(let artist of args)
+                {
+                    window.console?.log(artist);
+                    for(let albuminfos of artist.albums)
+                    {
+                        let MDBAlbum = albuminfos.album;
+                        window.console?.log(MDBAlbum);
+                        window.console?.log(`${newalbumpath} == ${MDBAlbum.path}`);
+                        if(MDBAlbum.path == newalbumpath)
+                        {
+                            MusicDB_Request("Bounce", "InformAlbumImportProgressLayer",
+                                {albumid: MDBAlbum.id});
+                            return "good";
+                        }
+                    }
+                }
+                return "bad"; // Album not found. That is bad because then Import failed somewhere.
+            },
+            (fnc, sig, rawdata)=>{
+                return null;
+            },
+            /*canfail=*/ true // when getting the album ID fails, it is not a big issue.
+            );
+
     }
 
 
