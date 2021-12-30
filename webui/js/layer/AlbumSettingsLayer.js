@@ -133,23 +133,26 @@ class AlbumSettingsLayer extends Layer
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "GetAlbum" && sig == "ShowAlbumSettingsLayer")
+        if(fnc == "GetAlbum")
         {
-            window.console?.log(args);
-            this.ResetUI();
-            this.UpdateAlbumInformation(args.artist, args.album);
-            this.UpdateAlbumTags(args.tags);
-            this.Show();
-        }
-        else if(fnc == "GetAlbum" && sig == "AlbumRenamed")
-        {
-            if(this.currentalbumid === args.album.id)
-                this.albumsettings.Update(args.artist, args.album);
-        }
-        else if(fnc == "GetAlbum" && sig == "UpdateTags")
-        {
-            if(this.currentalbumid === args.album.id)
+            // Initialize and show layer
+            if(sig == "ShowAlbumSettingsLayer")
+            {
+                this.ResetUI();
+                this.UpdateAlbumInformation(args.artist, args.album);
                 this.UpdateAlbumTags(args.tags);
+                this.Show();
+            }
+
+            // If there are news from an album currently shown, continue…
+            if(this.currentalbumid === args.album.id)
+            {
+                // Update layer
+                if(sig == "SongRenamed" || sig == "AlbumRenamed")
+                    this.albumsettings.Update(args.artist, args.album);
+                else if(sig == "UpdateTags")
+                    this.UpdateAlbumTags(args.tags);
+            }
         }
 
         this.artworkuploader?.onMusicDBMessage(fnc, sig, args, pass);

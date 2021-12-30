@@ -26,7 +26,7 @@ class SongsSettingsLayer extends Layer
     {
         super(background, "SongsSettingsLayer")
 
-        this.currentalbumid = null; // The album ID of the currently shown album songs
+        this.currentalbum = null; // The album ID of the currently shown album songs
 
         // Headlines
         this.albumheadline = new MainViewHeadline();
@@ -41,11 +41,11 @@ class SongsSettingsLayer extends Layer
         //this.closebutton = new TextButton("Remove", "Close Layer",
         //    ()=>{this.onClose();},
         //    "Close songs settings.");
-        this.closebutton = new TextButton("Remove", "Cancel and Discard",
+        this.closebutton = new TextButton("Remove", "Close and Discard",
             ()=>{this.onClose();},
             "Cancel album import. Nothing will be changed.");
         this.renamebutton = new TextButton("RenameFile", "Update Song",
-            ()=>{this.onClose();},
+            ()=>{this.onRename();},
             "Renames the song files and updates the database entries of all edited songs.");
 
         //this.toolbar.AddSpacer(true); // grow
@@ -74,18 +74,38 @@ class SongsSettingsLayer extends Layer
 
     onClose()
     {
-        this.currentalbumid = null;
+        this.currentalbum = null;
         this.Hide();
+    }
+
+    onRename()
+    {
+        let albumid            = this.currentalbum.id;
+        let albumpath          = this.currentalbum.path;
+        let songrenamerequests = this.songfilestable.GetRenameRequests();
+
+        for(let request of songrenamerequests)
+        {
+            let oldpath  = albumpath + "/" + request.oldname;
+            let newpath  = albumpath + "/" + request.newname;
+            MusicDB_Request("RenameMusicFile", "ConfirmSongRenaming", {oldpath: oldpath, newpath: newpath});
+        }
+
+        MusicDB_Broadcast("GetAlbum", "SongRenamed", {albumid: albumid}); // Tell all clients that the songs of an album got renamed
     }
 
     onSongFilesValidation(isvalid)
     {
+        if(isvalid)
+            this.renamebutton.Enable();
+        else
+            this.renamebutton.Disable();
     }
 
 
     UpdateSongsInformation(MDBArtist, MDBAlbum, MDBCDs)
     {
-        this.currentalbumid = MDBAlbum.id;
+        this.currentalbum = MDBAlbum;
         this.albumheadline.UpdateInformation(MDBAlbum, MDBArtist)
 
         this.songfilestable.Update(MDBAlbum, MDBCDs);
@@ -101,20 +121,31 @@ class SongsSettingsLayer extends Layer
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "GetAlbum" && sig == "ShowSongsSettingsLayer")
+        if(fnc == "GetAlbum")
         {
-            window.console?.log(args);
-            this.ResetUI();
-            this.UpdateSongsInformation(args.artist, args.album, args.cds);
-            this.Show();
-        }
-        else if(fnc == "GetAlbum" && sig == "AlbumRenamed")
-        {
-            //if(this.currentalbumid === args.album.id)
+            // Initialize and show layer
+            if(sig == "ShowSongsSettingsLayer")
+            {
+                window.console?.log(args);
+                this.ResetUI();
+                this.UpdateSongsInformation(args.artist, args.album, args.cds);
+                this.Show();
+            }
+
+            // If there are news from an album currently shown, continue…
+            if(this.currentalbum?.id !== args.album.id)
+                return;
+
+            // Update layer
+            if(sig == "SongRenamed" || sig == "AlbumRenamed")
+            {
+                this.ResetUI();
+                this.UpdateSongsInformation(args.artist, args.album, args.cds);
+            }
         }
         else if(fnc == "GetAlbum" && sig == "UpdateTags")
         {
-            //if(this.currentalbumid === args.album.id)
+            //if(this.currentalbum.id === args.album.id)
         }
     }
 }
