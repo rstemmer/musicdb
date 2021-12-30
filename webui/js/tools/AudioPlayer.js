@@ -24,7 +24,65 @@ class AudioPlayer extends Element
         this.element.controls = "controls";
         this.element.preload  = "none";
 
+        this.element.onerror   = (event)=>{this.onError(event);};
+        this.element.onwaiting = (event)=>{this.onWaiting(event);};
+        this.element.onstalled = (event)=>{this.onStalled(event);};
+        this.element.onsuspend = (event)=>{this.onSuspend(event);};
+        this.element.onended   = (event)=>{this.onEnded(event);};
+
         this.SetSource(source);
+        this.SetErrorCallback(null);
+    }
+
+
+
+    onWaiting(event)
+    {
+        window.console?.log(`onWaiting`);
+    }
+
+    onStalled(event)
+    {
+        window.console?.log(`onStalled`);
+    }
+
+    onSuspend(event)
+    {
+        window.console?.log(`onSuspend`);
+    }
+
+    onEnded(event)
+    {
+        window.console?.log(`onEnded`);
+    }
+
+    onError(event)
+    {
+        // Get error code
+        // Type: MediaError: https://developer.mozilla.org/en-US/docs/Web/API/MediaError
+        let error = event.target.error;
+        let code  = error.code;
+
+        let message;
+        switch(code)
+        {
+            case 1:
+                message = "Connecting aborted by the user.";
+                break;
+            case 2:
+                message = "Network connection error. Are you online? Is the URL correct (incl. protocol, port number)?";
+                break;
+            case 3:
+                message = "Decoding failed. Is the URL actually addressing an audio stream? Is the port number correct?";
+                break;
+            case 4:
+                message = "Media source not suitable. If it is a TLS secured stream (https://), does your browser trust the certificate?";
+                break;
+        }
+
+        window.console?.error(`Error: ${message}`);
+        if(typeof this.errorcallback === "function")
+            this.errorcallback(event, message);
     }
 
 
@@ -43,7 +101,7 @@ class AudioPlayer extends Element
 
     SetErrorCallback(callback)
     {
-        this.element.onerror = callback;
+        this.errorcallback = callback;
     }
 
     SetPlaysCallback(callback)
