@@ -48,7 +48,7 @@ WebUI.AddView("GenreSelection",     new GenreSelectionView(),   "GenreBox");
 WebUI.AddView("AlphabetBar",        new AlphabetBar(),          "AlphabetBox");
 WebUI.AddView("SearchInput",        new SearchInput(curtain),   "SearchBox");
 let musicdbstatus =     WebUI.AddView("MusicDBStatus",      new MusicDBStatus());
-let audiostreamplayer = WebUI.AddView("AudioStreamPlayer",  new AudioStreamPlayer());
+let audiostreamplayer = WebUI.AddView("AudioStreamPlayer",  new AudioStreamControl());
 
 WebUI.AddView("Artists",        new ArtistsView());
 WebUI.AddView("Album",          new AlbumView());

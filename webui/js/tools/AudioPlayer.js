@@ -23,15 +23,18 @@ class AudioPlayer extends Element
         super("audio", classes);
         this.element.controls = "controls";
         this.element.preload  = "none";
+        this.isplaying        = false;
 
         this.element.onerror   = (event)=>{this.onError(event);};
         this.element.onwaiting = (event)=>{this.onWaiting(event);};
         this.element.onstalled = (event)=>{this.onStalled(event);};
         this.element.onsuspend = (event)=>{this.onSuspend(event);};
         this.element.onended   = (event)=>{this.onEnded(event);};
+        this.element.oncanplay = (event)=>{this.onCanPlay(event);};
 
         this.SetSource(source);
         this.SetErrorCallback(null);
+        this.SetStreamStatusCallback(null);
     }
 
 
@@ -39,21 +42,36 @@ class AudioPlayer extends Element
     onWaiting(event)
     {
         window.console?.log(`onWaiting`);
+        if(typeof this.statuscallback === "function")
+            this.statuscallback(event, "waiting");
     }
 
     onStalled(event)
     {
         window.console?.log(`onStalled`);
+        if(typeof this.statuscallback === "function")
+            this.statuscallback(event, "stalled");
     }
 
     onSuspend(event)
     {
         window.console?.log(`onSuspend`);
+        if(typeof this.statuscallback === "function")
+            this.statuscallback(event, "suspend");
     }
 
     onEnded(event)
     {
         window.console?.log(`onEnded`);
+        if(typeof this.statuscallback === "function")
+            this.statuscallback(event, "ended");
+    }
+
+    onCanPlay(event)
+    {
+        window.console?.log(`onCanPlay`);
+        if(typeof this.statuscallback === "function")
+            this.statuscallback(event, "canplay");
     }
 
     onError(event)
@@ -73,7 +91,7 @@ class AudioPlayer extends Element
                 message = "Network connection error. Are you online? Is the URL correct (incl. protocol, port number)?";
                 break;
             case 3:
-                message = "Decoding failed. Is the URL actually addressing an audio stream? Is the port number correct?";
+                message = "Decoding failed. Is the URL actually addressing an audio stream? Is the port number correct? Did your audio driver having issues?";
                 break;
             case 4:
                 message = "Media source not suitable. If it is a TLS secured stream (https://), does your browser trust the certificate?";
@@ -83,6 +101,8 @@ class AudioPlayer extends Element
         window.console?.error(`Error: ${message}`);
         if(typeof this.errorcallback === "function")
             this.errorcallback(event, message);
+        if(typeof this.statuscallback === "function")
+            this.statuscallback(event, "error");
     }
 
 
@@ -95,6 +115,13 @@ class AudioPlayer extends Element
     ResetSource()
     {
         this.SetSource(this.element.src);
+    }
+
+
+
+    IsPlaying()
+    {
+        return this.isplaying;
     }
 
 
@@ -114,10 +141,22 @@ class AudioPlayer extends Element
         this.element.onpause = callback;
     }
 
+    SetStreamStatusCallback(callback)
+    {
+        this.statuscallback = callback;
+    }
 
+
+
+    Play()
+    {
+        this.isplaying = true;
+        this.element.play();
+    }
 
     Stop()
     {
+        this.isplaying = false;
         this.element.pause();
         this.ResetSource();
     }
