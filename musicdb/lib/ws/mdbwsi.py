@@ -677,8 +677,9 @@ class MusicDBWebSocketInterface(object):
                         for(let artist of args)
                         {
                             console.log("Artist: " + artist.name);
-                            for(let album of artist.albums)
-                                console.log(" -> " + album.name);
+                            for(let albumdata of artist.albums)
+                                console.log(albumdata.album); // album entry
+                                console.log(albumdata.tags);  // tags for the album
                         }
                     }
                 }
