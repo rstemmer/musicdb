@@ -29,7 +29,8 @@ class SongsSettingsLayer extends Layer
         this.currentalbumid = null; // The album ID of the currently shown album songs
 
         // Headlines
-        this.mainheadline = new LayerHeadline("Songs Settings",
+        this.albumheadline = new MainViewHeadline();
+        this.mainheadline  = new LayerHeadline("Songs Settings",
             "This layer provides all information of all songs of an album stored in the MusicDB database.");
 
         // Forms
@@ -37,13 +38,20 @@ class SongsSettingsLayer extends Layer
 
         // Tool Bar
         this.toolbar     = new ToolBar();
-        this.closebutton = new TextButton("Remove", "Close Layer",
+        //this.closebutton = new TextButton("Remove", "Close Layer",
+        //    ()=>{this.onClose();},
+        //    "Close songs settings.");
+        this.closebutton = new TextButton("Remove", "Cancel and Discard",
             ()=>{this.onClose();},
-            "Close songs settings.");
+            "Cancel album import. Nothing will be changed.");
+        this.renamebutton = new TextButton("RenameFile", "Update Song",
+            ()=>{this.onClose();},
+            "Renames the song files and updates the database entries of all edited songs.");
 
-        this.toolbar.AddSpacer(true); // grow
+        //this.toolbar.AddSpacer(true); // grow
         this.toolbar.AddButton(this.closebutton);
         this.toolbar.AddSpacer(true); // grow
+        this.toolbar.AddButton(this.renamebutton);
 
         // Initialize UI
         this.ResetUI();
@@ -56,6 +64,7 @@ class SongsSettingsLayer extends Layer
     {
         this.RemoveChilds();
 
+        this.AppendChild(this.albumheadline);
         this.AppendChild(this.mainheadline);
         this.AppendChild(this.songfilestable);
         this.AppendChild(this.toolbar);
@@ -77,6 +86,7 @@ class SongsSettingsLayer extends Layer
     UpdateSongsInformation(MDBArtist, MDBAlbum, MDBCDs)
     {
         this.currentalbumid = MDBAlbum.id;
+        this.albumheadline.UpdateInformation(MDBAlbum, MDBArtist)
 
         this.songfilestable.Update(MDBAlbum, MDBCDs);
     }
