@@ -32,6 +32,9 @@ class SongsSettingsLayer extends Layer
         this.mainheadline = new LayerHeadline("Songs Settings",
             "This layer provides all information of all songs of an album stored in the MusicDB database.");
 
+        // Forms
+        this.songfilestable = new SongFilesTable((isvalid)=>{this.onSongFilesValidation(isvalid);});
+
         // Tool Bar
         this.toolbar     = new ToolBar();
         this.closebutton = new TextButton("Remove", "Close Layer",
@@ -47,12 +50,14 @@ class SongsSettingsLayer extends Layer
     }
 
 
+    //let songrenamerequests  = this.songfilestable.GetRenameRequests();
 
     ResetUI()
     {
         this.RemoveChilds();
 
         this.AppendChild(this.mainheadline);
+        this.AppendChild(this.songfilestable);
         this.AppendChild(this.toolbar);
     }
 
@@ -64,11 +69,17 @@ class SongsSettingsLayer extends Layer
         this.Hide();
     }
 
+    onSongFilesValidation(isvalid)
+    {
+    }
 
 
     UpdateSongsInformation(MDBArtist, MDBAlbum, MDBCDs)
     {
         this.currentalbumid = MDBAlbum.id;
+
+        let songfiles = new Array();
+        this.songfilestable.Update(songfiles);
     }
 
 
