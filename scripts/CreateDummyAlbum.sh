@@ -139,6 +139,7 @@ CreateSong "02" "5" "これはテストです"
 CreateSong "03" "5" "A 💩 Test Song"
 CreateSong "04" "5" "Non conform file name" "Non conform file name"
 CreateSong "05" "no header" "No ID3 Tag"
+CreateSong "06" "6" "File.from.he∕∕"
 
 # Create booklet
 echo -e -n "\e[1;37m[\e[s ]\e[1;34m Creating $albumpath/booklet.pdf\e[0m"
