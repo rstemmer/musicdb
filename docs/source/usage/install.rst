@@ -404,13 +404,20 @@ If you want to protect the audio stream, you need to configure the corresponding
       <!-- … -->
    </paths>
 
-Then create the file and restart Icecast
+Then create the file ``Icecast.pem`` file, configure the ``users`` file and restart Icecast:
 
 .. code-block:: bash
 
-   touch /var/lib/musicdb/icecastusers
-   chown icecast:icecast /var/lib/musicdb/icecastusers
-   chmod u=rw,g=r,o-rw /var/lib/musicdb/icecastusers
+   # Create Icecast.pem …
+
+   # Setup users
+   touch /var/lib/icecast/users
+   chown icecast:icecast /var/lib/icecast/users
+   chmod u=rw,g=r,o-rw /var/lib/icecast/users
+
+   # Restart Icecast
+   systemctl restart icecast
+
 
 Documentation Installation
 --------------------------
