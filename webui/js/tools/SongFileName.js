@@ -204,7 +204,7 @@ class SongFileName
 
         // Process body (Song name)
         let body = filename.split(" ").slice(1).join(" ");
-        body     = body.split(".")[0];
+        body     = body.split(".").slice(0, -1).join(".");
 
         parts.name = body;
 
