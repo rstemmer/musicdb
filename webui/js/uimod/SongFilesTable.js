@@ -275,7 +275,7 @@ class SongFilesTableRowFromFile extends SongFilesTableSettingsRow
 
 
 
-class SongFilesTable extends Table
+class SongFilesTableBase extends Table
 {
     // validationstatuscallback if a function called whenever data is validated.
     // It gets one argument (boolean) that, if true, tells that all data in this table is valid.
@@ -308,6 +308,46 @@ class SongFilesTable extends Table
             this.SetMaxCDs(1000);
         else
             this.SetMaxCDs(0);
+    }
+
+
+
+    onValidationUpdate()
+    {
+        let validationstatus = this.CheckIfValid();
+        if(validationstatus === true)
+            this.datainvalidmessage.Hide();
+        else
+            this.datainvalidmessage.Show();
+
+        if(typeof this.validationstatuscallback === "function")
+            this.validationstatuscallback(validationstatus);
+    }
+
+
+
+    CheckIfValid()
+    {
+        for(let row of this.rows)
+        {
+            if(typeof row.CheckIfValid === "function")
+            {
+                if(row.CheckIfValid() !== true)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+
+
+    SetMaxCDs(maxcds)
+    {
+        for(let row of this.rows)
+        {
+            if(typeof row.UpdateMaxCDs === "function")
+                row.UpdateMaxCDs(maxcds);
+        }
     }
 
 
@@ -347,37 +387,30 @@ class SongFilesTable extends Table
 
 
 
-    onValidationUpdate()
-    {
-        let validationstatus = this.CheckIfValid();
-        if(validationstatus === true)
-            this.datainvalidmessage.Hide();
-        else
-            this.datainvalidmessage.Show();
-
-        if(typeof this.validationstatuscallback === "function")
-            this.validationstatuscallback(validationstatus);
-    }
-
-
-
-    CheckIfValid()
-    {
-        for(let row of this.rows)
-        {
-            if(typeof row.CheckIfValid === "function")
-            {
-                if(row.CheckIfValid() !== true)
-                    return false;
-            }
-        }
-        return true;
-    }
-
-
-
     // Tries to figure out how many CDs the album has.
     // This method considers the meta data as well as the file name.
+    GetMaxCDs(datalist)
+    {
+        window.console?.error("GetMaxCDs must be implemented by derived class!");
+    }
+    Update(datastructure)
+    {
+        window.console?.error("Update must be implemented by derived class!");
+    }
+}
+
+
+
+class SongFilesTableFromFilesystem extends SongFilesTableBase
+{
+    constructor(validationstatuscallback)
+    {
+        super(validationstatuscallback);
+    }
+
+
+
+    // This interface must be implemented
     GetMaxCDs(files)
     {
         let cdnumbers = new Array();
@@ -404,17 +437,7 @@ class SongFilesTable extends Table
 
 
 
-    SetMaxCDs(maxcds)
-    {
-        for(let row of this.rows)
-        {
-            if(typeof row.UpdateMaxCDs === "function")
-                row.UpdateMaxCDs(maxcds);
-        }
-    }
-
-
-
+    // This interface must be implemented
     Update(files)
     {
         // Try to Sort
@@ -430,6 +453,56 @@ class SongFilesTable extends Table
         for(let file of files)
         {
             let row = new SongFilesTableRowFromFile(file, maxcds, (isvalid)=>{this.onValidationUpdate();});
+            this.AddRow(row);
+        }
+        this.AddRow(this.bottomrow);
+
+        // Refresh state
+        if(maxcds > 1)
+            this.multicdsetting.SetState(true);
+        else
+            this.multicdsetting.SetState(false);
+        this.onValidationUpdate();
+    }
+}
+
+
+
+class SongFilesTableFromDatabase extends SongFilesTableBase
+{
+    constructor(validationstatuscallback)
+    {
+        super(validationstatuscallback);
+    }
+
+
+
+    // This interface must be implemented
+    GetMaxCDs(MDBAlbum)
+    {
+        return MDBAlbum.numofcds;
+    }
+
+
+
+    // This interface must be implemented
+    Update(MDBAlbum, MDBCDs)
+    {
+        let maxcds = this.GetMaxCDs(MDBAlbum);
+        let songs  = new Array();
+        for(let cdindex in MDBCDs)
+        {
+            for(let cdentry of MDBCDs[cdindex])
+                songs.push(cdentry.song);
+        }
+
+        // Create new table
+        this.Clear();
+        this.AddRow(this.multicdrow);
+        this.AddRow(this.headlinerow);
+        for(let song of songs)
+        {
+            let row = new SongFilesTableRowFromEntry(song, maxcds, (isvalid)=>{this.onValidationUpdate();});
             this.AddRow(row);
         }
         this.AddRow(this.bottomrow);

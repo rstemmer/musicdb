@@ -33,7 +33,7 @@ class SongsSettingsLayer extends Layer
             "This layer provides all information of all songs of an album stored in the MusicDB database.");
 
         // Forms
-        this.songfilestable = new SongFilesTable((isvalid)=>{this.onSongFilesValidation(isvalid);});
+        this.songfilestable = new SongFilesTableFromDatabase((isvalid)=>{this.onSongFilesValidation(isvalid);});
 
         // Tool Bar
         this.toolbar     = new ToolBar();
@@ -78,8 +78,7 @@ class SongsSettingsLayer extends Layer
     {
         this.currentalbumid = MDBAlbum.id;
 
-        let songfiles = new Array();
-        this.songfilestable.Update(songfiles);
+        this.songfilestable.Update(MDBAlbum, MDBCDs);
     }
 
 

@@ -48,7 +48,7 @@ class AlbumImportLayer extends Layer
 
         // Forms
         this.albumsettingstable = new AlbumPathSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
-        this.songfilestable     = new SongFilesTable((isvalid)=>{this.onSongsSettingsValidation(isvalid);});
+        this.songfilestable     = new SongFilesTableFromFilesystem((isvalid)=>{this.onSongsSettingsValidation(isvalid);});
         this.tasks              = new BatchExecution();
 
         // Tool Bar
