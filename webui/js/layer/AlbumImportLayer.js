@@ -48,12 +48,6 @@ class AlbumImportLayer extends Layer
 
         // Forms
         this.albumsettingstable = new AlbumPathSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
-        this.songfilessettings  = new SettingsList();
-        this.multicdsetting     = new SettingsCheckbox(
-            "Multiple CDs",
-            "Check, if the album consists of more than one CD.",
-            (ischecked)=>{this.onChangeMultiCDSettings(ischecked);});
-        this.songfilessettings.AddEntry(this.multicdsetting);
         this.songfilestable     = new SongFilesTable((isvalid)=>{this.onSongsSettingsValidation(isvalid);});
         this.tasks              = new BatchExecution();
 
@@ -82,7 +76,6 @@ class AlbumImportLayer extends Layer
         this.AppendChild(this.albumheadline);
         this.AppendChild(this.albumsettingstable);
         this.AppendChild(this.songsheadline);
-        this.AppendChild(this.songfilessettings);
         this.AppendChild(this.songfilestable);
         this.AppendChild(this.tasksheadline);
         this.AppendChild(this.tasks);
@@ -101,16 +94,6 @@ class AlbumImportLayer extends Layer
         let progresslayer = WebUI.GetLayer("AlbumImportProgress");
         progresslayer.ExecuteTasks(this.tasks); // Will also Show the layer
         this.Hide();
-    }
-
-
-
-    onChangeMultiCDSettings(ischecked)
-    {
-        if(ischecked)
-            this.songfilestable.SetMaxCDs(1000); // Two or more CDs
-        else
-            this.songfilestable.SetMaxCDs(1); // Just one CD
     }
 
 
@@ -361,16 +344,6 @@ class AlbumImportLayer extends Layer
                 args[0].frommeta.releaseyear,
                 albumpath);
             this.songfilestable.Update(args);
-
-            let maxcds = this.songfilestable.GetMaxCDs(args);
-            if(maxcds > 1)
-            {
-                this.multicdsetting.SetState(true);
-            }
-            else
-            {
-                this.multicdsetting.SetState(false);
-            }
             this.ValidateForm();
         }
     }

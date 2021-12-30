@@ -286,11 +286,28 @@ class SongFilesTable extends Table
 
         this.datainvalidmessage = new MessageBarError("Invalid Song Settings. Check red input fields.");
 
+        this.multicdsetting     = new SettingsCheckbox(
+            "Multiple CDs",
+            "Check checkbox, if the album consists of more than one CD.",
+            (ischecked)=>{this.onChangeMultiCDSettings(ischecked);});
+
         // Table
+        this.multicdrow  = new TableSpanRow(SONGFILESTABLEHEADLINE.length, [], this.multicdsetting);
         this.headlinerow = new SongFilesTableHeadline();
-        this.bottomrow   = new TableSpanRow(SONGFILESTABLEHEADLINE.length, [], this.datainvalidmessage.GetHTMLElement());
+        this.bottomrow   = new TableSpanRow(SONGFILESTABLEHEADLINE.length, [], this.datainvalidmessage);
+        this.AddRow(this.multicdrow);
         this.AddRow(this.headlinerow);
         this.AddRow(this.bottomrow);
+    }
+
+
+
+    onChangeMultiCDSettings(ischecked)
+    {
+        if(ischecked)
+            this.SetMaxCDs(1000);
+        else
+            this.SetMaxCDs(0);
     }
 
 
@@ -408,6 +425,7 @@ class SongFilesTable extends Table
 
         // Create new table
         this.Clear();
+        this.AddRow(this.multicdrow);
         this.AddRow(this.headlinerow);
         for(let file of files)
         {
@@ -415,7 +433,13 @@ class SongFilesTable extends Table
             this.AddRow(row);
         }
         this.AddRow(this.bottomrow);
-        this.onValidationUpdate(); // Refresh validation
+
+        // Refresh state
+        if(maxcds > 1)
+            this.multicdsetting.SetState(true);
+        else
+            this.multicdsetting.SetState(false);
+        this.onValidationUpdate();
     }
 }
 
