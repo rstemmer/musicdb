@@ -112,7 +112,7 @@ class SongFileName
 
     MakeValidSongName(songname)
     {
-        let validsongname = songname.replace(/\//g,"∕"); // Division slash
+        let validsongname = songname.replaceAll("/", "∕"); // Division slash
         return validsongname;
     }
 
@@ -231,6 +231,7 @@ class SongFileName
         if(this.maxcds > 1)
             filename += `${this.parts.cdnum}-`;
         filename += `${this.parts.track} ${this.parts.name}.${this.parts.ext}`;
+        filename  = filename.replaceAll("/", "∕"); // Division slash
 
         return filename;
     }
