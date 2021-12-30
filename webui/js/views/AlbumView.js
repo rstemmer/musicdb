@@ -396,10 +396,11 @@ class AlbumView extends MainView2
         {
             this.UpdateInformation(args.album, args.artist, args.tags, args.cds);
         }
-        else if(fnc == "GetAlbum" && sig == "AlbumRenamed")
+        else if(fnc == "GetAlbum" && (sig == "AlbumRenamed" || sig == "SongRenamed"))
         {
-            if(args.album.id == currentalbumid)
-                this.headline.UpdateInformation(args.album, args.artist)
+            if(args.album.id !== currentalbumid)
+                return;
+            this.UpdateInformation(args.album, args.artist, args.tags, args.cds);
         }
         else if(fnc == "GetAlbum" && sig == "UpdateTags")
         {
