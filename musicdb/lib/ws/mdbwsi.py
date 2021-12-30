@@ -3854,20 +3854,20 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                # Will succeed
+                // Will succeed
                 MusicDB_Call("RenameMusicFile", {
                         oldpath:"Artist/2021 - Album Name/01 old file name.mp3",
                         newpath:"Artist/2021 - Album Name/01 new file name.mp3"
                         });
 
-                # Will succeed, if the song has no entry in the database.
-                # Otherwise it fails because the file names violate the naming scheme.
+                // Will succeed, if the song has no entry in the database.
+                // Otherwise it fails because the file names violate the naming scheme.
                 MusicDB_Call("RenameMusicFile", {
                         oldpath:"Artist/2021 - Album Name/old file name.mp3",
                         newpath:"Artist/2021 - Album Name/new file name.mp3"
                         });
 
-                # Will fail if because album name changed as well
+                // Will fail if because album name changed as well
                 MusicDB_Request("RenameMusicFile", "ConfirmRename", {
                         oldpath:"Artist/Old Album Name, Old Song Name.flac",
                         newpath:"Artist/2021 - New Album Name/01 New Song Name.flac"
@@ -3969,20 +3969,20 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                # Will succeed
+                // Will succeed
                 MusicDB_Call("RenameAlbumDirectory", {
                         oldpath:"Artist/2021 - Old Album Name",
                         newpath:"Artist/2021 - New Album Name"
                         });
 
-                # Will succeed, if the album has no entry in the database.
-                # Otherwise it fails because the file names violate the naming scheme.
+                // Will succeed, if the album has no entry in the database.
+                // Otherwise it fails because the file names violate the naming scheme.
                 MusicDB_Call("RenameAlbumDirectory", {
                         oldpath:"Artist/Old Album Name",
                         newpath:"Artist/New Album Name"
                         });
 
-                # Will fail because artist name changed as well.
+                // Will fail because artist name changed as well.
                 MusicDB_Request("RenameAlbumDirectory", "ConfirmRename", {
                         oldpath:"Artist/Old Album Name",
                         newpath:"New Artist/2021 - New Album Name"
@@ -4078,7 +4078,7 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                # Will succeed
+                // Will succeed
                 MusicDB_Request("RenameArtistDirectory", "ConfirmRename", {
                         oldpath:"Old Artist",
                         newpath:"New Artist"
@@ -4201,26 +4201,26 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                # Will succeed
+                // Will succeed
                 MusicDB_Call("ChangeArtistDirectory", {
                         oldalbumpath:       "Old Artist/2021 - Album Name",
                         newartistdirectory: "Already Existing Artist"
                         });
 
-                # Will succeed
+                // Will succeed
                 MusicDB_Call("ChangeArtistDirectory", {
                         oldalbumpath:       "Old Artist/2021 - Album Name",
                         newartistdirectory: "New Artist"
                         });
 
-                # Will succeed if album is known by the database
+                // Will succeed if album is known by the database
                 MusicDB_Call("ChangeArtistDirectory", {
-                        oldalbumpath:       "Old Artist/2021 - Album Name", # That album has already been moved by the user
+                        oldalbumpath:       "Old Artist/2021 - Album Name", // That album has already been moved by the user
                         newartistdirectory: "New Artist"
                         });
 
 
-                # Will fail because new artist directory contains a sub directory
+                // Will fail because new artist directory contains a sub directory
                 MusicDB_Request("ChangeArtistDirectory", "ConfirmRename", {
                         oldalbumpath:       "Old Artist/2021 - Album Name",
                         newartistdirectory: "New Artist/subdirectory"
@@ -4505,6 +4505,7 @@ class MusicDBWebSocketInterface(object):
         #. Collect their path and check sum (this may take some time)
 
         The returned information has the following structure
+
         * ``"newpaths"``
             * ``"artists"``, ``"albums"``, ``"songs"``, ``"filteredsongs"``, ``"videos"``
                 * Each entry is a list of paths as string
@@ -4532,6 +4533,7 @@ class MusicDBWebSocketInterface(object):
                             console.log(task["annotations"]);
                     }
                 }
+
         """
         taskid = self.filesystemmanager.InitiateFilesystemScan()
         return taskid

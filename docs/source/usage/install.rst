@@ -159,7 +159,7 @@ API-Key Setup
 MusicDB has no user authentication integrated.
 The MusicDB websocket server relies on the HTTPS server configuration to provide user authentication (For example via LDAP or client-side certificate authentication).
 
-For details see :doc:`/basics/securtiy`
+For details see :doc:`/basics/security`
 
 .. note::
 
@@ -219,7 +219,7 @@ There will also be a regular occurring error that the connection to Icecast fail
 This is also fine because Icecast has not been set up yet. Setting up Icecast is explained later in this document.
 
 Now you can already access the websocket server with your web browser to see if all network settings around MusicDB are correct.
-Use the following address: `https://127.0.0.1:9000`_. Of course use the correct IP address and port if you changed the port.
+Use the following address: `<https://127.0.0.1:9000>`_. Of course use the correct IP address and port if you changed the port.
 The default SSL certificate is self-signed and needs to be confirmed explicitly.
 Then the *"AutobahnPython"* web page should load telling you the version number and that this is not an actual web server.
 
@@ -286,7 +286,7 @@ When where is no music managed by MusicDB yet, the WebUI will show you a Welcome
 This is fine because you have not hand over any music to MusicDB.
 
 Please consider a Apache server configuration that supports HTTPS.
-For details see :doc:`/basics/securtiy`.
+For details see :doc:`/basics/security`.
 
 You may also want to give access to your music directory.
 Therefore edit the Apache configuration at ``/etc/httpd/conf/extra/musicdb.conf``.
@@ -415,10 +415,10 @@ Then create the file and restart Icecast
 Documentation Installation
 --------------------------
 
-Usually you can access the documentation on `online at rstemmer.github.io/musicdb<https://rstemmer.github.io/musicdb/build/html/index.html>`_
+Usually you can access the documentation on `online at rstemmer.github.io/musicdb <https://rstemmer.github.io/musicdb/build/html/index.html>`_
 In case you want to have the documentation installed on your server you can do this with the following steps.
 
-Download the ``musicdb-$version-doc.tar.zst`` file from the `GitHub Repository<https://github.com/rstemmer/musicdb/releases>`_ and install it to ``/usr/share/doc/musicdb/html``.
+Download the ``musicdb-$version-doc.tar.zst`` file from the `GitHub Repository <https://github.com/rstemmer/musicdb/releases>`_ and install it to ``/usr/share/doc/musicdb/html``.
 For example:
 
 .. code-block:: bash

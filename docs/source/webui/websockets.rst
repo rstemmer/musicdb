@@ -79,9 +79,6 @@ Connection Process
       }
 
 
-.. js:autofunction:: ConnectToMusicDB
-
-
 Watchdog
 --------
 
@@ -108,15 +105,6 @@ WATCHDOG_RUN (boolean):
 WATCHDOG_INTERVAL (integer):
    If there is no sign that the connection is active for *interval* milliseconds, the watchdog will recognize it.
 
-The following functions implement the Watchdog.
-They are used internal by the socket object as shown in the figure above.
-Usually they need not to be called from the user of the *musicdb.js* file.
-
-.. js:autofunction:: MDB_WebsocketWatchdog
-
-.. js:autofunction:: MDB_StopWebsocketWatchdog
-
-.. js:autofunction:: MDB_ResetWebsocketWatchdog
 
 
 Communication with the server
@@ -143,13 +131,46 @@ WEBSOCKET_APIKEY (string):
 Sending Data
 ^^^^^^^^^^^^
 
-.. js:autofunction:: MusicDB_Call
+There are three functions defined to communicate with the MusicDB Server:
 
-.. js:autofunction:: MusicDB_Request
+   * ``MusicDB_Call``: Call a function without expecting a response from the server. Anyway, the server many response with a message event for the caller client or even with a broadcast. It might also trigger some notification events.
+   * ``MusicDB_Request``: Call a function and ask the server to response to it.
+   * ``MusicDB_Broadcast``: Call a function but let the response be sent to all connected clients.
 
-.. js:autofunction:: MusicDB_Broadcast
+The following code example shows the JavaScript function declaration:
 
-.. js:autofunction:: MDB_SendPacket
+   .. code-block:: javascript
+
+      function MusicDB_Call(fncname, args)
+      {
+         // …
+      }
+
+      function MusicDB_Request(fncname, fncsig, args, pass)
+      {
+         // …
+      }
+
+      function MusicDB_Broadcast(fncname, fncsig, args, pass)
+      {
+         // …
+      }
+
+The arguments have the following meaning:
+
+``fncname`` (string):
+   Name of the WebSocket API function. See :doc:`/basics/webapi`.
+
+``fncsig`` (string):
+   A signature to identify the reason for a function call.
+   This can be any string and well be passed though to the ``sig`` parameter of the ``onMusicDBMessage`` handler.
+
+``args`` (Object, optional):
+   An object with the arguments to a called function. See :doc:`/basics/webapi`.
+
+``pass`` (Object, optional):
+   Similar to the ``fncsig`` parameter, the ``pass`` parameter gets passed to the response of a function call.
+   This can be used to pass further information to a clients processing of an message, or to distribute information from one client to another one (via ``MusicDB_Boradcast``).
 
 
 Receiving Data
