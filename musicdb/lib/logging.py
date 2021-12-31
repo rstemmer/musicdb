@@ -26,7 +26,7 @@ import os
 import stat
 from systemd import journal
 
-class MBDLogFormatter(logging.Formatter):
+class MDBLogFormatter(logging.Formatter):
     """
     This class handles log messages.
     The class is derived from `logging.Formatter <https://docs.python.org/3/library/logging.html#formatter-objects>`_.
@@ -73,15 +73,15 @@ class MBDLogFormatter(logging.Formatter):
 
         # Replace the original format with one customized by logging level
         if record.levelno == logging.DEBUG:
-            self._style._fmt = MBDLogFormatter.debug_format
+            self._style._fmt = MDBLogFormatter.debug_format
         elif record.levelno == logging.INFO:
-            self._style._fmt = MBDLogFormatter.info_format
+            self._style._fmt = MDBLogFormatter.info_format
         elif record.levelno == logging.WARNING:
-            self._style._fmt = MBDLogFormatter.warning_format
+            self._style._fmt = MDBLogFormatter.warning_format
         elif record.levelno == logging.ERROR:
-            self._style._fmt = MBDLogFormatter.error_format
+            self._style._fmt = MDBLogFormatter.error_format
         elif record.levelno == logging.CRITICAL:
-            self._style._fmt = MBDLogFormatter.critical_format
+            self._style._fmt = MDBLogFormatter.critical_format
 
         # Call the original formatter class to do the grunt work
         result = logging.Formatter.format(self, record)
@@ -181,9 +181,9 @@ class MusicDBLogger():
 
         # configure formatter
         if config:
-            self.formatter = MBDLogFormatter(config.log.ignore)
+            self.formatter = MDBLogFormatter(config.log.ignore)
         else:
-            self.formatter = MBDLogFormatter([])
+            self.formatter = MDBLogFormatter([])
 
         for h in self.handler:
             if h:
