@@ -72,20 +72,20 @@ class StreamView extends MainView
     ShowInMainView()
     {
         if(this.viewposition == "QueueView")
-            queueview.UnmountStreamView();
+            WebUI.GetView("Queue").UnmountStreamView();
 
         mainviewmanager.MountView(this);
         this.viewposition = "MainView";
     }
     ShowInQueueView()
     {
-        queueview.MountStreamView(this);
+        WebUI.GetView("Queue").MountStreamView(this);
         this.viewposition = "QueueView";
     }
     ShowInVideoPanel()
     {
         if(this.viewposition == "QueueView")
-            queueview.UnmountStreamView();
+            WebUI.GetView("Queue").UnmountStreamView();
 
         videopanelmanager.MountView(this);
         this.viewposition = "VideoPanel";

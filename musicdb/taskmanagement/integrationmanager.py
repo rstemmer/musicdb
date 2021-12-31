@@ -44,17 +44,7 @@ class IntegrationManager(TaskManager):
 
 
 
-    # TODO: This may be useful to integrate any music from the file system that is already available
-    #       and not recently uploaded.
-    def InitiateIntegration(self):
-        """
-        """
-        raise NotImplementedError
-        #self.InitiateProcess(uploadid, mimetype, contenttype, filesize, checksum, sourcefilename, "waitforchunk")
-        #return
-
-
-    def InitiateIntegration(self, uploadtaskid, targetpath):
+    def InitiateIntegration(self, taskid, targetpath):
         """
         This method initiates the integration of an uploaded file or directory.
         The ``targetpath`` will be the destination at that the uploaded content will be moved to.
@@ -65,12 +55,13 @@ class IntegrationManager(TaskManager):
         It determines if the artwork will be imported for an album or a video.
         The target type is determined by using :meth:`musicdb.mdbapi.musicdirectory.MusicDirectory.AnalysePath`.
 
-        Otherwise it is mandatory that the ``targetpath`` does not yet exist inside the Music Directory.
+        Otherwise it is mandatory that a file addressed by ``targetpath`` does not yet exist inside the Music Directory.
+        When a parent directory of ``targetpath`` does not exist it will be created.
 
-        The addressed task by ``uploadtaskid`` must be in the state ``"readyforintegration"``.
+        The addressed task by ``taskid`` must be in the state ``"readyforintegration"``.
 
         Args:
-            uploadtaskid (str): ID of the task that performed the upload
+            taskid (str): ID of the task that performed the upload
             targetpath (str): Path relative to the music directory
 
         Returns:
@@ -80,26 +71,20 @@ class IntegrationManager(TaskManager):
             TypeError: When one of the parameters are of a wrong data type
             ValueError: When one of the parameters has an unexpected value
         """
-        task = self.GetTaskByID(uploadtaskid)
+        task = self.GetTaskByID(taskid)
         if task["state"] != "readyforintegration":
             logging.warning("Cannot integrate an upload that is not in \"readyforintegration\" state. Task with ID \"%s\" was in \"%s\" state! \033[1;30m(Nothing will be done)", str(task["id"]), str(task["state"]))
             return False
 
-        # Determine target type
-        targettype = None
-        fileinfos  = self.musicdirectory.AnalysePath(targetpath)
-        if not fileinfos:
-            raise ValueError("Invalid target path \"%s\".", str(targetpath))
-
-        if fileinfos["video"] and self.musicdirectory.IsFile(targetpath):
-            targettype = "video"
-        elif fileinfos["album"] and self.musicdirectory.IsDirectory(targetpath):
-            targettype = "album"
-
-        if not targettype:
-            raise ValueError("Target path \"%s\" does not address a valid video file or album directory", str(targetpath))
-
+        # Update task dictionary with target path
         if task["contenttype"] == "artwork":
+            targettype = None
+            fileinfos  = self.musicdirectory.AnalysePath(targetpath)
+            if fileinfos["video"] and self.musicdirectory.IsFile(targetpath):
+                targettype = "video"
+            elif fileinfos["album"] and self.musicdirectory.IsDirectory(targetpath):
+                targettype = "album"
+
             task["state"] = "startartworkimport"
             task["awsourcetype"] = "imagefile"
             task["awsourcepath"] = task["preprocessedpath"]
@@ -107,25 +92,37 @@ class IntegrationManager(TaskManager):
                 task["albumpath"] = targetpath
             elif targettype == "video":
                 task["videopath"] = targetpath
+            else:
+                raise ValueError("Target path \"%s\" does not address a valid video file or album directory"%(str(targetpath)))
+
+        elif task["contenttype"] == "albumfile":
+            task["state"] = "startintegration"
+            task["albumfilepath"] = targetpath
 
         self.SaveTask(task)
         self.ScheduleTask(task)
         return task["id"]
 
 
-    def IntegrateUploadedFile(self, taskid, triggerimport=False):
+
+    def IntegrateUploadedFile(self, task, triggerimport=False):
         """
         This method integrated the uploaded files into the music directory.
         The whole file tree will be created following the MusicDB naming scheme.
 
-        The upload task must be in ``readyforintegration`` state. If not, nothing happens.
+        It is not guaranteed that after the integration all files and directory actually follow the MusicDB naming scheme.
+        Files that have been integrated may violate that scheme.
+        Adjusting the file and directory names is part of the import process.
+        The integration process is for storing music files inside the music directory without any effort for the user.
+
+        The upload task must be in ``startintegration`` state. If not, nothing happens.
 
         When *triggerimport* is ``true``, the integration manager triggers the import by the
         :mod:`~musicdb.taskmanagement.importmanager`
         This happens asynchronously inside the task management thread.
 
         Args:
-            taskid (str): ID to identify the upload
+            task (dict): dictionary of a task
             triggerimport (bool): Optional, default: ``False``. If ``True`` the import process of the content into the Music Database will be triggered.
 
         Returns:
@@ -135,14 +132,9 @@ class IntegrationManager(TaskManager):
             TypeError: When *taskid* is not of type ``str``
             ValueError: When *taskid* is not included in the Task Queue
         """
-        try:
-            task = self.GetTaskByID(taskid)
-        except Exception as e:
-            logging.error("Integration of uploaded file failed because of the following error: %s", str(e))
-            return False
 
-        if task["state"] != "readyforintegration":
-            logging.warning("Cannot integrate an upload that is not in \"readyforintegration\" state. Task with ID \"%s\" was in \"%s\" state! \033[1;30m(Nothing will be done)", str(task["id"]), str(task["state"]))
+        if task["state"] != "startintegration":
+            logging.warning("Cannot integrate an upload that is not in \"startintegration\" state. Task with ID \"%s\" was in \"%s\" state! \033[1;30m(Nothing will be done)", str(task["id"]), str(task["state"]))
             return False
 
         # Perform integration
@@ -150,6 +142,8 @@ class IntegrationManager(TaskManager):
         success = False
         if task["contenttype"] == "video":
             success = self.IntegrateVideo(task)
+        elif task["contenttype"] == "albumfile":
+            success = self.IntegrateAlbumFile(task)
         #elif task["contenttype"] == "artwork":
         #    success = True # Importing artwork does not require the file at any specific place
         else:
@@ -182,6 +176,7 @@ class IntegrationManager(TaskManager):
             uploadedfile = task["preprocessedpath"]
         else:
             uploadedfile  = task["uploadpath"]
+        absuploadpath = self.uploaddirectory.AbsolutePath(uploadedfile)
 
         try:
             artistname    = task["annotations"]["artistname"]
@@ -215,7 +210,7 @@ class IntegrationManager(TaskManager):
 
         # Copy file, create Artist directory if not existing
         try:
-            success = self.musicdirectory.CopyFile(uploadedfile, videofile)
+            success = self.musicdirectory.CopyFile(absuploadpath, videofile)
         except PermissionError:
             logging.error("Copying video file to \"%s\" failed! - Permission denied! \033[1;30m(MusicDB requires write permission to the music file tree)", str(videofile))
             self.NotifyClient("InternalError", task, "Copying failed - Permission denied")
@@ -227,6 +222,64 @@ class IntegrationManager(TaskManager):
             logging.warning("Copying video file to \"%s\" failed!", str(videofile))
         return success
 
+
+
+    def IntegrateAlbumFile(self, task):
+        """
+        This method copies a file form the upload directory into the music directory.
+        It is expected that the file is part of an album.
+        If the file already exists, ``False`` gets returned.
+
+        The file is copied form the location ``"preprocessedpath"`` if set.
+        Otherwise it is copied form ``"uploadpath"``.
+        The destination path is expected to be defined in ``"albumfilepath"``.
+
+        If the parent directory (artist or album directory) does not exist, it will be created.
+
+        Args:
+            task (dict): Data structure of a task that contains the keys mention in the method description
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+        """
+        if task["preprocessedpath"] != None:
+            uploadedfile = task["preprocessedpath"]
+        else:
+            uploadedfile  = task["uploadpath"]
+
+        absuploadedfile = self.uploaddirectory.AbsolutePath(uploadedfile)
+        albumfilepath   = task["albumfilepath"]
+
+
+        # Check if video file already exists
+        albumdirectorypath = self.musicdirectory.GetDirectory(albumfilepath)
+        if not self.musicdirectory.IsDirectory(albumdirectorypath):
+            logging.info("Album directory for \"%s\" does not exist and will be created.", str(albumfilepath))
+            try:
+                self.musicdirectory.CreateSubdirectory(albumdirectorypath)
+            except PermissionError:
+                logging.error("Creating album directory \"%s\" failed! - Permission denied! \033[1;30m(MusicDB requires write permission to the music file tree)", str(albumdirectorypath))
+                self.NotifyClient("InternalError", task, "Creating album directory failed - Permission denied")
+                return False
+
+        # Copy file
+        logging.debug("Copying album file \"%s\" -> \"%s\"", uploadedfile, albumfilepath)
+        try:
+            success = self.musicdirectory.CopyFile(absuploadedfile, albumfilepath)
+        except FileNotFoundError:
+            logging.error("Copying album file from \"%s\" to \"%s\" failed! - File not found! \033[1;30m", str(uploadedfile), str(albumfilepath))
+            self.NotifyClient("InternalError", task, "Copying failed - File not found")
+            return False
+        except PermissionError:
+            logging.error("Copying album file to \"%s\" failed! - Permission denied! \033[1;30m(MusicDB requires write permission to the music file tree)", str(albumfilepath))
+            self.NotifyClient("InternalError", task, "Copying failed - Permission denied")
+            return False
+
+        if(success):
+            logging.info("New album file at %s", str(albumfilepath))
+        else:
+            logging.warning("Copying album file to \"%s\" failed!", str(albumfilepath))
+        return success
 
 
 

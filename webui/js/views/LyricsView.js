@@ -66,7 +66,7 @@ class LyricsView extends MainView2
             // Update Headline
             this.headline.UpdateInformation(MDBAlbum, MDBArtist)
             this.headline.SetSubtitleClickAction(
-                ()=>{artistsview.ScrollToArtist(MDBArtist.id);},
+                ()=>{WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);},
                 null
             );
 

@@ -209,7 +209,10 @@ class MetaTags(object):
                 #artwork = self.file["APIC:"] # access APIC frame and grab the image
                 # The suggested API seems to be broken.
                 # This is why I go deeper into the mutagen-classes to get the image:
-                artwork = self.file.tags.getall("APIC")[0]
+                try:
+                    artwork = self.file.tags.getall("APIC")[0]
+                except:
+                    return False
             elif self.ftype == "m4a":
                 artwork = self.file["covr"][0]
             elif self.ftype == "flac":

@@ -64,60 +64,101 @@ class AlbumSettingsTableRow extends AlbumSettingsTableRowBase
 
 class AlbumSettingsTable extends Table
 {
-    // validationstatuscallback if a function called whenever data is validated.
-    // It gets one argument (boolean) that, if true, tells that all data in this table is valid.
-    constructor(validationstatuscallback)
+    constructor()
     {
         super(["AlbumSettingsTable"]);
-        this.validationstatuscallback = validationstatuscallback;
-        this.artistdiff = ""; // old artist -> new artist
-        this.albumdiff  = ""; // old album -> new album
-        this.pathdiff   = ""; // old path -> new path
+        this.headlinerow     = new AlbumSettingsTableHeadline();
 
+        this.newartistinfos  = null;
+        this.knownartistinfo = null;
+        this.artistnameinput = null;
+        this.artistnamerow   = null;
+
+        this.albumnameinput  = null;
+        this.albumnamerow    = null;
+
+        this.releaseyearinput= null;
+        this.releaseyearrow  = null;
+
+        this.origininput     = null;
+        this.originrow       = null;
+
+        this.importdateinput = null;
+        this.importdaterow   = null;
+
+        this.hidealbuminput  = null;
+        this.hidealbumrow    = null;
+    }
+
+
+
+    AddArtistNameRow()
+    {
         this.newartistinfo   = new MessageBarInfo("Artist unknown. New artist will be created.");
-        this.newartistinfo.HideCloseButton();
         this.knownartistinfo = new MessageBarConfirm("Artist known. It already has an entry in the database.");
-        this.knownartistinfo.HideCloseButton();
         let  artistinfos     = new Element("div", ["flex-column"]);
         artistinfos.AppendChild(this.newartistinfo);
         artistinfos.AppendChild(this.knownartistinfo);
 
-        // Text Inputs
-        this.artistnameinput     = new TextInput(  (value)=>{return this.ValidateArtistName(value);  });
-        this.albumnameinput      = new TextInput(  (value)=>{return this.ValidateAlbumName(value);   });
-        this.releasedateinput    = new NumberInput((value)=>{return this.ValidateReleaseDate(value); });
+        this.artistnameinput = new TextInput((value)=>{return this.ValidateArtistName(value);});
 
-        this.artistnameinput.SetAfterValidateEventCallback( (value, valid)=>{return this.EvaluateNewPath();});
-        this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
-        this.releasedateinput.SetAfterValidateEventCallback((value, valid)=>{return this.EvaluateNewPath();});
-
-        this.datainvalidmessage = new MessageBarError("Invalid Album Settings. Check red input fields.");
-
-        // Table
-        this.headlinerow  = new AlbumSettingsTableHeadline();
-        this.artistnamerow = new AlbumSettingsTableRow(
+        this.artistnamerow   = new AlbumSettingsTableRow(
             "Artist Name",
             this.artistnameinput,
             "Correct name of the album artist");
-        this.albumnamerow = new AlbumSettingsTableRow(
+
+        this.AddRow(this.artistnamerow   );
+        this.AddRow(new TableSpanRow(3, [], artistinfos));
+    }
+
+    AddAlbumNameRow()
+    {
+        this.albumnameinput = new TextInput((value)=>{return this.ValidateAlbumName(value);});
+        this.albumnamerow   = new AlbumSettingsTableRow(
             "Album Name",
             this.albumnameinput,
             "Correct name of the album (without release year)");
-        this.releasedaterow = new AlbumSettingsTableRow(
-            "Release Date",
-            this.releasedateinput,
+        this.AddRow(this.albumnamerow);
+    }
+
+    AddReleaseYearRow()
+    {
+        this.releaseyearinput = new NumberInput((value)=>{return this.ValidateReleaseYear(value);});
+        this.releaseyearrow   = new AlbumSettingsTableRow(
+            "Release Year",
+            this.releaseyearinput,
             "Release year with 4 digits (like \"2021\")");
+        this.AddRow(this.releaseyearrow);
+    }
 
-        this.newpathelement = new Element("span");
-        let  newpathnode    = this.newpathelement.GetHTMLElement();
+    AddOriginRow()
+    {
+        this.origininput        = new TextInput(  (value)=>{return this.ValidateOrigin(value);      });
+        this.originrow = new AlbumSettingsTableRow(
+            "Album Origin",
+            this.origininput,
+            "Where the data comes from (like \"internet\", \"iTunes\", \"bandcamp\", \"CD\")");
+        this.AddRow(this.originrow);
+    }
 
-        this.AddRow(this.headlinerow     );
-        this.AddRow(this.artistnamerow   );
-        this.AddRow(new TableSpanRow(3, [], artistinfos));
-        this.AddRow(this.albumnamerow    );
-        this.AddRow(this.releasedaterow  );
-        this.AddRow(new TableSpanRow(3, [], newpathnode));
-        this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage));
+    AddImportDateRow()
+    {
+        this.importdateinput = new DateInput((value)=>{return this.ValidateImportDate(value);});
+        this.importdaterow   = new AlbumSettingsTableRow(
+            "Import Date",
+            this.importdateinput,
+            "Import date (like \"30.12.2021\")");
+        this.AddRow(this.importdaterow);
+    }
+
+    AddHideAlbumRow()
+    {
+        this.hidealbuminput = new BooleanInput((value)=>{return true;}); // TODO
+        this.hidealbumrow   = new AlbumSettingsTableRow(
+            "Hide Album",
+            this.hidealbuminput,
+            "When the album is hidden, it will not be shown in the Artists list or considered as random music source.");
+        this.AddRow(this.hidealbumrow);
     }
 
 
@@ -128,7 +169,7 @@ class AlbumSettingsTable extends Table
             return false;
 
         // New Artist?
-        let artistslist = artistscache.FindArtist(value, "strcmp");
+        let artistslist = WebUI.GetManager("Artists").FindArtist(value, "strcmp");
         if(artistslist.length == 1)
         {
             this.knownartistinfo.UpdateMessage(`Artist "${value}" known. It already has an entry in the database.`);
@@ -143,13 +184,15 @@ class AlbumSettingsTable extends Table
         }
         return true;
     }
+
     ValidateAlbumName(value)
     {
         if(value.length <= 0)
             return false;
         return true;
     }
-    ValidateReleaseDate(value)
+
+    ValidateReleaseYear(value)
     {
         let thisyear = new Date().getFullYear();
 
@@ -157,9 +200,56 @@ class AlbumSettingsTable extends Table
             return false
         return true;
     }
+
     ValidateOrigin(value)
     {
+        if(value.length <= 0)
+            return false;
         return true;
+    }
+
+    ValidateImportDate(value)
+    {
+        return true;
+    }
+}
+
+
+
+class AlbumPathSettingsTable extends AlbumSettingsTable
+{
+    // validationstatuscallback if a function called whenever data is validated.
+    // It gets one argument (boolean) that, if true, tells that all data in this table is valid.
+    constructor(validationstatuscallback)
+    {
+        super();
+        this.validationstatuscallback = validationstatuscallback;
+        this.oldpath = "";
+
+        this.oldartistdir = new ArtistDirectoryName();
+        this.newartistdir = new ArtistDirectoryName();
+        this.oldalbumdir  = new AlbumDirectoryName();
+        this.newalbumdir  = new AlbumDirectoryName();
+
+        this.artistdiff    = new ArtistDirectoryNameDiff();
+        this.albumdiff     = new AlbumDirectoryNameDiff();
+
+        this.AddRow(this.headlinerow);
+        this.AddArtistNameRow();
+        this.AddAlbumNameRow();
+        this.AddReleaseYearRow();
+
+        this.artistnameinput.SetAfterValidateEventCallback( (value, valid)=>{this.EvaluateNewPath();});
+        this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{this.EvaluateNewPath();});
+        this.releaseyearinput.SetAfterValidateEventCallback((value, valid)=>{this.EvaluateNewPath();});
+
+        this.datainvalidmessage = new MessageBarError("Invalid Album Settings. Check red input fields.");
+
+        // Table
+        this.newpathelement = new Element("span");
+
+        this.AddRow(new TableSpanRow(3, [], this.newpathelement));
+        this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage));
     }
 
 
@@ -170,7 +260,7 @@ class AlbumSettingsTable extends Table
             return false;
         if(this.albumnameinput.GetValidState() == false)
             return false;
-        if(this.releasedateinput.GetValidState() == false)
+        if(this.releaseyearinput.GetValidState() == false)
             return false;
         return true;
     }
@@ -179,161 +269,66 @@ class AlbumSettingsTable extends Table
 
     EvaluateNewPath()
     {
-        const validspan = `<span style="color: var(--color-brightgreen)">`;
-        const errorspan = `<span style="color: var(--color-brightred)">`;
-        const grayspan  = `<span style="color: var(--color-gray)">`;
-        const closespan = `</span>`;
-        let   openspan  = grayspan;
-        let   grayslash = `${grayspan}/${closespan}`;
-        let   grayarrow = `${grayspan}&nbsp;➜&nbsp;${closespan}`;
+        // Get new values
+        let artistname  = this.artistnameinput.GetValue();
+        let albumname   = this.albumnameinput.GetValue();
+        let releaseyear = this.releaseyearinput.GetValue();
 
-        let oldartistdir  = this.oldpath.split("/")[0] || "";
-        let oldalbumdir   = this.oldpath.split("/")[1] || "";
-        let oldartistname = oldartistdir;
-        let oldalbumname  = oldalbumdir;
-        if(oldalbumname.slice(4,7) == " - ")
-            oldalbumname = oldalbumname.slice(7);
+        // Update new*name objects
+        this.newartistdir.SetArtistName(artistname);
+        this.newalbumdir.SetAlbumName(albumname);
+        this.newalbumdir.SetReleaseYear(releaseyear, false); // do not validate for life preview
 
-        let newpath = "";
+        // Check Parts
+        let artistnameerror = this.newartistdir.CheckArtistName();
+        let albumnameerror  = this.newalbumdir.CheckAlbumName();
+        let releaseerror    = this.newalbumdir.CheckReleaseYear();
 
-        // Artist
-        // Defines:
-        //  -> this.artistdiff
-        //  -> artistdiffold
-        //  -> artistdiffnew
-        let newartistname = this.artistnameinput.GetValue();
-        newartistname = newartistname.replace(/\//g,"∕" /*Division slash*/);
+        // Compose Error Message
+        let errors = "";
+        if(artistnameerror)
+            errors += `${artistnameerror} `;
+        if(albumnameerror)
+            errors += `${albumnameerror} `;
+        if(releaseerror)
+            errors += `${releaseerror}`;
 
-        if(this.artistnameinput.GetValidState() === true)
-            openspan = validspan;
-        else
-            openspan = errorspan;
-
-        newpath += `${newartistname}/`;
-        this.artistdiff = "";
-        let artistdiffold = "";
-        let artistdiffnew = "";
-        if(newartistname != oldartistname)
-        {
-            artistdiffold = `${errorspan}${oldartistname}${closespan}`;
-            artistdiffnew = `${openspan}${newartistname}${closespan}`;
-            this.artistdiff += artistdiffold;
-            this.artistdiff += grayslash;
-            this.artistdiff += grayarrow;
-            this.artistdiff += artistdiffnew;
-            this.artistdiff += grayslash;
-        }
-        else
-        {
-            artistdiffold = `${grayspan}${oldartistname}${closespan}`;
-            artistdiffnew = `${grayspan}${newartistname}${closespan}`;
-            this.artistdiff += artistdiffnew;
-            this.artistdiff += grayslash;
-        }
-
-        // Release Year
-        // Defines:
-        //  -> releasediffold
-        //  -> releasediffnew
-        let releaseyear = this.releasedateinput.GetValue();
-
-        if(this.releasedateinput.GetValidState() === true)
-            openspan = validspan;
-        else
-            openspan = errorspan;
-
-        newpath += `${releaseyear} - `;
-
-        let oldrelease  = oldalbumdir.substr(0, oldalbumdir.indexOf(" "));
-        let releasediffold = "";
-        let releasediffnew = "";
-        if(oldrelease != releaseyear)
-        {
-            releasediffold = `${errorspan}${oldrelease}${closespan}`;
-            releasediffnew = `${openspan}${releaseyear}${closespan}`;
-        }
-        else
-        {
-            releasediffold = `${grayspan}${oldrelease}${closespan}`;
-            releasediffnew = `${grayspan}${releaseyear}${closespan}`;
-        }
-
-        // Album name
-        //  -> albumdiffold
-        //  -> albumdiffnew
-        let newalbumname = this.albumnameinput.GetValue();
-        newalbumname = newalbumname.replace(/\//g,"∕" /*Division slash*/);
-
-        if(this.albumnameinput.GetValidState() === true)
-            openspan = validspan;
-        else
-            openspan = errorspan;
-
-        newpath += `${newalbumname}`;
-
-        let albumnamediffold = "";
-        let albumnamediffnew = "";
-        if(oldalbumname != newalbumname)
-        {
-            albumnamediffold = `${errorspan}${oldalbumname}${closespan}`;
-            albumnamediffnew = `${openspan}${newalbumname}${closespan}`;
-        }
-        else
-        {
-            albumnamediffold = `${grayspan}${oldalbumname}${closespan}`;
-            albumnamediffnew = `${grayspan}${newalbumname}${closespan}`;
-        }
-
-        // Album Directory
-        // Defines:
-        //  -> this.albumdiff
-        let albumdirdiffold = releasediffold + `${grayspan}&nbsp;-&nbsp;${closespan}` + albumnamediffold;
-        let albumdirdiffnew = releasediffnew + `${grayspan}&nbsp;-&nbsp;${closespan}` + albumnamediffnew;
-        albumdirdiffold += grayslash;
-        albumdirdiffnew += grayslash;
-
-        let newartistdir;
-        let newalbumdir;
-        [newartistdir, newalbumdir] = newpath.split("/");
-
-        this.albumdiff = "";
-        if(newalbumdir != oldalbumdir)
-            this.albumdiff = albumdirdiffold + grayarrow + albumdirdiffnew;
-        else
-            this.albumdiff = albumdirdiffnew;
-
-        // Full path
-        // Defines:
-        //  -> this.pathdiff
-        let oldpathhtml = "";
-        oldpathhtml += artistdiffold;
-        oldpathhtml += grayslash;
-        oldpathhtml += albumdirdiffold;
-        let newpathhtml = "";
-        newpathhtml += artistdiffnew;
-        newpathhtml += grayslash;
-        newpathhtml += albumdirdiffnew;
-
-        this.pathdiff = "";
-        if(this.oldpath != newpath)
-            this.pathdiff = `${oldpathhtml}${grayarrow}${newpathhtml}`;
-        else
-            this.pathdiff = newpathhtml;
-
-        // Update visualisation of path validation
-        this.newpathelement.RemoveChilds();
-        this.newpathelement.SetInnerHTML(this.pathdiff);
-
-        // Check and propagate validation status
-        let validationstatus = this.CheckIfValid();
-        if(validationstatus !== true)
+        // Set Error if existing
+        if(errors.length > 0)
             this.datainvalidmessage.Show();
         else
             this.datainvalidmessage.Hide();
 
+        // Update diffs
+        const grayspan  = `<span style="color: var(--color-gray)">`;
+        const closespan = `</span>`;
+        const grayslash = `${grayspan}/${closespan}`;
+        const grayarrow = `${grayspan}&nbsp;➜&nbsp;${closespan}`;
+        this.artistdiff.UpdateDiff(this.oldartistdir, this.newartistdir);
+        this.albumdiff.UpdateDiff(this.oldalbumdir, this.newalbumdir);
+
+        let oldpathhtml = "";
+        oldpathhtml += this.artistdiff.olddiff;
+        oldpathhtml += grayslash;
+        oldpathhtml += this.albumdiff.olddiff;
+        let newpathhtml = "";
+        newpathhtml += this.artistdiff.newdiff;
+        newpathhtml += grayslash;
+        newpathhtml += this.albumdiff.newdiff;
+
+        let pathdiff = "";
+        if(oldpathhtml != newpathhtml)
+            pathdiff = `${oldpathhtml}${grayarrow}${newpathhtml}`;
+        else
+            pathdiff = newpathhtml;
+        this.newpathelement.RemoveChilds();
+        this.newpathelement.SetInnerHTML(pathdiff);
+
+        // Check and propagate validation status
+        let validationstatus = this.CheckIfValid();
         if(typeof this.validationstatuscallback === "function")
             this.validationstatuscallback(validationstatus);
-        return newpath;
+        return;
     }
 
 
@@ -341,24 +336,25 @@ class AlbumSettingsTable extends Table
     GetArtistDirectoryName()
     {
         let artistname = this.artistnameinput.GetValue();
-        artistname = artistname.replace(/\//g,"∕" /*Division slash*/);
+        artistname = this.newartistdir.MakeValidArtistName(artistname);
         return artistname;
     }
 
     GetAlbumDirectoryName()
     {
-        // Release Year
-        let releaseyear = this.releasedateinput.GetValue();
+        let releaseyear = this.releaseyearinput.GetValue();
         let albumname   = this.albumnameinput.GetValue();
-        albumname = albumname.replace(/\//g,"∕" /*Division slash*/);
-        return `${releaseyear} - ${albumname}`;
+        let albumdirectoryname = new AlbumDirectoryName();
+
+        albumdirectoryname.SetReleaseYear(releaseyear);
+        albumdirectoryname.SetAlbumName(albumname);
+
+        return albumdirectoryname.ComposeDirectoryName();
     }
 
 
 
-    // Returns a array with two objects with two attributes: .newname, .oldname
-    // First object is for the artist, second for the album directory name
-    // If for one or all of them the directories are the same, null will be set instead of an object.
+    // Returns an object with two attributes: .newname, .oldname
     GetAlbumRenameRequest()
     {
         let newdirectoryname  = this.GetAlbumDirectoryName();
@@ -372,7 +368,10 @@ class AlbumSettingsTable extends Table
             renamerequest = new Object();
             renamerequest.newname = newdirectoryname;
             renamerequest.oldname = olddirectoryname;
-            renamerequest.htmldiff= this.albumdiff;
+
+            let oldalbumdir = new AlbumDirectoryName(olddirectoryname);
+            let newalbumdir = new AlbumDirectoryName(newdirectoryname);
+            renamerequest.htmldiff= this.albumdiff.UpdateDiff(oldalbumdir, newalbumdir);
         }
         return renamerequest;
     }
@@ -389,19 +388,384 @@ class AlbumSettingsTable extends Table
             renamerequest = new Object();
             renamerequest.newname = newdirectoryname;
             renamerequest.oldname = olddirectoryname;
-            renamerequest.htmldiff= this.artistdiff;
+
+            let oldartistdir = new ArtistDirectoryName(olddirectoryname);
+            let newartistdir = new ArtistDirectoryName(newdirectoryname);
+            renamerequest.htmldiff= this.artistdiff.UpdateDiff(oldartistdir, newartistdir);
         }
         return renamerequest;
     }
 
 
-
-    Update(artistname, albumname, releasedate, albumpath)
+    // When albumpath is not set, then it gets generated by the following scheme:
+    //  ${artistname}/${releasedate} - ${albumname}
+    Update(artistname, albumname, releasedate, albumpath=null)
     {
-        this.oldpath = albumpath;
+        if(albumpath === null)
+            this.oldpath = `${artistname}/${releasedate} - ${albumname}`;
+        else
+            this.oldpath = albumpath;
+
+        this.oldartistdir = new ArtistDirectoryName(this.oldpath.split("/")[0]);
+        this.oldalbumdir  = new AlbumDirectoryName( this.oldpath.split("/")[1]);
+
         this.artistnameinput.SetValue(artistname);
         this.albumnameinput.SetValue(albumname);
-        this.releasedateinput.SetValue(releasedate);
+        this.releaseyearinput.SetValue(releasedate);
+    }
+}
+
+
+
+/*
+ * Adds origin and import date settings
+ * Handles path renaming internal by providing a "Rename" button
+ *   using the RenameAlbumDirectory API
+ */
+class AlbumEntrySettingsTable extends AlbumSettingsTable
+{
+    constructor()
+    {
+        super();
+        this.oldpath = "";
+        this.oldorigin     = "";
+        this.oldimportdate = "";
+        this.oldhidealbum  = null;
+        this.artistpath    = "";
+        this.albnumid      = null;
+        this.oldalbumname  = new AlbumDirectoryName();
+        this.newalbumname  = new AlbumDirectoryName();
+        this.albumdiff     = new AlbumDirectoryNameDiff();
+        this.tasks         = new BatchExecution();
+        this.tasks.SetListenSignature("ConfirmAlbumSettingsTask");
+        this.tasks.SetOnFinishCallback((opentasks, finishedtasks)=>
+            {
+                this.onTasksFinished(opentasks, finishedtasks);
+            });
+
+        // Load / Save buttons
+        this.loadbutton = new TextButton("Load", "Reset Table",
+            ()=>{this.onLoad();},
+            "Reset all changes made inside the album settings table.");
+        this.savebutton = new TextButton("Save", "Save Changes",
+            ()=>{this.onSave();},
+            "Save all changes made inside the album settinsg tabke.\n"+
+            "If the ablum name or release year has been changed,\n"+
+            "the album directory inside the Music Diretory gets renamed as well.");
+        this.toolbar   = new ToolBar();
+        this.toolbar.AddButton(this.loadbutton);
+        this.toolbar.AddSpacer(true /*grow*/);
+        this.toolbar.AddButton(this.savebutton);
+
+        this.datainvalidmessage = new MessageBarError("Invalid album directory name. Check red input fields.");
+        this.changesmessage     = new MessageBarInfo("Changes in the settings table not yet saved.");
+        this.newpathelement     = new Element("span");
+
+        this.AddRow(this.headlinerow);
+        this.AddAlbumNameRow();
+        this.AddReleaseYearRow();
+        this.AddRow(new TableSpanRow(3, [], this.newpathelement));
+        this.AddOriginRow();
+        this.AddImportDateRow();
+        this.AddHideAlbumRow();
+        this.AddRow(new TableSpanRow(3, [], this.changesmessage));
+        this.AddRow(new TableSpanRow(3, [], this.datainvalidmessage));
+        this.AddRow(new TableSpanRow(3, [], this.tasks));
+        this.AddRow(new TableSpanRow(3, [], this.toolbar));
+
+        this.albumnameinput.SetAfterValidateEventCallback(
+            (value, valid)=>
+            {
+                this.EvaluateNewPath();
+                this.CheckChanges();
+            });
+        this.releaseyearinput.SetAfterValidateEventCallback(
+            (value, valid)=>
+            {
+                this.EvaluateNewPath();
+                this.CheckChanges();
+            });
+        this.origininput.SetAfterValidateEventCallback(
+            (value, valid)=>
+            {
+                this.CheckChanges();
+            });
+        this.importdateinput.SetAfterValidateEventCallback(
+            (value, valid)=>
+            {
+                this.CheckChanges();
+            });
+        this.hidealbuminput.SetAfterValidateEventCallback(
+            (value, valid)=>
+            {
+                this.CheckChanges();
+            });
+
+    }
+
+
+
+    CheckChanges()
+    {
+        let origin       = this.origininput.GetValue();
+        let importdate   = this.importdateinput.GetValue();
+        let hidealbum    = this.hidealbuminput.GetValue();
+        let olddirectory = this.oldalbumname.ComposeDirectoryName();
+        let newdirectory = this.newalbumname.ComposeDirectoryName();
+
+        let changes = false;
+        if(hidealbum != this.oldhidealbum)
+            changes = true;
+        if(origin != this.oldorigin)
+            changes = true;
+        if(importdate != this.oldimportdate)
+            changes = true;
+        if(newdirectory != olddirectory)
+            changes = true;
+
+        if(changes)
+        {
+            this.changesmessage.Show();
+            this.loadbutton.Enable();
+            this.savebutton.Enable();
+        }
+        else
+        {
+            this.changesmessage.Hide();
+            this.loadbutton.Disable();
+            this.savebutton.Disable();
+        }
+
+        // Check if data is valid. If not, disable the save button
+        let yearcheck = this.newalbumname.CheckReleaseYear();
+        let namecheck = this.newalbumname.CheckAlbumName();
+
+        if(yearcheck === null && namecheck === null)
+        {
+            this.datainvalidmessage.Hide();
+            this.UpdateTasks();
+        }
+        else
+        {
+            this.datainvalidmessage.UpdateMessage(`${yearcheck||""} ${namecheck||""}`);
+            this.datainvalidmessage.Show();
+            this.savebutton.Disable();
+            this.tasks.Clear(); // Just be sure to not mess up anything
+        }
+    }
+
+
+
+    UpdateTasks()
+    {
+        let olddirectory = this.oldalbumname.ComposeDirectoryName();
+        let newdirectory = this.newalbumname.ComposeDirectoryName();
+        let origin       = this.origininput.GetValue();
+        let importdate   = this.importdateinput.GetValue();
+        let hidealbum    = this.hidealbuminput.GetValue();
+
+        this.tasks.Clear();
+
+        // Renaming includes updating name, release and origin of an album.
+        // So to not override the origin settings, do renaming first.
+        if(newdirectory != olddirectory)
+        {
+            let oldpath = `${this.artistpath}/${olddirectory}`;
+            let newpath = `${this.artistpath}/${newdirectory}`;
+            this.tasks.AddTask(`Rename Album Directory to "${newdirectory}"`,
+                (webuitaskid)=>
+                {
+                    MusicDB_Request("RenameAlbumDirectory", "ConfirmAlbumSettingsTask",
+                        {oldpath: oldpath, newpath: newpath},
+                        {webuitaskid: webuitaskid});
+                    return "active";
+                },
+                (fnc, sig, args, pass)=>
+                {
+                    if(args === true) return "good";
+                    else              return "bad";
+                },
+                null /*on notification*/, true /*can fail*/);
+        }
+        if(origin != this.oldorigin)
+        {
+            this.tasks.AddTask(`Update Origin to ${origin}`,
+                (webuitaskid)=>
+                {
+                    MusicDB_Request("SetAlbumOrigin", "ConfirmAlbumSettingsTask",
+                        {albumid: this.albumid, origin: origin},
+                        {webuitaskid: webuitaskid});
+                },
+                (fnc, sig, args, pass)=>
+                {
+                    return "good";
+                },
+                null /*on notification*/, true /*can fail*/);
+        }
+        if(importdate != this.oldimportdate)
+        {
+            this.tasks.AddTask("Update Import Date",
+                (webuitaskid)=>
+                {
+                    MusicDB_Request("SetAlbumImportTime", "ConfirmAlbumSettingsTask",
+                        {albumid: this.albumid, importtime: importdate},
+                        {webuitaskid: webuitaskid});
+                },
+                (fnc, sig, args, pass)=>
+                {
+                    return "good";
+                },
+                null /*on notification*/, true /*can fail*/);
+        }
+        if(hidealbum != this.oldhidealbum)
+        {
+            this.tasks.AddTask("Update Hide-Album State",
+                (webuitaskid)=>
+                {
+                    // This needs to be a broadcast to all clients to make them update
+                    MusicDB_Broadcast("HideAlbum", "UpdateArtists",
+                        {albumid: this.albumid, hide: hidealbum});
+                    // Dummy call to trigger batch execution
+                    MusicDB_Request("Bounce", "ConfirmAlbumSettingsTask",
+                        {},
+                        {webuitaskid: webuitaskid});
+                },
+                (fnc, sig, args, pass)=>
+                {
+                    return "good";
+                },
+                null /*on notification*/, true /*can fail*/);
+        }
+
+        // If renaming took place, update all instances of the WebUI
+        if(newdirectory != olddirectory)
+        {
+            // Force all WebUIs reloading their album information (broadcast)
+            this.tasks.AddTask("Propagate new album directory to all clients",
+                (webuitaskid)=>
+                {
+                    // Propagate album renaming to all clients
+                    MusicDB_Broadcast("GetAlbum", "AlbumRenamed",
+                        {albumid: this.albumid});
+                    // Dummy call to trigger batch execution
+                    MusicDB_Request("Bounce", "ConfirmAlbumSettingsTask",
+                        {},
+                        {webuitaskid: webuitaskid});
+                },
+                (fnc, sig, args, pass)=>
+                {
+                    return "good";
+                },
+                null /*on notification*/, true /*can fail*/);
+        }
+
+        return;
+    }
+
+
+
+    EvaluateNewPath()
+    {
+        // Get new values
+        let albumname   = this.albumnameinput.GetValue();
+        let releaseyear = this.releaseyearinput.GetValue();
+
+        // Update new*name objects
+        this.newalbumname.SetAlbumName(albumname);
+        this.newalbumname.SetReleaseYear(releaseyear, false); // do not validate for life preview
+
+        // Update diffs
+        this.albumdiff.UpdateDiff(this.oldalbumname, this.newalbumname);
+
+        // Full path diff
+        const grayspan  = `<span style="color: var(--color-gray)">`;
+        const closespan = `</span>`;
+        const grayslash = `${grayspan}/${closespan}`;
+        const grayarrow = `${grayspan}&nbsp;➜&nbsp;${closespan}`;
+
+        let oldpathhtml = this.albumdiff.olddiff;
+        let newpathhtml = this.albumdiff.newdiff;
+        let pathdiff    = "";
+        if(oldpathhtml != newpathhtml)
+            pathdiff = `${oldpathhtml}${grayarrow}${newpathhtml}`;
+        else
+            pathdiff = newpathhtml;
+
+        // Update visualisation of path validation
+        this.newpathelement.RemoveChilds();
+        this.newpathelement.SetInnerHTML(pathdiff);
+
+        return;
+    }
+
+
+
+    onLoad()
+    {
+        this.albumnameinput.SetValue(this.oldalbumname.parts.name);
+        this.releaseyearinput.SetValue(this.oldalbumname.parts.year);
+        this.origininput.SetValue(this.oldorigin);
+        this.importdateinput.SetValue(this.oldimportdate);
+    }
+
+    onSave()
+    {
+        this.loadbutton.Disable();
+        this.savebutton.Disable();
+        this.UpdateTasks(); // Just make sure all changes are considered
+        this.tasks.ExecuteTasks();
+    }
+
+    onTasksFinished(opentasks, finishedtasks)
+    {
+        if(opentasks.length === 0)
+        {
+            // All tasks successfully processed.
+            // Refresh whole view
+            this.changesmessage.Hide();
+            this.tasks.Clear();
+            MusicDB_Request("GetAlbum", "ShowAlbumSettingsLayer", {albumid: this.albumid});
+        }
+        else
+        {
+            // Save has been tried without success. User should change something or reload.
+            this.savebutton.Disable();
+        }
+    }
+
+
+
+    Update(MDBArtist, MDBAlbum)
+    {
+        this.oldpath       = MDBAlbum.path
+        this.oldorigin     = MDBAlbum.origin;
+        this.oldimportdate = MDBAlbum.added;
+        this.oldhidealbum  = MDBAlbum.hidden;
+        this.artistpath    = MDBArtist.path;
+        this.albumid       = MDBAlbum.id;
+
+        this.oldalbumname = new AlbumDirectoryName( this.oldpath.split("/")[1]);
+
+        this.albumnameinput.SetValue(MDBAlbum.name);
+        this.releaseyearinput.SetValue(MDBAlbum.release);
+        this.origininput.SetValue(MDBAlbum.origin);
+        this.importdateinput.SetValue(MDBAlbum.added);
+
+        this.CheckChanges(); // Reset State
+    }
+
+
+
+    onMusicDBMessage(fnc, sig, args, pass)
+    {
+        if(sig == "ConfirmAlbumSettingsTask")
+        {
+            this.tasks?.onMusicDBMessage(fnc, sig, args, pass);
+        }
+    }
+    onMusicDBNotification(fnc, sig, rawdata)
+    {
+        this.tasks?.onMusicDBNotification(fnc, sig, rawdata);
     }
 }
 

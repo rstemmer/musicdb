@@ -81,7 +81,6 @@ class StreamSettingsTable extends Table
 
         // Error messages
         this.urlerror    = new MessageBarError();
-        this.urlerror.HideCloseButton();
         this.urlerrorrow = new StreamSettingsTableSpanRow(this.urlerror);
 
         // Text Inputs
@@ -229,17 +228,17 @@ class StreamSettings extends MainSettingsView
 
         // Test Player
         this.player = new AudioStreamPlayer();
-        this.player.SetErrorCallback((event)=>{this.onStreamError(event);});
+        this.player.SetErrorCallback((event, message)=>{this.onStreamError(event, message);});
         this.player.SetPlaysCallback((event)=>{this.onStreamPlays(event);});
 
         // Message bar for stream errors
         this.streamerror = new MessageBarError();
-        this.streamerror.HideCloseButton();
         this.streamplays = new MessageBarConfirm("Connection to the stream seems to work technically.");
+        this.streamplays.ShowCloseButton();
 
         this.saved   = new MessageBarConfirm("Audio stream connection settings successfully updated.");
+        this.saved.ShowCloseButton();
         this.unsaved = new MessageBarWarning("Audio stream changed but not yet saved!");
-        this.unsaved.HideCloseButton();
 
         // Load / Save buttons
         let loadbutton = new SVGButton("Load", ()=>{this.Reload()});
@@ -264,29 +263,8 @@ class StreamSettings extends MainSettingsView
 
 
 
-    onStreamError(event)
+    onStreamError(event, message)
     {
-        // Get error code
-        // Type: MediaError: https://developer.mozilla.org/en-US/docs/Web/API/MediaError
-        let error = event.target.error;
-        let code  = error.code;
-
-        let message;
-        switch(code)
-        {
-            case 1:
-                message = "Connecting aborted by the user.";
-                break;
-            case 2:
-                message = "Network connection error. Are you online? Is the URL correct (incl. protocol, port number)?";
-                break;
-            case 3:
-                message = "Decoding failed. Is the URL actually addressing an audio stream? Is the port number correct?";
-                break;
-            case 4:
-                message = "Media source not suitable. If it is a TLS secured stream (https://), does your browser trust the certificate?";
-                break;
-        }
 
         this.streamerror.UpdateMessage(`Error: ${message}`);
         this.streamerror.Show();

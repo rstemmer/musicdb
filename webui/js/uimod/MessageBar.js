@@ -37,7 +37,7 @@ class MessageBar extends Element
         this.AppendChild(this.closebutton);
 
         this.autohidedelay   = null;
-        this.hideclosebutton = false;
+        this.hideclosebutton = true;
 
         this.Hide();
     }
@@ -115,7 +115,7 @@ class MessageBarWarning extends MessageBar
 {
     constructor(htmlmessage=null)
     {
-        super(new SVGIcon("StatusBad"), htmlmessage);
+        super(new SVGIcon("StatusWarning"), htmlmessage);
         this.SetData("messagetype", "warning");
     }
 }
@@ -182,6 +182,17 @@ class MessageBarConfirmDelete extends MessageBar
             this.Hide();
             this.ondelete();
         }
+    }
+}
+
+
+
+class MessageBarProcessing extends MessageBar
+{
+    constructor(htmlmessage=null)
+    {
+        super(new SVGIcon("StatusActive"), htmlmessage);
+        this.SetData("messagetype", "active");
     }
 }
 

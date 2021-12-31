@@ -52,18 +52,20 @@ class AlbumView extends MainView2
         // Create Settings
         this.settings_tags  = new Element("div", ["flex-column"], "AlbumGenreSettings");
         this.settings_color = new Element("div", ["flex-column"]);
-        this.settings_hide  = new SettingsCheckbox(
-            "Hide Album",
-            "When the album is hidden, it will not be shown in the Artists list.</br>Furthermore it is not considered by the random song selection algorithm.</br>You can make the album visible again with the MusicDB Management tools (See Main Menu).");
-
+        this.settings_more  = new Element("div", ["flex-column"]);
         this.settings   = new TabSelect();
         this.tagstabid  = this.settings.AddTab(new SVGIcon("Tags"),    "Genre Tags",   this.settings_tags, true);
         this.colortabid = this.settings.AddTab(new SVGIcon("Artwork"), "Color Scheme", this.settings_color);
-        this.hidetabid  = this.settings.AddTab(new SVGIcon("Hide"),    "Hide Album",   this.settings_hide.GetHTMLElement());
+        this.moretabid  = this.settings.AddTab(new SVGIcon("Settings"),"More Settings",this.settings_more);
 
         // Show settings on right click
         this.headline.SetRightClickCallback((event)=>{this.settings.ToggleVisibility(); event.preventDefault();});
         this.settings.Hide();
+
+        this.hidealbum  = new SettingsCheckbox(
+            "Hide Album",
+            "When the album is hidden, it will not be shown in the Artists list.</br>Furthermore it is not considered by the random song selection algorithm.</br>You can make the album visible again with the MusicDB Management tools (See Main Menu).");
+
 
         // Create Tag-View
         this.genreview    = new TagListView();
@@ -92,7 +94,7 @@ class AlbumView extends MainView2
 
     AddRandomSongToQueue(position)
     {
-        let currentalbumid = mdbmodemanager.GetCurrentAlbumID();
+        let currentalbumid = WebUI.GetManager("MusicMode").GetCurrentAlbumID();
         MusicDB_Call("AddRandomSongToQueue", {albumid: currentalbumid, position: position});
     }
 
@@ -100,13 +102,13 @@ class AlbumView extends MainView2
 
     UpdateInformation(MDBAlbum, MDBArtist, MDBTags, MDBCDs)
     {
-        let currentalbumid    = mdbmodemanager.GetCurrentAlbumID();
+        let currentalbumid    = WebUI.GetManager("MusicMode").GetCurrentAlbumID();
         this.currentalbumtags = MDBTags;
 
         // Update Headline
         this.headline.UpdateInformation(MDBAlbum, MDBArtist)
         this.headline.SetSubtitleClickAction(
-            ()=>{artistsview.ScrollToArtist(MDBArtist.id);},
+            ()=>{WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);},
             null
         );
 
@@ -123,12 +125,27 @@ class AlbumView extends MainView2
         this.settings_color.AppendChild(this.artworkuploader.GetHTMLElement());
         this.settings_color.AppendChild(this.colorselect.GetHTMLElement());
 
-        this.settings_hide.SetState(MDBAlbum.hidden);
-        this.settings_hide.SetHandler((state)=>
+        this.hidealbum.SetState(MDBAlbum.hidden);
+        this.hidealbum.SetHandler((state)=>
             {
                 MusicDB_Broadcast("HideAlbum", "UpdateArtists", {albumid: MDBAlbum.id, hide: state});
             }
         );
+        this.albumsettings = new TextButton("Settings", "Show Advanced Album Settings", ()=>
+            {
+                MusicDB_Request("GetAlbum", "ShowAlbumSettingsLayer", {albumid: MDBAlbum.id});
+            },
+            "Open album settings layer to review and change all details of this album stored in the database.");
+        this.songssettings = new TextButton("Settings", "Show Songs Settings", ()=>
+            {
+                MusicDB_Request("GetAlbum", "ShowSongsSettingsLayer", {albumid: MDBAlbum.id});
+            },
+            "Open songs settings layer to review and change all details of the songs of this album.");
+
+        this.settings_more.RemoveChilds();
+        this.settings_more.AppendChild(this.hidealbum);
+        this.settings_more.AppendChild(this.albumsettings);
+        this.settings_more.AppendChild(this.songssettings);
 
         this.genreedit          = new TagListEdit("genre");
         this.subgenreedit       = new TagListEdit("subgenre");
@@ -279,7 +296,7 @@ class AlbumView extends MainView2
 
     UpdateTagInformation(MDBTags)
     {
-        let currentalbumid    = mdbmodemanager.GetCurrentAlbumID();
+        let currentalbumid    = WebUI.GetManager("MusicMode").GetCurrentAlbumID();
         this.currentalbumtags = MDBTags;
 
         // Update existing tags
@@ -343,7 +360,7 @@ class AlbumView extends MainView2
             return
 
         // Get current song ID and check if it is available in the shown album
-        let currentsongid = mdbmodemanager.GetCurrentSongID();
+        let currentsongid = WebUI.GetManager("MusicMode").GetCurrentSongID();
         if(typeof this.songtiles[currentsongid] !== "object")
             return;
 
@@ -358,6 +375,7 @@ class AlbumView extends MainView2
 
         // Set actual tile to true
         this.songtiles[currentsongid].tile.SetPlayingState(true);
+        this.songtiles[currentsongid].tile.ScrollIntoView();
         return;
     }
 
@@ -372,10 +390,16 @@ class AlbumView extends MainView2
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        let currentalbumid = mdbmodemanager.GetCurrentAlbumID();
+        let currentalbumid = WebUI.GetManager("MusicMode").GetCurrentAlbumID();
 
         if(fnc == "GetAlbum" && sig == "ShowAlbum")
         {
+            this.UpdateInformation(args.album, args.artist, args.tags, args.cds);
+        }
+        else if(fnc == "GetAlbum" && (sig == "AlbumRenamed" || sig == "SongRenamed"))
+        {
+            if(args.album.id !== currentalbumid)
+                return;
             this.UpdateInformation(args.album, args.artist, args.tags, args.cds);
         }
         else if(fnc == "GetAlbum" && sig == "UpdateTags")

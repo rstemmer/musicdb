@@ -14,19 +14,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-The import management is responsible for managing Uploads, Integration and Import of music into the MuiscDB system.
+The task management is responsible for managing
+    * Uploads new content to the server (:doc:`/taskmanagement/uploadmanager`)
+    * Integration of new content into the Music Directory (:doc:`/taskmanagement/integrationmanager`)
+    * Import of music into the MuiscDB Database (:doc:`/taskmanagement/importmanager`)
+    * Importing artwork for an album (:doc:`/taskmanagement/artworkmanager`)
+    * Scanning the file system for new or invalid data (:doc:`/taskmanagement/filesystemmanager`)
+
 The whole process is split into several tasks managed by the :meth:`~TaskManagementThread`.
 
-The communication is handled via notification to allow continuing uploading even when the connection gets lost in the meanwhile.
+The communication is handled via notification to allow continuing reporting of status updates
+without blocking and even when the connection gets lost in the meanwhile.
 
 Furthermore uploading a file, integrating it into the music directory and importing it into the Music Database
-shall be possible in separate steps.
-
-The upload is performed chunk-wise.
-After initiating an Upload, this upload manager (:doc:`/taskmanagement/uploadmanager`)
-requests chunks of data via MusicDB Notifications from the clients.
-All clients are informed about the upload process, not only the client that initiated the upload.
-So each client can show the progress and state.
+is possible in separate steps.
 
 The whole process is split into several tasks. Each task has its own state.
 The task state is persistently stored inside the uploads directory within a JSON file in a *tasks* sub-directory.
@@ -46,16 +47,22 @@ Possible Task states:
         * ``"preprocessing"``: The file is currently in preprocessing state. For example if an archive gets unpacked.
     * Integration related states:
         * ``"readyforintegration"``: The integration of the file can be started
+        * ``"startintegration"``: Start the integration process
         * ``"integrating"``: The integration process has started
         * ``"integrationfailed"``: Integrating the uploaded file into the music directory failed
     * Import related states:
-        * ``"readyforimport"``: The uploaded file was successfully integrated into the music directory. The content can now be imported into the MusicDB Database
+        * ``"readyforimport"``: The uploaded file was successfully integrated into the music directory. The content can now be imported into the MusicDB Database. Everything is now based on file management inside the managed Music Directory. From this state, ``"remove"`` gets triggered.
         * ``"startmusicimport"``: Importing the integrated file into the music database started
         * ``"importingmusic"``: The music import process has started
         * ``"importfailed"``: Import process failed (importing the music or generating the artwork)
         * ``"startartworkimport"``: Importing succeeded and generating the artwork started
         * ``"importingartwork"``: The artwork import process has started
         * ``"importcomplete"``: Import process complete and successful
+    * File system scanning states:
+        * ``"startfsscan"``:
+        * ``"scanningfs"``:
+        * ``"fsscanfailed"``:
+        * ``"fsscancomplete"``:
 
 To each task, there are several additional information, also stored in the JSON file.
 The following keys are in dictionary that represent a task:
@@ -63,9 +70,11 @@ The following keys are in dictionary that represent a task:
     * Unrelated information
         * ``"id"`` (str): The task ID
         * ``"state"`` (str): One of the task states listed above
-        * ``"contenttype"`` (str): Type of the content: (``"video"``, ``"album"``, ``"artwork"``)
+        * ``"contenttype"`` (str): Type of the content: (``"video"``, ``"albumfile"``, ``"artwork"``, ``"any"``). An album file can a song but also a booklet PDF, a video clip or any other additional content of an album.
         * ``"mimetype"`` (str): MIME-Type of the file (For example ``"image/png"``)
         * ``"annotations"`` (dict): Additional annotations that can be provided by the user and be optionally used by some task processing.
+        * ``"initializationtime"`` (int): The unix time stamp when the task has been created
+        * ``"updatetime"`` (int): Unix time stamp when the task has been updated the last time via :meth:`~musicdb.taskmanagement.taskmanager.TaskManager.UpdateTaskState`. After initialization it is ``None``.
     * Upload related information (May not be valid if there was no upload task)
         * ``"filesize"`` (int): The size of the file in Bytes
         * ``"offset"`` (int): The amount of existing bytes of a file that is currently being uploaded.
@@ -76,6 +85,7 @@ The following keys are in dictionary that represent a task:
     * Integration related information (May not be valid if the file is not yet integrated into the Music Directory)
         * ``"videopath"`` (str): Path to a video file, relative to the Music Directory
         * ``"albumpath"`` (str): Path to an album directory, relative to the Music Directory
+        * ``"albumfilepath"`` (str): Path to file of an album, relative to the Music Directory
     * Artwork related
         * ``"awsourcetype"`` (str): Type of the artwork source: ``"imagefile"``, ``"songfile"`` or ``"videofile"``.
         * ``"awsourcepath"`` (str): Path to the artwork source
@@ -105,6 +115,7 @@ from musicdb.taskmanagement.uploadmanager   import UploadManager
 from musicdb.taskmanagement.integrationmanager  import IntegrationManager
 from musicdb.taskmanagement.importmanager   import ImportManager
 from musicdb.taskmanagement.artworkmanager  import ArtworkManager
+from musicdb.taskmanagement.filesystemmanager   import FilesystemManager
 
 Config      = None
 Thread      = None
@@ -194,6 +205,7 @@ def TaskManagementThread():
         integrationmanager = IntegrationManager(Config, musicdb)
         importmanager   = ImportManager(Config, musicdb)
         artworkmanager  = ArtworkManager(Config, musicdb)
+        filesystemmanager  = FilesystemManager(Config, musicdb)
     except Exception as e:
         logging.exception("Initializing Task Management Thread failed with exception: %s", str(e))
 
@@ -211,14 +223,28 @@ def TaskManagementThread():
             time.sleep(1)
 
         deletekeys = []
+        # Process all tasks
         for taskid, task in tasks.items():
+            #logging.debug("Processing task %s in state %s", task["id"], task["state"])
+
+            # Remove tasks older than 24h
+            try:
+                age = CalculateAge(task)
+                if(age > 24*60*60): # older than 24h
+                    logging.warning("Task \"%s\" is older than 24h. Most likely there went something wrong with this task. \033[1;30m(Task will be removed)", task["id"])
+                    taskmanager.UpdateTaskState(task, "remove");
+            except Exception as e:
+                logging.exception("Checking age of task (ID: %s) failed with exception: %s \033[1;30m(Task will be removed, its files remain.)", str(taskid), str(e))
+
+            # Process task
             try:
                 keeptask = ProcessTask(taskid, task,
                         taskmanager,
                         uploadmanager,
                         integrationmanager,
                         importmanager,
-                        artworkmanager)
+                        artworkmanager,
+                        filesystemmanager)
                 if not keeptask:
                     deletekeys.append(taskid)
             except Exception as e:
@@ -226,12 +252,36 @@ def TaskManagementThread():
 
         # Remove all deleted tasks
         for taskid in deletekeys:
-            taskmanager.RemoveTask(taskid)
+            try:
+                taskmanager.RemoveTask(taskid)
+            except Exception as e:
+                logging.exception("Removing task (ID: %s) failed with exception: %s \033[1;30m(Oh.)", str(taskid), str(e))
+
     return
 
 
 
-def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, importmanager, artworkmanager):
+def CalculateAge(task):
+    """
+    This method calculates how old the task is (in seconds).
+    If the task is new created (``"updatetime"`` is ``None``), ``0`` gets returned.
+
+    Args:
+        task (dict): Task dictionary
+
+    Returns:
+        age as integer in seconds
+    """
+    lastupdate = task["updatetime"]
+    if type(lastupdate) != int:
+        return 0
+
+    currenttime = int(time.time())
+    return currenttime - lastupdate
+
+
+
+def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, importmanager, artworkmanager, filesystemmanager):
     """
     After an import is completed successfully, all clients connected to the server get a ``"sys:refresh"`` notification
     to update their caches.
@@ -242,7 +292,14 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
     """
     state       = task["state"]
     contenttype = task["contenttype"]
-    logging.debug("Task with state \"%s\" found. (%s)", str(state), str(contenttype));
+    #logging.debug("Task with state \"%s\" found. (%s)", str(state), str(contenttype));
+
+    # Check if the tasks still exists in the file system.
+    # Remove if not, because the user may have removed that file for a purpose
+    # Note that updating the task state to "remove" will recreate the removed task file!
+    if not taskmanager.ExistsTaskFile(task):
+        taskmanager.UpdateTaskState(task, "remove")
+        logging.info("Found task did not exist as file in the tasks directory anymore. Task will be removed.");
 
     # Check if there are some things to do to proceed with the task
     if state == "uploadcomplete":
@@ -252,9 +309,14 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
         # further steps should be triggered by the user!
         pass
 
+    elif state == "startintegration":
+        integrationmanager.IntegrateUploadedFile(task)
+
     elif state == "readyforimport":
         # further steps should be triggered by the user!
-        pass
+        # From this moment on, the task manager is no longer needed.
+        # Everything is now based on file management inside the managed Music Directory
+        taskmanager.UpdateTaskState(task, "remove")
 
     elif state == "startmusicimport":
         importmanager.ImportMusic(task)
@@ -265,11 +327,14 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
     elif state == "importcomplete":
         server.UpdateCaches(); # Trigger all Clients to update their caches
 
+    elif state == "startfsscan":
+        filesystemmanager.ScanFilesystem(task)
+
     elif state == "remove":
         return False
 
     # Now check if the task can be removed
-    if state == "uploadfailed" or state == "importfailed" or state == "importcomplete":
+    if state in ["uploadfailed", "importfailed", "importcomplete", "invalidcontent", "fsscanfailed", "fsscancomplete"]:
         taskmanager.UpdateTaskState(task, "remove")
 
     return True

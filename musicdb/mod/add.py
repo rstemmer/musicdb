@@ -135,7 +135,7 @@ from musicdb.lib.modapi         import MDBModule
 from musicdb.lib.db.musicdb     import MusicDatabase, SONG_LYRICSSTATE_FROMFILE
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.metatags       import MetaTags
-from musicdb.mdbapi.database    import MusicDBDatabase
+from musicdb.mdbapi.music       import MusicDBMusic
 from musicdb.mdbapi.artwork     import MusicDBArtwork
 from musicdb.lib.clui.listview  import ListView
 from musicdb.lib.clui.text      import Text
@@ -385,12 +385,12 @@ class SongView(ListView, ButtonView):
 
 
 
-class add(MDBModule, MusicDBDatabase):
+class add(MDBModule, MusicDBMusic):
     def __init__(self, config, database):
         MDBModule.__init__(self)
-        MusicDBDatabase.__init__(self, config, database)
+        MusicDBMusic.__init__(self, config, database)
 
-        # gets already set by MusicDBDatabase
+        # gets already set by MusicDBMusic
         #self.db  = None
         #self.cfg = None
         #self.fs  = None

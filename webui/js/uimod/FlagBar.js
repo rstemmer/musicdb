@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,15 +16,11 @@
 
 "use strict";
 
-class FlagBar
+class FlagBar extends Element
 {
     constructor(MDBMusic, moods, alignment="right")
     {
-        this.element = document.createElement("div");
-        this.element.classList.add("FlagBar");
-        this.element.classList.add("flex-row");
-        this.element.classList.add("smallfont");
-        this.element.classList.add("hlcolor");
+        super("div", ["FlagBar", "flex-row", "smallfont", "hlcolor"]);
 
         if(alignment == "right")
         {
@@ -38,13 +34,6 @@ class FlagBar
             this._AddProperties(MDBMusic);
             this._AddMoodFlags(moods);
         }
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element
     }
 
 
@@ -88,7 +77,7 @@ class FlagBar
 
         let ratiobar = new RatioBar(ratio, `${likes} / ${dislikes}`);
 
-        this.element.appendChild(ratiobar.GetHTMLElement());
+        this.AppendChild(ratiobar);
         return;
     }
 
@@ -98,29 +87,29 @@ class FlagBar
         let icon;
         if(MDBMusic.favorite == 1)
         {
-            icon = new SVGIcon("Favorite")
+            icon = new SVGIcon("Favorite2")
             icon.SetTooltip("Favorite");
             icon.SetColor("var(--color-gold)");
-            this.element.appendChild(icon.GetHTMLElement());
+            this.AppendChild(icon);
         }
         if(MDBMusic.liverecording == 1)
         {
             icon = new SVGIcon("LiveRecording")
             icon.SetTooltip("Live Recording");
-            this.element.appendChild(icon.GetHTMLElement());
+            this.AppendChild(icon);
         }
         if(MDBMusic.badaudio == 1)
         {
-            icon = new SVGIcon("BadAudio")
+            icon = new SVGIcon("BadFile")
             icon.SetTooltip("Bad Audio");
             icon.SetColor("var(--color-red)");
-            this.element.appendChild(icon.GetHTMLElement());
+            this.AppendChild(icon);
         }
         if(MDBMusic.lyricsvideo == 1)
         {
             icon = new SVGIcon("LyricsVideo")
             icon.SetTooltip("Lyrics Video");
-            this.element.appendChild(icon.GetHTMLElement());
+            this.AppendChild(icon);
         }
         return;
     }
@@ -129,14 +118,14 @@ class FlagBar
     {
         // Set Mood Flags
         // Iterate over all existing mood IDs and check which of them was set for this song
-        let allmoods = tagmanager.GetMoods();
+        let allmoods = WebUI.GetManager("Tags").GetMoods();
         let moodids  = moods.map(mood => mood.id); // List of IDs of set moods for this song
         for(let mood of allmoods)
         {
             if(moodids.indexOf(mood.id) >= 0 && mood.icon != null)
             {
                 let flagelement = this._CreateMoodFlag(mood);
-                this.element.appendChild(flagelement);
+                this.AppendChild(flagelement);
             }
         }
         return;

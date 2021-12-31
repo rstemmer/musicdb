@@ -109,6 +109,58 @@ class NumberInput extends Input
     }
 }
 
+class BooleanInput extends Input
+{
+    constructor(oninput="", initvalue=false, tooltip="")
+    {
+        super("checkbox", oninput, initvalue, tooltip)
+    }
+
+    SetValue(checked)
+    {
+        this.element.checked == true
+        this.onInput();
+        return;
+    }
+
+    GetValue()
+    {
+        if(this.element.checked == true)
+            return true;
+        return false;
+    }
+}
+
+// SetValue/GetValue use unix time stamps as integer in seconds
+// Only the date (day, month, year) will be available as input.
+// The time of the day will be preserved
+class DateInput extends Input
+{
+    constructor(oninput="", initvalue="", tooltip="")
+    {
+        super("date", oninput, initvalue, tooltip)
+    }
+
+    SetValue(unixvalue)
+    {
+        const oneday = 24*60*60;
+        this.time = unixvalue % oneday;
+        let day   = unixvalue - this.time;
+
+        this.element.valueAsNumber = `${day}000`;
+        this.onInput();
+        return;
+    }
+
+    GetValue()
+    {
+        let jstimestamp = this.element.valueAsNumber;
+        let unixday     = Math.floor(jstimestamp / 1000);
+        let unixvalue   = unixday + this.time;
+        return unixvalue;
+    }
+}
+
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

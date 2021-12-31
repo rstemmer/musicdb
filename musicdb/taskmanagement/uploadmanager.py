@@ -16,6 +16,13 @@
 """
 This module organizes the uploading process to data from the WebUI into the MusicDB Upload directory
 where it can then be further processed.
+
+The upload is performed chunk-wise.
+After initiating an Upload, the management thread (:doc:`/taskmanagement/taskmanager`)
+requests chunks of data via MusicDB Notifications from the clients.
+All clients are informed about the upload process, not only the client that initiated the upload.
+So each client can show the progress and state.
+
 """
 
 import logging
@@ -26,7 +33,6 @@ from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.fileprocessing import Fileprocessing
 from musicdb.lib.metatags       import MetaTags
-from musicdb.mdbapi.database    import MusicDBDatabase
 from musicdb.mdbapi.artwork     import MusicDBArtwork
 from musicdb.mdbapi.videoframes import VideoFrames
 from musicdb.mdbapi.musicdirectory      import MusicDirectory
@@ -54,7 +60,6 @@ class UploadManager(TaskManager):
         self.artworkfs  = Filesystem(self.cfg.directories.artwork)
         # TODO: check write permission of all directories
         self.fileprocessing = Fileprocessing(self.cfg.directories.uploads)
-        self.dbmanager  = MusicDBDatabase(config, database)
 
 
 
@@ -138,7 +143,7 @@ class UploadManager(TaskManager):
             return False
 
         chunksize = len(rawdata)
-        filepath  = task["uploadpath"]
+        filepath  = self.uploaddirectory.AbsolutePath(task["uploadpath"])
 
         try:
             with open(filepath, "ab") as fd:
@@ -198,6 +203,7 @@ class UploadManager(TaskManager):
 
         Args:
             taskid (str): ID to identify the upload
+            annotations (dict): A dictionary with annotations that will be added to the upload task data structure
 
         Returns:
             ``True`` on success, otherwise ``False``
@@ -251,6 +257,8 @@ class UploadManager(TaskManager):
             success = self.PreProcessVideo(task)
         elif task["contenttype"] == "artwork":
             success = self.PreProcessArtwork(task)
+        elif task["contenttype"] == "albumfile":
+            success = self.PreProcessAlbumFile(task)
         else:
             logging.warning("Unsupported content type of upload: \"%s\" \033[1;30m(Upload will be ignored)", str(task["contenttype"]))
             self.UpdateTaskState(task, "invalidcontent", "Unsupported content type")
@@ -288,6 +296,43 @@ class UploadManager(TaskManager):
         return True
 
 
+    def PreProcessAlbumFile(self, task):
+        """
+        An album file in general can be anything. It can be a song (normal case) but also a booklet,
+        a music video or anything else.
+        This method identifies music files and reads its meta data using the :class:`~musicdb.lib.metatags.MetaTags` class.
+
+        All tags returned by :meth:`~musicdb.lib.metatags.MetaTags.GetAllMetadata` will be annotated to the task, if the file is a music file.
+        To annotate those information, the :meth:`~AnnotateUpload` method will be used.
+
+        Args:
+            task (dict): the task object of an upload-task
+
+        Returns:
+            ``True`` on success, otherwise ``False``.
+        """
+        taskid     = task["id"]
+        uploadpath = task["uploadpath"]
+
+        # Update mime type
+        # Usually mime type is set by the front end. If not, it may be important here because album files can be anything
+        if not task["mimetype"]:
+            task["mimetype"] = self.fileprocessing.GuessMimeType(uploadpath)
+
+        # Read out some meta data and annotate them to the task
+        absuploadpath = self.uploaddirectory.AbsolutePath(task["uploadpath"])
+        meta = MetaTags()
+        try:
+            meta.Load(absuploadpath)
+        except ValueError:
+            logging.debug("The file \"%s\" uploaded as part of an album to %s is not a song file.", task["sourcefilename"], task["uploadpath"])
+        else:
+            tags = meta.GetAllMetadata()
+            self.AnnotateUpload(taskid, tags)
+
+        task["preprocessedpath"] = uploadpath # path does not change. Set it anyway to be consistent.
+        return True
+
 
     def PreProcessArtwork(self, task):
         """
@@ -302,17 +347,19 @@ class UploadManager(TaskManager):
         Returns:
             ``True`` on success, otherwise ``False``.
         """
-        origfile = task["uploadpath"]
-        extension= self.uploaddirectory.GetFileExtension(origfile)
-        jpegfile = origfile[:-len(extension)] + "jpg"
+        origfile      = task["uploadpath"]
+        extension     = self.uploaddirectory.GetFileExtension(origfile)
+        absuploadpath = str(self.uploaddirectory.AbsolutePath(task["uploadpath"]))
+
+        jpegfile = absuploadpath[:-len(extension)] + "jpg"
         if extension != "jpg":
             logging.debug("Transcoding artwork file form %s (\"%s\") to JPEG (\"%s\")", extension, origfile, jpegfile);
             try:
-                im = Image.open(origfile)
+                im = Image.open(absuploadpath)
                 im = im.convert("RGB")
                 im.save(jpegfile, "JPEG", optimize=True, progressive=True)
             except Exception as e:
-                logging.error("Transcoding %s -> %s failed with exception: %s", origfile, jpegfile, str(e))
+                logging.error("Transcoding %s -> %s failed with exception: %s", absuploadpath, jpegfile, str(e))
                 return False
 
         task["preprocessedpath"] = jpegfile

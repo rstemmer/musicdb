@@ -24,7 +24,7 @@ from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.fileprocessing import Fileprocessing
-from musicdb.mdbapi.database    import MusicDBDatabase
+from musicdb.mdbapi.music       import MusicDBMusic
 from musicdb.mdbapi.artwork     import MusicDBArtwork
 from musicdb.mdbapi.videoframes import VideoFrames
 from musicdb.mdbapi.musicdirectory      import MusicDirectory
@@ -50,7 +50,7 @@ class ArtworkManager(TaskManager):
         self.musicdirectory   = MusicDirectory(self.cfg)
         self.artworkdirectory = Filesystem(self.cfg.directories.artwork)
         self.fileprocessing   = Fileprocessing(self.cfg.directories.uploads)
-        self.databasemanager  = MusicDBDatabase(config, database)
+        self.musicmanager     = MusicDBMusic(config, database)
 
 
 

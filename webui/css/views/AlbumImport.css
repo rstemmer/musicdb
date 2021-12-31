@@ -18,11 +18,14 @@
 
 
 
-#AlbumImport > table
+#AlbumImport
+{
+}
+
+#AlbumImport > *
 {
     margin:         1rem auto;
     width:          95%;
-    overflow:       scroll;
 }
 
 

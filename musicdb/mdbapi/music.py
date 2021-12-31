@@ -30,8 +30,13 @@ from musicdb.lib.db.trackerdb   import TrackerDatabase      # To update when a s
 from musicdb.mdbapi.musicdirectory  import MusicDirectory
 
 
-class MusicDBDatabase(object):
+class MusicDBMusic(object):
     """
+    This class provides tools to manage the music database and its files.
+    The main purpose is to act as interface between the database and the files associated to the entries inside the database.
+
+    In comparison to the :class:`~musicdb.mdbapi.musicdirectory.MusicDirectory` a link between a file and the database is assumed.
+
     This class supports the following features
 
         * File management
@@ -104,17 +109,16 @@ class MusicDBDatabase(object):
 
     def FindLostPaths(self):
         """
-        This method checks all artist, album and song entries if the paths to their related directories and files are still valid.
-        Entries with invalid paths gets returned in three lists: ``artists, albums, songs``
-
-        This method does not check if the song is cached in the Song Cache.
+        This method checks all artist, album song and video entries if the paths to their related directories and files are still valid.
+        Entries with invalid paths gets returned in as a list inside a dictionary.
 
         Returns:
-            A three lists of database entries with invalid paths. Empty lists if there is no invalid entrie.
+            A dictionary with 4 entries: ``"artists"``, ``"albums"``, ``"songs"`` and ``"videos"``.
         """
         lostartists = []
         lostalbums  = []
         lostsongs   = []
+        lostvideos  = []
 
         # Check Artists
         artists = self.db.GetAllArtists()
@@ -134,7 +138,18 @@ class MusicDBDatabase(object):
             if not self.musicdirectory.IsFile(song["path"]):
                 lostsongs.append(song)
 
-        return lostartists, lostalbums, lostsongs
+        # Check Videos
+        videos = self.db.GetVideos()
+        for video in videos:
+            if not self.musicdirectory.IsFile(video["path"]):
+                lostvideos.append(video)
+
+        lostpaths = {}
+        lostpaths["artists"] = lostartists
+        lostpaths["albums"]  = lostalbums
+        lostpaths["songs"]   = lostsongs
+        lostpaths["videos"]  = lostvideos
+        return lostpaths
 
 
 
@@ -148,22 +163,30 @@ class MusicDBDatabase(object):
 
         If a new directory was found, the subdirectories will also be added!
         So for a new album, the new songs are explicit added as well.
+        There is a special list called ``"filteredsongs"`` that is a subset of the songs list,
+        only listing new songs of known albums.
+        So if you rename a song inside an album that is imported in the database,
+        this song gets listed in the ``"songs"`` and ``"filteredsongs"`` list.
+        Songs inside a new album directory are only listed in the ``"songs"`` list.
 
-        This method is very optimistic. It will also list empty directories.
-        The user may want to check if the results of this method are valid for him.
+        All directories are checked if they are valid album or artist directories.
+        This does not address their naming scheme which might be violated.
+        It is checked via :meth:`musicdb.mdbapi.musicdirectory.MusicDirectory.EvaluateArtistDirectory` and :meth:`musicdb.mdbapi.musicdirectory.MusicDirectory.EvaluateAlbumDirectory`
+        if MusicDB has write access to the content of those directories and if they fulfill certain criteria.
 
         Furthermore this method is error tolerant. This means, if in the database has an invalid entry,
         it does not lead to errors. For example, if an album path gets renamed, this path will be returned.
         It does not lead to an error that the old path is still in the database.
 
         Returns:
-            A dictionary with 4 entries: ``"artists"``, ``"albums"``, ``"songs"`` and ``"videos"``.
+            A dictionary with 5 entries: ``"artists"``, ``"albums"``, ``"songs"``, ``"filteredsongs"`` and ``"videos"``.
             Each a list of paths that are valid but unknown by the database. Empty lists if there is no valid entry.
         """
         newpaths = {}
         newpaths["artists"] = []
         newpaths["albums"]  = []
         newpaths["songs"]   = []
+        newpaths["filteredsongs"] = []
         newpaths["videos"]  = []
 
         self._UpdatePathsCaches()
@@ -175,8 +198,11 @@ class MusicDBDatabase(object):
         knownartistpaths = self.artistpathscache
 
         for path in artistpaths:
-            if path not in knownartistpaths:
-                newpaths["artists"].append(path)
+            if path in knownartistpaths:
+                continue
+            if not self.musicdirectory.EvaluateArtistDirectory(path):
+                continue
+            newpaths["artists"].append(path)
 
         # Check Albums
         knownalbumpaths = self.albumpathscache
@@ -184,13 +210,19 @@ class MusicDBDatabase(object):
         albumpaths      = self.musicdirectory.ToString(albumpaths)
         
         for path in albumpaths:
-            if path not in knownalbumpaths:
-                newpaths["albums"].append(path)
+            if path in knownalbumpaths:
+                continue
+            if not self.musicdirectory.EvaluateAlbumDirectory(path):
+                continue
+            newpaths["albums"].append(path)
 
         # Check Songs
         for albumpath in albumpaths:
             newsongpaths = self.FindNewSongs(albumpath)
             newpaths["songs"].extend(newsongpaths)
+
+            if albumpath in knownalbumpaths:
+                newpaths["filteredsongs"].extend(newsongpaths)
 
         # Check Videos
         knownvideopaths = self.videopathscache
@@ -202,6 +234,9 @@ class MusicDBDatabase(object):
             # check if this is really an audio file
             extension = self.musicdirectory.GetFileExtension(path)
             if extension not in ["mp4", "m4v", "webm"]:
+                continue
+
+            if not self.musicdirectory.EvaluateMusicFile(path):
                 continue
 
             if path not in knownvideopaths:
@@ -217,6 +252,9 @@ class MusicDBDatabase(object):
         The album part can address an album that is known by the MusicDB, but it can also be an unknown one.
 
         The songs are filtered by the configured ignore list (see :doc:`/basics/config`).
+
+        Songs that can not be managed by MusicDB are also filtered out.
+        The files are checked via :meth:`musicdb.mdbapi.musicdirectory.MusicDirectory.EvaluateMusicFile`.
 
         Furthermore the songs are filtered by their extension.
         Only the following files are considered: .aac, .m4a, .mp3, .flac
@@ -245,9 +283,49 @@ class MusicDBDatabase(object):
             if extension not in ["aac", "m4a", "mp3", "flac"]:
                 continue
 
-            if path not in knownsongpaths:
-                newpaths.append(path)
+            if path in knownsongpaths:
+                continue
+
+            if not self.musicdirectory.EvaluateMusicFile(path):
+                continue
+
+            newpaths.append(path)
         return newpaths
+
+
+
+    def CreateNewArtist(self, name):
+        """
+        This method creates a new Artist with the name ``name``.
+
+        If there is no directory with the same name in the music root directory,
+        a new directory will be created.
+        When creating the directory fails, so that there exists no directory with the artist name,
+        ``None`` will be returned.
+
+        If there is already an artist with the same name existing in the database,
+        its database entry will be returned.
+        If there the artist is unknown, a new entry will be created as well.
+        The new entry will be returned.
+
+        Args:
+            name (str): Name of the new artist.
+
+        Returns:
+            The artist entry, or ``None`` on error.
+        """
+        if not self.musicdirectory.Exists(name):
+            self.musicdirectory.CreateSubdirectory(name)
+
+        if not self.musicdirectory.IsDirectory(name):
+            logging.warning("File system entry for new artist \"%s\" exists and is a file. \033[1;30m(File will not be replaced by the Artist directory. Creating artist canceled.)", str(name))
+            return None
+
+        artist = self.db.GetArtistByPath(name)
+        if not artist:
+            self.db.AddArtist(name, name)
+            artist = self.db.GetArtistByPath(name)
+        return artist
 
 
 
@@ -261,7 +339,7 @@ class MusicDBDatabase(object):
             #. Extract the artist name from the path
             #. Set file attributes and ownership using :meth:`~musicdb.mdbapi.musicdirectory.MusicDirectory.FixAttributes`
             #. Add artist to database
-            #. Call :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AddAlbum` for all subdirectories of the artistpath. (Except for the directory-names in the *ignorealbum* list)
+            #. Call :meth:`~musicdb.mdbapi.music.MusicDBMusic.AddAlbum` for all subdirectories of the artistpath. (Except for the directory-names in the *ignorealbum* list)
 
         Args:
             artistpath (str): Absolute or relative (to the music directory) path to the artist that shall be added to the database.
@@ -348,6 +426,84 @@ class MusicDBDatabase(object):
 
 
 
+    def ChangeAlbumArtist(self, albumid, newartist):
+        """
+        This method changes the artist associated to an album.
+        It is expected that the album addressed by its album ID exists in the database as well as in the file system.
+
+        If *newartist* is an integer, it is assumed to be an existing artist (existing in the database and the file system).
+
+        If *newartist* is a string, it is assumed that this string is the name, and so the directory of the new artist.
+        In this case, a new artist entry will be created via :meth:`~CreateNewArtist` if it does not exist in the database.
+        If it also does not exist in the Music Directory, a new artist directory will be created as well.
+
+        The album directory will be moved into the new artist directory and all paths of the album and its songs will be updated.
+        If the album directory already is inside the new artist directory this is also fine.
+        In this case it is important that the album directory name is still the same!
+        Otherwise the process gets canceled and ``False`` returned.
+        Then only the database entry will be updated.
+        This situation can happen if the user renamed the artist directory with the album sub-directory inside.
+
+        Args:
+            albumid (int): ID of the album that shall be associated to a new artist.
+            newartist (int/str): Artist ID if of type ``int`` or artist name if of type ``str``.
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+
+        Raises:
+            TypeError: If albumid is not an integer or newartist is not an integer or a string
+            ValueError: If albumid does not address an existing database entry
+
+        Examples:
+
+            .. code-block:: python
+
+                music.ChangeAlbumArtist(albumid_a, 42)
+                music.ChangeAlbumArtist(albumid_b, "New Artist")
+        """
+        # Create working environment
+        if type(albumid) == int:
+            album = self.db.GetAlbumById(albumid)
+        else:
+            raise TypeError("Album ID must be of type int. It was of type %s"%(str(type(albumid))))
+
+        artistpath     = newartist
+        oldalbumpath   = album["path"]
+        albumdirectory = self.musicdirectory.GetDirectoryName(oldalbumpath)
+        newalbumpath   = artistpath + "/" + albumdirectory
+        if not self.musicdirectory.Exists(oldalbumpath) and not self.musicdirectory.Exists(newalbumpath):
+            logging.error("Cannot find album %i at its old path (%s) or its new path (%s)! \033[1;30m(Changing album artist canceled, nothing will be changed)", albumid, oldalbumpath, newalbumpath);
+
+
+        if type(newartist) == int:
+            artist = self.db.GetArtistById(newartist)
+        elif type(newartist) == str:
+            artist = self.CreateNewArtist(newartist) # if artist exists, it just will be returned
+        else:
+            raise TypeError("New Artist must be of type int or str. It was of type %s"%(str(type(newartist))))
+
+        # Check if album and artist exist
+        if not album:
+            logging.debug("Unable to find album %i", albumid)
+            return False
+
+        if not artist:
+            logging.debug("Unable to find or create artist %s", str(newartist));
+            return False
+
+        # Move album to new artist
+        if self.musicdirectory.Exists(oldalbumpath):
+            success = self.musicdirectory.MoveDirectory(oldalbumpath, artistpath)
+
+        # Update album
+        self.UpdateAlbum(albumid, newalbumpath, artist["id"])
+
+        return True
+
+
+
+
     def AddAlbum(self, albumpath, artistid=None):
         """
         This method adds an album to the database in the following steps:
@@ -360,12 +516,12 @@ class MusicDBDatabase(object):
             #. Get modification date using :meth:`~musicdb.lib.filesystem.FileSystem.GetModificationDate`
             #. Set file attributes and ownership using :meth:`~musicdb.mdbapi.musicdirectory.MusicDirectory.FixAttributes`
             #. Create new entry for the new album in the database and get the default values
-            #. Add each song of the album to the database by calling :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AddSong`
+            #. Add each song of the album to the database by calling :meth:`~musicdb.mdbapi.music.MusicDBMusic.AddSong`
             #. Write all collected information of the album into the database
 
         If adding the songs to the database raises an exception, that song gets skipped.
         The *numofsongs* value for the album is the number of actual existing songs for this album in the database.
-        It is save to add the failed song later by using the :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AddSong` method.
+        It is save to add the failed song later by using the :meth:`~musicdb.mdbapi.music.MusicDBMusic.AddSong` method.
 
         Args:
             albumpath (str): Absolute path, or path relative to the music root directory, to the album that shall be added to the database.
@@ -433,7 +589,7 @@ class MusicDBDatabase(object):
 
         # fix attributes to fit in mdb environment before adding it to the database
         try:
-            self.musicdirectory.FixAttributes(videopath)
+            self.musicdirectory.FixAttributes(albumpath)
         except Exception as e:
             logging.warning("Fixing file attributes failed with error: %s \033[1;30m(leaving permissions as they are)",
                     str(e))
@@ -477,7 +633,7 @@ class MusicDBDatabase(object):
 
 
 
-    def UpdateAlbum(self, albumid, newpath):
+    def UpdateAlbum(self, albumid, newpath, artistid=None):
         """
         This method updates an already existing album entry in the database.
         So in case some information in the filesystem were changed (renaming, new files, …) the database gets updated.
@@ -494,6 +650,7 @@ class MusicDBDatabase(object):
             * name
             * release date
             * origin
+            * artistid
 
         All albums and songs of this artist will also be updated using
         :meth:`~UpdateSong`.
@@ -501,6 +658,7 @@ class MusicDBDatabase(object):
         Args:
             albumid (int): ID of the album entry that shall be updated
             newpath (str): Relative path to the new album
+            artistid (int): Optional, default value is ``None``. The ID of the artist this song belongs to.
 
         Returns:
             ``None``
@@ -525,6 +683,15 @@ class MusicDBDatabase(object):
         if fsmeta == None:
             raise AssertionError("Analysing path \"%s\" failed!", songpaths[0])
 
+        # artistid may be not given by the arguments of this method.
+        # In this case, it must be searched in the database
+        if artistid == None:
+            artist = self.db.GetArtistByPath(fsmeta["artist"])
+            if artist == None:
+                raise AssertionError("Artist for the album \"" + newpath + "\" is not available in the database.")
+            artistid = artist["id"]
+
+        album["artistid"]= artistid
         album["name"]    = fsmeta["album"]
         album["release"] = fsmeta["release"]
         album["origin"]  = tagmeta["origin"]
@@ -543,7 +710,7 @@ class MusicDBDatabase(object):
             # It may fail because not only the album name changed,
             # but also the files inside
             if self.musicdirectory.IsFile(songpath):
-                self.UpdateSong(song["id"], songpath)
+                self.UpdateSong(song["id"], songpath, artistid)
 
         return None
 
@@ -564,7 +731,7 @@ class MusicDBDatabase(object):
             #. If the parameter *albumid* was ``None`` the *numofsongs* entry of the determined album gets incremented
             #. If there are lyrics in the song file, they get also inserted into the database
 
-        In case the album ID is set, this method assumes that its database entry gets managed by the :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AddAlbum` method.
+        In case the album ID is set, this method assumes that its database entry gets managed by the :meth:`~musicdb.mdbapi.music.MusicDBMusic.AddAlbum` method.
         So, nothing will be changed regarding the album.
         If album ID was ``None``, this method also updates the album-entry, namely the *numofsongs* value gets incremented.
 
@@ -685,15 +852,15 @@ class MusicDBDatabase(object):
 
 
 
-    def UpdateSong(self, songid, newpath):
+    def UpdateSong(self, songid, newpath, artistid=None):
         """
         This method updates a song entry and parts of the related album entry.
         The following steps will be done to do this:
 
-            #. Update the *path* entry of the album to the new path
+            #. Update the *path* entry of the song to the new path
             #. Reading the song files meta data
-            #. Analyse the path to collect further information from the filesystem
-            #. Update database entry with the new collected information
+            #. Analyse the path to collect further information from the file system
+            #. Update database entry with the new collected information including number of songs and CDs of the album entry.
 
         Updates information are:
 
@@ -704,8 +871,9 @@ class MusicDBDatabase(object):
             * playtime
             * bitrate
             * checksum
+            * artistid
 
-        Further more the following album information get updted:
+        Further more the following album information get updated:
 
             * numofsongs
             * numofcds
@@ -737,7 +905,16 @@ class MusicDBDatabase(object):
         if fsmeta == None:
             raise AssertionError("Invalid path-format: " + songpath)
 
-        # Remember! The filesystem is always right
+        # artistid may be not given by the arguments of this method.
+        # In this case, it must be searched in the database
+        if artistid == None:
+            artist = self.db.GetArtistByPath(fsmeta["artist"])
+            if artist == None:
+                raise AssertionError("Artist for the album \"" + newpath + "\" is not available in the database.")
+            artistid = artist["id"]
+
+        # Remember! The files ystem is always right
+        song["artistid"] = artistid
         song["path"]     = songpath
         song["name"]     = fsmeta["song"] 
         song["number"]   = fsmeta["songnumber"]

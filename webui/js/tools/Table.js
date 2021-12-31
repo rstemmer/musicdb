@@ -46,6 +46,10 @@ class Table extends Element
 
     RemoveRow(tablerow, includecontextrow=false)
     {
+        // Double-remove can happen…
+        if(tablerow === undefined)
+            return;
+
         let rowelement   = tablerow.element;
 
         // Remove rows from the DOM

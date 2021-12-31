@@ -52,7 +52,7 @@ class ButtonBox_AddMusicToQueue extends ButtonBox
 
     _AddMusicToQueue(position)
     {
-        queueview.AddFakeEntry(this.musictype, position);
+        WebUI.GetView("Queue").AddFakeEntry(this.musictype, position);
         this.AddMusicToQueue(position);
     }
 
@@ -102,7 +102,7 @@ class ButtonBox_QueueControls extends ButtonBox_AddMusicToQueue
 
     AddMusicToQueue(position)
     {
-        let musicdbmode = mdbmodemanager.GetCurrentMode();
+        let musicdbmode = WebUI.GetManager("MusicMode").GetCurrentMode();
         let command     = null;
         if(musicdbmode == "audio")
         {
@@ -121,7 +121,7 @@ class ButtonBox_QueueControls extends ButtonBox_AddMusicToQueue
 
     UpdateTooltips()
     {
-        let musicdbmode = mdbmodemanager.GetCurrentMode();
+        let musicdbmode = WebUI.GetManager("MusicMode").GetCurrentMode();
         if(musicdbmode == "audio")
         {
             this.appendbutton.SetTooltip("Add random song to the queue end");

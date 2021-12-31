@@ -31,13 +31,13 @@ class QueueControlView extends Element
 
     Update()
     {
-        let musictype = mdbmodemanager.GetCurrentMode();
-        let label     = null;
-        if(musictype == "audio")
+        let mode  = WebUI.GetManager("MusicMode").GetCurrentMode();
+        let label = null;
+        if(mode == "audio")
         {
             label = "Add Random Song:";
         }
-        else if(musictype == "video")
+        else if(mode == "video")
         {
             label = "Add Random Video:";
         }

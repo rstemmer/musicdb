@@ -31,3 +31,8 @@ The MusicDB Websocket Server itself used TLS to ensure the data send via the web
 which also allows user authentication for accessing the audio stream.
 Icecast and MusicDB should run on the same server, because MusicDB does not support TLD secured communication to Icecast.
 
+File Access Permissions
+-----------------------
+
+See :doc:`/basics/data` for a detailed documentation on the access permissions for the MusicDB file structure.
+

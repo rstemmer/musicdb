@@ -176,7 +176,7 @@ class ArtistsView extends LeftView
     {
         let musicid      = MDBMusic.id;
         let tile         = this.tiles[musicid];
-        let activegenres = tagmanager.GetActiveGenres();
+        let activegenres = WebUI.GetManager("Tags").GetActiveGenres();
 
         for(let genre of MDBGenres)
         {
@@ -198,7 +198,7 @@ class ArtistsView extends LeftView
 
     RequestUpdate()
     {
-        let mode = mdbmodemanager.GetCurrentMode();
+        let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
         if(mode == "audio")
             MusicDB_Broadcast("GetFilteredArtistsWithAlbums", "ShowArtists");
         else if(mode == "video")
@@ -232,10 +232,17 @@ class ArtistsView extends LeftView
         }
         else if(fnc == "HideAlbum" && sig == "UpdateArtists")
         {
-            if(mdbmodemanager.GetCurrentMode() == "audio")
+            let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
+            if(mode == "audio")
                 MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
             else
                 MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+        }
+        else if(fnc == "GetAlbum" && sig == "AlbumRenamed")
+        {
+            let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
+            if(mode == "audio")
+                MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
         }
         return;
     }

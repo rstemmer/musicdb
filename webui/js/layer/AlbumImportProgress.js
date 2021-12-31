@@ -22,30 +22,33 @@ class AlbumImportProgress extends Layer
 {
     // background: Instance of the Curtain class that lays behind the Layer.
     // When the layer is made visible, then also the background will be shown
-    constructor(background, id)
+    constructor(background)
     {
-        super(background, id)
+        super(background, "AlbumImportProgress")
         // Headline
         this.headline = new LayerHeadline("Album Import Tasks Execution Progress",
             "This is an overview of the Tasks that are executed to import the new album. "+
             "During import, the status of each task will be visualized.");
 
         // Finish-Messages
-        this.successmessage = new MessageBarConfirm("Importing the new album succeeded");
-        this.errormessage   = new MessageBarError("An error occured while importing the new album");
-        this.successmessage.HideCloseButton();
-        this.errormessage.HideCloseButton();
+        this.successmessage = new MessageBarConfirm("Importing the new album succeeded.");
+        this.errormessage   = new MessageBarError("An error occured while importing the new album. (See server logs for detail. Sorry.)");
 
         // Tool Bar
         this.toolbar     = new ToolBar();
-        this.closebutton = new TextButton("MusicDB", "Close",
+        this.closebutton = new TextButton("Approve", "Close (Change Settings Later)",
             ()=>{this.onClick_Close();},
-            "Cancel album import. Nothing will be changed.");
+            "Cancel album import. Nothing will be changed. Tags and colors can be updated later in the Album View");
+        this.settingsbutton = new TextButton("Settings", "Change Album Settings",
+            ()=>{this.onClick_Settings();},
+            "Open Setting layer to set genre tags and update the color scheme or upload a new artwork.");
         this.toolbar.AddSpacer(true); // grow
         this.toolbar.AddButton(this.closebutton);
         this.toolbar.AddSpacer(true); // grow
+        this.toolbar.AddButton(this.settingsbutton);
 
-        this.tasks = null;
+        this.tasks   = null;
+        this.albumid = null;
     }
 
 
@@ -56,15 +59,11 @@ class AlbumImportProgress extends Layer
         this.Hide();
     }
 
-
-
-    onExecutionFinished(success=true)
+    onClick_Settings()
     {
-        if(success)
-            this.successmessage.Show();
-        else
-            this.errormessage.Show();
-        this.closebutton.Enable();
+        MusicDB_Request("FindNewContent", "ShowAlbumImport");   // Reload Album Import Settings View
+        MusicDB_Request("GetAlbum", "ShowSongsSettingsLayer", {albumid: this.albumid});
+        this.Hide();
     }
 
 
@@ -75,8 +74,11 @@ class AlbumImportProgress extends Layer
         // Reset UI
         this.RemoveChilds();
         this.closebutton.Disable();
+        this.settingsbutton.Disable();
         this.successmessage.Hide();
         this.errormessage.Hide();
+        this.errormessage.SetData("messagetype", "error");
+        this.albumid = null;
 
         // Prepare Tasks for being executed
         this.tasks = tasks;
@@ -86,8 +88,8 @@ class AlbumImportProgress extends Layer
         // Rebuild UI
         this.AppendChild(this.headline);
         this.AppendChild(this.tasks);
-        this.AppendChild(this.successmessage);
         this.AppendChild(this.errormessage);
+        this.AppendChild(this.successmessage);
         this.AppendChild(this.toolbar);
 
         // And Fire
@@ -100,7 +102,11 @@ class AlbumImportProgress extends Layer
     onFinish(opentasks, finishedtasks)
     {
         if(opentasks.length == 0)
+        {
             this.successmessage.Show();
+            // It can happen that some tasks failed that are allowed to fail. Then errors are just a warning.
+            this.errormessage.SetData("messagetype", "warning");
+        }
         else
             this.errormessage.Show();
         this.closebutton.Enable();
@@ -115,6 +121,14 @@ class AlbumImportProgress extends Layer
             window.console?.log(args);
             window.console?.log(pass);
             this.tasks?.onMusicDBMessage(fnc, sig, args, pass);
+        }
+
+        if(fnc == "Bounce" && sig == "InformAlbumImportProgressLayer")
+        {
+            window.console?.log(`Bounce:InformAlbumImportProgressLayer`);
+            window.console?.log(args);
+            this.albumid = args.albumid;
+            this.settingsbutton.Enable();
         }
     }
     onMusicDBNotification(fnc, sig, rawdata)

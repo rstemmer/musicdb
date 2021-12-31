@@ -19,10 +19,29 @@
 
 class List extends Element
 {
-    constructor(classes=[])
+    constructor(headline=null, classes=[])
     {
-        super("div", ["List", "flex-column", "frame", ...classes]);
-        this.entries = new Array();
+        super("div", ["List", "flex", "flex-column", ...classes]);
+        this.headline = new Element("div", ["listhead", "flex", "flex-center"]);
+        this.listbody = new Element("div", ["listbody", "flex", "flex-column", "frame"]);
+        this.entries  = null;
+        this.selectable  = false;
+        this.multiselect = false;
+
+        if(typeof headline == "string")
+            this.SetHeadline(headline);
+
+        this.Clear();
+
+        this.AppendChild(this.headline);
+        this.AppendChild(this.listbody);
+    }
+
+
+
+    SetHeadline(headline)
+    {
+        this.headline.SetInnerText(headline);
     }
 
 
@@ -30,7 +49,15 @@ class List extends Element
     Clear()
     {
         this.entries = new Array();
-        super.RemoveChilds();
+        this.listbody.RemoveChilds();
+    }
+
+
+
+    MakeSelectable(selectable=true, multiselect=false)
+    {
+        this.selectable  = selectable;
+        this.multiselect = multiselect;
     }
 
 
@@ -38,8 +65,10 @@ class List extends Element
     // entry: Element instance
     AddEntry(entry)
     {
+        // When an entry gets selected, the list needs to know this.
+        entry.onclickparentcallback = (entry)=>{this.onEntrySelect(entry);}
         this.entries.push(entry);
-        this.AppendChild(entry);
+        this.listbody.AppendChild(entry);
     }
 
 
@@ -58,15 +87,108 @@ class List extends Element
 
         return;
     }
+
+
+
+    onEntrySelect(selectedentry)
+    {
+        if(this.selectable == false)
+            return;
+
+        // Remove selection state from all entries except the selected one
+        for(let entry of this.entries)
+        {
+            if(entry == selectedentry)
+                entry.ToggleSelection();
+            else if(this.multiselect == false)
+                entry.Select(false);
+        }
+    }
+
+
+
+    // Returns an array of all selected entries. Empty array if no entry is selected
+    GetSelectedEntries()
+    {
+        let entries = new Array();
+        for(let entry of this.entries)
+        {
+            if(entry.GetSelectionState() == true)
+                entries.push(entry);
+        }
+        return entries;
+    }
 }
 
 
 
 class ListEntry extends Element
 {
-    constructor(classes=[], id=null)
+    // Data: data annotated to the entry
+    constructor(label="", data=null, onclick=null, classes=[], id=null)
     {
         super("div", ["ListEntry", "hoverframe", ...classes], id);
+        this.onclickusercallback   = null;
+        this.onclickparentcallback = null; // expects one parameter: this entry
+        this.element.onclick       = ()=>{this.onClick();};
+        this.data                  = data;
+
+        this.SetLabel(label);
+        this.SetClickEventCallback(onclick);
+    }
+
+
+
+    SetLabel(label)
+    {
+        let labelelement;
+        if(typeof label === "string")
+        {
+            labelelement = new Element("span");
+            labelelement.SetInnerText(label);
+        }
+        else
+        {
+            labelelement = label;
+        }
+        this.RemoveChilds();
+        this.AppendChild(labelelement);
+    }
+
+
+
+    Select(select=true)
+    {
+        this.SetData("highlight", select);
+    }
+    GetSelectionState()
+    {
+        return this.GetData("highlight") == "true";
+    }
+    ToggleSelection()
+    {
+        this.Select(! this.GetSelectionState());
+    }
+
+
+
+    // No parameters and no return value handled
+    SetClickEventCallback(onclick)
+    {
+        if(typeof onclick !== "function")
+            return;
+        this.onclickusercallback = onclick;
+    }
+
+
+
+    onClick()
+    {
+        // The parent may update the selection state
+        if(typeof this.onclickparentcallback === "function")
+            this.onclickparentcallback(this);
+        if(typeof this.onclickusercallback === "function")
+            this.onclickusercallback();
     }
 }
 

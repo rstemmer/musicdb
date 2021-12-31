@@ -33,14 +33,14 @@ class UploadManager
     constructor()
     {
         this.uploads = new Object;
-        this.videouploadstable = new UploadTable();
+        this.videouploads      = new UploadTable();
     }
 
 
 
     GetVideoUploadsTable()
     {
-        return this.videouploadstable;
+        return this.videouploads;
     }
 
 
@@ -60,6 +60,7 @@ class UploadManager
 
 
 
+    // This method returns the generated task ID (task.id)
     async StartUpload(contenttype, filedescription, rawdata, initialannotations=null)
     {
         
@@ -90,10 +91,11 @@ class UploadManager
             },
             {contenttype: task.contenttype});
 
-        if(typeof initialannotations === "object")
+        if(typeof initialannotations === "object" && initialannotations !== null)
             MusicDB_Call("AnnotateUpload", {taskid: task.id, ...initialannotations});
 
         window.console && console.log(task);
+        return task.id;
     }
 
 
@@ -118,9 +120,18 @@ class UploadManager
         if(fnc == "MusicDB:Task")
         {
             window.console?.log(data);
+            let state = data.state;
+            if(state === "notexisting")
+            {
+                window.console?.warn(`MusicDB:Task notification for task in "notexisting" state`);
+                if(sig == "InternalError")
+                    window.console?.warn(`The same task came with the message: "${data.message}"`);
+                return;
+            }
+
+            // Get information of the task that caused this notification
             let taskid      = data.taskid;
             let task        = data.task;
-            let state       = data.state;
             let contenttype = task.contenttype;
 
             // Only process task, if this client is the owner of the task
@@ -129,12 +140,13 @@ class UploadManager
 
             if(sig == "ChunkRequest")
             {
-                this.videouploadstable.TryUpdateRow(task);
+                if(contenttype == "video")
+                    this.videouploads.UpdateRow(task);
                 this.UploadNextChunk(data)
             }
             else // "StateUpdate", "InternalError"
             {
-                this.videouploadstable.Update(data.uploadslist.videos);
+                //this.videouploads.Update(data.uploadslist.videos);
             }
 
             if(sig == "StateUpdate")
@@ -146,7 +158,7 @@ class UploadManager
                     if(state == "readyforintegration")
                     {
                         let musicpath = task.annotations.musicpath;
-                        MusicDB_Call("IntegrateContent", {taskid: taskid, musicpath: musicpath});
+                        MusicDB_Call("InitiateContentIntegration", {taskid: taskid, musicpath: musicpath});
                     }
                 }
 
@@ -163,13 +175,6 @@ class UploadManager
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "GetUploads" && sig == "ShowUploads")
-        {
-            window.console && console.log(args);
-            window.console && console.log(pass);
-            this.videouploadstable.Update(args.videos);
-        }
-
         return;
     }
 }

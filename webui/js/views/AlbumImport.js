@@ -20,12 +20,15 @@ class AlbumImport extends MainSettingsView
 {
     constructor()
     {
-        super("AlbumImport", "Import new Albums", "Import new found albums into the MusicDB Music Database. To find new albums, they must be uploaded into the Music Directory managed by MusicDB.");
+        super("AlbumImport", "Upload and Import new Albums", "Upload new albums into the Music Director and/or Import new albums form the Music Directory into the MusicDB Music Database.");
 
-        this.directoryupload = new AlbumDirectorySelect("Select Album Directory", "Select an album directory from the local computer");
+        this.directoryupload = new AlbumDirectorySelect("Select Album Directory", "Select an album directory from the local computer to start the upload process.");
         this.AppendChild(this.directoryupload);
 
-        this.albumlist = new List();
+        this.importheadline = new SettingsHeadline("New Albums Inside Music Directory",
+            "This is a list of albums found inside the Music Directory that have not yet been imported into the MusicDB Music Database.");
+        this.albumlist = new List("New Album Directories");
+        this.AppendChild(this.importheadline);
         this.AppendChild(this.albumlist);
     }
 
@@ -52,8 +55,8 @@ class AlbumImport extends MainSettingsView
 
     ImportAlbum(albumpath)
     {
-        albumimportlayer.Show(); // Hand over to the overlay
-        MusicDB_Request("FindAlbumSongFiles", "ShowAlbumSongFiles", {albumpath:albumpath});
+        WebUI.ShowLayer("AlbumImport"); // Hand over to the overlay
+        MusicDB_Request("FindAlbumSongFiles", "ShowAlbumImportLayer", {albumpath:albumpath});
     }
 
 

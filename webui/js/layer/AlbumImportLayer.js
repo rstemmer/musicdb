@@ -22,16 +22,15 @@ class AlbumImportLayer extends Layer
 {
     // background: Instance of the Curtain class that lays behind the Layer.
     // When the layer is made visible, then also the background will be shown
-    constructor(background, id)
+    constructor(background)
     {
-        super(background, id)
+        super(background, "AlbumImportLayer")
 
         this.oldartistdirectoryname = null;
         this.oldalbumdirectoryname  = null;
 
         // Message Bar
         this.invalidsourceinfo  = new MessageBarError("Invalid Album Source. There were no songs in the selected Album directory.");
-        this.invalidsourceinfo.HideCloseButton();
 
         // Headlines
         this.albumheadline = new LayerHeadline("Album Directory Settings",
@@ -48,16 +47,16 @@ class AlbumImportLayer extends Layer
             "During import, the status of each task will be visualized.");
 
         // Forms
-        this.albumsettingstable = new AlbumSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
-        this.songfilestable     = new SongFilesTable((isvalid)=>{this.onSongsSettingsValidation(isvalid);});
+        this.albumsettingstable = new AlbumPathSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
+        this.songfilestable     = new SongFilesTableFromFilesystem((isvalid)=>{this.onSongsSettingsValidation(isvalid);});
         this.tasks              = new BatchExecution();
 
         // Tool Bar
         this.toolbar            = new ToolBar();
-        this.cancelbutton       = new TextButton("MusicDB", "Cancel and Discard",
+        this.cancelbutton       = new TextButton("Remove", "Cancel and Discard",
             ()=>{this.onClick_Cancel();},
             "Cancel album import. Nothing will be changed.");
-        this.importbutton       = new TextButton("MusicDB", "Import Album",
+        this.importbutton       = new TextButton("Import", "Import Album",
             ()=>{this.onClick_Import();},
             "Apply rename files and directories properly and import album into database. Create artis if not existing.");
 
@@ -92,8 +91,8 @@ class AlbumImportLayer extends Layer
 
     onClick_Import()
     {
-        //this.tasks.ExecuteTasks();
-        albumimportprogress.ExecuteTasks(this.tasks); // Will also Show the layer
+        let progresslayer = WebUI.GetLayer("AlbumImportProgress");
+        progresslayer.ExecuteTasks(this.tasks); // Will also Show the layer
         this.Hide();
     }
 
@@ -205,12 +204,12 @@ class AlbumImportLayer extends Layer
         }
 
         // Check if Artist needs to be created
-        let artistslist = artistscache.FindArtist(artistdirectoryname, "strcmp");
+        let artistslist = WebUI.GetManager("Artists").FindArtist(artistdirectoryname, "strcmp");
         if(artistslist.length !== 1)
         {
             this.tasks.AddTask(`Create Artist: ${artistdirectoryname}`,
                 (webuitaskid)=>{
-                    MusicDB_Request("CreateArtist", "ConfirmAlbumImportTask",
+                    MusicDB_Request("CreateArtistEntry", "ConfirmAlbumImportTask",
                         {name: artistdirectoryname},
                         {webuitaskid: webuitaskid});
                     return "active";},
@@ -256,6 +255,8 @@ class AlbumImportLayer extends Layer
                         return "bad";
                     else if(rawdata["state"] == "importcomplete")
                         return "good";
+                    else
+                        return null;
                 }
                 return "active";
             }
@@ -292,10 +293,48 @@ class AlbumImportLayer extends Layer
                         return "bad";
                     else if(rawdata["state"] == "importcomplete")
                         return "good";
+                    else
+                        return null;
                 }
                 return "active";
             },
             /*canfail=*/ true // when importing artwork fails, it is not a big issue.
+            );
+
+        // Identify new album ID and communicate it to the album import progress layer for later use
+        this.tasks.AddTask("Identify new Album ID",
+            (webuitaskid)=>
+            {
+                MusicDB_Request("GetArtistsWithAlbums", "ConfirmAlbumImportTask",
+                    {},
+                    {webuitaskid: webuitaskid});
+                return "active";
+            },
+            (fnc, sig, args, pass)=>
+            {
+                // Identify new album and load it
+                for(let artist of args)
+                {
+                    window.console?.log(artist);
+                    for(let albuminfos of artist.albums)
+                    {
+                        let MDBAlbum = albuminfos.album;
+                        window.console?.log(MDBAlbum);
+                        window.console?.log(`${newalbumpath} == ${MDBAlbum.path}`);
+                        if(MDBAlbum.path == newalbumpath)
+                        {
+                            MusicDB_Request("Bounce", "InformAlbumImportProgressLayer",
+                                {albumid: MDBAlbum.id});
+                            return "good";
+                        }
+                    }
+                }
+                return "bad"; // Album not found. That is bad because then Import failed somewhere.
+            },
+            (fnc, sig, rawdata)=>{
+                return null;
+            },
+            /*canfail=*/ true // when getting the album ID fails, it is not a big issue.
             );
 
     }
@@ -304,9 +343,8 @@ class AlbumImportLayer extends Layer
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "FindAlbumSongFiles" && sig == "ShowAlbumSongFiles")
+        if(fnc == "FindAlbumSongFiles" && sig == "ShowAlbumImportLayer")
         {
-            window.console?.log(args);
             this.ResetUI();
 
             // It can happen that a potential album directory does not contain any songs
@@ -337,9 +375,9 @@ class AlbumImportLayer extends Layer
             let albumpath = this.oldartistdirectoryname + "/" + this.oldalbumdirectoryname;
 
             this.albumsettingstable.Update(
-                args[0].artistname,
-                args[0].albumname,
-                args[0].releaseyear,
+                args[0].frommeta.artistname,
+                args[0].frommeta.albumname,
+                args[0].frommeta.releaseyear,
                 albumpath);
             this.songfilestable.Update(args);
             this.ValidateForm();

@@ -42,6 +42,7 @@
         <link rel="stylesheet" href="css/tools/ProgressBar.css">
         <link rel="stylesheet" href="css/tools/IndicatorBar.css">
         <link rel="stylesheet" href="css/tools/StatusElement.css">
+        <link rel="stylesheet" href="css/tools/SongFileNameDiff.css">
         <link rel="stylesheet" href="css/tools/flex.css">
         <link rel="stylesheet" href="css/tools/PopupElement.css">
         <link rel="stylesheet" href="css/tools/Menu.css">
@@ -84,6 +85,7 @@
         <link rel="stylesheet" href="css/uimod/AudioStreamPlayer.css">
         <link rel="stylesheet" href="css/uimod/AlbumSettingsTable.css">
         <link rel="stylesheet" href="css/uimod/SongFilesTable.css">
+        <link rel="stylesheet" href="css/uimod/TaskTable.css">
         <!-- Tiles -->
         <link rel="stylesheet" href="css/tiles/Tile.css">
         <link rel="stylesheet" href="css/tiles/QueueTile.css">
@@ -92,7 +94,12 @@
         <link rel="stylesheet" href="css/tiles/VideoTile.css">
         <!-- Layer -->
         <link rel="stylesheet" href="css/layer/AlbumImportLayer.css">
+        <link rel="stylesheet" href="css/layer/AlbumIntegrationLayer.css">
         <link rel="stylesheet" href="css/layer/AlbumImportProgress.css">
+        <link rel="stylesheet" href="css/layer/AlbumUploadProgress.css">
+        <link rel="stylesheet" href="css/layer/AlbumIntegrationProgress.css">
+        <link rel="stylesheet" href="css/layer/AlbumSettingsLayer.css">
+        <link rel="stylesheet" href="css/layer/SongsSettingsLayer.css">
         <!-- Views -->
         <link rel="stylesheet" href="css/views/MainMenu.css">
         <link rel="stylesheet" href="css/views/LeftView.css">
@@ -101,6 +108,7 @@
         <link rel="stylesheet" href="css/views/GenreSelectionView.css">
         <link rel="stylesheet" href="css/views/MusicDBHUD.css">
         <link rel="stylesheet" href="css/views/MusicDBControls.css">
+        <link rel="stylesheet" href="css/views/AudioStreamControl.css">
         <link rel="stylesheet" href="css/views/SearchInput.css">
         <link rel="stylesheet" href="css/views/AlphabetBar.css">
         <link rel="stylesheet" href="css/views/ArtistsView.css">
@@ -121,6 +129,8 @@
         <link rel="stylesheet" href="css/views/HiddenAlbums.css">
         <link rel="stylesheet" href="css/views/AlbumImport.css">
         <link rel="stylesheet" href="css/views/VideoImport.css">
+        <link rel="stylesheet" href="css/views/TaskListView.css">
+        <link rel="stylesheet" href="css/views/RepairView.css">
 
         <link rel="stylesheet" href="css/views/QueueTimeBar.css">
         <link rel="stylesheet" href="css/views/QueueView.css">
@@ -130,12 +140,19 @@
 
         <!-- Make Things Work -->
         <!-- Tools and Base Classes -->
+        <script src="js/tools/SongFileName.js"></script>
+        <script src="js/tools/AlbumDirectoryName.js"></script>
+        <script src="js/tools/ArtistDirectoryName.js"></script>
+
         <script src="js/tools/Element.js"></script>
         <script src="js/tools/PopupElement.js"></script>
         <script src="js/tools/Levenshtein.js"></script>
         <script src="js/tools/BufferToHexString.js"></script>
         <script src="js/tools/EncodePath.js"></script>
         <script src="js/tools/StatusElement.js"></script>
+        <script src="js/tools/SongFileNameDiff.js"></script>
+        <script src="js/tools/AlbumDirectoryNameDiff.js"></script>
+        <script src="js/tools/ArtistDirectoryNameDiff.js"></script>
         <script src="js/tools/BatchExecution.js"></script>
         <script src="js/tools/CreateGrid.js"></script>
         <script src="js/tools/Table.js"></script>
@@ -194,6 +211,7 @@
         <script src="js/uimod/AudioStreamPlayer.js"></script>
         <script src="js/uimod/AlbumSettingsTable.js"></script>
         <script src="js/uimod/SongFilesTable.js"></script>
+        <script src="js/uimod/TaskTable.js"></script>
         <!-- Tiles -->
         <script src="js/tiles/Tile.js"></script>
         <script src="js/tiles/QueueTile.js"></script>
@@ -202,7 +220,12 @@
         <script src="js/tiles/VideoTile.js"></script>
         <!-- Layer -->
         <script src="js/layer/AlbumImportLayer.js"></script>
+        <script src="js/layer/AlbumIntegrationLayer.js"></script>
         <script src="js/layer/AlbumImportProgress.js"></script>
+        <script src="js/layer/AlbumUploadProgress.js"></script>
+        <script src="js/layer/AlbumIntegrationProgress.js"></script>
+        <script src="js/layer/AlbumSettingsLayer.js"></script>
+        <script src="js/layer/SongsSettingsLayer.js"></script>
         <!-- Views -->
         <script src="js/moderator/ViewManager.js"></script>
         <script src="js/views/MainMenu.js"></script>
@@ -213,6 +236,7 @@
         <script src="js/views/GenreSelectionView.js"></script>
         <script src="js/views/MusicDBHUD.js"></script>
         <script src="js/views/MusicDBControls.js"></script>
+        <script src="js/views/AudioStreamControl.js"></script>
         <script src="js/views/SearchInput.js"></script>
         <script src="js/views/AlphabetBar.js"></script>
         <script src="js/views/ArtistsView.js"></script>
@@ -235,6 +259,8 @@
         <script src="js/views/HiddenAlbums.js"></script>
         <script src="js/views/AlbumImport.js"></script>
         <script src="js/views/VideoImport.js"></script>
+        <script src="js/views/TaskListView.js"></script>
+        <script src="js/views/RepairView.js"></script>
 
         <script src="js/views/QueueView.js"></script>
         <script src="js/views/QueueControlView.js"></script>
@@ -245,6 +271,7 @@
         <script src="js/musicdb.js"></script>
 
         <!-- This needs to be the last one. It connects to the server and starts running the functionality. -->
+        <script src="js/tools/Application.js"></script>
         <script src="js/moderator/moderator.js"></script>
 
     </head>

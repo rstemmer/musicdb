@@ -1285,6 +1285,95 @@ class MusicDatabase(Database):
         return None
 
 
+
+    def SetAlbumHiddenState(self, albumid, hiddenstate):
+        """
+        Hides or shows an album depending on the *hide* state.
+        When ``hidden == True`` the album gets hidden,
+        when ``hidden == False`` the hidden state gets reset to make the album visible again.
+
+        Args:
+            albumid (int): ID of the album
+            hidden (bool): Hide or Show the album
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: If *albumid* is not an integer and *hiddenstate* not a bool
+        """
+        if type(albumid) != int or type(hiddenstate) != bool:
+            raise TypeError("Album ID must be an integer and hiddenstate a boolean!")
+
+        data = {}
+        data["hidden"]  = hiddenstate
+        data["albumid"] = albumid
+        sql = "UPDATE albums SET hidden=:hidden WHERE albumid=:albumid"
+        with MusicDatabaseLock:
+            self.Execute(sql, data)
+        return None
+
+
+
+    def SetAlbumOrigin(self, albumid, origin):
+        """
+        This method updates the origin entry of an album.
+        The origin defines where the album has been bought.
+
+        Args:
+            albumid (int): ID of the album
+            origin (str): Defines the origin
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: If *albumid* is not an integer and *origin* not a str
+        """
+        if type(albumid) != int or type(origin) != str:
+            raise TypeError("Album ID must be an integer and origin a string!")
+
+        data = {}
+        data["origin"]  = origin
+        data["albumid"] = albumid
+        sql = "UPDATE albums SET origin=:origin WHERE albumid=:albumid"
+        with MusicDatabaseLock:
+            self.Execute(sql, data)
+        return None
+
+
+
+    def SetAlbumAddedTime(self, albumid, added):
+        """
+        This method updates the entry of an album that stores the date and time when the album has been added.
+        So this is the time the album has been imported into the MusicDB universe.
+
+        The time must be a unix time stamp in seconds.
+
+        Usually this time gets set by the import routines.
+
+        Args:
+            albumid (int): ID of the album
+            added (int): The time the album has been added
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: If *albumid* is not an integer and *added* not a int
+        """
+        if type(albumid) != int or type(added) != int:
+            raise TypeError("Album ID must be an integer and added an integer!")
+
+        data = {}
+        data["added"]   = added
+        data["albumid"] = albumid
+        sql = "UPDATE albums SET added=:added WHERE albumid=:albumid"
+        with MusicDatabaseLock:
+            self.Execute(sql, data)
+        return None
+
+
     #------------------------------------------------------------------------#
     # ARTWORK                                                                #
     #------------------------------------------------------------------------#
@@ -1354,35 +1443,6 @@ class MusicDatabase(Database):
         data["color"]   = color
         data["albumid"] = albumid
         sql = "UPDATE albums SET " + colorname + "=:color WHERE albumid=:albumid"
-        with MusicDatabaseLock:
-            self.Execute(sql, data)
-        return None
-
-
-
-    def SetAlbumHiddenState(self, albumid, hiddenstate):
-        """
-        Hides or shows an album depending on the *hide* state.
-        When ``hidden == True`` the album gets hidden,
-        when ``hidden == False`` the hidden state gets reset to make the album visible again.
-        
-        Args:
-            albumid (int): ID of the album
-            hidden (bool): Hide or Show the album
-
-        Returns:
-            ``None``
-
-        Raises:
-            TypeError: If *albumid* is not an integer and *hiddenstate* not a bool
-        """
-        if type(albumid) != int or type(hiddenstate) != bool:
-            raise TypeError("Album ID must be an integer and hiddenstate a boolean!")
-
-        data = {}
-        data["hidden"]  = hiddenstate
-        data["albumid"] = albumid
-        sql = "UPDATE albums SET hidden=:hidden WHERE albumid=:albumid"
         with MusicDatabaseLock:
             self.Execute(sql, data)
         return None

@@ -44,7 +44,7 @@ class AlphabetBar extends Element
     {
         let button = new Element("span", ["button"]);
         button.SetInnerText(marker);
-        button.element.onclick = ()=>{artistsview.ScrollToMarker(marker);};
+        button.element.onclick = ()=>{WebUI.GetView("Artists").ScrollToMarker(marker);};
         return button;
     }
 }

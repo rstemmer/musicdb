@@ -20,10 +20,12 @@ import json
 import logging
 import threading
 import uuid
+import time
 from pathlib            import Path
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.filesystem     import Filesystem
+from musicdb.mdbapi.accesspermissions   import AccessPermissions
 
 TaskManagerLock = threading.RLock() # RLock is mandatory for nested calls!
 Callbacks = []
@@ -34,6 +36,11 @@ class TaskManager(object):
     This is a base class that provides a common interface used by the
     :meth:`~musicdb.taskmanagement.managementthread.TaskManagementThread`
     to perform the upload, integration and import tasks.
+
+    Tasks are stored as JSON file in the MusicDB data directory inside a sub directory *tasks*.
+    When a user removed one of the JSON files inside that directory, the task will be set into the ``remove`` state internally.
+    This state update will be stored in the previous removed file, so that this file appears short after removing.
+    Anyway, as soon as the ``remove`` state got processed, the task file and related uploaded files will be removed again by MusicDB.
 
     Args:
         config: :class:`~musicdb.lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration
@@ -52,6 +59,11 @@ class TaskManager(object):
         self.cfg = config
         self.uploaddirectory = Filesystem(self.cfg.directories.uploads)
         self.tasksdirectory  = Filesystem(self.cfg.directories.tasks)
+
+        # Check if the file system access permissions are correct set
+        accesspermissions = AccessPermissions(self.cfg)
+        accesspermissions.EvaluateTasksDirectory()
+        accesspermissions.EvaluateUploadsDirectory()
 
         global Tasks
         with TaskManagerLock:
@@ -127,7 +139,7 @@ class TaskManager(object):
             * state: The current state of the upload task
             * message: ``null``/``None`` or a message from the server
             * task: The task dictionary itself
-            * uploadslist: Except for ``ChunkRequest`` events, the WebSocket server append the result of :meth:`musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads` to the notification
+            * tasklist: Except for ``ChunkRequest`` events, the WebSocket server append the result of :meth:`musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetCurrentTasks` to the notification
 
         *task* can be ``None`` in case the notification is meant to be an information that a given upload ID is invalid.
 
@@ -236,6 +248,29 @@ class TaskManager(object):
 
 
 
+    def ExistsTaskFile(self, task):
+        """
+        This method checks if the task file related to ``task`` exists in the tasks directory.
+        If it is so, ``True`` gets returned.
+        This method can be used to check if the task has been removed by the user.
+        Reasons for the user to remove a task file can be fixing a stuck process.
+
+        This method does not more than checking if the task exists in the file system.
+        It will not add or remove the task from the global task list processed by the :meth:`~taskmanagement.managementthread.TaskManagementThread`
+
+        Args:
+            task (dict): The task to check
+
+        Returns:
+            ``True`` if the tasks exists in the file system, otherwise ``False``
+        """
+        taskid = task["id"]
+        path   = self.tasksdirectory.GetRoot() / Path(taskid+".json")
+        exists = self.tasksdirectory.Exists(path)
+        return exists
+
+
+
     #####################################################################
     # Management Functions                                              #
     #####################################################################
@@ -274,6 +309,8 @@ class TaskManager(object):
         task["contenttype"    ] = None
         task["mimetype"       ] = None
         task["annotations"    ] = {}
+        task["initializationtime"] = int(time.time())
+        task["updatetime"     ] = None
         # Upload Related
         task["filesize"       ] = None
         task["offset"         ] = None
@@ -325,7 +362,7 @@ class TaskManager(object):
         global Tasks
         if taskid not in Tasks:
             self.NotifyClient("InternalError", None, "Invalid Task ID")
-            raise ValueError("Task ID \"%s\" not in Task Queue.", str(taskid))
+            raise ValueError("Task ID \"%s\" not in Task Queue."%(str(taskid)))
 
         return Tasks[taskid]
 
@@ -336,6 +373,7 @@ class TaskManager(object):
         This method updates and saves the state of an task.
         An ``"StateUpdate"`` notification gets send as well.
         If the task already is in the state, nothing happens.
+        The ``"updatetime"`` value will be updated to the current unix time stamp.
 
         If *errormessage* is not ``None``, the notification gets send as ``"InternalError"`` with the message
 
@@ -350,7 +388,8 @@ class TaskManager(object):
         if task["state"] == state:
             return
 
-        task["state"] = state
+        task["state"]      = state
+        task["updatetime"] = int(time.time())
         self.SaveTask(task)
 
         if errormessage:
@@ -388,8 +427,8 @@ class TaskManager(object):
             raise TypeError("mime type must be of type string")
         if type(contenttype) != str:
             raise TypeError("content type must be of type string")
-        if contenttype not in ["video", "album", "artwork"]:
-            raise ValueError("content type \"%s\" not valid. \"video\", \"album\" or \"artwork\" expected."%(str(contenttype)))
+        if contenttype not in ["video", "albumfile", "artwork"]:
+            raise ValueError("content type \"%s\" not valid. \"video\", \"albumfile\" or \"artwork\" expected."%(str(contenttype)))
         if type(filesize) != int:
             raise TypeError("file size must be of type int")
         if filesize <= 0:
@@ -409,10 +448,12 @@ class TaskManager(object):
         if not contenttype in self.cfg.uploads.allow:
             self.NotifyClient("InternalError", None, "Upload of %s not allowed"%(contenttype))
             logging.warning("Uploads of %s not allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)", contenttype)
+            return
 
         fileextension   = self.uploaddirectory.GetFileExtension(sourcefilename)
         destinationname = contenttype + "-" + checksum + "." + fileextension
-        uploadpath = self.cfg.directories.uploads + "/" + destinationname
+        #uploadpath = self.cfg.directories.uploads + "/" + destinationname
+        uploadpath = destinationname
 
         # TODO: Check if there is already a task with the given ID.
         # If this task is in waitforchunk state, the upload can be continued instead of restarting it.
@@ -421,7 +462,8 @@ class TaskManager(object):
         self.uploaddirectory.RemoveFile(uploadpath)  # Removes file when it exists
         
         # Create File
-        with open(uploadpath, "w+b"):
+        absuploadpath  = self.uploaddirectory.AbsolutePath(uploadpath)
+        with open(absuploadpath, "w+b"):
             pass
 
         task = self.CreateNewTask()
@@ -493,6 +535,7 @@ class TaskManager(object):
         global Tasks
         with TaskManagerLock:
             if taskid in Tasks:
+                logging.debug("Removing internal data")
                 Tasks.pop(taskid)
 
         logging.debug("Removing %s", self.tasksdirectory.AbsolutePath(taskfile))

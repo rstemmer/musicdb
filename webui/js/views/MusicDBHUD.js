@@ -147,7 +147,7 @@ class MusicDBHUD extends Element
         this.artistinfobox.appendChild(this._CreateInfoElement(this.artisticon, MDBArtist.name));
         this.artistinfobox.onclick      = ()=>
             {
-                artistsview.ScrollToArtist(MDBArtist.id);
+                WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);
             }
 
         return;
@@ -173,7 +173,7 @@ class MusicDBHUD extends Element
         this.artistinfobox.appendChild(this._CreateInfoElement(this.artisticon, MDBArtist.name));
         this.artistinfobox.onclick      = ()=>
             {
-                artistsview.ScrollToArtist(MDBArtist.id);
+                WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);
             }
 
         return;

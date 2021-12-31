@@ -82,7 +82,7 @@ import argparse
 from musicdb.lib.modapi         import MDBModule
 from musicdb.lib.db.musicdb     import MusicDatabase, SONG_LYRICSSTATE_EMPTY
 from musicdb.lib.filesystem     import Filesystem
-from musicdb.mdbapi.database    import MusicDBDatabase
+from musicdb.mdbapi.music       import MusicDBMusic
 from musicdb.lib.clui.listview  import ListView
 from musicdb.lib.clui.text      import Text
 from musicdb.lib.clui.buttonview import ButtonView
@@ -167,12 +167,12 @@ class OrphanEntryView(ListView):
         return string
 
 
-class repair(MDBModule, MusicDBDatabase):
+class repair(MDBModule, MusicDBMusic):
     def __init__(self, config, database):
         MDBModule.__init__(self)
-        MusicDBDatabase.__init__(self, config, database)
+        MusicDBMusic.__init__(self, config, database)
 
-        # gets already set by MusicDBDatabase
+        # gets already set by MusicDBMusic
         #self.db  = None
         #self.cfg = None
         #self.fs  = None
@@ -198,14 +198,17 @@ class repair(MDBModule, MusicDBDatabase):
         """
         This method runs the following checks and updates the internal state of this class.
 
-            * :meth:`musicdb.mdbapi.database.MusicDBDatabase.FindLostPaths`
-            * :meth:`musicdb.mdbapi.database.MusicDBDatabase.FindNewPaths`
+            * :meth:`musicdb.mdbapi.music.MusicDBMusic.FindLostPaths`
+            * :meth:`musicdb.mdbapi.music.MusicDBMusic.FindNewPaths`
 
         Returns:
             *Nothing*
         """
-        self.lostartists, self.lostalbums, self.lostsongs = self.FindLostPaths()
-        self.newpaths = self.FindNewPaths()
+        self.lostpaths = self.FindLostPaths()
+        self.lostartists = self.lostpaths["artists"]
+        self.lostalbums  = self.lostpaths["albums"]
+        self.lostsongs   = self.lostpaths["songs"]
+        self.lostpaths = self.FindNewPaths()
         self.newartists = self.newpaths["artists"]
         self.newalbums  = self.newpaths["albums"]
         self.newsongs   = self.newpaths["songs"]

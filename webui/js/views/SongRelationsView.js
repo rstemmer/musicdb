@@ -37,11 +37,11 @@ class SongRelationsView extends MainView
         this.songsbox.innerHTML = "";
         this.headline.UpdateRawInformation(MDBSong.name, MDBArtist.name, MDBAlbum.name, MDBSong.name);
         this.headline.SetSubtitleClickAction(
-            ()=>{artistsview.ScrollToArtist(MDBArtist.id);},
+            ()=>{WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);},
             ()=>{MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});}
         );
 
-        let activegenres    = tagmanager.GetActiveGenres();
+        let activegenres    = WebUI.GetManager("Tags").GetActiveGenres();
         let currentartistid = -1;
         this.songtiles = new Object();
         for(let entry of songentries)
@@ -114,7 +114,7 @@ class SongRelationsView extends MainView
         let artistheadline = document.createElement("span");
 
         artistheadline.innerText = MDBArtist.name;
-        artistheadline.onclick   = ()=>{artistsview.ScrollToArtist(MDBArtist.id);};
+        artistheadline.onclick   = ()=>{WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);};
 
         this.songsbox.appendChild(artistheadline);
         return;

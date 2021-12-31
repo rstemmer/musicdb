@@ -22,18 +22,22 @@
 }
 
 
-
-.UploadTableRow:nth-child(1) > td
+.UploadTableRow td:nth-child(2)
 {
-    margin:             auto;
-    text-align:         center;
-}
-.UploadTableRow td:nth-child(4) > div
-{
-    margin-left:        auto;
-    justify-content:    flex-end;
+    width:              50%;
 }
 
+
+.UploadTableRow td:nth-child(3)
+{
+    width:              20%;
+}
+
+
+.UploadTableRow td:not(:nth-child(2))
+{
+    white-space:        nowrap;
+}
 
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 

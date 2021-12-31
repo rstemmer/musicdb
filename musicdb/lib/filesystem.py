@@ -16,11 +16,16 @@
 
 import os
 import shutil
+import stat
+import grp
+import pwd
 import logging
 import subprocess
 from pathlib import Path
 from typing  import Union, Optional
 
+import mimetypes
+mimetypes.init()
 
 class Filesystem(object):
     """
@@ -156,10 +161,20 @@ class Filesystem(object):
             xpath (str/Path): A relative or absolute path
 
         Returns:
-            An absolute path
+            An absolute path as Path object
 
         Raises:
             TypeError: If *xpath* is ``None``
+
+        Example:
+
+            .. code-block:: python
+
+                fs   = Filesystem()
+                home = fs.AbsolutePath("~")
+                # PosixPath('/home/ralf')
+                home = fs.ToString(home)
+                # '/home/ralf'
         """
         if type(xpath) == str:
             path = Path(xpath)
@@ -433,12 +448,13 @@ class Filesystem(object):
         If the source file does not exist, ``False`` gets returned.
         If the destination file exists, it gets overwritten!
         When the destination path is a directory, the file gets copied into the directory.
-        Filesystem metadata are copied as well.
+        All parent directories must exist, otherwise a ``FileNotFoundError`` exception gets raised.
+
         The UNIX shell alternative would be like the following line:
 
         .. code-block:: bash
 
-            cp -p $SRCPATH $DSTPATH
+            cp $SRCPATH $DSTPATH
 
         Args:
             xsrcpath (str/Path): A relative or absolute path of the source
@@ -446,6 +462,10 @@ class Filesystem(object):
 
         Returns:
             ``False`` if the file does not exist.
+
+        Excpetions:
+            PermissionError: When there is no write access to the destination directory
+            FileNotFoundError: When the destination directory does not exist
         """
         abssource = self.AbsolutePath(xsrcpath)
         absdest   = self.AbsolutePath(xdstpath)
@@ -512,6 +532,34 @@ class Filesystem(object):
 
         extension = extension[1:]               # remove the "." (".py"->"py")
         return extension
+
+
+    def GuessMimeType(self, xpath: Union[str, Path]) -> str:
+        """
+        Derives the mime type based on the file extension.
+
+        Args:
+            xpath (str/Path): A path or name of a file
+
+        Returns:
+            The mime type as ``"type/subtype"``, or ``None`` if the mime type cannot be determined.
+
+        Example:
+
+            .. code-block:: python
+
+                fs   = FileSystem("/tmp")
+
+                type = fs.GuessMimeType("test.txt")
+                print("MIME type is: \"%s\""%(type))    # in this example: "text/plain"
+
+                type = fs.GuessMimeType("README")
+                print("MIME type is: \"%s\""%(type))    # in this example: "None"
+
+        """
+        path = self.AbsolutePath(xpath)
+        mimetype = mimetypes.guess_type(path)[0]
+        return mimetype
 
 
 
@@ -622,6 +670,28 @@ class Filesystem(object):
 
 
 
+    def SetOwner(self, xpath: Union[str, Path], user: str, group: str) -> bool:
+        """
+        This method changes the ownership of a file or directory.
+
+        Args:
+            xpath (str/Path): Path to the file or directory
+            user (str): Name of a valid UNIX user
+            group (str): Name of a valid UNIX group
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+        """
+        try:
+            shutil.chown(abspath, owner, group)
+        except PermissionError as e:
+            logging.error("Setting ownership of %s to %s:%s failed with error %s", abspath, owner, group, str(e))
+            return False
+
+        return True
+
+
+
     def GetMode(self, xpath: Union[str, Path]) -> int:
         """
         This method returns the mode of a file.
@@ -642,9 +712,198 @@ class Filesystem(object):
                 fs = Filesystem("/tmp")
                 mode = fs.GetMode("testfile.txt")
         """
+        logging.warning("Filesystem.GetMode is DEPRECATED. Better use Filesystem.GetAccessPermissions")
         abspath  = self.AbsolutePath(xpath)
         mode     = abspath.stat()
         return mode.st_mode & 0o7777
+
+    def GetAccessPermissions(self, xpath: Union[str, Path]) -> str:
+        """
+        This method returns the access mode (access permissions) of a file or a directory.
+        The mode is represented as string as it is used to be when calling ``ls -l``.
+
+        The returned string is defined as follows:
+
+        * It consists of exact 9 characters.
+        * 0…2: User access permissions (2: Set UID when ``"s"``)
+        * 3…5: Group access permissions (5: Set GID when ``"s"``)
+        * 6…8: Access permissions for others (8: Sticky when ``"t"``)
+        * It uses the following set of characters: ``"rwxst-"``.
+
+        Args:
+            xpath (str/Path): Path to the file or directory
+
+        Returns:
+            A string representing the files/directories access mode
+
+        Example:
+
+            .. code-block:: python
+                
+                fs = Filesystem("/tmp")
+                
+                # Files at /tmp:
+                # rw-rw-r-- test1.txt
+                # rwxr-xr-x directory1
+                # rwsr-x--t directory2
+                fs.GetAccessPermissions("test1.txt")    # "rw-rw-r--"
+                fs.GetAccessPermissions("directory1")   # "rwxr-xr-x"
+                fs.GetAccessPermissions("directory2")   # "rwsr-x--t"
+        """
+        abspath  = self.AbsolutePath(xpath)
+        perm     = abspath.stat()
+        mode     = perm.st_mode
+        string   = ""
+
+        # user
+        if(mode & stat.S_IRUSR):    string += "r"
+        else:                       string += "-"
+        if(mode & stat.S_IWUSR):    string += "w"
+        else:                       string += "-"
+        if(mode & stat.S_ISUID):    string += "s"
+        elif(mode & stat.S_IXUSR):  string += "x"
+        else:                       string += "-"
+        # group
+        if(mode & stat.S_IRGRP):    string += "r"
+        else:                       string += "-"
+        if(mode & stat.S_IWGRP):    string += "w"
+        else:                       string += "-"
+        if(mode & stat.S_ISGID):    string += "s"
+        elif(mode & stat.S_IXGRP):  string += "x"
+        else:                       string += "-"
+        # other
+        if(mode & stat.S_IROTH):    string += "r"
+        else:                       string += "-"
+        if(mode & stat.S_IWOTH):    string += "w"
+        else:                       string += "-"
+        if(mode & stat.S_ISVTX):    string += "t"
+        elif(mode & stat.S_IXOTH):  string += "x"
+        else:                       string += "-"
+
+        return string
+
+
+
+    def SetAccessPermissions(self, xpath: Union[str, Path], mode: str) -> bool:
+        """
+        This method sets the access mode (access permissions) of a file or directory.
+        The mode is represented as string as it is used to be when calling ``ls -l``.
+
+        The access mode string must fulfill the following specification:
+
+        * It consists of exact 9 characters.
+        * 0…2: User access permissions (2: Set UID when ``"s"``)
+        * 3…5: Group access permissions (5: Set GID when ``"s"``)
+        * 6…8: Access permissions for others (8: Sticky when ``"t"``)
+        * It uses the following set of characters: ``"rwxst-"``.
+
+        Unknown characters will be ignored as well as characters at unexpected positions.
+
+        Args:
+            xpath (str/Path): The file or directory that mode shall be changed
+            mode (str): The new permissions to set
+        
+        Returns:
+            ``True`` on success, otherwise ``False``
+
+        Raises:
+            ValueError: When *mode* does not have exact 9 characters.
+
+        Example:
+
+            .. code-block:: python
+
+                fs.SetAccessPermissions("test.txt", "rwxr-x---")
+                fs.SetAccessPermissions("test",     "rwxr-s--t")
+        """
+        if len(mode) != 9:
+            raise ValueError("File access mode needs to have exact 9 characters (for example \"rwxrwxrwx\")");
+
+        permissions = 0
+        # user
+        if(mode[0] == "r"): permissions |= stat.S_IRUSR
+        if(mode[1] == "w"): permissions |= stat.S_IWUSR
+        if(mode[2] == "x"): permissions |= stat.S_IXUSR
+        if(mode[2] == "s"): permissions |= stat.S_ISUID
+        # group
+        if(mode[3] == "r"): permissions |= stat.S_IRGRP
+        if(mode[4] == "w"): permissions |= stat.S_IWGRP
+        if(mode[5] == "x"): permissions |= stat.S_IXGRP
+        if(mode[5] == "s"): permissions |= stat.S_ISGID
+        # other
+        if(mode[6] == "r"): permissions |= stat.S_IROTH
+        if(mode[7] == "w"): permissions |= stat.S_IWOTH
+        if(mode[8] == "x"): permissions |= stat.S_IXOTH
+        if(mode[8] == "t"): permissions |= stat.S_ISVTX
+
+        abspath = self.AbsolutePath(xpath)
+
+        try:
+            logging.debug("Changing access permissions of %s to %s (%s)", abspath, mode, oct(permissions))
+            abspath.chmod(permissions)
+        except PermissionError as e:
+            logging.error("Setting mode of %s to %s failed with error %s", abspath, oct(permissions), str(e))
+            return False
+
+        return True
+
+
+
+    def CheckAccessPermissions(self, xpath: Union[str, Path] = ".") -> str:
+        """
+        This method can be used to check if a file or directory can be accessed.
+        It returns a string with 3 characters that represent the read, write and execute flags.
+        The returned string is specified as follows:
+
+        * 3 Characters wide string
+        * ``[0]``: ``"r"`` when read access is possible, otherwise ``"-"``
+        * ``[1]``: ``"w"`` when write access is possible, otherwise ``"-"``
+        * ``[2]``: ``"r"`` when the file can be executed or the directory can be entered. Otherwise ``"-"``
+
+        The access is checked for the user ID and group ID of the process that calls this method.
+
+        Args:
+            xpath (str/Path): The file or directory that mode shall be changed. (Optional, default is ``"."``)
+        
+        Returns:
+            A 3 character string representing the ``"rwx"`` access permissions.
+
+        Example:
+
+            .. code-block::
+
+                fs.CheckAccessPermissions("test.txt") # "rw-"
+                fs.CheckAccessPermissions("dir")      # "r-x"
+                fs.CheckAccessPermissions("mydir")    # "rwx"
+                fs.CheckAccessPermissions()           # "rwx"
+        """
+        # Get user, group
+        owneruser, ownergroup = self.GetOwner(xpath)
+
+        userid    = os.geteuid()
+        thisuser  = pwd.getpwuid(userid).pw_name
+        gid       = os.getegid()
+        thisgroup = grp.getgrgid(gid).gr_name
+
+        # Get permissions
+        perm = list("---")
+        mode = self.GetAccessPermissions(xpath)
+
+        if thisuser == owneruser:
+            if mode[0] == "r":  perm[0] = "r"
+            if mode[1] == "w":  perm[1] = "w"
+            if mode[2] != "-":  perm[2] = "x"
+
+        if thisgroup == ownergroup:
+            if mode[3] == "r":  perm[0] = "r"
+            if mode[4] == "w":  perm[1] = "w"
+            if mode[5] != "-":  perm[2] = "x"
+
+        if mode[6] == "r":  perm[0] = "r"
+        if mode[7] == "w":  perm[1] = "w"
+        if mode[8] != "-":  perm[2] = "x"
+
+        return "".join(perm)
 
 
 
@@ -704,6 +963,7 @@ class Filesystem(object):
                 fs.SetAttributes("testdirectory", None, None, mode) # make directory writeable for group members
 
         """
+        logging.warning("Filesystem.SetAttributes is DEPRECATED. Better use Filesystem.SetAccessPermissions")
         abspath = self.AbsolutePath(xpath)
 
         if mode != None:

@@ -239,6 +239,12 @@ Server side API
 
 .. automodule:: musicdb.lib.ws.mdbwsi
 
+Special Functions
+^^^^^^^^^^^^^^^^^
+
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
+   :members: Bounce
+
 
 Artists
 ^^^^^^^
@@ -246,8 +252,10 @@ Artists
 .. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members: GetArtists,
       GetArtistsWithAlbums,
-      GetFilteredArtistsWithVideos
-      CreateArtist
+      GetFilteredArtistsWithVideos,
+      CreateArtistEntry,
+      UpdateArtistEntry,
+      RemoveArtistEntry
 
 Albums
 ^^^^^^
@@ -258,8 +266,12 @@ Albums
       GetSortedAlbumCDs,
       GetAlbum,
       HideAlbum,
+      SetAlbumOrigin,
+      SetAlbumImportTime,
       SetAlbumColor,
-      AddAlbumToQueue
+      AddAlbumToQueue,
+      UpdateAlbumEntry,
+      RemoveAlbumEntry
 
 Songs
 ^^^^^
@@ -273,7 +285,10 @@ Songs
       GetSongRelationship,
       UpdateSongStatistic,
       CutSongRelationship,
-      PlayNextSong
+      PlayNextSong,
+      CreateSongEntry,
+      UpdateSongEntry,
+      RemoveSongEntry
 
 Videos
 ^^^^^^
@@ -343,9 +358,9 @@ Uploading
 .. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members:   InitiateUpload,
       UploadChunk,
-      GetUploads,
+      GetCurrentTasks,
       AnnotateUpload,
-      IntegrateContent,
+      InitiateContentIntegration,
       InitiateMusicImport,
       InitiateArtworkImport,
       RemoveUpload
@@ -359,7 +374,9 @@ File Handling
       FindAlbumSongFiles,
       RenameMusicFile,
       RenameAlbumDirectory,
-      ChangeArtistDirectory
+      RenameArtistDirectory,
+      ChangeArtistDirectory,
+      InitiateFilesystemScan
 
 Other
 ^^^^^

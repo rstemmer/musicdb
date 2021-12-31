@@ -47,6 +47,7 @@ class Layer extends Element
     Show()
     {
         this.background.Show();
+        this.element.scrollTo({top: 0, left: 0});
         this.element.style.visibility = "visible";
     }
     Hide()

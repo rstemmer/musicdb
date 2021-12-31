@@ -94,6 +94,7 @@ class QueueView extends Element
     // musictype: "audio" or "video"
     Update(musictype, MDBQueue)
     {
+        let queuetimemanager = WebUI.GetView("QueueTime");
         // Nothing in the queue? -> Nothing to do
         // A fresh installed MusicDB may have no queue!
         if(MDBQueue.length === 0)
@@ -167,21 +168,31 @@ class QueueView extends Element
 
 
 
+    // WHAT THE FUCK IS GOING ON HERE?
+    // This code it totally messed up and needs to be refactored.
+    // Like the left page is managed by the LeftViewManager
+    // this code could be managed by a RightViewManager.
     onMusicDBMessage(fnc, sig, args, pass)
     {
         if(fnc == "GetSongQueue" && sig == "ShowSongQueue")
         {
             let mainviewbox = document.getElementById("RightContentBox"); // \_ HACK
             mainviewbox.innerHTML = "";
-            mainviewbox.appendChild(queueview.GetHTMLElement());           // /  This should do a Main View Manager
+            mainviewbox.appendChild(WebUI.GetView("Queue").GetHTMLElement());           // /  This should do a Main View Manager
             this.Update("audio", args);
         }
         else if(fnc == "GetVideoQueue" && sig == "ShowVideoQueue")
         {
             let mainviewbox = document.getElementById("RightContentBox"); // \_ HACK
             mainviewbox.innerHTML = "";
-            mainviewbox.appendChild(queueview.GetHTMLElement());           // /  This should do a Main View Manager
+            mainviewbox.appendChild(WebUI.GetView("Queue").GetHTMLElement());           // /  This should do a Main View Manager
             this.Update("video", args);
+        }
+        else if(fnc == "GetAlbum" && sig == "AlbumRenamed")
+        {
+            let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
+            if(mode == "audio")
+                MusicDB_Request("GetSongQueue", "ShowSongQueue");
         }
     }
 }

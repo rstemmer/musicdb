@@ -22,9 +22,8 @@ class AudioStreamPlayer extends AudioPlayer
     constructor()
     {
         super(null, ["AudioStreamPlayer"]);
-        this.element.controls = "controls";
-        this.element.preload  = "none";
-        this.configuredurl    = null
+        this.configuredurl = null
+        this.SetPausedCallback(()=>{this.Stop();});
     }
 
 

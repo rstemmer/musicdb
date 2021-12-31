@@ -28,7 +28,7 @@
 
 .SongFilesTable td:last-child
 {
-    width: 100%;
+    width: 99%;
 }
 
 .SongFilesTable td:nth-child(1) > input
@@ -43,7 +43,14 @@
 {
     width:              50ch;
 }
-.SongFilesTable td:nth-child(4) > span
+.SongFilesTable td:nth-child(4)
+{
+    width:              50ch;
+    /*
+    white-space:        normal;
+    */
+}
+.SongFilesTable td:nth-child(5) > span
 {
 }
 

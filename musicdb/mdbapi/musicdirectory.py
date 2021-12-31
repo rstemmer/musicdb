@@ -24,23 +24,27 @@ import logging
 import subprocess
 from pathlib import Path
 from typing  import Union, Optional
-from musicdb.lib.filesystem import Filesystem
+from musicdb.lib.fileprocessing import Fileprocessing
+from musicdb.mdbapi.accesspermissions   import AccessPermissions
 
 
-class MusicDirectory(Filesystem):
+class MusicDirectory(Fileprocessing):
     """
     This class provides an interface to the Music Directory.
     The whole class assumes that it is used with an Unicode capable UNIX-style filesystem.
-    It is derived from :class:`musicdb.lib.filesystem.Filesystem`.
+    It is derived from :class:`musicdb.lib.fileprocessing.Fileprocessing`.
 
+    In comparison to the :class:`~musicdb.mdbapi.music.MusicDBMusic`, only the files are on focus, not the music database.
+    Keep in mind that applying some of the methods of this class can harm the connection between the database entries and their associated files.
 
     Args:
         config: MusicDB configuration object
     """
     def __init__(self, config):
-        Filesystem.__init__(self, config.directories.music)
+        Fileprocessing.__init__(self, config.directories.music)
 
         self.cfg = config
+        self.ap  = AccessPermissions(self.cfg, self.cfg.directories.music)
 
         # read lists with files and directories that shall be ignored by the scanner
         self.ignoreartists = self.cfg.music.ignoreartists
@@ -57,33 +61,27 @@ class MusicDirectory(Filesystem):
 
             * File permissions: ``rw-rw-r--``
             * Directory permissions: ``rwxrwxr-x``
-            * Ownership as configured in the settings: ``[music]->owner``:``[music]->group``
+
+        To update the access permissions the method :meth:`musicdb.lib.filesystem.Filesystem.SetAttributes` is used.
 
         Args:
             path (str/Path): Path to an artist, album or song, relative to the music directory
 
         Returns:
-            *Nothing*
+            ``True`` on success, otherwise ``False``
 
         Raises:
-            ValueError if path is neither a file nor a directory.
+            ValueError: if path is neither a file nor a directory.
         """
-        logging.warning("MusicDirectory.FixAttributes is DEPRECATED")
-        # -rw-rw-r--
-        filepermissions= stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH
-        # drwxrwxr-x
-        dirpermissions = stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH                 
-
-        # check if file or dir permissions must be used
         if self.IsDirectory(path):
-            permissions = dirpermissions
+            permissions = "rwxrwxr-x"
         elif self.IsFile(path):
-            permissions = filepermissions
+            permissions = "rw-rw-r--"
         else:
             raise ValueError("Path \""+str(path)+"\" is not a directory or file")
 
-        # change attributes and ownership
-        self.SetAttributes(path, self.cfg.music.owner, self.cfg.music.group, permissions)
+        success = self.SetAccessPermissions(path, permissions)
+        return success
 
 
 
@@ -517,6 +515,136 @@ class MusicDirectory(Filesystem):
                 contenttype = "song"
 
         return contenttype
+
+
+
+    def EvaluateAlbumDirectory(self, albumpath):
+        """
+        This method checks if a directory path is a valid album directory.
+        Despite :meth:`~TryAnalysePath` and :meth:`AnalyseAlbumDirectoryName` this method does not care about the naming scheme.
+        It checks the actual content and directory inside the file system.
+        A valid album directory must fulfill the following criteria:
+
+            * It must be an existing directory
+            * MusicDB must have read and write access to this directory
+            * The directory must only contain files, no sub directories
+            * All files inside the directory must be readable and writable
+            * At least one file inside the directory must be a song file
+
+        Args:
+            albumpath (str): Path to the album to check
+
+        Returns:
+            ``True if the directory is a valid album directory. Otherwise ``False``.
+        """
+        if not self.IsDirectory(albumpath):
+            logging.debug("Invalid album directory: %s does not address an existing directory.", str(albumpath));
+            return False
+
+        if not self.ap.IsWritable(albumpath):
+            logging.debug("Invalid album directory: MusicDB has no write access to %s.", albumpath);
+            return False
+
+        albumfiles = self.ListDirectory(albumpath)
+        songfound  = False
+        for albumfile in albumfiles:
+            if not self.IsFile(albumfile):
+                logging.debug("Invalid album directory: Album directory %s has at least one sub directory (%s) which should not be the case.", albumpath, albumfile);
+                return False
+
+            fileextension = self.GetFileExtension(albumfile)
+            if fileextension in ["m4a", "flac", "aac", "mp4", "mp3"]:
+                songfound = True
+
+            if not self.ap.IsWritable(albumfile):
+                logging.debug("Invalid album directory: Album directory %s has at least one read-only file (%s) which should not be the case.", albumpath, albumfile);
+                return False
+
+        if not songfound:
+            logging.debug("Invalid album directory: Album directory %s has no song files.", albumpath);
+            return False
+
+        return True
+
+
+
+    def EvaluateArtistDirectory(self, artistpath):
+        """
+        This method checks if a directory is a valid artist directory.
+        In contrast to :meth:`~TryAnalysePath` this method does not care about the naming scheme.
+        It checks the actual content, directory and sub directories inside the file system.
+
+        A valid artist directory must fulfill the following criteria:
+
+            * It must be an existing directory
+            * MusicDB must have read and write access to this directory
+            * All sub directories and files must be writable
+            * There must be at least one valid album directory (Checked via :meth:`~EvaluateAlbumDirectory` or a video file
+
+        Args:
+            artistpath (str): Path to the artist to check
+
+        Returns:
+            ``True if the directory is a valid artist directory. Otherwise ``False``.
+        """
+        if not self.IsDirectory(artistpath):
+            logging.debug("Invalid artist directory: %s does not address an existing directory.", str(artistpath));
+            return False
+
+        if not self.ap.IsWritable(artistpath):
+            logging.debug("Invalid artist directory: MusicDB has no write access to %s.", artistpath);
+            return False
+
+        artistcontent = self.ListDirectory(artistpath)
+        videofound    = False
+        albumfound    = False
+        for path in artistcontent:
+            if not self.ap.IsWritable(path):
+                logging.debug("Invalid artist directory: Artist directory %s has at least one read-only file or sub-directory (%s) which should not be the case.", artistpath, path);
+                return False
+
+            if self.IsFile(path):
+                fileextension = self.GetFileExtension(path)
+                if fileextension in ["webm", "mp4", "m4v"]:
+                    videofound = True
+            else:
+                if self.EvaluateAlbumDirectory(path):
+                    albumfound = True
+
+        if not videofound and not albumfound:
+            logging.debug("Invalid artist directory: Artist directory %s has no albums and no video files.", artistpath);
+            return False
+
+        return True
+
+
+
+    def EvaluateMusicFile(self, musicpath):
+        """
+        This method checks if a file is a valid music file.
+        In contrast to :meth:`~TryAnalysePath` this method does not care about the naming scheme.
+        It checks the actual content inside the file system.
+
+        A valid music file must fulfill the following criteria:
+
+            * It must be an existing file
+            * MusicDB must have read and write access to this file
+
+        Args:
+            musicpath (str): Path to the music file to check
+
+        Returns:
+            ``True if the file is a valid music file. Otherwise ``False``.
+        """
+        if not self.IsFile(musicpath):
+            logging.debug("Invalid music file: %s does not address an existing file.", str(musicpath));
+            return False
+
+        if not self.ap.IsWritable(musicpath):
+            logging.debug("Invalid music file: MusicDB has no write access to %s.", musicpath);
+            return False
+
+        return True
 
 
 

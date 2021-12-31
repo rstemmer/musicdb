@@ -64,7 +64,7 @@ class MainMenu extends Menu
             "Enter Fullscreen",
             ()=>
             {
-                fullscreenmanager.EnterFullscreen();
+                WebUI.GetManager("Fullscreen").EnterFullscreen();
             },
             "Switch browser into fullscreen mode",
 
@@ -72,7 +72,7 @@ class MainMenu extends Menu
             "Leave Fullscreen",
             ()=>
             {
-                fullscreenmanager.LeaveFullscreen();
+                WebUI.GetManager("Fullscreen").LeaveFullscreen();
             },
             "Switch browser into window mode");
     }
@@ -84,7 +84,7 @@ class MainMenu extends Menu
             "Switch to Video Mode",
             ()=>
             {
-                mdbmodemanager.SetVideoMode();
+                WebUI.GetManager("MusicMode").SetVideoMode();
             },
             "Switch MusicDB WebUI to Video Mode",
 
@@ -92,7 +92,7 @@ class MainMenu extends Menu
             "Switch to Audio Mode",
             ()=>
             {
-                mdbmodemanager.SetAudioMode();
+                WebUI.GetManager("MusicMode").SetAudioMode();
             },
             "Switch MusicDB WebUI to Audio Mode");
     }
@@ -104,7 +104,8 @@ class MainMenu extends Menu
             "Reload Artists",
             ()=>
             {
-                if(mdbmodemanager.GetCurrentMode() == "audio")
+                let musicmode = WebUI.GetManager("MusicMode").GetCurrentMode();
+                if(musicmode == "audio")
                     MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
                 else
                     MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
@@ -201,9 +202,9 @@ class MainMenu extends Menu
                 this.HideEntry("modeswitch");
 
             if(args.WebUI.showstreamplayer == true)
-                this.ShowSection("MusicDB Stream");
+                this.ShowSection("Audio Stream");
             else
-                this.HideSection("MusicDB Stream");
+                this.HideSection("Audio Stream");
         }
 
         return;

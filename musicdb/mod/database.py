@@ -33,10 +33,10 @@ The following subcommands are provided:
         Add new artist, album, song or video to the database.
         Direct interface to:
 
-            * If the path addresses a song: :meth:`musicdb.mdbapi.database.MusicDBDatabase.AddSong`
-            * If the path addresses a album: :meth:`musicdb.mdbapi.database.MusicDBDatabase.AddAlbum`
-            * If the path addresses a artist: :meth:`musicdb.mdbapi.database.MusicDBDatabase.AddArtist`
-            * If the path addresses a video: :meth:`musicdb.mdbapi.database.MusicDBDatabase.AddVideo`
+            * If the path addresses a song: :meth:`musicdb.mdbapi.music.MusicDBMusic.AddSong`
+            * If the path addresses a album: :meth:`musicdb.mdbapi.music.MusicDBMusic.AddAlbum`
+            * If the path addresses a artist: :meth:`musicdb.mdbapi.music.MusicDBMusic.AddArtist`
+            * If the path addresses a video: :meth:`musicdb.mdbapi.music.MusicDBMusic.AddVideo`
 
     ``update``:
         Allows updating the database when a song or video file got changed or exchanged.
@@ -50,8 +50,8 @@ The following subcommands are provided:
 
         It interfaces the following methods:
 
-            * For songs: :meth:`musicdb.mdbapi.database.MusicDBDatabase.UpdateSong`
-            * For videos: :meth:`musicdb.mdbapi.database.MusicDBDatabase.UpdateVideo`
+            * For songs: :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateSong`
+            * For videos: :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateVideo`
 
         After the update you may want to update the video artworks via :doc:`/mod/videoframes`.
 
@@ -62,11 +62,11 @@ The following subcommands are provided:
 
     ``getlyrics``: 
         Search in song files for lyrics.
-        This is done by calling for each song file :meth:`musicdb.mdbapi.database.MusicDBDatabase.AddLyricsFromFile`
+        This is done by calling for each song file :meth:`musicdb.mdbapi.music.MusicDBMusic.AddLyricsFromFile`
         
     ``check``: 
         Check the given path if it is a valid artist, album or song path.
-        This is done by calling :meth:`musicdb.mdbapi.database.MusicDBDatabase.TryAnalysePathFor`.
+        This is done by calling :meth:`musicdb.mdbapi.music.MusicDBMusic.TryAnalysePathFor`.
 
 .. attention::
 
@@ -99,13 +99,13 @@ Examples:
 import argparse
 import os
 from musicdb.lib.modapi         import MDBModule
-from musicdb.mdbapi.database    import MusicDBDatabase
+from musicdb.mdbapi.music       import MusicDBMusic
 from tqdm               import tqdm
 import traceback
 
-class database(MDBModule, MusicDBDatabase):
+class database(MDBModule, MusicDBMusic):
     def __init__(self, config, database):
-        MusicDBDatabase.__init__(self, config, database)
+        MusicDBMusic.__init__(self, config, database)
 
 
     def CMD_Add(self, target, path):

@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ class ProgressBar extends Element
         super("div", ["ProgressBar", "flex-row", "frame"]);
         this.bar  = document.createElement("div");
         this.text = document.createElement("span");
+        this.progress = 0;
 
         this.element.appendChild(this.bar);
         this.element.appendChild(this.text);
@@ -33,8 +34,13 @@ class ProgressBar extends Element
     // progress: 0..100
     SetProgress(progress)
     {
+        this.progress        = progress;
         this.bar.style.width = `${progress}%`;
         this.text.innerText  = `${progress} %`; // U+202F: NARROW NO-BREAK SPACE
+    }
+    GetProgress()
+    {
+        return this.progress;
     }
 
 }

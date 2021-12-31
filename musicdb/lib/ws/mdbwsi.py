@@ -24,7 +24,9 @@ Artists
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums` (Alternative: GetFilteredArtistsWithAlbums)
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetFilteredArtistsWithVideos`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CreateArtist`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CreateArtistEntry`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateArtistEntry`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveArtistEntry`
 
 Albums
 
@@ -33,8 +35,12 @@ Albums
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.HideAlbum`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumOrigin`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumImportTime`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateAlbumEntry`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumEntry`
 
 Songs
 
@@ -47,6 +53,9 @@ Songs
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CreateSongEntry`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongEntry`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongEntry`
 
 Videos
 
@@ -106,9 +115,9 @@ Uploading
 
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateUpload`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.UploadChunk`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetCurrentTasks`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.AnnotateUpload`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.IntegrateContent`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateContentIntegration`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateMusicImport`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateArtworkImport`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveUpload`
@@ -121,7 +130,9 @@ File Handling
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.FindAlbumSongFiles`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RenameMusicFile`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RenameAlbumDirectory`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RenameArtistDirectory`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.ChangeArtistDirectory`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateFilesystemScan`
 
 Other
 
@@ -147,7 +158,7 @@ from musicdb.lib.cfg.webui      import WebUIConfig
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.metatags       import MetaTags
 import os
-from musicdb.mdbapi.database    import MusicDBDatabase
+from musicdb.mdbapi.music       import MusicDBMusic
 from musicdb.mdbapi.musicdirectory  import MusicDirectory
 from musicdb.mdbapi.mise        import MusicDBMicroSearchEngine
 from musicdb.mdbapi.tags        import MusicDBTags
@@ -161,6 +172,7 @@ from musicdb.taskmanagement.uploadmanager   import UploadManager
 from musicdb.taskmanagement.integrationmanager import IntegrationManager
 from musicdb.taskmanagement.importmanager   import ImportManager
 from musicdb.taskmanagement.artworkmanager  import ArtworkManager
+from musicdb.taskmanagement.filesystemmanager  import FilesystemManager
 import logging
 from threading          import Thread
 import traceback
@@ -184,7 +196,7 @@ class MusicDBWebSocketInterface(object):
             self.videostream= VideoStreamManager(self.cfg, self.database)
             self.songqueue  = SongQueue(self.cfg, self.database)
             self.videoqueue = VideoQueue(self.cfg, self.database)
-            self.music      = MusicDBDatabase(self.cfg, self.database)
+            self.music      = MusicDBMusic(self.cfg, self.database)
             self.musicdirectory = MusicDirectory(self.cfg)
 
             self.taskmanager    = TaskManager(self.cfg, self.database)
@@ -192,6 +204,7 @@ class MusicDBWebSocketInterface(object):
             self.integrationmanager = IntegrationManager(self.cfg, self.database)
             self.importmanager  = ImportManager(self.cfg, self.database)
             self.artworkmanager = ArtworkManager(self.cfg, self.database)
+            self.filesystemmanager  = FilesystemManager(self.cfg, self.database)
         except Exception as e:
             logging.exception(e)
             raise e
@@ -269,7 +282,7 @@ class MusicDBWebSocketInterface(object):
 
         # Append uploads to notification except for high frequent ChunkRequest
         if notification != "ChunkRequest":
-            data["uploadslist"] = self.GetUploads()
+            data["tasklist"] = self.GetCurrentTasks()
 
         response    = {}
         response["method"]      = "notification"
@@ -285,7 +298,9 @@ class MusicDBWebSocketInterface(object):
         retval = None
 
         # Request-Methods
-        if fncname == "GetArtists":
+        if fncname == "Bounce":
+            retval = self.Bounce(args)
+        elif fncname == "GetArtists":
             retval = self.GetArtists()
         elif fncname == "GetArtistsWithAlbums":
             retval = self.GetArtistsWithAlbums()
@@ -348,20 +363,28 @@ class MusicDBWebSocketInterface(object):
             retval = self.RenameMusicFile(args["oldpath"], args["newpath"])
         elif fncname == "RenameAlbumDirectory":
             retval = self.RenameAlbumDirectory(args["oldpath"], args["newpath"])
-        elif fncname == "CreateArtist":
-            retval = self.CreateArtist(args["name"])
+        elif fncname == "RenameArtistDirectory":
+            retval = self.RenameArtistDirectory(args["oldpath"], args["newpath"])
+        elif fncname == "CreateArtistEntry":
+            retval = self.CreateArtistEntry(args["name"])
+        elif fncname == "RemoveArtistEntry":
+            retval = self.RemoveArtistEntry(args["artistid"])
+        elif fncname == "UpdateArtistEntry":
+            retval = self.UpdateArtistEntry(args["artistid"], args["newpath"])
         elif fncname == "ChangeArtistDirectory":
             retval = self.ChangeArtistDirectory(args["oldalbumpath"], args["newartistdirectory"])
-        elif fncname == "GetUploads":
-            retval = self.GetUploads()
+        elif fncname == "GetCurrentTasks":
+            retval = self.GetCurrentTasks()
         elif fncname == "AnnotateUpload":
             retval = self.AnnotateUpload(args["taskid"], args)
-        elif fncname == "IntegrateContent":
-            retval = self.IntegrateContent(args["taskid"], args["musicpath"])
+        elif fncname == "InitiateContentIntegration":
+            retval = self.InitiateContentIntegration(args["taskid"], args["musicpath"])
         elif fncname == "InitiateMusicImport":
             retval = self.InitiateMusicImport(args["contenttype"], args["contentpath"])
         elif fncname == "InitiateArtworkImport":
             retval = self.InitiateArtworkImport(args["sourcepath"], args["targetpath"])
+        elif fncname == "InitiateFilesystemScan":
+            retval = self.InitiateFilesystemScan()
         elif fncname == "RemoveUpload":
             retval = self.RemoveUpload(args["taskid"])
         # Call-Methods (retval will be ignored unless method gets not changed)
@@ -437,6 +460,10 @@ class MusicDBWebSocketInterface(object):
             fncname= "GetSong"
         elif fncname == "HideAlbum":
             retval = self.HideAlbum(args["albumid"], args["hide"])
+        elif fncname == "SetAlbumOrigin":
+            retval = self.SetAlbumOrigin(args["albumid"], args["origin"])
+        elif fncname == "SetAlbumImportTime":
+            retval = self.SetAlbumImportTime(args["albumid"], args["importtime"])
         elif fncname == "SetAlbumColor":
             retval = self.SetAlbumColor(args["albumid"], args["colorname"], args["color"])
         elif fncname == "SetVideoColor":
@@ -477,6 +504,16 @@ class MusicDBWebSocketInterface(object):
             retval = self.RemoveSongFromQueue(args["entryid"])
         elif fncname == "RemoveVideoFromQueue":
             retval = self.RemoveVideoFromQueue(args["entryid"])
+        elif fncname == "RemoveSongEntry":
+            retval = self.RemoveSongEntry(args["songid"])
+        elif fncname == "UpdateSongEntry":
+            retval = self.UpdateSongEntry(args["songid"], args["newpath"])
+        elif fncname == "CreateSongEntry":
+            retval = self.CreateSongEntry(args["newpath"])
+        elif fncname == "RemoveAlbumEntry":
+            retval = self.RemoveAlbumEntry(args["albumid"])
+        elif fncname == "UpdateAlbumEntry":
+            retval = self.UpdateAlbumEntry(args["albumid"], args["newpath"])
         elif fncname == "CutSongRelationship":
             retval = self.CutSongRelationship(args["songid"], args["relatedsongid"])
             if method == "request":
@@ -560,6 +597,27 @@ class MusicDBWebSocketInterface(object):
 
 
 
+    def Bounce(self, args):
+        """
+        This is a special method that does nothing but returning the arguments given to it.
+        It can be used to propagate information between different clients or trigger certain events inside a client.
+
+        Args:
+            args (dict): A dictionary with any data
+
+        Returns:
+            The dictionary given as argument
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Broadcast("Bounce", "UpdateValue", {value: 42}); // Tell all clients that value is 42
+                MusicDB_Request("Bounce", "TriggerEvent");               // Trigger an event inside the client
+        """
+        return args
+
+
+
     def GetArtists(self):
         """
         Returns a list of artists.
@@ -619,8 +677,9 @@ class MusicDBWebSocketInterface(object):
                         for(let artist of args)
                         {
                             console.log("Artist: " + artist.name);
-                            for(let album of artist.albums)
-                                console.log(" -> " + album.name);
+                            for(let albumdata of artist.albums)
+                                console.log(albumdata.album); // album entry
+                                console.log(albumdata.tags);  // tags for the album
                         }
                     }
                 }
@@ -2737,6 +2796,67 @@ class MusicDBWebSocketInterface(object):
 
 
 
+    def SetAlbumOrigin(self, albumid, origin):
+        """
+        This method updates the origin of an album.
+        The origin must be a string like ``"iTunes"``, ``"Amazon"``, ``"CD"`` or ``"internet"``.
+        Any string is possible.
+
+        The origin describes where the album files come from - where they have be bought.
+        Usually the string stored in *origin* is the name of the online shop. Avoid URLs.
+
+        Args:
+            albumid (int): ID of the album to update
+            origin (str): Origin of the album
+
+        Returns:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("SetAlbumOrigin", {albumid: 1000, origin: "internet"});
+        """
+        try:
+            self.database.SetAlbumOrigin(albumid, origin)
+        except TypeError as e:
+            logging.warning("SetAlbumOrigin failed with exception: %s", str(e));
+        return None
+
+
+
+    def SetAlbumImportTime(self, albumid, importtime):
+        """
+        This method updates the import time ("added" entry) of an album.
+        This is the time at which the album has been imported into the MusicDB Database.
+        It is expected that the ``importtime`` is a unix time stamp in seconds.
+
+        Usually this time gets set by the import routines.
+        Do only change this value if it is obviously wrong.
+
+        Args:
+            albumid (int): ID of the album to update
+            importtime (str|int): Time at which the album has been imported
+
+        Returns:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                let jstimestamp   = Date.now();                     // milliseconds
+                let unixtimestamp = Math.floor(jstimestamp / 1000); // seconds
+
+                MusicDB_Call("SetAlbumImportTime", {albumid: 1000, importtime: unixtimestamp});
+        """
+        try:
+            self.database.SetAlbumAddedTime(albumid, int(importtime));
+        except TypeError as e:
+            logging.warning("SetAlbumAddedTime called by SetAlbumImportTime failed with exception: %s", str(e));
+        return None
+
+
+
     def SetAlbumColor(self, albumid, colorname, color):
         """
         Sets a color scheme for an album.
@@ -3349,9 +3469,175 @@ class MusicDBWebSocketInterface(object):
 
 
 
+    def RemoveSongEntry(self, songid):
+        """
+        This method removes a song from the database.
+        The related file in the Music Directory remains untouched.
+        All other information related to the song entry will be removed from the database as well.
+
+        Args:
+            songid (int): ID of the song to remove
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("RemoveSongEntry", {songid: 23});
+        """
+        try:
+            self.music.RemoveSong(songid)
+        except Exception as e:
+            logging.warning("Removing song entry (%s) from database failed with error: %s", str(songid), str(e))
+        return None
+
+
+
+    def CreateSongEntry(self, newpath):
+        """
+        This method creates a new song entry in the database.
+        The song file is addressed by *newpath*.
+        This file must fulfill the MusicDB name scheme for song files.
+        The import is done via :meth:`musicdb.mdbapi.music.MusicDBMusic.AddSong`.
+
+        It is important that the album already exists in the database.
+        This method does not replace the :meth:`~InitiateMusicImport` which imports new albums or videos.
+        This method is supposed to be used to add a new song to an existing album.
+        The album entry gets updated as well (number of songs).
+
+        Args:
+            newpath (str): Path to the new song file relative to the music directory
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("CreateSongEntry", {newpath: "Artist/2020 - Album/01 Updated Song.flac"});
+        """
+        try:
+            self.music.AddSong(newpath)
+        except Exception as e:
+            logging.warning("Creating new song entry for \"%s\" failed with error: %s", str(newpath), str(e))
+        return None
+
+
+
+    def UpdateSongEntry(self, songid, newpath):
+        """
+        This method updates the database entry of the song with the ID *songid*.
+        The information for the update come from the song file addressed by *newpath*.
+        The update is done via :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateSong`.
+
+        Args:
+            songid (int): ID of the song to update
+            newpath (str): Path to the new song file relative to the music directory
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("UpdateSongEntry", {songid: 23, newpath: "Artist/2020 - Album/01 Updated Song.flac"});
+        """
+        try:
+            self.music.UpdateSong(songid, newpath)
+        except Exception as e:
+            logging.warning("Updating song entry (%s) to \"%s\" failed with error: %s", str(songid), str(newpath), str(e))
+        return None
+
+
+
+    def UpdateAlbumEntry(self, albumid, newpath):
+        """
+        This method updates the database entry of the album with the ID *albumid*.
+        The information for the update come from the directory addressed by *newpath*.
+        The update is done via :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateAlbum`.
+        All songs inside the directory get updated via :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateSong` as well.
+
+        Args:
+            songid (int): ID of the album to update
+            newpath (str): Path to the new album directory relative to the music directory
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("UpdateAlbumEntry", {albumid: 1337, newpath: "Artist/2020 - Updated Album"});
+        """
+        try:
+            self.music.UpdateAlbum(albumid, newpath)
+        except Exception as e:
+            logging.warning("Updating album entry (%s) to \"%s\" failed with error: %s", str(albumid), str(newpath), str(e))
+        return None
+
+
+
+    def RemoveAlbumEntry(self, albumid):
+        """
+        This method removes an album and all its songs from the database.
+        The related directory and files in the Music Directory remains untouched.
+        All other information related to the songs will be removed from the database as well.
+
+        Args:
+            albumid (int): ID of the album to remove
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("RemoveAlbumEntry", {albumid: 42});
+        """
+        try:
+            self.music.RemoveAlbum(albumid)
+        except Exception as e:
+            logging.warning("Removing album entry (%s) from database failed with error: %s", str(albumid), str(e))
+        return None
+
+
+
+    def UpdateArtistEntry(self, artistid, newpath):
+        """
+        This method updates the database entry of the artist with the ID *artistid*.
+        The information for the update come from the directory addressed by *newpath*.
+        The update is done via :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateArtist`.
+        All albums inside the directory get updated via :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateAlbum` as well as
+        all their songs via :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateSong`.
+
+        Args:
+            artistid (int): ID of the artist to update
+            newpath (str): Path to the new artist directory relative to the music directory
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("UpdateArtisEntry", {artistid: 1337, newpath: "Moved Artist"});
+        """
+        try:
+            self.music.UpdateArtist(artistid, newpath)
+        except Exception as e:
+            logging.warning("Updating artist entry (%s) to \"%s\" failed with error: %s", str(artistid), str(newpath), str(e))
+        return None
+
+
+
+    def RemoveArtistEntry(self, artistid):
+        """
+        This method removes an artist and all its albums and songs from the database.
+        The related directory and files in the Music Directory remains untouched.
+        All other information related to the songs will be removed from the database as well.
+
+        Args:
+            artistid (int): ID of the album to remove
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("RemoveArtistEntry", {artistid: 42});
+        """
+        try:
+            self.music.RemoveArtist(artistid)
+        except Exception as e:
+            logging.warning("Removing artist entry (%s) from database failed with error: %s", str(artistid), str(e))
+        return None
+
+
+
     def FindNewContent(self):
         """
-        This method uses :meth:`musicdb.mdbapi.database.MusicDBDatabase.FindNewPaths` to get all new albums and videos.
+        This method uses :meth:`musicdb.mdbapi.music.MusicDBMusic.FindNewPaths` to get all new albums and videos.
 
         The lists of albums and videos contain objects with the following keys:
 
@@ -3467,15 +3753,27 @@ class MusicDBWebSocketInterface(object):
         Each list entry is a dictionary with the following information:
 
         * ``path`` (string): relative path to the music file
-        * ``songname`` (string)
-        * ``albumname`` (string)
-        * ``artistname`` (string)
-        * ``releaseyear`` (integer)
-        * ``origin`` (string): Where the files comes from. Where it has been bought.
-        * ``cdnumber`` (integer)
-        * ``songnumber`` (integer)
-        * ``haslyrics`` (boolean): ``True`` when there are lyrics attached to the song file
-        * ``hasartwork`` (boolean): ``True`` when there is an album cover attached to the song file
+        * ``frommeta`` (dict): Song information collected from the files meta data
+            * ``songname`` (string)
+            * ``albumname`` (string)
+            * ``artistname`` (string)
+            * ``releaseyear`` (integer)
+            * ``origin`` (string): Where the files comes from. Where it has been bought.
+            * ``cdnumber`` (integer)
+            * ``songnumber`` (integer)
+            * ``haslyrics`` (boolean): ``True`` when there are lyrics attached to the song file
+            * ``hasartwork`` (boolean): ``True`` when there is an album cover attached to the song file
+        * ``frompath`` (dict): Song information collected from the file path (keep in mind that this path is not yet verified by the user to be correct).
+            * ``songname`` (string)
+            * ``albumname`` (string)
+            * ``artistname`` (string)
+            * ``releaseyear`` (integer)
+            * ``cdnumber`` (integer)
+            * ``songnumber`` (integer)
+
+        The information inside the ``"frompath"`` dictionary is collected via :meth:`musicdb.mdbapi.musicdirectory.MusicDirectory.AnalysePath`.
+        When this method fails, ``None`` is stored under that key.
+
 
         Args:
             albumpath (str): path to an album that may have new/unknown songs. The path must be relative to the music directory.
@@ -3491,18 +3789,36 @@ class MusicDBWebSocketInterface(object):
 
         songfiles = []
         for path in files:
-            entry = {}
+
+            # Read meta data
             metadata.Load(path)
-            entry["path"]        = str(path)
-            entry["songname"]    = metadata.GetSongname()
-            entry["albumname"]   = metadata.GetAlbumname()
-            entry["artistname"]  = metadata.GetArtistname()
-            entry["releaseyear"] = metadata.GetReleaseyear()
-            entry["origin"]      = metadata.GetOrigin()
-            entry["cdnumber"]    = metadata.GetCDNumber()
-            entry["songnumber"]  = metadata.GetTracknumber()
-            entry["haslyrics"]   = type(metadata.GetLyrics()) == str
-            entry["hasartwork"]  = metadata.CheckArtwork()
+            frommeta = {}
+            frommeta["songname"]    = metadata.GetSongname()
+            frommeta["albumname"]   = metadata.GetAlbumname()
+            frommeta["artistname"]  = metadata.GetArtistname()
+            frommeta["releaseyear"] = metadata.GetReleaseyear()
+            frommeta["origin"]      = metadata.GetOrigin()
+            frommeta["cdnumber"]    = metadata.GetCDNumber()
+            frommeta["songnumber"]  = metadata.GetTracknumber()
+            frommeta["haslyrics"]   = type(metadata.GetLyrics()) == str
+            frommeta["hasartwork"]  = metadata.CheckArtwork()
+
+            filedata = self.musicdirectory.AnalysePath(path)
+            if filedata:
+                fromfile = {}
+                fromfile["songname"]    = filedata["song"]
+                fromfile["albumname"]   = filedata["album"]
+                fromfile["artistname"]  = filedata["artist"]
+                fromfile["releaseyear"] = filedata["release"]
+                fromfile["cdnumber"]    = filedata["cdnumber"]
+                fromfile["songnumber"]  = filedata["songnumber"]
+            else:
+                fromfile = None
+
+            entry = {}
+            entry["path"]     = str(path)
+            entry["frommeta"] = frommeta
+            entry["fromfile"] = fromfile
             songfiles.append(entry)
 
         return songfiles
@@ -3538,20 +3854,20 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                # Will succeed
+                // Will succeed
                 MusicDB_Call("RenameMusicFile", {
                         oldpath:"Artist/2021 - Album Name/01 old file name.mp3",
                         newpath:"Artist/2021 - Album Name/01 new file name.mp3"
                         });
 
-                # Will succeed, if the song has no entry in the database.
-                # Otherwise it fails because the file names violate the naming scheme.
+                // Will succeed, if the song has no entry in the database.
+                // Otherwise it fails because the file names violate the naming scheme.
                 MusicDB_Call("RenameMusicFile", {
                         oldpath:"Artist/2021 - Album Name/old file name.mp3",
                         newpath:"Artist/2021 - Album Name/new file name.mp3"
                         });
 
-                # Will fail if because album name changed as well
+                // Will fail if because album name changed as well
                 MusicDB_Request("RenameMusicFile", "ConfirmRename", {
                         oldpath:"Artist/Old Album Name, Old Song Name.flac",
                         newpath:"Artist/2021 - New Album Name/01 New Song Name.flac"
@@ -3629,6 +3945,8 @@ class MusicDBWebSocketInterface(object):
 
         If the album has an entry in the Music Database, its entry is updated as well.
         In this case the new path must fulfill the Music Naming Scheme.
+        The update triggers :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateAlbum`.
+        This leads to updating the path, name, release and origin of an album.
 
         The position of the album should be plausible anyway.
         So it must be placed inside an artist directory.
@@ -3651,20 +3969,20 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                # Will succeed
+                // Will succeed
                 MusicDB_Call("RenameAlbumDirectory", {
                         oldpath:"Artist/2021 - Old Album Name",
                         newpath:"Artist/2021 - New Album Name"
                         });
 
-                # Will succeed, if the album has no entry in the database.
-                # Otherwise it fails because the file names violate the naming scheme.
+                // Will succeed, if the album has no entry in the database.
+                // Otherwise it fails because the file names violate the naming scheme.
                 MusicDB_Call("RenameAlbumDirectory", {
                         oldpath:"Artist/Old Album Name",
                         newpath:"Artist/New Album Name"
                         });
 
-                # Will fail because artist name changed as well.
+                // Will fail because artist name changed as well.
                 MusicDB_Request("RenameAlbumDirectory", "ConfirmRename", {
                         oldpath:"Artist/Old Album Name",
                         newpath:"New Artist/2021 - New Album Name"
@@ -3731,7 +4049,100 @@ class MusicDBWebSocketInterface(object):
 
 
 
-    def CreateArtist(self, name):
+    def RenameArtistDirectory(self, oldpath, newpath):
+        """
+        Renames an artist directory.
+        In general it is not checked if the new path fulfills the Music Naming Scheme (See :doc:`/usage/music`).
+
+        If the artist has an entry in the Music Database, its entry is updated as well.
+        In this case the new path must fulfill the Music Naming Scheme.
+        The update triggers :meth:`musicdb.mdbapi.music.MusicDBMusic.UpdateArtist`.
+        This leads to updating the path, name, release and origin of all albums inside the artist directory.
+
+        The position of the artist should be plausible anyway.
+        So it must be placed inside the music directory and not being a sub directory.
+
+        If the old path does not address a directory, the Method returns ``False``.
+        If the new path does address an already existing file or directory, ``False`` gets returned.
+        No files will be overwritten.
+
+        To change the artist directory of an album see :meth:`~RenameArtistDirectory`.
+
+        Args:
+            oldpath (str): Path to the directory that shall be renamed
+            newpath (str): New name of the artist directory
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+
+        Example:
+            .. code-block:: javascript
+
+                // Will succeed
+                MusicDB_Request("RenameArtistDirectory", "ConfirmRename", {
+                        oldpath:"Old Artist",
+                        newpath:"New Artist"
+                        });
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "RenameArtistDirectory" && sig == "ConfirmRename")
+                    {
+                        if(args === true)
+                            console.log(`Renaming ${pass.oldfile} succeeded.`);
+                    }
+                }
+
+        """
+        # Check if old path is a valid path to a file in the Music Directory
+        if not self.musicdirectory.IsDirectory(oldpath):
+            logging.warning("Rename Artist Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
+            return False
+
+        # Check if new path addresses an already existing file
+        if self.musicdirectory.Exists(newpath):
+            logging.warning("Rename Artist Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
+            return False
+
+        # Check if path if path is plausible
+        oldcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldpath)
+        newcontenttype = self.musicdirectory.EstimateContentTypeByPath(newpath)
+        if oldcontenttype != newcontenttype:
+            logging.warning("Old path (\"%s\") was estimated as \"%s\", the new one (\"%s\") as \"%s\". \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype, newpath, newcontenttype)
+            return False
+
+        if oldcontenttype != "artist":
+            logging.warning("Old path (\"%s\") was estimated as \"%s\". An Artist was expected. \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype)
+            return False
+
+        # Check if exists in database
+        databaseentry = self.database.GetArtistByPath(oldpath)
+
+        # Rename path
+        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
+        try:
+            success = self.musicdirectory.Rename(oldpath, newpath)
+        except Exception as e:
+            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
+            success = False
+
+        if not success:
+            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
+            return False
+
+        # Update database if needed
+        if databaseentry != None:
+            targetid = databaseentry["id"]
+            logging.info("Updating database entry for \033[0;36m%s\033[1;34m with ID \033[0;36m%s", oldcontenttype, str(targetid))
+            self.music.UpdateArtist(targetid, newpath)
+
+        return True
+
+
+
+    def CreateArtistEntry(self, name):
         """
         This method creates a new Artist with the name ``name``.
 
@@ -3745,29 +4156,15 @@ class MusicDBWebSocketInterface(object):
         If there the artist is unknown, a new entry will be created.
         The new entry will be returned.
 
+        For details see :meth:`musicdb.mdbapi.music.MusicDBMusic.CreateNewArtist`.
+
         Args:
             name (str): Name of the new artist.
 
         Returns:
             The artist entry, or ``None`` on error.
         """
-        if not self.musicdirectory.Exists(name):
-            logging.info("Creating new Artist directory \"%s\".", str(name))
-            self.musicdirectory.CreateSubdirectory(name)
-        else:
-            logging.debug("File system entry for new artist \"%s\" already exists.", str(name))
-
-        if not self.musicdirectory.IsDirectory(name):
-            logging.warning("File system entry for new artist \"%s\" exists and is a file. \033[1;30m(File will not be replaced by the Artist directory. Creating artist canceled.)", str(name))
-            return None
-
-        artist = self.database.GetArtistByPath(name)
-        if artist:
-            logging.debug("Artist \"%s\" already exists in the database. No need to create a new entry.", name)
-        else:
-            logging.info("New Artist \"%s\" will be added to the database.", name)
-            self.database.AddArtist(name, name)
-            artist = self.database.GetArtistByPath(name)
+        artist = self.music.CreateNewArtist(name)
         return artist
 
 
@@ -3777,7 +4174,9 @@ class MusicDBWebSocketInterface(object):
         This method changes the artist directory of an album.
         If the new artist directory is not existing it will be created.
         If it exists, the album directory will just be moved into the existing artist directory.
-        The old artist directory will be not be touched, even if it becomes an empty directory. 
+        The old artist directory will not be touched, even if it becomes an empty directory. 
+
+        To rename an artist directory see :meth:`~RenameArtistDirectory`.
 
         If the album exists in the Music Database, its entry will be updated (including its songs).
         In this case, a possibly new artist will be imported into the database as well.
@@ -3789,6 +4188,9 @@ class MusicDBWebSocketInterface(object):
         If the old path does not address a directory, ``False`` gets returned.
         No files will be overwritten.
 
+        In case the album addressed by *oldalbumpath* exists in the database,
+        the function :meth:`musicdb.mdbapi.music.MusicDBMusic.ChangeAlbumArtist` is used to keep the database updated.
+
         Args:
             oldalbumpath (str): Path to the album directory inside the old artists directory
             newartistdirectory (str): Name of the new artist directory in that the addressed album will be moved in.
@@ -3799,20 +4201,26 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                # Will succeed
+                // Will succeed
                 MusicDB_Call("ChangeArtistDirectory", {
                         oldalbumpath:       "Old Artist/2021 - Album Name",
                         newartistdirectory: "Already Existing Artist"
                         });
 
-                # Will succeed
+                // Will succeed
                 MusicDB_Call("ChangeArtistDirectory", {
                         oldalbumpath:       "Old Artist/2021 - Album Name",
                         newartistdirectory: "New Artist"
                         });
 
+                // Will succeed if album is known by the database
+                MusicDB_Call("ChangeArtistDirectory", {
+                        oldalbumpath:       "Old Artist/2021 - Album Name", // That album has already been moved by the user
+                        newartistdirectory: "New Artist"
+                        });
 
-                # Will fail because new artist directory contains a sub directory
+
+                // Will fail because new artist directory contains a sub directory
                 MusicDB_Request("ChangeArtistDirectory", "ConfirmRename", {
                         oldalbumpath:       "Old Artist/2021 - Album Name",
                         newartistdirectory: "New Artist/subdirectory"
@@ -3830,14 +4238,9 @@ class MusicDBWebSocketInterface(object):
                 }
 
         """
-        # Check if old path is a valid path to a file in the Music Directory
-        if not self.musicdirectory.IsDirectory(oldalbumpath):
-            logging.warning("Changing Artist Directory failed because album path \"%s\" does not exists inside the Music Directory", str(oldalbumpath))
-            return False
-
         # Check if new path addresses an already existing file
         if self.musicdirectory.IsFile(newartistdirectory):
-            logging.warning("Changing Artist Directory failed because new path \"%s\" does an exist file inside the Music Directory", str(newartistdirectory))
+            logging.warning("Changing Artist Directory failed because new path \"%s\" is an exist file inside the Music Directory", str(newartistdirectory))
             return False
 
         # Check if path if path is plausible
@@ -3851,38 +4254,34 @@ class MusicDBWebSocketInterface(object):
             logging.warning("New artist directory (\"%s\") was estimated as \"%s\". An artist directory was expected. \033[1;30m(Old path will not be renamed)", newartistdirectory, newcontenttype)
             return False
 
-        # Check if album exists in database
-        databaseentry = self.database.GetAlbumByPath(oldalbumpath)
-
-        # Check if artist exists. Create if not.
-        if not self.musicdirectory.IsDirectory(newartistdirectory):
-            self.musicdirectory.CreateSubdirectory(newartistdirectory)
-
-        # Move album into new artist directory
+        # Check if album exists in database or if this is only a "file system job"
         logging.info("Moving \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldalbumpath, newartistdirectory)
-        try:
-            success = self.musicdirectory.MoveDirectory(oldalbumpath, newartistdirectory)
-        except Exception as e:
-            logging.error("Moving Directory \"%s\" into \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldalbumpath, newartistdirectory, str(e))
-            success = False
+        albumentry = self.database.GetAlbumByPath(oldalbumpath)
+        if albumentry:
+            # Use proper API
+            albumid = albumentry["id"]
+            success = self.music.ChangeAlbumArtist(albumid, newartistdirectory)
+        else:
+            # Album does not exist, so only work on file system level
+            # Check if old path is a valid path to a file in the Music Directory
+            if not self.musicdirectory.IsDirectory(oldalbumpath):
+                logging.warning("Changing Artist Directory failed because album path \"%s\" does not exists inside the Music Directory", str(oldalbumpath))
+                return False
+
+            # Check if artist exists. Create if not.
+            if not self.musicdirectory.IsDirectory(newartistdirectory):
+                self.musicdirectory.CreateSubdirectory(newartistdirectory)
+
+            # Move album into new artist directory
+            try:
+                success = self.musicdirectory.MoveDirectory(oldalbumpath, newartistdirectory)
+            except Exception as e:
+                logging.error("Moving Directory \"%s\" into \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldalbumpath, newartistdirectory, str(e))
+                success = False
 
         if not success:
             logging.warning("Moving Directory \"%s\" into \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldalbumpath, newartistdirectory)
             return False
-
-        # Update database if needed
-        if databaseentry != None:
-            # Add new artist if needed
-            if not self.database.GetArtistByPath(newartistdirectory):
-                logging.info("Creating new Artist entry \033[0;36m%s\033[1;34m in the Music Database", newartistdirectory)
-                self.database.AddArtist(newartistdirectory, newartistdirectory)
-
-            # Update Album entry
-            targetid = databaseentry["id"]
-            logging.info("Updating database entry for \033[0;36m%s\033[1;34m with ID \033[0;36m%s", oldcontenttype, str(targetid))
-            albumname    = self.musicdirectory.GetDirectoryName(oldalbumpath)
-            newalbumpath = newartistdirectory + "/" + albumname
-            self.music.UpdateAlbum(targetid, newalbumpath)
 
         return True
 
@@ -3927,14 +4326,15 @@ class MusicDBWebSocketInterface(object):
         return
 
 
-    def GetUploads(self):
+    def GetCurrentTasks(self):
         """
-        This method gets all tasks from the :mod:`~musicdb.mdbapi.uploadmanager`.
+        This method gets all tasks from the :mod:`~musicdb.taskmanagement.taskmanager`.
         This list then gets split into three lists:
 
-            * *videos*: A list of all available video uploads
-            * *albums*: Album uploads
-            * *artworks*: Artwork uploads
+            * *videos*: A list of all video related tasks
+            * *albumfiles*: A song or any other album content processed as part of an album upload
+            * *artworks*: Artwork uploads and import
+            * *any*: Can be anything. Depends on the task.
 
         Returns:
             a list with information about all yet unprocessed uploads
@@ -3943,24 +4343,42 @@ class MusicDBWebSocketInterface(object):
 
             .. code-block:: javascript
 
-                MusicDB_Request("GetUploads", "ShowUploads");
+                MusicDB_Request("GetCurrentTasks", "ShowTasks");
 
                 // …
 
                 function onMusicDBMessage(fnc, sig, args, pass)
                 {
+                    console.log(args.albumfiles);
                     console.log(args.albums);
                     console.log(args.videos);
                     console.log(args.artworks);
+                    console.log(args["any"]);
                 }
         """
-        tasksdict = self.uploadmanager.GetTasks()
+        tasksdict = self.taskmanager.GetTasks()
         retval    = {}
-        retval["videos"]   = []
-        retval["albums"]   = []
-        retval["artworks"] = []
+        retval["videos"]     = []
+        retval["albumfiles"] = []
+        retval["albums"]     = []
+        retval["artworks"]   = []
+        retval["any"]        = []
         for key, task in tasksdict.items():
-            contentlist = task["contenttype"] + "s"
+            contenttype = task["contenttype"]
+            if contenttype == "video":
+                contentlist = "videos"
+            elif contenttype == "albumfile":
+                contentlist = "albumfiles"
+            elif contenttype == "album":
+                contentlist = "albums"
+            elif contenttype == "artwork":
+                contentlist = "artworks"
+            elif contenttype == "any":
+                contentlist = "any"
+            else:
+                logging.debug("Unexpected content type \"%s\" will be ignored", contenttype);
+                continue
+
             retval[contentlist].append(task)
 
         return retval
@@ -3987,7 +4405,7 @@ class MusicDBWebSocketInterface(object):
 
 
 
-    def IntegrateContent(self, taskid, musicpath):
+    def InitiateContentIntegration(self, taskid, musicpath):
         """
         This method integrates uploaded content into the Music Directory.
         The task with the ID ``taskid`` must be in state ``"readyforintegration"``.
@@ -4072,6 +4490,52 @@ class MusicDBWebSocketInterface(object):
             The task ID as string
         """
         taskid = self.artworkmanager.InitiateImport(sourcepath, targetpath)
+        return taskid
+
+
+
+    def InitiateFilesystemScan(self):
+        """
+        This method can be used to scan the file system and find lost paths inside the database.
+        It does the following steps:
+
+        #. Check all database entries if the associated files and directories can be found via :meth:`musicdb.mdbapi.music.MusicDBMusic.FindLostPaths`
+        #. If not, collect their database entry
+        #. Find all new files and directories via :meth:`musicdb.mdbapi.music.MusicDBMusic.FindNewPaths`
+        #. Collect their path and check sum (this may take some time)
+
+        The returned information has the following structure
+
+        * ``"newpaths"``
+            * ``"artists"``, ``"albums"``, ``"songs"``, ``"filteredsongs"``, ``"videos"``
+                * Each entry is a list of paths as string
+        * ``"lostpaths"``
+            * ``"artists"``, ``"albums"``, ``"songs"``, ``"videos"``
+                * Each entry is a list of database entries as dictionary
+
+        The found information are annotated to the task
+
+        Returns:
+            The task ID as string
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("InitiateFilesystemScan");
+
+                // …
+
+                function onMuiscDBNotification(fnc, sig, task)
+                {
+                    if(fnc == "MusicDB:Task" && sig == "StateUpdate")
+                    {
+                        if(task["state"] == "fsscancomplete")
+                            console.log(task["annotations"]);
+                    }
+                }
+
+        """
+        taskid = self.filesystemmanager.InitiateFilesystemScan()
         return taskid
 
 
