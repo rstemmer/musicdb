@@ -12,8 +12,22 @@ The music directory is the directory that contains the music files
 that will be managed, presented and streamed by MusicDB.
 It is mandatory for MusicDB to work correctly.
 
+The music directory can be configured in the MusicDB configuration file ``/etc/musicdb.ini``.
+Enter the absolute path at ``[directories]->music``.
+
+Three parties need to have access to the files:
+
+   * MusicDB, Read/Write: Needs to have access to the music directories and files to manage them.
+   * You, the user, Read/Write (optional): To manage music by yourself, upload music via ``scp`` or bypass MusicDB at all.
+   * The Web Server, Read-Only (optional): To allow the client user to listen to single files directly via the "preview"-feature.
+
 The expected ownership is ``$user:musicdb`` with the permission ``rwxrwxr-x``.
-Keep in mind that also the web-server needs to have read access for the "preview"-feature.
+With ``$user`` as your user name.
+If MusicDB has no read access to the music directory, it cannot be executed.
+In case it only has read access it can be executed, but some features will not work.
+
+To give the Web Server access to the music directory you have to enable it inside the MusicDB web server configuration.
+See the :doc:`/usage/install` instruction for further details on how to setup the web server.
 
 
 MusicDB Data Directory
@@ -22,11 +36,17 @@ MusicDB Data Directory
 The default path of the data directory is ``/var/lib/musicdb``.
 It contains all the variable data used and needed by MusicDB, including the databases.
 
+MusicDB needs to have write access to all of those directories.
+On installation these file/directory structure gets created and setup correct.
+Usually the user does not have to care about this.
+
+The data directory can be configured in the MusicDB configuration file ``/etc/musicdb.ini``.
+Enter the absolute path at ``[directories]->data``.
+
 It contains the following sub directories:
 
-
 state/:
-   This directory is used to provide and maintain a consistent state for the MusicDB Websocket Server.
+   This directory is used to provide and maintain a consistent state for the MusicDB WebSocket Server.
    It is mainly maintained by :mod:`musicdb.lib.cfg.mdbstate`
 
 uploads/:
@@ -40,7 +60,38 @@ tasks/:
 webdata/:
    This directory contains all data that needs to be available by the HTTPS web server.
    It contains the WebUI configuration ``config.js`` as well as the artwork directory.
-   
+   Keep in mind that the Web Server needs to have read access to all data inside the ``webdata`` directory.
+
+   The artwork sub-directory comes with write access for the whole ``musicdb`` group to allow other tools take part in managing the music artworks.
+
+===============  ===========  ===========  =============
+Directory        Owner        Group        Permissions
+===============  ===========  ===========  =============
+state            ``musicdb``  ``musicdb``  ``rwxrwxr-x``
+uploads          ``musicdb``  ``musicdb``  ``rwxr-x---``
+tasks            ``musicdb``  ``musicdb``  ``rwxr-x---``
+webdata          ``musicdb``  ``musicdb``  ``rwxr-xr-x``
+webdata/artwork  ``musicdb``  ``musicdb``  ``rwxrwxr-x``
+===============  ===========  ===========  =============
+
+
+MusicDB Log File
+----------------
+
+MusicDB uses the systemd journal for logging.
+Additionally it creates a file at ``/var/lib/musicdb``.
+This directory can be configured in the MusicDB configuration file ``/etc/musicdb.ini``.
+Enter the absolute path at ``[log]->debugfile``.
+
+
+==============================  ===========  ===========  =============
+Directory                       Owner        Group        Permissions
+==============================  ===========  ===========  =============
+/var/log/musicdb                ``root``     ``musicdb``  ``rwxrwxr-x``
+/var/log/musicdb/debuglog.ansi  ``musicdb``  ``musicdb``  ``rw-rw-r--``
+==============================  ===========  ===========  =============
+
+
 
 
 Transition from 7.2.0 to 8.0.0
