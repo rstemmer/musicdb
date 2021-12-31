@@ -16,6 +16,8 @@
 
 """
 This library provides the excessive logging system of MusicDB.
+
+For details about the file and directory structure for logging information into files see :doc:`/basics/data`.
 """
 
 import logging
@@ -93,12 +95,6 @@ class MBDLogFormatter(logging.Formatter):
 class MusicDBLogger():
     """
     This class provides the logging management itself and handles the logging configuration.
-
-    Args:
-        path (str): A "path" where the logs will be written. Use ``"stdout"`` or ``"stderr"`` to show them on the screen. Use ``"journal"`` to write to SystemDs journal.
-        loglevelname (str): Name of the lowest log level that shall be shown: ``"DEBUG"``, ``"INFO"``, ``"WARNING"``, ``"ERROR"`` or ``"CRITICAL"``.
-        debugpath (str): Path to a file where everything (DEBUG) shall be logged in. ``None`` for not such a file.
-        config: A MusicDB Configuration object that hold the ignore list. If ``None`` the configuration will not be appied.
     """
     loglevelmap = {}
     loglevelmap["DEBUG"]    = logging.DEBUG
@@ -107,21 +103,33 @@ class MusicDBLogger():
     loglevelmap["ERROR"]    = logging.ERROR
     loglevelmap["CRITICAL"] = logging.CRITICAL
 
-    def __init__(self, logpath="stderr", loglevelname="INFO", debugpath=None, config=None):
-        # create output handler
+    def __init__(self):
+        # create default output handler setup
         self.handler = []   # list of handler. At least one: stderr. Maybe a file for more details
-        self.Reconfigure(logpath, loglevelname, debugpath, config)
+        self.Reconfigure()
 
 
 
     def SetFilePermissions(self, path):
+        """
+        This method set the access permission of a file to "rw-r-----".
+        If the file in *path* cannot be accessed, an error gets printed to ``stderr``
+        and MusicDB gets exited with error code ``1``.
+
+        Args:
+            path (str): Absolute path to a log file
+
+        Returns:
+            ``True`` on success. On Error MusicDB gets terminated.
+        """
         try:
-            with open(path, 'a'):
+            with open(path, "a"):
                 pass
 
-            os.chmod(path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH) # 664
+            os.chmod(path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP) # rw-r-----
         except PermissionError:
-            return False
+            print("\033[1;31mFATAL ERROR: No Read/Write access to log file!\033[0m (" + path + ")", file=sys.stderr)
+            exit(1)
         return True
 
 
@@ -159,7 +167,7 @@ class MusicDBLogger():
                 phandler = journal.JournalHandler(SYSLOG_IDENTIFIER="musicdb")
             else:
                 phandler = logging.FileHandler(logpath)
-                self.SetFilePermissions(logpath) # Set file permission to rw-rw-r-- !
+                self.SetFilePermissions(logpath)
 
             phandler.setLevel(loglevel)
             self.handler.append(phandler)

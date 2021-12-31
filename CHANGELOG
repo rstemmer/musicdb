@@ -15,6 +15,7 @@ Run  git log --oneline  for more details
 │ * Invalid ownership and permissions of files and sub-directories will be fixed when the server gets started
 │ * MusicDB server start/stop is now managed via systemd and journald
 │ * MusicDB can now be installed via pacman
+│ - Some command line options removed (Use --config instead): --quiet, --verbose, --logfile, --loglevel
 │ - FIFO interface removed
 │ - PID-File interfaces removed
 │ - [lycra] Lyrics Crawler feature removed (Data quality was bad, feature was never used)
@@ -43,7 +44,7 @@ Run  git log --oneline  for more details
 │       CreateSongEntry, CreateArtistEntry,
 │       SetAlbumOrigin, SetAlbumImportTime, Bounce
 │    * Renamed: GetUploads -> GetCurrentTasks
-│ * Solved Issues: #68, #66, #65, #22, #27
+│ * Solved Issues: #68, #66, #65, #22, #27, #72
 │
 ┝━ MINOR CHANGES
 │ * [metadata] Uses mutagen instead of mutagenx module

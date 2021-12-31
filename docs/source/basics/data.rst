@@ -88,7 +88,7 @@ Enter the absolute path at ``[log]->debugfile``.
 Directory                       Owner        Group        Permissions
 ==============================  ===========  ===========  =============
 /var/log/musicdb                ``root``     ``musicdb``  ``rwxrwxr-x``
-/var/log/musicdb/debuglog.ansi  ``musicdb``  ``musicdb``  ``rw-rw-r--``
+/var/log/musicdb/debuglog.ansi  ``musicdb``  ``musicdb``  ``rw-r-----``
 ==============================  ===========  ===========  =============
 
 
