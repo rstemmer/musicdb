@@ -43,7 +43,9 @@ cp    ${repository}/share/tmpfiles.conf   ./debian/musicdb.tmpfile
 
 # Build deb package
 echo -e "\e[1;34mBuilding deb package …\e[0m"
-debuild
+debuild -uc -us --lintian-opts --profile debian
+# -uc -us: Do not sign source and changes
+# --profile debian: See: https://bugs.launchpad.net/ubuntu/+source/lintian/+bug/1303603
 
 cp ${builddir}/musicdb*.deb ${repository}/dist/.
 echo -e "\e[1;32mdone"
