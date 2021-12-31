@@ -161,10 +161,20 @@ class Filesystem(object):
             xpath (str/Path): A relative or absolute path
 
         Returns:
-            An absolute path
+            An absolute path as Path object
 
         Raises:
             TypeError: If *xpath* is ``None``
+
+        Example:
+
+            .. code-block:: python
+
+                fs   = Filesystem()
+                home = fs.AbsolutePath("~")
+                # PosixPath('/home/ralf')
+                home = fs.ToString(home)
+                # '/home/ralf'
         """
         if type(xpath) == str:
             path = Path(xpath)
