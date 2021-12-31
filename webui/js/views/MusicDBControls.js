@@ -72,7 +72,7 @@ class MusicDBControls extends Element
         }
         else if(state == "stopped")
         {
-            this.UpdateButton(playbutton, "Play Audio Stream", "Continue audio streaming on server side for all clients", "play");
+            this.UpdateButton(playbutton, "Start Audio Stream", "Continue audio streaming on server side for all clients", "play");
         }
     }
     SetVideoStatus(state) // "playing"/"stopped"
