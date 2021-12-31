@@ -24,7 +24,7 @@ class MusicDBControls extends Element
 {
     constructor()
     {
-        super("div", ["MusicDBControlsBox", "frame", "hovpacity", "hlcolor"]);
+        super("div", ["MusicDBControlsBox", "flex", "flex-column", "frame", "hovpacity", "hlcolor"]);
 
         this.controls = new Object();
         this.controls["audio"] = this._CreateControls("audio");
