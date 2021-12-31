@@ -149,8 +149,12 @@ def AssertMusicDirectory(path):
 
     user, group = fs.GetOwner(path)
     if group != "musicdb":
-        logging.critical("Music directory %s does not belong to the UNIX group \"musicdb\". MusicDB needs to have permission to manage the music directory", path)
-        exit(1)
+        if user == "musicdb":
+            # Usually the music directory should just belong to the MusicDB group.
+            # The owner should be the User itself. But as long as MusicDB has R/W access.
+            logging.debug("Music directory %s is owned by MusicDB.", path)
+        else:
+            logging.warning("Music directory %s does not belong to the UNIX group \"musicdb\". MusicDB needs to have permission to manage the music directory", path)
 
     perm = fs.CheckAccessPermissions(path)
     if perm[0] != "r" or perm[2] != "x":
