@@ -40,8 +40,6 @@
 | Arch Linux      | [📦 musicdb-8.0.0-1-any.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases) | `pacman -U ./musicdb-8.0.0-1-any.pkg.tar.zst` |
 | Fedora 35       | [📦 musicdb-8.0.0-1.fc35.noarch.rpm](https://github.com/rstemmer/musicdb/releases) | `dnf install ./musicdb-8.0.0-1.fc35.noarch.rpm` |
 | openSUSE 15.3   | [📦 musicdb-8.0.0-1.](https://github.com/rstemmer/musicdb/releases) | `zypper install musicdb-8.0.0-1.` |
-| Debian/Ubuntu   | [📦 musicdb_8.0.0-1_all.deb](https://github.com/rstemmer/musicdb/releases) | `apt install ./musicdb_8.0.0-1_all.deb` |
-| Raspberry Pi OS | [📦 musicdb_8.0.0-1_all.deb](https://github.com/rstemmer/musicdb/releases) | `apt install ./musicdb_8.0.0-1_all.deb` |
 | Source Code     | [📦 musicdb-8.0.0-src.tar.zst](https://github.com/rstemmer/musicdb/releases) | [⚙️ Install from Source Code](https://rstemmer.github.io/musicdb/build/html/usage/install.html) |
 
 [⚙️ Setup and Run MusicDB with Apache and Icecast](https://rstemmer.github.io/musicdb/build/html/usage/install.html)
@@ -179,9 +177,9 @@ Periodically I test MusicDB also on an [Raspberry Pi 4](https://www.raspberrypi.
 
 The following matrix shows on which Linux Distributions I tested the MusicDB back end and if it succeeded.
 
-| MusicDB | [Arch Linux](https://archlinux.org/) | [Fedora](https://getfedora.org) | [openSUSE](https://www.opensuse.org/) | [Ubuntu](https://ubuntu.com) |
-| --- | --- | --- | --- | --- |
-| 8.0.0 | 🟢 OK | 🟢 OK | 🟡 not tested | 🟡 not tested |
+| MusicDB | [Arch Linux](https://archlinux.org/) | [Fedora](https://getfedora.org) | [openSUSE](https://www.opensuse.org/) |
+| --- | --- | --- | --- |
+| 8.0.0 | 🟢 OK | 🟢 OK | 🟡 not tested |
 
 The following matrix shows with which web browsers I tested the MusicDB front end and if it succeeded.
 
