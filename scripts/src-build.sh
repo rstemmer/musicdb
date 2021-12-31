@@ -35,7 +35,7 @@ cp    CHANGELOG         $tmp
 cp    setup.py          $tmp
 cp    pyproject.toml    $tmp
 
-tar -c --zstd --exclude="__pycache__" -C ${tmp}/.. -f dist/${pkgname}.tar.zst $pkgname
+tar -c --zstd --exclude="__pycache__" --exclude='*.bak' -C ${tmp}/.. -f dist/${pkgname}.tar.zst $pkgname
 
 rm -r $tmp
 echo -e "\e[1;32mdone"
