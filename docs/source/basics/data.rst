@@ -67,7 +67,7 @@ webdata/:
 ===============  ===========  ===========  =============
 Directory        Owner        Group        Permissions
 ===============  ===========  ===========  =============
-state            ``musicdb``  ``musicdb``  ``rwxrwxr-x``
+state            ``musicdb``  ``musicdb``  ``rwxr-xr-x``
 uploads          ``musicdb``  ``musicdb``  ``rwxr-x---``
 tasks            ``musicdb``  ``musicdb``  ``rwxr-x---``
 webdata          ``musicdb``  ``musicdb``  ``rwxr-xr-x``
