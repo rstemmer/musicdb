@@ -263,7 +263,7 @@ class QueueDropZone extends DropTarget
                 {
                     let songid = parseInt(musicid);
                     MusicDB_Call("AddSongToQueue", {songid: songid, position: this.entryid});
-                    queueview.AddFakeEntry(musictype, this.entryid)
+                    WebUI.GetView("Queue").AddFakeEntry(musictype, this.entryid)
                 }
                 else if(musictype == "video")
                 {
