@@ -41,6 +41,7 @@ WebUI.AddLayer("SongsSettings",             new SongsSettingsLayer(layerbackgrou
 
 let errorbackground = WebUI.AddLayer("ErrorBackground", new LayerBackground(3));
 WebUI.AddLayer("WebSocketClosed",           new WebSocketClosed(errorbackground));
+WebUI.AddLayer("WebSocketError",            new WebSocketError(errorbackground));
 
 // Create Basic MusicDB WebUI Components
 WebUI.AddView("MusicDBControls",    new MusicDBControls(),      "ControlBox");
@@ -111,7 +112,7 @@ function onMusicDBConnectionError()
     WebUI.onWebSocketError();
 
     musicdbstatus.onMusicDBConnectionError();
-    mainviewmanager.ShowWebSocketError();
+    WebUI.GetLayer("WebSocketError").Show();
 }
 function onMusicDBWatchdogBarks()
 {
