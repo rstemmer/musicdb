@@ -20,9 +20,9 @@
 
 class Curtain extends Element
 {
-    constructor()
+    constructor(cssclasses=[])
     {
-        super("div", ["Curtain"]);
+        super("div", ["Curtain", ...cssclasses]);
         this.element.onclick     = ()=>{this.onClick();};
         this.element.ondragenter = ()=>{this.onDragEnter();};
         this.element.ondragleave = ()=>{this.onDragLeave();};

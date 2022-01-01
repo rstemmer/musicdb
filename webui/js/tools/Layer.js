@@ -19,9 +19,9 @@
 
 class LayerBackground extends Curtain
 {
-    constructor()
+    constructor(cssclasses=[])
     {
-        super();
+        super(cssclasses);
         this.element.onclick     = "";
         this.element.ondragenter = "";
         this.element.ondragleave = "";
