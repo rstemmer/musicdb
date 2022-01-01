@@ -2387,6 +2387,8 @@ class MusicDBWebSocketInterface(object):
         This method removes a song from song queue.
         The song gets identified by the entry ID of the queue entry.
 
+        If the song is currently streamed, playing the next song gets triggered.
+
         Args:
             entryid (str) Queue entry ID of the song
 
@@ -2403,7 +2405,17 @@ class MusicDBWebSocketInterface(object):
             logging.warning("entryid must be of type string! Actual type was %s. \033[1;30m(RemoveSongFromQueue will be ignored)", str(type(entryid)))
             return None
 
-        self.songqueue.RemoveSong(int(entryid))
+        currentsong = self.songqueue.GetQueue()[0]
+        if currentsong == None:
+            logging.warning("There is no song in the queue. So there is also no song with the ID %s! \033[1;30m(RemoveSongFromQueue will be ignored)", entryid)
+            return None
+
+        if currentsong["entryid"] == int(entryid):
+            logging.debug("Current song cannot be removed from queue because it is currently streamed. Calling PlayNextSong instead.")
+            self.audiostream.PlayNextSong()
+        else:
+            self.songqueue.RemoveSong(int(entryid))
+
         return None
 
 
@@ -2411,6 +2423,8 @@ class MusicDBWebSocketInterface(object):
         """
         This method removes a video from the video queue.
         The video gets identified by the entry ID of the queue entry.
+
+        If the video is currently streamed, playing the next video gets triggered.
 
         Args:
             entryid (str) Queue entry ID of the video
@@ -2428,7 +2442,16 @@ class MusicDBWebSocketInterface(object):
             logging.warning("entryid must be of type string! Actual type was %s. \033[1;30m(RemoveVideoFromQueue will be ignored)", str(type(entryid)))
             return None
 
-        self.videoqueue.RemoveVideo(int(entryid))
+        currentvideo = self.videoqueue.GetQueue()[0]
+        if currentvideo == None:
+            logging.warning("There is no video in the queue. So there is also no song with the ID %s! \033[1;30m(RemoveVideoFromQueue will be ignored)", entryid)
+            return None
+
+        if currentvideo["entryid"] == int(entryid):
+            logging.debug("Current video cannot be removed from queue because it is currently streamed. Calling PlayNextVideo instead.")
+            self.videostream.PlayNextVideo()
+        else:
+            self.videoqueue.RemoveVideo(int(entryid))
         return None
     
     
