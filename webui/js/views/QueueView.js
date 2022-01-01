@@ -98,7 +98,13 @@ class QueueView extends Element
         // Nothing in the queue? -> Nothing to do
         // A fresh installed MusicDB may have no queue!
         if(MDBQueue.length === 0)
+        {
+            let nomusicwarning = new MessageBarWarning("There is no Music in the Queue");
+            nomusicwarning.Show();
+            super.RemoveChilds();
+            super.AppendChild(nomusicwarning);
             return;
+        }
 
         // Reset timer
         if(MDBQueue[0].song !== undefined)

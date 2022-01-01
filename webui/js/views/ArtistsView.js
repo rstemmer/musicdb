@@ -46,6 +46,16 @@ class ArtistsView extends LeftView
         this.RemoveChilds();
         this.AppendChild(new Marker("↑_mark"));
 
+        // No artist available?
+        // Inform the user and give hints.
+        if(MDBArtistList.length === 0)
+        {
+            let noartistswarning = new MessageBarWarning("No artists found.<br>Select different genre or add new music.");
+            noartistswarning.Show();
+            this.AppendChild(noartistswarning);
+            return;
+        }
+
         for(let entry of MDBArtistList)
         {
             // Create artists entry
