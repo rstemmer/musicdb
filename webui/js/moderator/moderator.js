@@ -30,7 +30,7 @@ let curtain         = WebUI.AddLayer("MenuBackground",  new Curtain());
 let mainmenu        = WebUI.AddLayer("MainMenu",        new MainMenu(curtain));
 let mainmenubutton  = WebUI.AddLayer("MainMenuButton",  new MenuButton("1rem", "1rem", "Menu", ()=>{mainmenu.ToggleMenu();}, "Show main menu"));
 
-let layerbackground = WebUI.AddLayer("LayerBackground", new LayerBackground());
+let layerbackground = WebUI.AddLayer("LayerBackground", new LayerBackground(1));
 WebUI.AddLayer("AlbumImport",               new AlbumImportLayer(layerbackground));
 WebUI.AddLayer("AlbumIntegration",          new AlbumIntegrationLayer(layerbackground));
 WebUI.AddLayer("AlbumUploadProgress",       new AlbumUploadProgress(layerbackground));
@@ -38,6 +38,9 @@ WebUI.AddLayer("AlbumIntegrationProgress",  new AlbumIntegrationProgress(layerba
 WebUI.AddLayer("AlbumImportProgress",       new AlbumImportProgress(layerbackground));
 WebUI.AddLayer("AlbumSettings",             new AlbumSettingsLayer(layerbackground));
 WebUI.AddLayer("SongsSettings",             new SongsSettingsLayer(layerbackground));
+
+let errorbackground = WebUI.AddLayer("ErrorBackground", new LayerBackground(3));
+WebUI.AddLayer("WebSocketClosed",           new WebSocketClosed(errorbackground));
 
 // Create Basic MusicDB WebUI Components
 WebUI.AddView("MusicDBControls",    new MusicDBControls(),      "ControlBox");
@@ -125,6 +128,7 @@ function onMusicDBConnectionClosed()
     WebUI.onWebSocketClosed();
 
     musicdbstatus.onMusicDBConnectionClosed();
+    WebUI.GetLayer("WebSocketClosed").Show();
 }
 
 function onMusicDBNotification(fnc, sig, rawdata)
