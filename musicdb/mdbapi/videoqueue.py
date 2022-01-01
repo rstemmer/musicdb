@@ -342,6 +342,9 @@ class VideoQueue(object):
         global Queue
         global QueueLock
 
+        if self.cfg.debug.disablevideos:
+            return None
+
         with QueueLock:
             # Empty Queue? Add a random video!
             if len(Queue) == 0:

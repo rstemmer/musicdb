@@ -150,7 +150,7 @@ class BatchExecution extends StatusList
         let state = null;
         if(typeof this.currenttask["notificationfunction"] === "function")
             state = this.currenttask["notificationfunction"](fnc, sig, rawdata);
-        if(typeof rawdata.message === "string")
+        if(typeof rawdata?.message === "string")
             this.currenttask["lastmessage"] = rawdata.message;
 
         this.UpdateState(state);

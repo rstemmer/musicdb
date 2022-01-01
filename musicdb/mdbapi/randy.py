@@ -282,6 +282,8 @@ class Randy(object):
         global Blacklist
 
         logging.debug("Randy starts looking for a random video …")
+        import traceback
+        trackback.print_stack()
         t_start = datetime.datetime.now()
 
         filterlist = self.mdbstate.GetFilterList()
