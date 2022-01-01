@@ -90,9 +90,6 @@ window.onload = function ()
     // Do some last DOM changes
     WebUI.onWindowLoad();
 
-    let body = new Element(document.body);
-    body.AppendChild(musicdbstatus.GetReconnectButtonHTMLElement());
-
     leftviewmanager     = new LeftViewManager();
     mainviewmanager     = new MainViewManager();
     videopanelmanager   = new VideoPanelManager();
@@ -107,7 +104,6 @@ function onMusicDBConnectionOpen()
     WebUI.onWebSocketOpen();
 
     musicdbstatus.onMusicDBConnectionOpen();
-
     MusicDB_Request("LoadWebUIConfiguration", "SetupWebUI");
 }
 function onMusicDBConnectionError()
