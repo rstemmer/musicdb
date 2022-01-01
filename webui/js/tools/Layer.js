@@ -71,10 +71,12 @@ class Layer extends Element
 
 
 
+    /*
     onMusicDBMessage(fnc, sig, args, pass)
     {
         window.console?.warn("Derived class must implement a onMusicDBMessage method!");
     }
+    */
 }
 
 
