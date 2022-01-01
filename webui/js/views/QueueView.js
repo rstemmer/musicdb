@@ -188,11 +188,14 @@ class QueueView extends Element
             mainviewbox.appendChild(WebUI.GetView("Queue").GetHTMLElement());           // /  This should do a Main View Manager
             this.Update("video", args);
         }
-        else if(fnc == "GetAlbum" && sig == "AlbumRenamed")
+        else if(fnc == "GetAlbum")
         {
-            let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
-            if(mode == "audio")
-                MusicDB_Request("GetSongQueue", "ShowSongQueue");
+            if(sig == "AlbumRenamed" || sig == "SongRenamed")
+            {
+                let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
+                if(mode == "audio")
+                    MusicDB_Request("GetSongQueue", "ShowSongQueue");
+            }
         }
     }
 }
