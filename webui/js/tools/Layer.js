@@ -19,9 +19,10 @@
 
 class LayerBackground extends Curtain
 {
-    constructor(cssclasses=[])
+    constructor(zindex=1, cssclasses=[])
     {
         super(cssclasses);
+        this.element.style.zIndex = zindex;
         this.element.onclick     = "";
         this.element.ondragenter = "";
         this.element.ondragleave = "";
@@ -39,7 +40,19 @@ class Layer extends Element
     {
         super("div", ["Layer", "frame", "opaque"], id);
         this.background = background;
+        this.SetZIndex();
         this.Hide();
+    }
+
+
+
+    SetZIndex(zindex=null)
+    {
+        if(zindex === null)
+        {
+            zindex = parseInt(this.background.element.style.zIndex);
+        }
+        this.element.style.zIndex = zindex;
     }
 
 
