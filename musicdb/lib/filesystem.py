@@ -842,8 +842,8 @@ class Filesystem(object):
             logging.debug("Changing access permissions of %s to %s (%s)", abspath, mode, oct(permissions))
             abspath.chmod(permissions)
         except PermissionError as e:
-            logging.error("Setting mode of %s to %s failed with error %s", abspath, oct(permissions), str(e))
-            return False
+            logging.debug("Setting mode of %s to %s failed with error %s", abspath, oct(permissions), str(e))
+            raise e
 
         return True
 
