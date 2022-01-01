@@ -285,6 +285,16 @@ def AudioStreamingThread():
 
         return
 
+
+    # Do nothing if there are no songs in the database
+    if len(musicdb.GetAllSongs()) == 0:
+        logging.error("There are no songs in the database yet. Audio stream disabled. \033[1;37m(Import albums and restart the server to enable audio streaming again.)")
+        while RunThread:
+            time.sleep(1)
+            Event_TimeChanged(0)
+        return
+
+
     # Start streaming …
     while RunThread:
         # Sleep a bit to reduce the load on the CPU. If disconnected, sleep a bit longer
