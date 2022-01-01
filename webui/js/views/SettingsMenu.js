@@ -28,12 +28,24 @@ class SettingsMenu extends LeftView
         this.views.push(null);
         this.AddMenuEntry(
             new SVGIcon("Back"),
-            "Back to Artists", 
+            "Back to Music", 
             ()=>{
                 this.UnlockView();
                 leftviewmanager.ShowArtistsView();
+                let modemanager = WebUI.GetManager("MusicMode");
+                let musicmode   = modemanager.GetCurrentMode();
+                if(musicmode == "audio")
+                {
+                    let albumid = modemanager.GetCurrentAlbumID();
+                    MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: albumid});
+                }
+                else
+                {
+                    let videoid = modemanager.GetCurrentVideoID();
+                    MusicDB_Request("GetVideo", "ShowVideo", {videoid: videoid});
+                }
                 },
-            "Hide Management menu and show Artists");
+            "Hide Management menu and go back to the Music Views");
 
         this.views.push(WebUI.GetView("WebUISettings"));
         this.AddMenuEntry(
