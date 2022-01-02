@@ -42,19 +42,19 @@ class DataDirectoryMaintainer(object):
 
         # Collect all sub-directories
         self.subdirpaths = []
-        self.AddDirectory(self.config.directories.data,    self.user, self.group, 0o775)
-        self.AddDirectory(self.config.directories.state,   self.user, self.group, 0o755)
-        self.AddDirectory(self.config.directories.webdata, self.user, self.group, 0o755)
-        self.AddDirectory(self.config.directories.artwork, self.user, self.group, 0o775) # TODO include sub directories
-        self.AddDirectory(self.config.directories.uploads, self.user, self.group, 0o750)
-        self.AddDirectory(self.config.directories.tasks,   self.user, self.group, 0o750)
+        self.AddDirectory(self.config.directories.data,    self.user, self.group, "rwxrwxr-x")
+        self.AddDirectory(self.config.directories.state,   self.user, self.group, "rwxr-xr-x")
+        self.AddDirectory(self.config.directories.webdata, self.user, self.group, "rwxr-xr-x")
+        self.AddDirectory(self.config.directories.artwork, self.user, self.group, "rwxrwxr-x") # TODO include sub directories
+        self.AddDirectory(self.config.directories.uploads, self.user, self.group, "rwxr-x---")
+        self.AddDirectory(self.config.directories.tasks,   self.user, self.group, "rwxr-x---")
 
         # Collect all files (expected directory, initial file source)
         sourcedir = self.config.directories.share
         self.filepaths = []
-        self.AddFile(self.config.files.webuiconfig,       self.user, self.group, 0o664, sourcedir + "/webui.ini")
-        self.AddFile(self.config.files.defaultalbumcover, self.user, self.group, 0o644, sourcedir + "/default.jpg")
-        self.AddFile(self.config.files.webuijsconfig,     self.user, self.group, 0o664, sourcedir + "/config.js")
+        self.AddFile(self.config.files.webuiconfig,       self.user, self.group, "rw-rw-r--", sourcedir + "/webui.ini")
+        self.AddFile(self.config.files.defaultalbumcover, self.user, self.group, "rw-r--r--", sourcedir + "/default.jpg")
+        self.AddFile(self.config.files.webuijsconfig,     self.user, self.group, "rw-rw-r--", sourcedir + "/config.js")
 
 
     def AddDirectory(self, expectedpath, user, group, mode):
@@ -164,7 +164,8 @@ class DataDirectoryMaintainer(object):
 
             if not self.CheckPath(subdir["path"], subdir["user"], subdir["group"], subdir["mode"]):
                 logging.info("Updating attributes of %s", subdir["path"])
-                self.filesystem.SetAttributes(subdir["path"], subdir["user"], subdir["group"], subdir["mode"])
+                self.filesystem.SetAccessPermissings(subdir["path"], subdir["mode"])
+                self.filesystem.SetOwner(subdir["path"], subdir["user"], subdir["group"])
 
 
         for file in self.filepaths:
@@ -174,7 +175,8 @@ class DataDirectoryMaintainer(object):
 
             if not self.CheckPath(file["path"], file["user"], file["group"], file["mode"]):
                 logging.info("Updating attributes of %s", file["path"])
-                self.filesystem.SetAttributes(file["path"], file["user"], file["group"], file["mode"])
+                self.filesystem.SetAccessPermissings(file["path"], file["mode"])
+                self.filesystem.SetOwner(file["path"], file["user"], file["group"])
 
         # Make sure the WebSocket API Key is set in the config.js file
         self.InsertWSAPIKey(self.config.websocket.apikey, self.config.files.webuijsconfig)
@@ -184,7 +186,7 @@ class DataDirectoryMaintainer(object):
 
     def CheckPath(self, path, expuser, expgroup, expmode):
         user, group = self.filesystem.GetOwner(path)
-        mode        = self.filesystem.GetMode(path)
+        mode        = self.filesystem.GetAccessPermissions(path)
         success     = True
 
         if user != expuser:
@@ -194,7 +196,7 @@ class DataDirectoryMaintainer(object):
             logging.warning("Group of %s is %s but should be %s!", path, group, expgroup)
             success = False
         if mode != expmode:
-            logging.warning("Access mode of %s is %s but should be %s!", path, oct(mode), oct(expmode))
+            logging.warning("Access mode of %s is %s but should be %s!", path, mode, expmode)
             success = False
         return success
 
