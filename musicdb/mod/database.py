@@ -102,35 +102,6 @@ class database(MDBModule, MusicDBMusic):
 
 
 
-    def CMD_GetLyrics(self, target, path):
-        print("\033[1;34mAdding lyrics to following \033[1;36m" + target + "\033[1;34m:\033[0;36m %s \033[1;34m… "%(path), end="")
-        if target == "song":
-            self.AddLyricsFromFile(path)
-
-        elif target == "album":
-            path  = self.musicdirectory.RemoveRoot(path) # remove the path to the music directory
-            album = self.db.GetAlbumByPath(path)
-            songs = self.db.GetSongsByAlbumId(album["id"])
-            
-            for song in tqdm(songs, unit="songs"):
-                self.AddLyricsFromFile(song["path"])
-
-        elif target == "artist":
-            path   = self.musicdirectory.RemoveRoot(path) # remove the path to the music directory
-            artist = self.db.GetArtistByPath(path)
-            songs  = self.db.GetSongsByArtistId(artist["id"])
-            
-            for song in tqdm(songs, unit="songs"):
-                self.AddLyricsFromFile(song["path"])
-
-        else:
-            raise ValueError("Invalid target! Target must be \"artist\", \"album\" or \"song\".")
-
-        print("\033[1;32mdone")
-        return None
-
-
-
     def GetTargetByPath(self, abspath):
         # returns "album", "artist", "song", "video" or None if path is invalid
 
@@ -178,10 +149,6 @@ class database(MDBModule, MusicDBMusic):
         addparser.add_argument("path", help="path to an artist, album or song")
         addparser.set_defaults(command="Remove")
 
-        getparser = subp.add_parser("getlyrics", help="read lyrics from file(s) and store them in the database")
-        getparser.add_argument("path", help="path to an artist, album or song directory")
-        getparser.set_defaults(command="GetLyrics")
-
         chkparser = subp.add_parser("check", help="check if the path is in a correct format")
         chkparser.add_argument("path", help="path to an artist, album, song or root music directory")
         chkparser.set_defaults(command="CheckPath")
@@ -226,8 +193,6 @@ class database(MDBModule, MusicDBMusic):
         try:
             if command == "Remove":
                 exitcode = self.CMD_Remove(target, path)
-            elif command == "GetLyrics":
-                exitcode = self.CMD_GetLyrics(target, path)
             elif command == "CheckPath":
                 # Nothing to do.
                 # When it comes to execute a command, the path got already checked.
