@@ -57,13 +57,6 @@ In the following chapters, the basic concepts and philosophy of MusicDB and its 
 Furthermore usage guides for MusicDB and how to handle its environment are provided.
 Those chapters are for users as well as for developers.
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Concepts
-   :glob:
-
-   basics/*
-
 
 .. toctree::
    :maxdepth: 1
@@ -71,6 +64,14 @@ Those chapters are for users as well as for developers.
    :glob:
 
    usage/*
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Concepts
+   :glob:
+
+   basics/*
 
 
 MusicDB CLI
