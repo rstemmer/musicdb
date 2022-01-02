@@ -1019,7 +1019,7 @@ class MusicDatabase(Database):
             raise TypeError("artistid must be a decimal number of type integer or string")
 
         with MusicDatabaseLock:
-            sql = "DELETE FROM albums WHERE artistid = ?"
+            sql = "DELETE FROM artists WHERE artistid = ?"
             self.Execute(sql, artistid)
 
         return None
