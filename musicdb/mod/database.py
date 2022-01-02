@@ -81,6 +81,7 @@ class database(MDBModule, MusicDBMusic):
         except ValueError:
             print("\033[1;31mERROR: Path %s is not part of the music collection!\033[0m"%(abspath))
             return None
+        path = self.musicdirectory.ToString(path)
         
         print("\033[1;34mRemoving following \033[1;36m" + target + "\033[1;34m from database:\033[0;36m %s \033[1;34m… "%(path), end="")
 
