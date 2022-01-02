@@ -63,11 +63,10 @@ Examples:
 """
 
 import argparse
-import os
-from musicdb.lib.modapi         import MDBModule
-from musicdb.mdbapi.music       import MusicDBMusic
-from tqdm               import tqdm
 import traceback
+from musicdb.lib.modapi     import MDBModule
+from musicdb.lib.filesystem import Filesystem
+from musicdb.mdbapi.music   import MusicDBMusic
 
 class database(MDBModule, MusicDBMusic):
     def __init__(self, config, database):
@@ -92,11 +91,17 @@ class database(MDBModule, MusicDBMusic):
         elif target == "album":
             album = self.db.GetAlbumByPath(path)
             self.RemoveAlbum(album["id"])
+
         elif target == "song":
             song = self.db.GetSongByPath(path)
             self.RemoveSong(song["id"])
+
+        elif target == "video":
+            video = self.db.GetVideoByPath(path)
+            self.RemoveVideo(video["id"])
+
         else:
-            raise ValueError("Invalid target! Target must be \"artist\", \"album\" or \"song\".")
+            raise ValueError("Invalid target! Target must be \"artist\", \"album\", \"video\" or \"song\".")
         print("\033[1;32mdone")
         return None
 
@@ -165,11 +170,13 @@ class database(MDBModule, MusicDBMusic):
         command = args.command
 
         # Determine absolute path by relative path
+        fs = Filesystem()
         try:
-            path = os.path.abspath(args.path)
+            path = fs.AbsolutePath(args.path)
         except Exception as e:
             print("\033[1;31mDetermine absolute path failed with exception \"%s\"!\033[0m"%(str(e)))
             return 1
+        path = fs.ToString(path)
 
         # Determine target by path
         try:
