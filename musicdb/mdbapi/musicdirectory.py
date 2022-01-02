@@ -274,15 +274,18 @@ class MusicDirectory(Fileprocessing):
 
     def AnalysePath(self, musicpath):
         """
-        This method analyses a path to a song or video and extracts all the information encoded in the path.
-        The path must consist of three parts: The artist directory, the album directory and the song file.
-        For videos only two parts are expected: The artist directory and the video file
+        This method analyses a path to an artist, and album, a song or video and extracts all the information encoded in the path.
+        For songs, path must consist of three parts: The artist directory, the album directory and the song file.
+        For alums and videos only two parts are expected: The artist directory and the video file.
+        For artist only one part.
 
         A valid path has one the following structures: 
         
             * ``{artistname}/{albumrelease} - {albumname}/{songnumber} {songname}.{extension}``
             * ``{artistname}/{albumrelease} - {albumname}/{cdnumber}-{songnumber} {songname}.{extension}``
             * ``{artistname}/{videorelease} - {videoname}.{extension}``
+            * ``{artistname}/{albumrelease} - {albumname}``
+            * ``{artistname}``
 
         The returned dictionary holds all the extracted information from the scheme listed above.
         The following entries exists but may be ``None`` depending if the path addresses a video or song.
@@ -300,7 +303,10 @@ class MusicDirectory(Fileprocessing):
         The names can have all printable Unicode characters and of cause spaces.
 
         If an error occurs because the path does not follow the scheme, ``None`` gets returned.
-        This method does not check if the path exists!
+        This method also checks if the file or directory exists!
+
+        The path must also address a file or directory inside the music directory.
+        Anyway the path can be relative or absolute.
 
         Args:
             musicpath (str/Path): A path of a song including artist and album directory or a video including the artists directory.
@@ -309,8 +315,11 @@ class MusicDirectory(Fileprocessing):
             On success, a dictionary with information about the artist, album and song or video is returned.
             Otherwise ``None`` gets returned.
         """
+        if self.Exists(musicpath):
+            logging.debug("Path \"%s\" does not exist.", str(musicpath));
 
-        path = str(musicpath)
+        path = self.TryRemoveRoot(musicpath)
+        path = self.ToString(path)
 
         # Define all possibly used variables to a avoid undefined behavior
         result = {}
@@ -329,20 +338,25 @@ class MusicDirectory(Fileprocessing):
 
         # separate parts of the path
         parts = path.count("/")
-        if parts == 1:  # This my be a video or an album (let's see if it is a directory)
+        if parts == 0: # This must be an artist
+            if self.IsDirectory(path):
+                artist = path
+        elif parts == 1: # This my be a video or an album (let's see if it is a directory)
             if self.IsDirectory(path):
                 [artist, album] = path.split("/")[-2:]
             else:
                 [artist, video] = path.split("/")[-2:]
         elif parts == 2: # This may be a song
-            [artist, album, song] = path.split("/")[-3:]
+            if self.IsFile(path):
+                [artist, album, song] = path.split("/")[-3:]
+
+        # analyze the artist information
+        if artist:
+            result["artist"] = artist
         else:
             logging.warning("Analysing \"%s\" failed!", path)
             logging.warning("Path cannot be split into three parts {artist}/{album}/{song} or two parts {artist}/{video}")
             return None
-
-        # analyze the artist information
-        result["artist"] = artist
 
         # analyze the album information
         if album:
