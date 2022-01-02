@@ -78,7 +78,7 @@ def SendSignalToServer(signum):
             import signal
             from musicdb.mdbapi.server import SendSignal
 
-            SendSignalToServer(signal.SIGUSR1)  # Trigger server cache refesh
+            SendSignalToServer(signal.SIGTERM)  # Trigger server to shut down
 
     The bash-equivalent of this call is:
 
@@ -101,14 +101,6 @@ def SendSignalToServer(signum):
     return 
 
 
-def SendRefreshSignalToServer():
-    """
-    Calls :meth:`~SendSignalToServer` with the signal ``signal.SIGUSR1`` which makes the server to refresh its caches.
-    """
-    SendSignalToServer(signal.SIGUSR1)
-
-
-
 
 def SignalHandler(signum, stack):
     """
@@ -124,9 +116,6 @@ def SignalHandler(signum, stack):
     if signum == signal.SIGTERM:
         logging.debug("Got signal TERM")
         SIGTERM_Handler()
-    elif signum == signal.SIGUSR1:
-        logging.debug("Got signal USR1")
-        SIGUSR1_Handler()
     else:
         logging.warning("Got unexpected signal %s"%str(signum))
 
@@ -180,15 +169,6 @@ def SIGTERM_Handler():
     logging.info("\033[1;36mSIGTERM:\033[1;34m Initiate Shutdown …\033[0m")
     global shutdown
     shutdown = True
-
-
-def SIGUSR1_Handler():
-    """
-    This function is the handler for the system signal USR1.
-    It calls :meth:`~UpdateCaches`
-    """
-    logging.info("\033[1;36mSIGUSR1:\033[1;34m Updating Caches …\033[0m")
-    UpdateCaches()
 
 
 

@@ -21,6 +21,7 @@ Run  git log --oneline  for more details
 │ - [lycra] Lyrics Crawler feature removed (Data quality was bad, feature was never used)
 │ + [logging] Allow logging to journald
 │ + [artwork] Long broken app-cache manifest generation removed
+│ - [server] SIGUSR1 removed
 │ * [database] musicdb.mdbapi.database.MusicDBDatabase is now called musicdb.mdbapi.music.MusicDBMusic
 │ * [music] FindLostPaths now uses a similar interface to FindNewPaths and supports videos as well
 │ * [music] FindNewPaths now provides an additional list that contains only new songs of imported albums
