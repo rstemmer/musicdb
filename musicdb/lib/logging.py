@@ -125,11 +125,15 @@ class MusicDBLogger():
         try:
             with open(path, "a"):
                 pass
-
-            os.chmod(path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP) # rw-rw----
-        except PermissionError:
-            print("\033[1;31mFATAL ERROR: No Read/Write access to log file!\033[0m (" + path + ")", file=sys.stderr)
+        except Exception as e:
+            print("\033[1;31mFATAL ERROR: Opening log file failed with error: %s\033[0m (%s)"%(str(e), str(path)), file=sys.stderr)
             exit(1)
+
+        try:
+            os.chmod(path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP) # rw-rw----
+        except Exception as e:
+            pass
+        #print("\033[1;33mWARNING: Setting permissions of log file failed with error: %s\033[0m (%s)"%(str(e), str(path)), file=sys.stderr)
         return True
 
 
