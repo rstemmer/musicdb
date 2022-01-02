@@ -123,6 +123,25 @@ class AlbumSettingsLayer extends Layer
 
 
 
+    onWebSocketClosed()
+    {
+        this.albumsettings?.tasks?.onConnectionLost();
+    }
+    onWebSocketError()
+    {
+        this.albumsettings?.tasks?.onConnectionLost();
+    }
+    onWatchdogBarks()
+    {
+        this.albumsettings?.tasks?.onConnectionLost();
+    }
+    onWebSocketOpen()
+    {
+        this.albumsettings?.tasks?.onReconnect();
+    }
+
+
+
     onMusicDBNotification(fnc, sig, rawdata)
     {
         this.artworkuploader?.onMusicDBNotification(fnc, sig, rawdata);

@@ -114,19 +114,33 @@ class AlbumImportProgress extends Layer
 
 
 
+    onWebSocketClosed()
+    {
+        this.tasks?.onConnectionLost();
+    }
+    onWebSocketError()
+    {
+        this.tasks?.onConnectionLost();
+    }
+    onWatchdogBarks()
+    {
+        this.tasks?.onConnectionLost();
+    }
+    onWebSocketOpen()
+    {
+        this.tasks?.onReconnect();
+    }
+
+
     onMusicDBMessage(fnc, sig, args, pass)
     {
         if(sig == "ConfirmAlbumImportTask")
         {
-            window.console?.log(args);
-            window.console?.log(pass);
             this.tasks?.onMusicDBMessage(fnc, sig, args, pass);
         }
 
         if(fnc == "Bounce" && sig == "InformAlbumImportProgressLayer")
         {
-            window.console?.log(`Bounce:InformAlbumImportProgressLayer`);
-            window.console?.log(args);
             this.albumid = args.albumid;
             this.settingsbutton.Enable();
         }
