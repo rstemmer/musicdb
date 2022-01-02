@@ -112,7 +112,7 @@ class MusicDBLogger():
 
     def SetFilePermissions(self, path):
         """
-        This method set the access permission of a file to "rw-r-----".
+        This method set the access permission of a file to "rw-rw----".
         If the file in *path* cannot be accessed, an error gets printed to ``stderr``
         and MusicDB gets exited with error code ``1``.
 
@@ -126,7 +126,7 @@ class MusicDBLogger():
             with open(path, "a"):
                 pass
 
-            os.chmod(path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP) # rw-r-----
+            os.chmod(path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP) # rw-rw----
         except PermissionError:
             print("\033[1;31mFATAL ERROR: No Read/Write access to log file!\033[0m (" + path + ")", file=sys.stderr)
             exit(1)
@@ -166,16 +166,16 @@ class MusicDBLogger():
             elif logpath == "journal":
                 phandler = journal.JournalHandler(SYSLOG_IDENTIFIER="musicdb")
             else:
-                phandler = logging.FileHandler(logpath)
                 self.SetFilePermissions(logpath)
+                phandler = logging.FileHandler(logpath)
 
             phandler.setLevel(loglevel)
             self.handler.append(phandler)
 
         # secondary handler
         if debugpath != None and debugpath != "/dev/null":
-            shandler = logging.FileHandler(debugpath)
             self.SetFilePermissions(debugpath)
+            shandler = logging.FileHandler(debugpath)
             shandler.setLevel(logging.DEBUG)
             self.handler.append(shandler)
 
