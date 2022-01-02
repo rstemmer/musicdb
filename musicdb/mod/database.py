@@ -87,19 +87,31 @@ class database(MDBModule, MusicDBMusic):
 
         if target == "artist":
             artist = self.db.GetArtistByPath(path)
-            self.RemoveArtist(artist["id"])
+            if artist:
+                self.RemoveArtist(artist["id"])
+            else:
+                print("\n\033[1;33mCannot find %s with path %s in the database."%(target, path))
 
         elif target == "album":
             album = self.db.GetAlbumByPath(path)
-            self.RemoveAlbum(album["id"])
+            if album:
+                self.RemoveAlbum(album["id"])
+            else:
+                print("\n\033[1;33mCannot find %s with path %s in the database."%(target, path))
 
         elif target == "song":
             song = self.db.GetSongByPath(path)
-            self.RemoveSong(song["id"])
+            if song:
+                self.RemoveSong(song["id"])
+            else:
+                print("\n\033[1;33mCannot find %s with path %s in the database."%(target, path))
 
         elif target == "video":
             video = self.db.GetVideoByPath(path)
-            self.RemoveVideo(video["id"])
+            if video:
+                self.RemoveVideo(video["id"])
+            else:
+                print("\n\033[1;33mCannot find %s with path %s in the database."%(target, path))
 
         else:
             raise ValueError("Invalid target! Target must be \"artist\", \"album\", \"video\" or \"song\".")

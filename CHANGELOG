@@ -28,6 +28,7 @@ Run  git log --oneline  for more details
 │ + [tracker] Configuration added to decide if random songs shall be tracked: [tracker]->trackrandom
 │ + [filesystem] New methods: SetOwner, SetAccessPermissions, GetAccessPermissions, CheckAccessPermissions
 │ + [accesspermissions] New module for high level access permission checks added
+│ - [command line api] database add, getlyrics, update
 │ + [WebUI] Audio stream player + settings form added
 │ + [WebUI] Allow uploading albums via web front-end
 │ + [WebUI] Allow importing albums via web front-end
