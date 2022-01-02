@@ -265,8 +265,6 @@ class MusicDBConfig(Config):
         self.music.owner            = self.Get(str, "music",    "owner",        "user")
         self.music.group            = self.Get(str, "music",    "group",        "musicdb")
 
-        logging.info("\033[1;32mdone")
-
 
 
     def GetDirectory(self, section, option, default):
