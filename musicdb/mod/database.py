@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,10 +33,6 @@ The following subcommands are provided:
         Removes an artist, album or song from the database.
         Only the database entries get removed.
         The files will not be touched.
-
-    ``getlyrics``: 
-        Search in song files for lyrics.
-        This is done by calling for each song file :meth:`musicdb.mdbapi.music.MusicDBMusic.AddLyricsFromFile`
         
     ``check``: 
         Check the given path if it is a valid artist, album or song path.
@@ -44,21 +40,22 @@ The following subcommands are provided:
 
 .. attention::
 
-    TODO: DEPRECATED - This behavior changed in MusicDB 8.0.0
+    After removing entries from the database they may be still in some caches.
+    Best way to make sure all caches are updated is by restarting the MuiscDB WebSocket server
 
-    While adding a new artist, album or song to the database, the file and directory attributes 
-    and ownership gets changed to the configured one in the MusicDB Configuration.
-
-    And after adding the new data, the command (``refresh``) gets written into the servers named pipe
-    to update its cache.
 
 
 Examples:
 
     .. code-block:: bash
 
+        musicdb database check /data/music/Good\ Artist/2022\ -\ Album
 
-        musicdb database remove /data/music/Bad\ Artist
+
+    .. code-block:: bash
+
+        musicdb database remove /var/music/Bad\ Artist
+        sudo systemctl restart musicdb
 
 """
 
