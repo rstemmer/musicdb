@@ -196,7 +196,6 @@ class MainMenu extends Menu
     {
         if(fnc == "LoadWebUIConfiguration" || sig == "UpdateConfig")
         {
-            window.console?.log(args);
             if(args.WebUI.videomode == "enabled")
                 this.ShowEntry("modeswitch");
             else

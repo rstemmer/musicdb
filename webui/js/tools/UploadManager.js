@@ -94,7 +94,6 @@ class UploadManager
         if(typeof initialannotations === "object" && initialannotations !== null)
             MusicDB_Call("AnnotateUpload", {taskid: task.id, ...initialannotations});
 
-        window.console && console.log(task);
         return task.id;
     }
 
@@ -109,7 +108,6 @@ class UploadManager
         let chunkdata = BufferToHexString(rawdata)
         task.offset  += rawdata.length;
 
-        window.console && console.log(task);
         MusicDB_Call("UploadChunk", {taskid: taskid, chunkdata: chunkdata});
     }
 
@@ -119,7 +117,6 @@ class UploadManager
     {
         if(fnc == "MusicDB:Task")
         {
-            window.console?.log(data);
             let state = data.state;
             if(state === "notexisting")
             {

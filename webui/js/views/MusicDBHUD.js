@@ -334,7 +334,6 @@ class MusicDBHUD extends Element
             if(pass != null && pass.origin == "MoodSettings")
             {
                 // Update Mood-Flags
-                window.console && console.log("HUD Update");
                 if(this.mode == "video")
                 {
                     this.moods = new VideoMoods();
