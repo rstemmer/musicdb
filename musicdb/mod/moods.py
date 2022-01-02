@@ -126,7 +126,6 @@ import argparse
 from musicdb.lib.modapi         import MDBModule
 from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.filesystem     import Filesystem
-from musicdb.lib.namedpipe      import NamedPipe
 from musicdb.mdbapi.tags        import MusicDBTags
 from musicdb.lib.clui.listview  import ListView
 from musicdb.lib.clui.text      import Text
