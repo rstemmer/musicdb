@@ -29,15 +29,6 @@ The target gets determined by its path.
 
 The following subcommands are provided:
 
-    ``add``: 
-        Add new artist, album, song or video to the database.
-        Direct interface to:
-
-            * If the path addresses a song: :meth:`musicdb.mdbapi.music.MusicDBMusic.AddSong`
-            * If the path addresses a album: :meth:`musicdb.mdbapi.music.MusicDBMusic.AddAlbum`
-            * If the path addresses a artist: :meth:`musicdb.mdbapi.music.MusicDBMusic.AddArtist`
-            * If the path addresses a video: :meth:`musicdb.mdbapi.music.MusicDBMusic.AddVideo`
-
     ``remove``:
         Removes an artist, album or song from the database.
         Only the database entries get removed.
@@ -66,16 +57,8 @@ Examples:
 
     .. code-block:: bash
 
-        musicdb database add /data/music/Artist/2000\ -\ New\ Album
 
         musicdb database remove /data/music/Bad\ Artist
-
-        musicdb database add /data/music/Artist/2000\ -\ Video.m4v
-
-        # musicdb database update [-h] [--oldpath OLDPATH] path
-        musicdb database update /data/music/Artist/2000\ -\ Video.m4v
-        musicdb database update --newpath /data/music/Artist/2000\ -\ Video.m4v /data/music/Artist/2000\ -\ Video.webm
-
 
 """
 
@@ -89,24 +72,6 @@ import traceback
 class database(MDBModule, MusicDBMusic):
     def __init__(self, config, database):
         MusicDBMusic.__init__(self, config, database)
-
-
-    def CMD_Add(self, target, path):
-        print("\033[1;34mAdding following \033[1;36m" + target + "\033[1;34m to database:\033[0;36m %s \033[1;34m… "%(path), end="")
-        if target == "artist":
-            self.AddArtist(path)
-        elif target == "album":
-            self.AddAlbum(path)
-        elif target == "song":
-            self.AddSong(path)
-        elif target == "video":
-            if not self.AddVideo(path):
-                print("\033[1;31mfailed")
-                return None
-        else:
-            raise ValueError("Invalid target! Target must be \"artist\", \"album\", \"song\" or \"video\".")
-        print("\033[1;32mdone")
-        return None
 
 
 
@@ -209,10 +174,6 @@ class database(MDBModule, MusicDBMusic):
 
         subp   = parser.add_subparsers(title="Commands", metavar="command", help="database commands")
 
-        addparser = subp.add_parser("add", help="add target to database")
-        addparser.add_argument("path", help="path to an artist, album, song or video")
-        addparser.set_defaults(command="Add")
-
         addparser = subp.add_parser("remove", help="remove target from database")
         addparser.add_argument("path", help="path to an artist, album or song")
         addparser.set_defaults(command="Remove")
@@ -263,9 +224,7 @@ class database(MDBModule, MusicDBMusic):
 
         # Execute command
         try:
-            if command == "Add":
-                exitcode = self.CMD_Add(target, path)
-            elif command == "Remove":
+            if command == "Remove":
                 exitcode = self.CMD_Remove(target, path)
             elif command == "GetLyrics":
                 exitcode = self.CMD_GetLyrics(target, path)
