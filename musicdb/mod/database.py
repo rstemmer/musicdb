@@ -224,27 +224,30 @@ class database(MDBModule, MusicDBMusic):
             return None
 
         print("\033[1;34mDetermin target by path \"\033[0;36m%s\033[1;34m\" …"%(path))
+        infos = self.musicdirectory.AnalysePath(path)
 
-        if self.musicdirectory.IsArtistPath(path, self.cfg.music.ignorealbums, self.cfg.music.ignoresongs):
-            print("\033[1;34mWorking on Artist-path\033[0m")
-            return "artist"
-
-        elif self.musicdirectory.IsAlbumPath(path, self.cfg.music.ignoresongs):
-            print("\033[1;34mWorking on Album-path")
-            return "album"
-
-        elif self.musicdirectory.IsSongPath(path):
-            print("\033[1;34mWorking on Song-path")
-            return "song"
-
-        elif self.musicdirectory.IsVideoPath(path):
-            print("\033[1;34mWorking on Video-path")
-            return "video"
-
-        else:
-            print("\033[1;31mERROR: Path does not address a Song, Album, Artist or Video\033[0m")
+        if infos == None:
+            print("\033[1;31mERROR: The path \033[1;30m%s\033[1;31m does not address a Song, Album, Artist or Video\033[0m"%(path))
             return None
 
+        if infos["video"] != None:
+            print("\033[1;34mWorking on the \033[1;35mVideo\033[1;34m file path of \033[0;36m" + infos["video"])
+            return "video"
+
+        if infos["song"] != None:
+            print("\033[1;34mWorking on the \033[1;35mSong\033[1;34m file path of \033[0;36m" + infos["song"])
+            return "song"
+
+        if infos["album"] != None:
+            print("\033[1;34mWorking on the \033[1;35mAlbum\033[1;34m directory path of \033[0;36m" + infos["album"])
+            return "album"
+
+        if infos["artist"] != None:
+            print("\033[1;34mWorking on the \033[1;35mArtist\033[1;34m directory path of \033[0;36m" + infos["artist"])
+            return "artist"
+
+        print("\033[1;31mERROR: The path \033[1;30m%s\033[1;31m does not address a Song, Album, Artist or Video\033[0m"%(path))
+        return None
 
 
     @staticmethod
@@ -308,16 +311,16 @@ class database(MDBModule, MusicDBMusic):
 
         # Check if path is valid for target (GetTargetByPath is too error tolerant for songs and albums)
         if target in ["song", "album"]:
-            if not self.TryAnalysePathFor(target, path):
+            if not self.musicdirectory.TryAnalysePathFor(target, path):
                 print("\033[1;31mInvalid path or target! Path \"%s\" does not match %s-naming scheme!\033[0m" % (path, target))
                 return 1
 
         # Handle optional oldpath argument
-        if args.oldpath:
-            oldpath = os.path.abspath(args.oldpath)
-            oldpath = self.musicdirectory.RemoveRoot(oldpath) # remove the path to the music directory
-        else:
-            oldpath = None
+        #if args.oldpath:
+        #    oldpath = os.path.abspath(args.oldpath)
+        #    oldpath = self.musicdirectory.RemoveRoot(oldpath) # remove the path to the music directory
+        #else:
+        oldpath = None
 
         # Execute command
         try:
