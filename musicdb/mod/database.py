@@ -49,7 +49,7 @@ The following subcommands are provided:
         
     ``check``: 
         Check the given path if it is a valid artist, album or song path.
-        This is done by calling :meth:`musicdb.mdbapi.music.MusicDBMusic.TryAnalysePathFor`.
+        This is done by calling :meth:`musicdb.mdbapi.music.MusicDBMusic.AnalysePath`.
 
 .. attention::
 
