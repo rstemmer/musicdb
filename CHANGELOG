@@ -35,6 +35,7 @@ Run  git log --oneline  for more details
 │    * [metadata] --check is no longer expected. Just give the path.
 │    - [recache] removed
 │ + [WebUI] Audio stream player + settings form added
+│ + [WebUI] Settings added to allow hiding Audio stream player and System Status inside the main menu
 │ + [WebUI] Allow uploading albums via web front-end
 │ + [WebUI] Allow importing albums via web front-end
 │ + [WebUI] Allow updating and renaming albums and songs via web front-end

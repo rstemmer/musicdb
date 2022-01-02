@@ -26,7 +26,10 @@ The following sections and keys are available:
         [WebUI]
         videomode=disabled
         lyrics=enabled
+
+        [MainMenu]
         showstreamplayer=False
+        showsystemstatus=True
 
         [ArtistsView]
         showrelease=True
@@ -53,9 +56,14 @@ The following sections and keys are available:
     Defines if lyrics should be present in the WebUI or not.
     This includes, but is not limited to, the lyrics state buttons in the Song Lists of the albums
 
-[WebUI]->showstreamplayer (boolean):
+[MainMenu]->showstreamplayer (boolean):
     If True, then the MusicDB audio stream player is shown in the main menu.
     This player can them be used to connect to the audio stream from the WebUI.
+
+[MainMenu]->showsystemstatus (boolean):
+    If True, the MusicDB system status is shown in the main menu.
+    It shows if the connection between the MusicDB Server and Icecast is up and if data gets streamed.
+    These information are not mandatory to know but help you to quickly identify issues with the audio stream.
 
 [ArtistsView]->showrelease (boolean):
     If true, the release date of an album is shown next to its name.
@@ -109,7 +117,8 @@ class WebUIConfig(Config):
         if version < 3:
             logging.info("Updating webui.ini to version 3")
             self.Set("meta",  "version",     3)
-            self.Set("WebUI", "showstreamplayer", False)
+            self.Set("MainMenu", "showstreamplayer", False)
+            self.Set("MainMenu", "showsystemstatus", True)
             self.Set("Stream","url",        "http://127.0.0.1:8000/stream")
             self.Set("Stream","username",   "")
             self.Set("Stream","password",   "")
@@ -130,7 +139,10 @@ class WebUIConfig(Config):
         cfg["WebUI"] = {}
         cfg["WebUI"]["videomode"]   = self.Get(str,  "WebUI", "videomode",   "disabled")
         cfg["WebUI"]["lyrics"]      = self.Get(str,  "WebUI", "lyrics",      "enabled")
-        cfg["WebUI"]["showstreamplayer"]    = self.Get(bool,  "WebUI", "showstreamplayer",   "False")
+
+        cfg["MainMenu"] = {}
+        cfg["MainMenu"]["showstreamplayer"] = self.Get(bool,  "MainMenu", "showstreamplayer",   "False")
+        cfg["MainMenu"]["showsystemstatus"] = self.Get(bool,  "MainMenu", "showsystemstatus",   "False")
 
         cfg["ArtistsView"] = {}
         cfg["ArtistsView"]["showrelease"] = self.Get(bool, "ArtistsView", "showrelease", True)
@@ -163,7 +175,8 @@ class WebUIConfig(Config):
         self.Set("meta",               "version",     cfg["meta"]["version"])
         self.Set("WebUI",              "videomode",   cfg["WebUI"]["videomode"])
         self.Set("WebUI",              "lyrics",      cfg["WebUI"]["lyrics"])
-        self.Set("WebUI",              "showstreamplayer",  cfg["WebUI"]["showstreamplayer"])
+        self.Set("MainMenu",           "showstreamplayer", cfg["MainMenu"]["showstreamplayer"])
+        self.Set("MainMenu",           "showsystemstatus", cfg["MainMenu"]["showsystemstatus"])
         self.Set("ArtistsView",        "showrelease", cfg["ArtistsView"]["showrelease"])
         self.Set("GenreSelectionView", "showother",   cfg["GenreSelectionView"]["showother"])
         self.Set("Stream",             "url",         cfg["Stream"]["url"])
