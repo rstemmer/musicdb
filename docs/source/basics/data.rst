@@ -43,6 +43,9 @@ Usually the user does not have to care about this.
 The data directory can be configured in the MusicDB configuration file ``/etc/musicdb.ini``.
 Enter the absolute path at ``[directories]->data``.
 
+The expected ownership is ``$user:musicdb`` with the permission ``rwxrwxr-x``.
+With ``$user`` as your user name.
+
 It contains the following sub directories:
 
 state/:

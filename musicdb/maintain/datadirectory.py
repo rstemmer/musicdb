@@ -42,6 +42,7 @@ class DataDirectoryMaintainer(object):
 
         # Collect all sub-directories
         self.subdirpaths = []
+        self.AddDirectory(self.config.directories.data,    self.user, self.group, 0o775)
         self.AddDirectory(self.config.directories.state,   self.user, self.group, 0o755)
         self.AddDirectory(self.config.directories.webdata, self.user, self.group, 0o755)
         self.AddDirectory(self.config.directories.artwork, self.user, self.group, 0o775) # TODO include sub directories
