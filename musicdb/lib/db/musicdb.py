@@ -453,7 +453,8 @@ Tag Related Methods
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.CreateTag`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetAllTags`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetTagByName`
-    * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.DeleteTag`
+    * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.DeleteTagByName`
+    * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.DeleteTagById`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.ModifyTag`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.SetTargetTag`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.RemoveTargetTag`
