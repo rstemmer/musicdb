@@ -260,11 +260,6 @@ class MusicDBConfig(Config):
         self.extern.songmap         = self.Get(str, "extern",   "songmap",      "songmap.csv")
 
 
-        # [music] # TODO: OLD -> REMOVE
-        # TODO: REMOVE:
-        self.music.owner            = self.Get(str, "music",    "owner",        "user")
-        self.music.group            = self.Get(str, "music",    "group",        "musicdb")
-
 
 
     def GetDirectory(self, section, option, default):

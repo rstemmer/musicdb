@@ -98,7 +98,7 @@ The sub directory name for each video gets created by
 the method :meth:`~musicdb.mdbapi.videoframes.VideoFrames.CreateFramesDirectoryName`.
 This method replaces "/" by an Unicode division slash (U+2215) to avoid problems with the filesystem.
 
-All new creates files and directories were set to the ownership ``[music]->owner:[music]->group``
+All new creates files and directories were set to the ownership ``[musicdb]->username:[musicdb]->groupname``
 and gets the permission ``rw-rw-r--`` (``+x`` for directories)
 
 .. attention::
@@ -252,7 +252,7 @@ class VideoFrames(object):
         # Set permissions to -rwxrwxr-x
         try:
             self.framesroot.SetAttributes(dirname,
-                    self.cfg.music.owner, self.cfg.music.group,
+                    self.cfg.musicdb.username, self.cfg.musicdb.groupname,
                     stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR |
                     stat.S_IRGRP | stat.S_IWGRP | stat.S_IXGRP |
                     stat.S_IROTH |                stat.S_IXOTH )

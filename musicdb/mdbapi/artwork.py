@@ -68,7 +68,7 @@ This method replaces "/" by an Unicode division slash to avoid problems with the
 
 In case there is no artwork given for an album, the default artwork is ``default.jpg``.
 
-All new creates files were set to the ownership ``[music]->owner:[music]->group`` and gets the permission ``rw-rw-r--``
+All new creates files were set to the ownership ``[musicdb]->username:[musicdb]->groupname`` and gets the permission ``rw-rw-r--``
 
 Web Browsers
 ^^^^^^^^^^^^
