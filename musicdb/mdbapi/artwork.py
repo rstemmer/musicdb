@@ -256,7 +256,7 @@ class MusicDBArtwork(object):
     def UpdateFileAttributes(self, path):
         """
         Tries to set the on owner of a file as configured in the MusicDB Configuration and
-        the access permission to ``rw-rw-r--`.
+        the access permission to ``rw-rw-r--``.
 
         Args:
             path: path to the artwork
