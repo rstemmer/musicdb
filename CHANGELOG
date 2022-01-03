@@ -31,9 +31,11 @@ Run  git log --oneline  for more details
 │ + [filesystem] New methods: SetOwner, SetAccessPermissions, GetAccessPermissions, CheckAccessPermissions
 │ + [accesspermissions] New module for high level access permission checks added
 │ * Command Line Interface
+│    - Old high level command line user interface removed. The WebUI provides a better, more reliable alternative.
+│       repair, add, moods, genres
+│    - [recache] removed
 │    - [database] removed sub commands: add, getlyrics, update
 │    * [metadata] --check is no longer expected. Just give the path.
-│    - [recache] removed
 │ + [WebUI] Audio stream player + settings form added
 │ + [WebUI] Settings added to allow hiding Audio stream player and System Status inside the main menu
 │ + [WebUI] Allow uploading albums via web front-end

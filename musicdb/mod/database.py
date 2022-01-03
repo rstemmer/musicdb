@@ -16,7 +16,6 @@
 """
 This module manages the music database.
 Its main task is to add new albums, artists or music videos to the Music Database.
-This module can also be seen as the low level interface compared to :doc:`/mod/add`.
 
 .. attention::
 

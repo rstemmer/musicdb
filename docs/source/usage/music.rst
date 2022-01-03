@@ -56,11 +56,13 @@ A complete path to the music video *Sonne* by *Rammstein* would be: ``Rammstein/
 Importing Albums to MusicDB
 ---------------------------
 
+TODO: UPDATE
+
 There are three ways to import music:
 
-   * The ``musicdb add`` command: :doc:`/mod/add` (the semi-automatic way)
+   * The ``musicdb add`` command: /mod/add (the semi-automatic way)
    * The ``musicdb database`` command: :doc:`/mod/database` (the hard way)
-   * The ``musicdb repair`` command: :doc:`/mod/repair` (not recommended - it was not made for importing)
+   * The ``musicdb repair`` command: /mod/repair (not recommended - it was not made for importing)
 
 After adding the music via ``musicdb database`` or ``musicdb repair``,
 the artwork must be imported using ``musicdb artwork`` (:doc:`/mod/artwork`).
@@ -98,8 +100,10 @@ For details see :doc:`/mod/database`.
 Using the repair module
 ^^^^^^^^^^^^^^^^^^^^^^^
 
+TODO: UPDATE
+
 The following example shows how to add artists and albums using the ``repair`` module.
-For details see :doc:`/mod/repair`.
+For details see /mod/repair.
 
 .. code-block:: bash
 
@@ -113,8 +117,10 @@ For details see :doc:`/mod/repair`.
 Using the add module
 ^^^^^^^^^^^^^^^^^^^^
 
+TODO: UPDATE
+
 The following example shows how to add artists and albums using the ``add`` module.
-For details see :doc:`/mod/add`.
+For details see /mod/add.
 
 .. code-block:: bash
 
@@ -127,11 +133,13 @@ For details see :doc:`/mod/add`.
 Updating Songs
 --------------
 
+TODO: UPDATE
+
 When updating a song file, or when renaming it, MusicDB won't find it anymore because of the changed path.
 Call the ``musicdb repair`` module to repair the connection between file and database entry.
 Select the "Orphan File" in the left list, press ``tab`` to switch to the right list and select the "Orphan DB Entry".
 Then press ``u`` to update the database entry with the new file.
-For further details see :doc:`/mod/repair`.
+For further details see /mod/repair.
 
 
 Importing Videos to MusicDB
