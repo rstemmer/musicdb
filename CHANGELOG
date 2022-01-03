@@ -34,6 +34,7 @@ Run  git log --oneline  for more details
 │ + [randy] New filter options:
 │       nohidden: do not select songs from hidden albums
 │       nobadfile: do not select songs that are flagged by the "bad file" flag
+│       nolivemusic: do not select songs that are flagged by the "live recording" flag
 │ * Command Line Interface
 │    - Old high level command line user interface removed. The WebUI provides a better, more reliable alternative.
 │       repair, add, moods, genres
