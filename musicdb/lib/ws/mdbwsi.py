@@ -3912,40 +3912,26 @@ class MusicDBWebSocketInterface(object):
 
             
         """
-        # Check if old path is a valid path to a file in the Music Directory
-        if not self.musicdirectory.IsFile(oldpath):
-            logging.warning("Rename Music Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
-            return False
-
-        # Check if new path addresses an already existing file
-        if self.musicdirectory.Exists(newpath):
-            logging.warning("Rename Music Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
-            return False
-
-        # Check if path if path is plausible
+        # Determine if the music file could be a song or a video
         oldcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldpath)
-        newcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldpath)
-        if oldcontenttype != newcontenttype:
-            logging.warning("Old path (\"%s\") was estimated as \"%s\", the new one (\"%s\") as \"%s\". \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype, newpath, newcontenttype)
-            return False
 
-        # Check if exists in database
+        # Check if exists in database and rename
         databaseentry = None
-        if   oldcontenttype == "song":
+        success       = False
+        if oldcontenttype == "song":
             databaseentry = self.database.GetSongByPath(oldpath)
+            success       = self.musicdirectory.RenameSongFile(oldpath, newpath)
+
         elif oldcontenttype == "video":
             databaseentry = self.database.GetVideoByPath(oldpath)
+            success       = self.musicdirectory.RenameSongFile(oldpath, newpath)
 
-        # Rename path
-        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
-        try:
-            success = self.musicdirectory.Rename(oldpath, newpath)
-        except Exception as e:
-            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
-            success = False
+        else:
+            logging.warning("Old path (\"%s\") was estimated as \"%s\". \"song\" or \"video\" was expected. \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype)
+            return False
 
-        if not success:
-            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
+        # Check if renaming succeeded. If not an error has already been logged
+        if success == False:
             return False
 
         # Update database if needed
@@ -4026,46 +4012,18 @@ class MusicDBWebSocketInterface(object):
                 }
 
         """
-        # Check if old path is a valid path to a file in the Music Directory
-        if not self.musicdirectory.IsDirectory(oldpath):
-            logging.warning("Rename Album Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
-            return False
-
-        # Check if new path addresses an already existing file
-        if self.musicdirectory.Exists(newpath):
-            logging.warning("Rename Album Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
-            return False
-
-        # Check if path if path is plausible
-        oldcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldpath)
-        newcontenttype = self.musicdirectory.EstimateContentTypeByPath(newpath)
-        if oldcontenttype != newcontenttype:
-            logging.warning("Old path (\"%s\") was estimated as \"%s\", the new one (\"%s\") as \"%s\". \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype, newpath, newcontenttype)
-            return False
-
-        if oldcontenttype != "album":
-            logging.warning("Old path (\"%s\") was estimated as \"%s\". An Album was expected. \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype)
-            return False
-
-        # Check if exists in database
+        # Check if exists in database and rename
         databaseentry = self.database.GetAlbumByPath(oldpath)
+        success       = self.musicdirectory.RenameAlbumDirectory(oldpath, newpath)
 
-        # Rename path
-        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
-        try:
-            success = self.musicdirectory.Rename(oldpath, newpath)
-        except Exception as e:
-            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
-            success = False
-
+        # Check if renaming succeeded. If not an error has already been logged
         if not success:
-            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
             return False
 
         # Update database if needed
         if databaseentry != None:
             targetid = databaseentry["id"]
-            logging.info("Updating database entry for \033[0;36m%s\033[1;34m with ID \033[0;36m%s", oldcontenttype, str(targetid))
+            logging.info("Updating database entry for \033[0;36mAlbum\033[1;34m with ID \033[0;36m%s", str(targetid))
             self.music.UpdateAlbum(targetid, newpath)
 
         return True
@@ -4119,46 +4077,17 @@ class MusicDBWebSocketInterface(object):
                 }
 
         """
-        # Check if old path is a valid path to a file in the Music Directory
-        if not self.musicdirectory.IsDirectory(oldpath):
-            logging.warning("Rename Artist Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
-            return False
-
-        # Check if new path addresses an already existing file
-        if self.musicdirectory.Exists(newpath):
-            logging.warning("Rename Artist Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
-            return False
-
-        # Check if path if path is plausible
-        oldcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldpath)
-        newcontenttype = self.musicdirectory.EstimateContentTypeByPath(newpath)
-        if oldcontenttype != newcontenttype:
-            logging.warning("Old path (\"%s\") was estimated as \"%s\", the new one (\"%s\") as \"%s\". \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype, newpath, newcontenttype)
-            return False
-
-        if oldcontenttype != "artist":
-            logging.warning("Old path (\"%s\") was estimated as \"%s\". An Artist was expected. \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype)
-            return False
-
-        # Check if exists in database
+        # Check if exists in database and rename
         databaseentry = self.database.GetArtistByPath(oldpath)
-
-        # Rename path
-        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
-        try:
-            success = self.musicdirectory.Rename(oldpath, newpath)
-        except Exception as e:
-            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
-            success = False
+        success       = self.musicdirectory.RenameArtistDirectory(oldname, newname)
 
         if not success:
-            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
             return False
 
         # Update database if needed
         if databaseentry != None:
             targetid = databaseentry["id"]
-            logging.info("Updating database entry for \033[0;36m%s\033[1;34m with ID \033[0;36m%s", oldcontenttype, str(targetid))
+            logging.info("Updating database entry for \033[0;36mArtist\033[1;34m with ID \033[0;36m%s", str(targetid))
             self.music.UpdateArtist(targetid, newpath)
 
         return True
