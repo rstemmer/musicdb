@@ -208,8 +208,8 @@ class MusicDBConfig(Config):
         self.randy = SECTION()
         self.randy.nodisabled       = self.Get(bool, "randy",   "nodisabled",   True)
         self.randy.nohated          = self.Get(bool, "randy",   "nohated",      True)
-        #self.randy.nohidden         = self.Get(bool, "randy",   "nohidden",     True) # TODO
-        #self.randy.nobadaudio       = self.Get(bool, "randy",   "nobadaudio",   True) # TODO
+        self.randy.nohidden         = self.Get(bool, "randy",   "nohidden",     True)
+        self.randy.nobadfile        = self.Get(bool, "randy",   "nobadfile",    True)
         self.randy.minsonglen       = self.Get(int,  "randy",   "minsonglen",   120)
         self.randy.maxsonglen       = self.Get(int,  "randy",   "maxsonglen",   600)
         self.randy.songbllen        = self.Get(int,  "randy",   "songbllen",    50)

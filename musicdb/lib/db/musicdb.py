@@ -1668,7 +1668,7 @@ class MusicDatabase(Database):
         return songs
 
 
-    def GetRandomSong(self, filterlist=None, nodisabled=True, nohated=False, minlen=None, maxlen=None, albumid=None):
+    def GetRandomSong(self, filterlist=None, nodisabled=True, nohated=False, nohidden=True, nobadfile=True, minlen=None, maxlen=None, albumid=None):
         r"""
         This method returns a random song that fulfills several constraints.
 
@@ -1722,6 +1722,8 @@ class MusicDatabase(Database):
             filterlist: Optional, default value is ``[]``. A list of genre names or genre tag IDs that limits the search set. The tags have *OR* relations.
             nodisabled (bool): If ``True`` no disables songs will be selected
             nohated (bool): If ``True`` no hated songs will be selected
+            nohidden (bool): If ``True`` no hidden albums will be considered (albumid can override this parameter)
+            nobadfile (bool): If ``True`` no songs marked as "bad file" will be selected
             minlen (int): If set, no songs with less than *minlen* seconds will be selected
             maxlen (int): If set, no songs with more than *maxlen* seconds will be selected
             albumid (int): Use album with ID ``albumid`` instead of a random album
@@ -1731,15 +1733,21 @@ class MusicDatabase(Database):
             or ``None`` when there is no song fulfilling the constraints
 
         Raises:
-            TypeError: When *nodisabled* or *nohated* are not of type ``bool``
+            TypeError: When *nodisabled*, *nohated*, *nohidden* or *nobadfile* are not of type ``bool``
             TypeError: When *minlen* or *maxlen* is not ``None`` and not of type integer
             TypeError: When *filterlist* is not a list and not ``None``
         """
         if type(nodisabled) != bool:
             raise TypeError("nodisabled must be of type bool")
-            
+
         if type(nohated) != bool:
             raise TypeError("nohated must be of type bool")
+
+        if type(nohidden) != bool:
+            raise TypeError("nohidden must be of type bool")
+
+        if type(nobadfile) != bool:
+            raise TypeError("nobadfile must be of type bool")
 
         if minlen != None and type(minlen) != int:
             raise TypeError("minlen must be None or of type integer")
@@ -1774,6 +1782,8 @@ class MusicDatabase(Database):
 
                 # Get IDs of all albums existing in the database
                 sql      = "SELECT albumid FROM albums"
+                if nohidden:
+                    sql += " WHERE hidden = FALSE"
                 retval   = self.GetFromDatabase(sql, None)
                 albumids = [entry[self.ALBUM_ID] for entry in retval]
 
@@ -1801,7 +1811,7 @@ class MusicDatabase(Database):
 
         # Get all Songs that may be candidate
         with MusicDatabaseLock:
-            songids = self.GetSongIdsByAlbumIds(selectedalbumids, nodisabled, nohated, minlen, maxlen)
+            songids = self.GetSongIdsByAlbumIds(selectedalbumids, nodisabled, nohated, nobadfile, minlen, maxlen)
 
         if len(songids) == 0:
             return None
@@ -1812,7 +1822,7 @@ class MusicDatabase(Database):
         return song
 
 
-    def GetSongIdsByAlbumIds(self, albumids, nodisabled=True, nohated=False, minlen=None, maxlen=None):
+    def GetSongIdsByAlbumIds(self, albumids, nodisabled=True, nohated=False, nobadfile=True, minlen=None, maxlen=None):
         """
         This method returns a list of songs that belong to the albums addressed by their IDs in the *albumids* list.
         The songs of the returned IDs also fulfill the constraints given by the other parameters.
@@ -1821,6 +1831,7 @@ class MusicDatabase(Database):
             albumids: A list of album IDs that songs are considered to get
             nodisabled (bool): If ``True`` no disables songs will be selected
             nohated (bool): If ``True`` no hated songs will be selected
+            nobadfile (bool): If ``True`` no songs marked as "bad file" will be selected
             minlen (int): If set, no songs with less than *minlen* seconds will be selected
             maxlen (int): If set, no songs with more than *maxlen* seconds will be selected
 
@@ -1828,7 +1839,7 @@ class MusicDatabase(Database):
             A list of song IDs
 
         Raises:
-            TypeError: When *nodisabled* or *nohated* are not of type ``bool``
+            TypeError: When *nodisabled*, *nohated* or *nobadfile* are not of type ``bool``
             TypeError: When *minlen* or *maxlen* is not ``None`` and not of type integer
             ValueError: When minlen is less than ``0``
             ValueError: When maxlen is less than ``0``
@@ -1836,9 +1847,12 @@ class MusicDatabase(Database):
         """
         if type(nodisabled) != bool:
             raise TypeError("nodisabled must be of type bool")
-            
+
         if type(nohated) != bool:
             raise TypeError("nohated must be of type bool")
+
+        if type(nobadfile) != bool:
+            raise TypeError("nobadfile must be of type bool")
 
         if minlen != None and type(minlen) != int:
             raise TypeError("minlen must be None or of type integer")
@@ -1855,6 +1869,8 @@ class MusicDatabase(Database):
             sql += " AND disabled != 1"
         if nohated:
             sql += " AND favorite >= 0"
+        if nobadfile:
+            sql += " AND badaudio = FALSE"
         if minlen:
             # make sure the argument does not mess up the query-string
             if minlen < 0:
