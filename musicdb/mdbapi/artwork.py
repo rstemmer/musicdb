@@ -266,15 +266,15 @@ class MusicDBArtwork(object):
         """
         # Set permissions to rw-rw-r--
         try:
-            self.artworkroot.SetAccessPermissions(artworkname, "rw-rw-r--")
+            self.artworkroot.SetAccessPermissions(path, "rw-rw-r--")
         except Exception as e:
             logging.warning("Setting artwork file attributes to rw-rw-r-- failed with error %s. \033[1;30m(Leaving them as they are)", str(e))
             return False
 
         # Set Owner
-        if not self.artworkroot.SetOwner(artworkname, self.cfg.music.owner, self.cfg.music.group):
+        if not self.artworkroot.SetOwner(path, self.cfg.musicdb.username, self.cfg.musicdb.groupname):
             logging.warning("Setting artwork owner to %s:%s not allowed. \033[1;30m(Leaving them as they are)",
-                    self.cfg.music.owner, self.cfg.music.group)
+                    self.cfg.musicdb.username, self.cfg.musicdb.groupname)
             return False
         return True
 
