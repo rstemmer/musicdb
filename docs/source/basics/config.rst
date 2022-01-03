@@ -211,6 +211,15 @@ nodisabled (boolean):
 nohated (boolean):
    If ``true`` no hated songs will be chosen
 
+nohidden (boolean):
+   If ``True`` no hidden albums will be considered
+
+nobadfile (boolean):
+   If ``True`` no songs marked as "bad file" will be selected
+
+nolivemusic (boolean):
+   If ``True`` no songs marked as "live recording" will be selected
+
 minsonglen (number ∈ ℕ):
    Determines the minimum length of a song in seconds to be in the set of possible songs
 
