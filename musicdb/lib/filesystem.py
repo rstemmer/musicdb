@@ -682,10 +682,11 @@ class Filesystem(object):
         Returns:
             ``True`` on success, otherwise ``False``
         """
+        abspath = self.AbsolutePath(xpath)
         try:
-            shutil.chown(abspath, owner, group)
+            shutil.chown(abspath, user, group)
         except PermissionError as e:
-            logging.error("Setting ownership of %s to %s:%s failed with error %s", abspath, owner, group, str(e))
+            logging.error("Setting ownership of %s to %s:%s failed with error %s", abspath, user, group, str(e))
             return False
 
         return True
