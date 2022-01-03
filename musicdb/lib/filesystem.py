@@ -1183,7 +1183,7 @@ class Filesystem(object):
         Executes an external program.
         The command line is a list of arguments with the executable name as first element.
         So ``commandline[0]`` is the program name like ``"ls"`` and the next elements are a list of arguments to this program (like ``"-l", "-h"``).
-        All entries in this list must be of type string.
+        All entries in this list must be representable as string.
 
         The I/O interfaces *stderr*, *stdout* and *stdin* are piped to ``/dev/null``
 
@@ -1198,7 +1198,7 @@ class Filesystem(object):
             *Nothing*
 
         Raises:
-            TypeError: When one entry of the commandline list is not of type string
+            TypeError: When one entry of the commandline list can not be converted to string
             ChildProcessError: If the return value of the executed program is not 0
 
         Example:
@@ -1218,9 +1218,8 @@ class Filesystem(object):
                 sync
 
         """
-        for entry in commandline:
-            if type(entry) is not str:
-                raise TypeError("All entries in the command line list must be of type string!")
+        commandline = [str(entry) for entry in commandline]
+
         devnull = open(os.devnull, "w")
         retval = subprocess.run(commandline, stdin=devnull, stdout=devnull, stderr=devnull).returncode
         if retval != 0:
