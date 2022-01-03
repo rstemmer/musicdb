@@ -30,7 +30,8 @@ Run  git log --oneline  for more details
 │ + [tracker] Configuration added to decide if random songs shall be tracked: [tracker]->trackrandom
 │ + [filesystem] New methods: SetOwner, SetAccessPermissions, GetAccessPermissions, CheckAccessPermissions
 │ + [accesspermissions] New module for high level access permission checks added
-│ * [randy] New filter options:
+│ * [randy] Fixed ignoring maxsonglen for random songs
+│ + [randy] New filter options:
 │       nohidden: do not select songs from hidden albums
 │       nobadfile: do not select songs that are flagged by the "bad file" flag
 │ * Command Line Interface

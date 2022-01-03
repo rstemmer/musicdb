@@ -156,7 +156,7 @@ class Randy(object):
                 return None
             # STAGE 1: Get Mathematical random song (under certain constraints)
             try:
-                song = self.db.GetRandomSong(filterlist, self.nodisabled, self.nohated, self.nohidden, self.nobadfile, self.minlen)
+                song = self.db.GetRandomSong(filterlist, self.nodisabled, self.nohated, self.nohidden, self.nobadfile, self.minlen, self.maxlen)
             except Exception as e:
                 logging.error("Getting random song failed with error: \"%s\"!", str(e))
                 return None
@@ -244,7 +244,7 @@ class Randy(object):
             tries += 1
             # STAGE 1: Get Mathematical random song (under certain constraints)
             try:
-                song = self.db.GetRandomSong(None, self.nodisabled, self.nohated, self.minlen, self.maxlen, albumid)
+                song = self.db.GetRandomSong(None, self.nodisabled, self.nohated, self.nohidden, self.nobadfile, self.minlen, self.maxlen, albumid)
             except Exception as e:
                 logging.error("Getting random song failed with error: \"%s\"!", str(e))
                 return None
