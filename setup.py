@@ -43,7 +43,6 @@ setuptools.setup(
                 "Tracker": "https://github.com/rstemmer/musicdb/issues",
             },
         packages        = setuptools.find_packages(),
-        #data_files      = [("man/man1", ["sterm.1"])],
         entry_points={
                 "console_scripts": [
                     "musicdb=musicdb.musicdb:main",
@@ -53,20 +52,11 @@ setuptools.setup(
             },
         install_requires= [
             "autobahn",
-            "systemd",
             "mutagen",
             "python-Levenshtein",
             "fuzzywuzzy",
             "pillow",
-            "tqdm",
-            "gi",
-            "sqlite3",
-            "configparser",
-            "json",
-            "csv",
-            "hashlib",
-            "unicodedata",
-            "asyncio"
+            "tqdm"
             ],
         python_requires = ">=3.8",
         keywords        = "music streaming cloud music-player music-library music-collection music-streaming music-manager streaming-audio musicdb",
