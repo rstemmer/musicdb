@@ -38,6 +38,7 @@ extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.imgmath',
     'sphinx.ext.ifconfig',
     'sphinx.ext.graphviz',
+    'sphinx_inline_tabs',
     'sphinx.ext.viewcode']
     #'sphinx_js',
 

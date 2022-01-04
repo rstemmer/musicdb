@@ -36,3 +36,47 @@ File Access Permissions
 
 See :doc:`/basics/data` for a detailed documentation on the access permissions for the MusicDB file structure.
 
+Password Protected Audio Stream
+-------------------------------
+
+If you want to protect the audio stream, you need to configure the corresponding mount points as follows:
+
+.. code-block:: xml
+
+   <mount>
+      <!-- … -->
+
+      <authentication type="htpasswd">
+         <option name="filename" value="/var/lib/icecast/users" />
+         <option name="allow_duplicate_users" value="1" />
+      </authentication>
+
+      <!-- … -->
+   </mount>
+
+   <!-- … -->
+
+   <paths>
+      <!-- … -->
+
+      <ssl-certificate>/etc/ssl/Icecast.pem</ssl-certificate>
+
+      <!-- … -->
+   </paths>
+
+Then create the file ``Icecast.pem`` file, configure the ``users`` file and restart Icecast:
+
+.. code-block:: bash
+
+   # Create Icecast.pem …
+
+   # Setup users
+   touch /var/lib/icecast/users
+   chown icecast:icecast /var/lib/icecast/users
+   chmod u=rw,g=r,o-rw /var/lib/icecast/users
+
+   # Restart Icecast
+   systemctl restart icecast
+
+
+

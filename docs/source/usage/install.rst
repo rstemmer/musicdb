@@ -41,7 +41,7 @@ Download
 --------
 
 Download the latest package file from the `MusicDB Releases page on GitHub <https://github.com/rstemmer/musicdb/releases>`_.
-There are severel packages avalilabe.
+There are several packages available.
 Download the one that matches to your Linux Distribution.
 
 Be aware that MusicDB requires lots of libraries because of its dependency to `FFmpeg <https://www.ffmpeg.org/>`_ and `gstreamer <https://gstreamer.freedesktop.org/>`_.
@@ -52,255 +52,48 @@ Installation
 
 Update your system before installing MusicDB.
 
+.. tab:: Arch Linux
 
-Arch Linux via pacman
-^^^^^^^^^^^^^^^^^^^^^
+   After downloading the latest MusicDB package, you can simply install it with the package manager ``pacman``.
+   Make sure you downloaded the package with the file extension ``.pkg.tar.zst``.
 
-After downloading the latest MusicDB package, you can simply install it with the package manager ``pacman``.
-Make sure you downloaded the package with the file extension ``.pkg.tar.zst``.
+   .. code-block:: bash
 
-.. code-block:: bash
+      # Become root
+      su
 
-   # Become root
-   su
+      # Install MusicDB
+      pacman -U musicdb-$version-any.pkg.tar.zst
 
-   # Install MusicDB
-   pacman -U musicdb-$version-any.pkg.tar.zst
+.. tab:: Fedora
 
+   After downloading the latest MusicDB package for Fedora, you can install it with the Fedora package manager ``dnf``.
+   MusicDB is optimized for the latest version of Fedora.
+   To make the instruction version independent, ``rpm -E %fedora`` is used to get the version of your Fedora distribution.
+   The output should match the fedora version encoded in the downloaded packaged.
 
-Fedora via dnf
-^^^^^^^^^^^^^^
+   If ``rpm -E %fedora`` returns ``35``, the downloaded file should contain ``fc35`` in its file name. For example: *musicdb-8.0.0-1.fc35.noarch.rpm*.
 
-After downloading the latest MusicDB package for Fedora, you can install it with the Fedora package manager ``dnf``.
-MusicDB is optimized for the latest version of Fedora.
-To make the instruction version independent, ``rpm -E %fedora`` is used to get the version of your Fedora distribution.
-The output should match the fedora version encoded in the downloaded packaged.
+   First you have to make sure you can install dependencies from the rpmfusion repository.
+   MusicDB requires some dependencies that do not follow the strict free software policy fedora follows.
+   Those dependencies (in our case multimedia transcoding tools like ``ffmpeg``) must be installed from a third party repository.
 
-If ``rpm -E %fedora`` returns ``35``, the downloaded file should contain ``fc35`` in its file name. For example: *musicdb-8.0.0-1.fc35.noarch.rpm*.
+   .. code-block:: bash
 
-First you have to make sure you can install dependencies from the rpmfusion repository.
-MusicDB requires some dependencies that do not follow the strict free software policy fedora follows.
-Those dependencies (in our case multimedia transcoding tools like ``ffmpeg``) must be installed from a third party repository.
+      dnf repolist
+      # Output should contain:
+      #  rpmfusion-free
+      #  rpmfusion-nonfree
 
-.. code-block:: bash
+      # If not, install the repository via the following commands:
+      sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+      sudo dnf install https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-   dnf repolist
-   # Output should contain:
-   #  rpmfusion-free
-   #  rpmfusion-nonfree
 
-   # If not, install the repository via the following commands:
-   sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-   sudo dnf install https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+   .. code-block:: bash
 
-
-.. code-block:: bash
-
-   # Install MusicDB
-   sudo dnf install musicdb-8.0.0-1.fc$(rpm -E %fedora).noarch.rpm
-
-
-From Source
-^^^^^^^^^^^
-
-To install MusicDB from source, download the source archive: ``musicdb-8.0.0-src.tar.zst``.
-Make sure you download the one with the latest version number.
-
-The following steps show how to install MusicDB on an Fedora 35.
-There will be some minor differences with other Linux distributions.
-Before installing MusicDB you should update your system.
-
-The installation process can be split into the following parts:
-
-    #. Installing libraries and tools MusicDB depends on
-    #. Installing the Back-End (``musicdb``)
-    #. Installing the Front-End (The WebUI)
-    #. Installing data and configuration files
-    #. Create the ``musicdb`` UNIX user and group
-
-First you need to install all libraries and tools used by MusicDB.
-This can be done with the package manager of your Linux Distribution.
-In case of Fedora it is ``dnf``.
-
-The following list shows the Arch Linux package names that need to be installed:
-
-
-===========================  ===========================  ===========================  ===========================
-Package Name                 Arch Linux                   Fedora                       Debian/Ubuntu
-===========================  ===========================  ===========================  ===========================
-zstd                                                      zstd                         zstd
----------------------------  ---------------------------  ---------------------------  ---------------------------
-Python 3                     python                       python3                      python3-all
-Python Build                 python-build                 python3-build
-                                                          python3-devel
-Python Setup Tools           python-setuptools            python3-setuptools           python3-setuptools
----------------------------  ---------------------------  ---------------------------  ---------------------------
-Python GObject               python-gobject               python3-gobject              python3-gi
-Python Autobahn              python-autobahn              python3-autobahn             python3-autobahn
-Python systemd               python-systemd               python3-systemd              python3-systemd
-Python Levenshtein           python-levenshtein           python3-Levenshtein          python3-levenshtein
-Python fuzzywuzzy            python-fuzzywuzzy            python3-fuzzywuzzy           python3-fuzzywuzzy
-Python mutagen               python-mutagen               python3-mutagen              python3-mutagen
-Python tqdm                  python-tqdm                  python3-tqdm                 python3-tqdm
-Python Pillow                python-pillow                python3-pillow               python3-willow
----------------------------  ---------------------------  ---------------------------  ---------------------------
-FFmpeg                       ffmpeg                       ffmpeg                       ffmpeg
-SQLite3                      sqlite                       sqlite                       sqlite3
-GStreamer                    gstreamer                    gstreamer1
-GStreamer plugins            gst-plugins-base             gstreamer1-plugins-base      gstreamer1.0-plugins-base
-                             gst-plugins-base-libs
-                             gst-plugins-good             gstreamer1-plugins-good      gstreamer1.0-plugins-good
-                             gst-plugins-bad              gstreamer1-plugins-bad-free  gstreamer1.0-plugins-bad
-                             gst-plugins-bad-libs         
-OpenSSL                                                   openssl                      openssl
-libshout                     libshout                     libshout                     libshout3
----------------------------  ---------------------------  ---------------------------  ---------------------------
-Icecast                      icecast                      icecast                      icecast2
-logrotate                    logrotate                    logrotate                    logrotate
-Apache HTTPD                 apache                       httpd                        apache2
-===========================  ===========================  ===========================  ===========================
-
-
-In some distributions packages have different names.
-For example Debian and Ubuntu have the following changes:
-``python3-pillow`` is replaced by ``python3-willow``.
-
-On Fedora you have to make sure you can install dependencies from the rpmfusion repository.
-MusicDB requires some dependencies that do not follow the strict free software policy fedora follows.
-Those dependencies (in our case multimedia transcoding tools like ``ffmpeg``) must be installed from a third party repository.
-On other Distributions a similar step may be necessary to get all required multimedia libraries.
-
-.. code-block:: bash
-
-   dnf repolist
-   # Output should contain:
-   #  rpmfusion-free
-   #  rpmfusion-nonfree
-
-   # If not, install the repository via the following commands:
-   sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-   sudo dnf install https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-
-Then the required packages for MusicDB can be installed:
-
-.. code-block:: bash
-
-   # Example for Fedora 35
-
-   # Update the System
-   sudo dnf upgrade
-
-   # Install packages required by MusicDB
-   sudo dnf install zstd
-   sudo dnf install python3 python3-build python3-devel python3-setuptools
-   sudo dnf install python3-gobject python3-autobahn python3-systemd python3-Levenshtein python3-fuzzywuzzy python3-mutagen python3-tqdm python3-pillow     
-   sudo dnf install gstreamer1 gstreamer1-plugins-base gstreamer1-plugins-good gstreamer1-plugins-bad-free
-   sudo dnf install ffmpeg
-   sudo dnf install sqlite
-   sudo dnf install openssl
-   sudo dnf install libshout
-   sudo dnf install logrotate
-   sudo dnf install icecast
-   sudo dnf install httpd
-
-After installing the dependencies for MusicDB, the Back-End can be installed.
-Again, the following shell commands show the required steps for Fedora 35.
-The commands may be a little bit different on other distributions.
-For example on Debian/Ubuntu the Python command is called ``python3`` instead of ``python``.
-
-.. code-block:: bash
-
-   # Go to the directory where the source archive is stored
-   # For example your Downloads directory
-   cd ~/Downloads
-
-   # Unpack the source archive and enter the directory
-   # Keep in mind that the version number may be different
-   tar -xf musicdb-8.0.0-src.tar.zst
-   cd musicdb-8.0.0-src
-
-   # Build the Back-End
-   python setup.py build
-   sudo python setup.py install --skip-build --optimize=1
-
-The Back-End should now be installed and can be tested by running ``musicdb --version``.
-It should return the correct version and the following error message.
-The group name will be different for your user.
-
-.. code-block::
-
-   MusicDB [8.0.0]
-   MusicDB runs in UNIX group ralf but expects group musicdb.
-   To change the group, run newgrp musicdb before executing MusicDB
-
-If you see an exception then something went wrong.
-You can open an Issue at the `MusicDB GitHub Page <https://github.com/rstemmer/musicdb/issues>`_ to ask for support.
-Please include the full exception and mention the Linux Distribution you use.
-
-Next step is to install the Front-End.
-This is done by the following commands:
-
-.. code-block:: bash
-
-   sudo install -dm 755 /usr/share/webapps/musicdb
-   sudo cp -r -a --no-preserve=ownership webui/* /usr/share/webapps/musicdb
-
-That's it for the Front-End.
-
-Next the data and configuration files needed by MusicDB needs to be installed.
-This is done by the following commands:
-
-.. code-block:: bash
-
-   # Shared Data
-   sudo install -dm 755 /usr/share/musicdb
-   sudo cp -r -a --no-preserve=ownership share/* /usr/share/musicdb
-   sudo cp -r -a --no-preserve=ownership sql     /usr/share/musicdb
-
-   # MusicDB Configuration
-   sudo install -Dm 644 share/musicdb.ini /etc/musicdb.ini
-
-   # System Configuration
-   sudo install -Dm 644 share/logrotate.conf  /etc/logrotate.d/musicdb
-   sudo install -Dm 644 share/apache.conf     /etc/httpd/conf/musicdb.conf
-   sudo install -Dm 644 share/musicdb.service /usr/lib/systemd/system/musicdb.service
-
-Make sure that the path to the ``musicdb`` executable in the ``musicdb.service`` file is correct:
-
-.. code-block:: bash
-
-   whereis musicdb
-   # Should print:
-   #> musicdb: /usr/bin/musicdb 
-   # or:
-   #> musicdb: /usr/local/bin/musicdb 
-
-   # If it is not /usr/bin/musicdb do the following steps:
-   sudo vim /usr/lib/systemd/system/musicdb.service
-   # Check [Service]->ExecStart=/usr/local/bin/musicdb server
-   systemctl daemon-reload
-
-
-
-In a final step the ``musicdb`` UNIX user and group must be created as well as some further data directories.
-For these final steps systemd will be used.
-
-.. code-block:: bash
-
-   sudo install -Dm 644 share/sysusers.conf /usr/lib/sysusers.d/musicdb.conf
-   sudo install -Dm 644 share/tmpfiles.conf /usr/lib/tmpfiles.d/musicdb.conf
-   sudo systemd-sysusers
-   sudo systemd-tmpfiles --create
-
-In case your distribution used SELinux, some additional steps are necessary to provide correct context to the new files and directories:
-
-.. code-block:: bash
-
-   semanage fcontext -a -t httpd_sys_content_t "/usr/share/webapps/musicdb(/.*)?"
-   restorecon -R /usr/share/webapps/musicdb
-
-That's it. MusicDB is now installed and can be configured.
-Continue with the next sections to create a working environment.
+      # Install MusicDB
+      sudo dnf install musicdb-8.0.0-1.fc$(rpm -E %fedora).noarch.rpm
 
 
 Initial Setup
@@ -459,32 +252,30 @@ This configuration just needs to be included into the Apache main configuration 
 In this example, the web-server would provide the WebUI via HTTP.
 It is recommend to use HTTPS. Please check the web server manual on how to setup SSL encrypted web sites.
 
-Apache on Arch Linux
-^^^^^^^^^^^^^^^^^^^^
+.. tab:: Arch Linux
 
-The following code shows how to install the HTTP server via ``pacman`` on Arch Linux.
+   The following code shows how to install the HTTP server via ``pacman`` on Arch Linux.
 
-.. code-block:: bash
+   .. code-block:: bash
 
-   # Install Apache
-   pacman -S apache
+      # Install Apache
+      pacman -S apache
 
-   # Setup web server for the front end
-   echo "Include conf/extra/musicdb.conf" >> /etc/httpd/conf/httpd.conf
+      # Setup web server for the front end
+      echo "Include conf/extra/musicdb.conf" >> /etc/httpd/conf/httpd.conf
 
 
-Apache on Fedora
-^^^^^^^^^^^^^^^^
+.. tab:: Fedora
 
-The following code shows how to install the HTTP server via ``dnf`` on Fedora.
+   The following code shows how to install the HTTP server via ``dnf`` on Fedora.
 
-.. code-block:: bash
+   .. code-block:: bash
 
-   # Install Apache
-   dnf install httpd
+      # Install Apache
+      dnf install httpd
 
-   # Setup web server for the front end
-   mv /etc/httpd/conf/musicdb.conf /etc/httpd/conf.d/.
+      # Setup web server for the front end
+      mv /etc/httpd/conf/musicdb.conf /etc/httpd/conf.d/.
 
 
 Start the Web Server
@@ -526,26 +317,23 @@ This section shows how to setup Icecast and how to connect MusicDB with Icecast.
    If you do not want to use Icecase, deactivate the responsible interface in MusicDB.
    Open ``/etc/musicdb.ini`` and set ``[debug]->disableicecast`` to ``True``.
 
-Icecast on Arch Linux
-^^^^^^^^^^^^^^^^^^^^^^^
+.. tab:: Arch Linux
 
-The following code shows how to install Icecast via ``pacman`` on Arch Linux.
+   The following code shows how to install Icecast via ``pacman`` on Arch Linux.
 
-.. code-block:: bash
+   .. code-block:: bash
 
-   # Setup Icecast for secure audio streaming
-   pacman -S icecast
+      # Setup Icecast for secure audio streaming
+      pacman -S icecast
 
+.. tab:: Fedora
 
-Icecast on Fedora
-^^^^^^^^^^^^^^^^^
+   The following code shows how to install Icecast via ``dnf`` on Fedora.
 
-The following code shows how to install Icecast via ``dnf`` on Fedora.
+   .. code-block:: bash
 
-.. code-block:: bash
-
-   # Setup Icecast for secure audio streaming
-   dnf install icecast
+      # Setup Icecast for secure audio streaming
+      dnf install icecast
 
 Setup Icecast
 ^^^^^^^^^^^^^
@@ -599,68 +387,15 @@ Be sure you have enabled MusicDB to connect to Icecast if you disabled it previo
 You then can, for example with `VLC <https://www.videolan.org/vlc/index.de.html>`_, connect to the audio stream.
 The stream URL is ``http://127.0.0.1:8000/stream``.
 
+
+Final Steps
+-----------
+
 At this point everything is ready to run and to use.
 Next you need to add Music to MusicDB.
 
-TODO: Reference to the related documentation
-
-
-Protected Stream
-^^^^^^^^^^^^^^^^
-
-If you want to protect the audio stream, you need to configure the corresponding mount points as follows:
-
-.. code-block:: xml
-
-   <mount>
-      <!-- … -->
-
-      <authentication type="htpasswd">
-         <option name="filename" value="/var/lib/icecast/users" />
-         <option name="allow_duplicate_users" value="1" />
-      </authentication>
-
-      <!-- … -->
-   </mount>
-
-   <!-- … -->
-
-   <paths>
-      <!-- … -->
-
-      <ssl-certificate>/etc/ssl/Icecast.pem</ssl-certificate>
-
-      <!-- … -->
-   </paths>
-
-Then create the file ``Icecast.pem`` file, configure the ``users`` file and restart Icecast:
-
-.. code-block:: bash
-
-   # Create Icecast.pem …
-
-   # Setup users
-   touch /var/lib/icecast/users
-   chown icecast:icecast /var/lib/icecast/users
-   chmod u=rw,g=r,o-rw /var/lib/icecast/users
-
-   # Restart Icecast
-   systemctl restart icecast
-
-
-Documentation Installation
---------------------------
-
-Usually you can access the documentation on `online at rstemmer.github.io/musicdb <https://rstemmer.github.io/musicdb/build/html/index.html>`_
-In case you want to have the documentation installed on your server you can do this with the following steps.
-
-Download the ``musicdb-$version-doc.tar.zst`` file from the `GitHub Repository <https://github.com/rstemmer/musicdb/releases>`_ and install it to ``/usr/share/doc/musicdb/html``.
-For example:
-
-.. code-block:: bash
-
-   mkdir -p /usr/share/doc/musicdb/htmldoc
-   tar -xf musicdb-8.0.0-doc.tar.zst --strip-components=1 -C /usr/share/doc/musicdb/htmldoc
-
+* :doc:`/usage/music`
+* :doc:`/usage/installdocs`
+* :doc:`/basics/security`
 
 
