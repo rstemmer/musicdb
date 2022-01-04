@@ -54,6 +54,7 @@ Arch Linux via pacman
 ^^^^^^^^^^^^^^^^^^^^^
 
 After downloading the latest MusicDB package, you can simply install it with the package manager ``pacman``.
+Make sure you downloaded the package with the file extension ``.pkg.tar.zst``.
 
 .. code-block:: bash
 
@@ -95,6 +96,16 @@ Those dependencies (in our case multimedia transcoding tools like ``ffmpeg``) mu
    # Install MusicDB
    sudo dnf install musicdb-8.0.0-1.fc$(rpm -E %fedora).noarch.rpm
 
+
+From Source
+^^^^^^^^^^^
+
+To install MusicDB from source, download the source archive: ``musicdb-8.0.0-src.tar.zst``.
+Make sure you download the one with the latest version number.
+
+The following steps show how to install MusicDB on an Ubuntu 20.04 LTS.
+There will be some minor differences with other Linux distributions.
+Before installing MusicDB you should update your system.
 
 Initial Setup
 -------------
