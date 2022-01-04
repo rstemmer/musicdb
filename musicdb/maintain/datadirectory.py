@@ -164,7 +164,7 @@ class DataDirectoryMaintainer(object):
 
             if not self.CheckPath(subdir["path"], subdir["user"], subdir["group"], subdir["mode"]):
                 logging.info("Updating attributes of %s", subdir["path"])
-                self.filesystem.SetAccessPermissings(subdir["path"], subdir["mode"])
+                self.filesystem.SetAccessPermissions(subdir["path"], subdir["mode"])
                 self.filesystem.SetOwner(subdir["path"], subdir["user"], subdir["group"])
 
 
@@ -175,7 +175,7 @@ class DataDirectoryMaintainer(object):
 
             if not self.CheckPath(file["path"], file["user"], file["group"], file["mode"]):
                 logging.info("Updating attributes of %s", file["path"])
-                self.filesystem.SetAccessPermissings(file["path"], file["mode"])
+                self.filesystem.SetAccessPermissions(file["path"], file["mode"])
                 self.filesystem.SetOwner(file["path"], file["user"], file["group"])
 
         # Make sure the WebSocket API Key is set in the config.js file
