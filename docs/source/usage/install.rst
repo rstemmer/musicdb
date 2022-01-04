@@ -91,7 +91,7 @@ Those dependencies (in our case multimedia transcoding tools like ``ffmpeg``) mu
    sudo dnf install https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 
-.. code-block::
+.. code-block:: bash
 
    # Install MusicDB
    sudo dnf install musicdb-8.0.0-1.fc$(rpm -E %fedora).noarch.rpm
@@ -106,6 +106,111 @@ Make sure you download the one with the latest version number.
 The following steps show how to install MusicDB on an Ubuntu 20.04 LTS.
 There will be some minor differences with other Linux distributions.
 Before installing MusicDB you should update your system.
+
+The installation process can be split into the following parts:
+
+    #. Installing libraries and tools MusicDB depends on
+    #. Installing the Back-End (``musicdb``)
+    #. Installing the Front-End (The WebUI)
+    #. Installing data and configuration files
+
+First you need to install all libraries and tools used by MusicDB.
+This can be done with the package manager of your Linux Distribution.
+In case of Ubuntu it is ``apt``.
+
+The following list shows the Arch Linux package names that need to be installed:
+
+      ``python3-mutagen``,
+      ``python3-tqdm``, 
+      ``python3-willow``
+      
+
+============        ============           ============                 ============
+Package Name        Arch Linux             Fedora                       Debian/Ubuntu
+============        ============           ============                 ============
+zstd                                       zstd                         zstd
+------------        ------------           ------------                 ------------
+Python 3            python                 python3                      python3-all
+Python Build        python-build           python3-build
+                                           python3-devel
+Python Setup Tools  python-setuptools      python3-setuptools           python3-setuptools
+------------        ------------           ------------                 ------------
+Python GObject      python-gobject         python3-gobject              python3-gi
+Python Autobahn     python-autobahn        python3-autobahn             python3-autobahn
+Python systemd      python-systemd         python3-systemd              python3-systemd
+Python Levenshtein  python-levenshtein     python3-Levenshtein          python3-levenshtein
+Python fuzzywuzzy   python-fuzzywuzzy      python3-fuzzywuzzy           python3-fuzzywuzzy
+Python mutagen      python-mutagen         python3-mutagen              python3-mutagen
+Python tqdm         python-tqdm            python3-tqdm                 python3-tqdm
+Python Pillow       python-pillow          python3-pillow               python3-willow
+------------        ------------           ------------                 ------------
+FFmpeg              ffmpeg                 ffmpeg                       ffmpeg
+SQLite3             sqlite                 sqlite                       sqlite3
+GStreamer           gstreamer              gstreamer1
+GStreamer plugins   gst-plugins-base       gstreamer1-plugins-base      gstreamer1.0-plugins-base
+                    gst-plugins-base-libs
+                    gst-plugins-good       gstreamer1-plugins-good      gstreamer1.0-plugins-good
+                    gst-plugins-bad        gstreamer2-plugins-bad-free  gstreamer1.0-plugins-bad
+                    gst-plugins-bad-libs   
+OpenSSL                                    openssl                      openssl
+libshout            libshout               libshout                     libshout3
+------------        ------------           ------------                 ------------
+Icecast             icecast                icecast                      icecast2
+logrotate           logrotate              logrotate                    logrotate
+Apache HTTPD        apache                 https                        apache2
+============        ============           ============                 ============
+
+
+In some distributions packages have different names.
+For example Debian and Ubuntu have the following changes:
+``python3-pillow`` is replaced by ``python3-willow``.
+
+
+.. code-block:: bash
+
+        # Example for Ubuntu 20.04 LTS
+        apt update
+        apt install zstd
+        apt install python3-all python3-setuptools
+        apt install python3-gi python3-autobahn python3-systemd python3-levenshtein python3-fuzzywuzzy python3-mutagen python3-willow python3-tqdm
+        apt install ffmpeg
+        apt install sqlite3
+        apt install gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
+        apt install openssl
+        apt install libshout3
+        apt install logrotate
+
+        # On Debian/Ubuntu the installation of the following packages is a bit "special"
+
+        apt install icecast2
+        # Select <No> on the dialog. The Icecast setup comes later.
+        
+        apt install apache2
+        # On Ubuntu apt autoamtically starts the server during the installation.
+        # This is most likely not what you want, because it is not set up yet.
+        # You can stop the server with the following command:
+        systemctl stop apache2
+
+After installing the dependencies MusicDB can be installed.
+Again, the following shell commands show the required steps for Ubuntu 20.04 LTS.
+The commands may be a little bit different on other distributons.
+For example on Arch Linux and Fedora the Python command is called ``python`` instead of ``python3``.
+
+.. code-block:: bash
+
+        # Go to the directory where the source archive is stored
+        # For example your Downloads directory
+        cd ~/Downloads
+
+        # Unpack the source archive and enter the directory
+        # Keep in mind that the version number may be different
+        tar -xf musicdb-8.0.0-src.tar.zst
+        cd musicdb-8.0.0-src
+
+        # Build the Back-End
+        python3 setup.py build
+        sudo python3 setup.py install --skip-build --optimize=1
+        #sudo python3 -m complileall --incalidation-mode=checked-hash
 
 Initial Setup
 -------------
