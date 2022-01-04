@@ -21,8 +21,11 @@ The following sections describe how to install MusicDB and its dependencies.
    Before updating MusicDB **backup the MusicDB Data directory**.
    Major updates change the configuration file and the database scheme.
 
+   **MusicDB requires Python 3.9 or later.**
+   If ``python3 --version`` returns a version number less than 3.9.0 MusicDB will not work on your Linux Distribution.
 
-For Arch Linux, a package is provided that can be installed via ``pacman``.
+
+For Arch Linux and Fedora, a package is provided that can be installed via ``pacman`` on Arch Linux or ``dnf`` on Fedora.
 Download the latest MusicDB package and execute the following commands.
 To make the web interface accessible ``apache`` is used as web server.
 Any other web server can be used as well.
@@ -31,8 +34,8 @@ This step is optional.
 
 .. warning::
 
-   In Germany, password protecting the audio stream is mandatory for legal reasons (GEMA),
-   if the stream is accessible from the internet.
+   In Germany, password protecting the audio stream is mandatory for legal reasons (GEMA).
+   Configure Icecast to ask for a password if the stream is accessible from the internet.
 
 Download
 --------
@@ -70,10 +73,10 @@ Fedora via dnf
 
 After downloading the latest MusicDB package for Fedora, you can install it with the Fedora package manager ``dnf``.
 MusicDB is optimized for the latest version of Fedora.
-To make the instruction version independed, ``rpm -E %fedora`` is used to get the version of your Fedora distribution.
+To make the instruction version independent, ``rpm -E %fedora`` is used to get the version of your Fedora distribution.
 The output should match the fedora version encoded in the downloaded packaged.
 
-If ``rpm -E %fedora`` returns ``35``, the downloaded file should contail ``fc35`` in its file name. For example: *musicdb-8.0.0-1.fc35.noarch.rpm*.
+If ``rpm -E %fedora`` returns ``35``, the downloaded file should contain ``fc35`` in its file name. For example: *musicdb-8.0.0-1.fc35.noarch.rpm*.
 
 First you have to make sure you can install dependencies from the rpmfusion repository.
 MusicDB requires some dependencies that do not follow the strict free software policy fedora follows.
@@ -121,9 +124,6 @@ In case of Fedora it is ``dnf``.
 
 The following list shows the Arch Linux package names that need to be installed:
 
-MusicDB requires Python 3.9 or later.
-If ``python3 --version`` returns a version number less than 3.9.0 MusicDB will not work on your Linux Distribution.
-
 
 ===========================  ===========================  ===========================  ===========================
 Package Name                 Arch Linux                   Fedora                       Debian/Ubuntu
@@ -168,7 +168,7 @@ For example Debian and Ubuntu have the following changes:
 On Fedora you have to make sure you can install dependencies from the rpmfusion repository.
 MusicDB requires some dependencies that do not follow the strict free software policy fedora follows.
 Those dependencies (in our case multimedia transcoding tools like ``ffmpeg``) must be installed from a third party repository.
-On other Distributions a simular step may be necessary to get all required multimedia libraries.
+On other Distributions a similar step may be necessary to get all required multimedia libraries.
 
 .. code-block:: bash
 
@@ -245,7 +245,7 @@ This is done by the following commands:
    sudo install -dm 755 /usr/share/webapps/musicdb
    sudo cp -r -a --no-preserve=ownership webui/* /usr/share/webapps/musicdb
 
-Thats it for the Front-End.
+That's it for the Front-End.
 
 Next the data and configuration files needed by MusicDB needs to be installed.
 This is done by the following commands:
@@ -262,8 +262,25 @@ This is done by the following commands:
 
    # System Configuration
    sudo install -Dm 644 share/logrotate.conf  /etc/logrotate.d/musicdb
-   sudo install -Dm 644 share/apache.conf     /etc/httpd/conf/extra/musicdb.conf
+   sudo install -Dm 644 share/apache.conf     /etc/httpd/conf/musicdb.conf
    sudo install -Dm 644 share/musicdb.service /usr/lib/systemd/system/musicdb.service
+
+Make sure that the path to the ``musicdb`` executable in the ``musicdb.service`` file is correct:
+
+.. code-block:: bash
+
+   whereis musicdb
+   # Should print:
+   #> musicdb: /usr/bin/musicdb 
+   # or:
+   #> musicdb: /usr/local/bin/musicdb 
+
+   # If it is not /usr/bin/musicdb do the following steps:
+   sudo vim /usr/lib/systemd/system/musicdb.service
+   # Check [Service]->ExecStart=/usr/local/bin/musicdb server
+   systemctl daemon-reload
+
+
 
 In a final step the ``musicdb`` UNIX user and group must be created as well as some further data directories.
 For these final steps systemd will be used.
@@ -275,7 +292,14 @@ For these final steps systemd will be used.
    sudo systemd-sysusers
    sudo systemd-tmpfiles --create
 
-That it. MusicDB is now installed and can be configured.
+In case your distribution used SELinux, some additional steps are necessary to provide correct context to the new files and directories:
+
+.. code-block:: bash
+
+   semanage fcontext -a -t httpd_sys_content_t "/usr/share/webapps/musicdb(/.*)?"
+   restorecon -R /usr/share/webapps/musicdb
+
+That's it. MusicDB is now installed and can be configured.
 Continue with the next sections to create a working environment.
 
 
@@ -288,7 +312,16 @@ Those steps are required to provide MusicDB a valid environment.
 For the following examples, the placeholder ``$username`` is used to represent the user
 that owns or maintains the music collection.
 The placeholder ``$username`` must be replaced by that user name.
-I also recommend to add your user to the ``musicdb`` group: ``usermod -G musicdb $username``.
+If you do not know your user name, enter ``id`` in the terminal.
+The name behind the UID is your user names.
+
+I recommend to add your user to the ``musicdb`` group: ``usermod -G musicdb $username``.
+Then you have extended read and write access to data managed by MusicDB.
+All users in the ``musicdb`` group can maintain MusicDB and use the MusicDB command line interface.
+
+.. code-block:: bash
+
+   usermod -G musicdb $username
 
 Music Directory
 ^^^^^^^^^^^^^^^
@@ -296,7 +329,7 @@ Music Directory
 The music directory is the directory that contains the music files
 that will be managed, presented and streamed by MusicDB.
 
-**It is mandatory for MusicDB to work correctly.**
+**Its existence is mandatory for MusicDB to work correctly.**
 
 Before you can start the MusicDB server, a music directory needs to be defined.
 This can be done in the :doc:`/basics/config` file that is placed at ``/etc/musicdb.ini``.
@@ -334,7 +367,7 @@ To make the MusicDB websocket server available from the local network, or intern
 
 The websocket server required an SSL cert/key pair. This is automatically generated on the first run of the MusicDB server if they do not exist.
 The paths are also configured in ``/etc/musicdb.ini`` in the ``[websocket]`` section.
-If you want to use your own certificates, for example managed by `Let's Encrypt <https://letsencrypt.org/de/>`_, you may want to change that paths as well.
+If you want to use your own certificates, for example managed by `Let's Encrypt <https://letsencrypt.org/>`_, you may want to change that paths as well.
 
 API-Key Setup
 ^^^^^^^^^^^^^
@@ -364,9 +397,9 @@ To generate a good key you can use ``openssl``:
    # DO NOT COPY THIS KEY. CREATE YOUR OWN!
 
 This key now must be entered into the server configuration.
-When starting MusicDB for the first time, this key gets propargated into the generated client configuration automatically.
+When starting MusicDB for the first time, this key gets propagated into the generated client configuration (``webdata/config.js``) automatically.
 
-To write the generated random key into the MusicDB server configratuion edit ``/etc/muiscdb.ini`` and update the ``[websocket]->apikey`` value.
+To write the generated random key into the MusicDB server configuration edit ``/etc/muiscdb.ini`` and update the ``[websocket]->apikey`` value.
 
 .. code-block:: ini
 
@@ -398,10 +431,13 @@ and/or check the debug log file via ``less -R /var/log/musicdb/debuglog.ansi``.
 
 When you start MusicDB server for the first time, there will appear some warnings because of missing files in the MusicDB *state* directory (csv-files).
 This is fine. These files will automatically be created when you use MusicDB for streaming music.
-There will also be a regular occurring error that the connection to Icecast failed.
-This is also fine because Icecast has not been set up yet. Setting up Icecast is explained later in this document.
+There will also be an error "There are no songs in the database yet. Audio stream disabled. (Import albums and restart the server to enable audio streaming again.)".
+This is also an expected behavior because no music has been added to the MusicDB database.
 
-Now you can already access the websocket server with your web browser to see if all network settings around MusicDB are correct.
+Now MusicDB is in a state where can be added and managed, but not streamed.
+As soon as you added music to MusicDB, you can restart the server via ``systemctl restart musicdb`` and it will work with all its features including streaming audio.
+
+You can already access the websocket server with your web browser to see if all network settings around MusicDB are correct.
 Use the following address: `<https://127.0.0.1:9000>`_. Of course use the correct IP address and port if you changed the port.
 The default SSL certificate is self-signed and needs to be confirmed explicitly.
 Then the *"AutobahnPython"* web page should load telling you the version number and that this is not an actual web server.
@@ -468,6 +504,9 @@ You should now be able to access the MusicDB WebUI via ``http://127.0.0.1/musicd
 When where is no music managed by MusicDB yet, the WebUI will show you a Welcome-Message telling you that there is no music in the Queue.
 This is fine because you have not hand over any music to MusicDB.
 
+.. figure:: ./images/welcome.png
+   :align: center
+
 Please consider a Apache server configuration that supports HTTPS.
 For details see :doc:`/basics/security`.
 
@@ -512,6 +551,7 @@ Setup Icecast
 
 The default settings in ``/etc/musicdb.ini`` match the default Icecast settings in ``/etc/icecast.xml``.
 Only the source password needs to be configured.
+Again you can use ``openssl rand -base64 32`` to generate a secure password.
 Some more details about Icecast can be found in the chapter: :doc:`/lib/icecast`
 
 The following listing shows the changes that are mandatory to make inside the ``/etc/icecast.xml`` file
@@ -557,6 +597,11 @@ Be sure you have enabled MusicDB to connect to Icecast if you disabled it previo
 
 You then can, for example with `VLC <https://www.videolan.org/vlc/index.de.html>`_, connect to the audio stream.
 The stream URL is ``http://127.0.0.1:8000/stream``.
+
+At this point everything is ready to run and to use.
+Next you need to add Music to MusicDB.
+
+TODO: Reference to the related documentation
 
 
 Protected Stream
