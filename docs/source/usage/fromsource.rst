@@ -20,43 +20,87 @@ First you need to install all libraries and tools used by MusicDB.
 This can be done with the package manager of your Linux Distribution.
 In case of Fedora it is ``dnf``.
 
-The following list shows the Arch Linux package names that need to be installed:
+The following list shows the packaged that are required by MusicDB.
+On each Linux distribution the package names may change a little bit, are split into multiple or merged together.
+Start with the list from one of the distributions listed below, that fits most to your Distribution.
+If you do not know what distribution you use, it is most likely Debian/Ubuntu.
 
+.. tab:: Arch Linux
 
-===========================  ===========================  ===========================  ===========================
-Package Name                 Arch Linux                   Fedora                       Debian/Ubuntu
-===========================  ===========================  ===========================  ===========================
-zstd                                                      zstd                         zstd
----------------------------  ---------------------------  ---------------------------  ---------------------------
-Python 3                     python                       python3                      python3-all
-Python Build                 python-build                 python3-build
-                                                          python3-devel
-Python Setup Tools           python-setuptools            python3-setuptools           python3-setuptools
----------------------------  ---------------------------  ---------------------------  ---------------------------
-Python GObject               python-gobject               python3-gobject              python3-gi
-Python Autobahn              python-autobahn              python3-autobahn             python3-autobahn
-Python systemd               python-systemd               python3-systemd              python3-systemd
-Python Levenshtein           python-levenshtein           python3-Levenshtein          python3-levenshtein
-Python fuzzywuzzy            python-fuzzywuzzy            python3-fuzzywuzzy           python3-fuzzywuzzy
-Python mutagen               python-mutagen               python3-mutagen              python3-mutagen
-Python tqdm                  python-tqdm                  python3-tqdm                 python3-tqdm
-Python Pillow                python-pillow                python3-pillow               python3-willow
----------------------------  ---------------------------  ---------------------------  ---------------------------
-FFmpeg                       ffmpeg                       ffmpeg                       ffmpeg
-SQLite3                      sqlite                       sqlite                       sqlite3
-GStreamer                    gstreamer                    gstreamer1
-GStreamer plugins            gst-plugins-base             gstreamer1-plugins-base      gstreamer1.0-plugins-base
-                             gst-plugins-base-libs
-                             gst-plugins-good             gstreamer1-plugins-good      gstreamer1.0-plugins-good
-                             gst-plugins-bad              gstreamer1-plugins-bad-free  gstreamer1.0-plugins-bad
-                             gst-plugins-bad-libs         
-OpenSSL                                                   openssl                      openssl
-libshout                     libshout                     libshout                     libshout3
----------------------------  ---------------------------  ---------------------------  ---------------------------
-Icecast                      icecast                      icecast                      icecast2
-logrotate                    logrotate                    logrotate                    logrotate
-Apache HTTPD                 apache                       httpd                        apache2
-===========================  ===========================  ===========================  ===========================
+   - python
+   - python-build
+   - python-setuptools
+   - python-gobject
+   - python-autobahn
+   - python-systemd
+   - python-levenshtein
+   - python-fuzzywuzzy
+   - python-mutagen
+   - python-tqdm
+   - python-pillow
+   - ffmpeg
+   - sqlite
+   - gstreamer
+   - gst-plugins-base
+   - gst-plugins-base-libs
+   - gst-plugins-good
+   - gst-plugins-bad
+   - gst-plugins-bad-libs
+   - libshout
+   - icecast
+   - logrotate
+   - apache
+
+.. tab:: Fedora
+
+   - zstd
+   - python3
+   - python3-build
+   - python3-devel
+   - python3-setuptools
+   - python3-gobject
+   - python3-autobahn
+   - python3-systemd
+   - python3-Levenshtein
+   - python3-fuzzywuzzy
+   - python3-mutagen
+   - python3-tqdm
+   - python3-pillow
+   - ffmpeg
+   - sqlite
+   - gstreamer1
+   - gstreamer1-plugins-base
+   - gstreamer1-plugins-good
+   - gstreamer1-plugins-bad-free
+   - openssl
+   - libshout
+   - icecast
+   - logrotate
+   - httpd
+
+.. tab:: Debian/Ubuntu
+
+   - zstd
+   - python3-all
+   - python3-setuptools
+   - python3-gi
+   - python3-autobahn
+   - python3-systemd
+   - python3-levenshtein
+   - python3-fuzzywuzzy
+   - python3-mutagen
+   - python3-tqdm
+   - python3-willow
+   - ffmpeg
+   - sqlite3
+   - gstreamer1.0-plugins-base
+   - gstreamer1.0-plugins-good
+   - gstreamer1.0-plugins-bad
+   - openssl
+   - libshout3
+   - icecast2
+   - logrotate
+   - apache2
 
 
 In some distributions packages have different names.
