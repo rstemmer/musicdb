@@ -103,7 +103,7 @@ From Source
 To install MusicDB from source, download the source archive: ``musicdb-8.0.0-src.tar.zst``.
 Make sure you download the one with the latest version number.
 
-The following steps show how to install MusicDB on an Ubuntu 20.04 LTS.
+The following steps show how to install MusicDB on an Fedora 35.
 There will be some minor differences with other Linux distributions.
 Before installing MusicDB you should update your system.
 
@@ -116,47 +116,48 @@ The installation process can be split into the following parts:
 
 First you need to install all libraries and tools used by MusicDB.
 This can be done with the package manager of your Linux Distribution.
-In case of Ubuntu it is ``dnf``.
+In case of Fedora it is ``dnf``.
 
 The following list shows the Arch Linux package names that need to be installed:
 
 MusicDB requires Python 3.9 or later.
 If ``python3 --version`` returns a version number less than 3.9.0 MusicDB will not work on your Linux Distribution.
 
-============        ============           ============                 ============
-Package Name        Arch Linux             Fedora                       Debian/Ubuntu
-============        ============           ============                 ============
-zstd                                       zstd                         zstd
-------------        ------------           ------------                 ------------
-Python 3            python                 python3                      python3-all
-Python Build        python-build           python3-build
-                                           python3-devel
-Python Setup Tools  python-setuptools      python3-setuptools           python3-setuptools
-------------        ------------           ------------                 ------------
-Python GObject      python-gobject         python3-gobject              python3-gi
-Python Autobahn     python-autobahn        python3-autobahn             python3-autobahn
-Python systemd      python-systemd         python3-systemd              python3-systemd
-Python Levenshtein  python-levenshtein     python3-Levenshtein          python3-levenshtein
-Python fuzzywuzzy   python-fuzzywuzzy      python3-fuzzywuzzy           python3-fuzzywuzzy
-Python mutagen      python-mutagen         python3-mutagen              python3-mutagen
-Python tqdm         python-tqdm            python3-tqdm                 python3-tqdm
-Python Pillow       python-pillow          python3-pillow               python3-willow
-------------        ------------           ------------                 ------------
-FFmpeg              ffmpeg                 ffmpeg                       ffmpeg
-SQLite3             sqlite                 sqlite                       sqlite3
-GStreamer           gstreamer              gstreamer1
-GStreamer plugins   gst-plugins-base       gstreamer1-plugins-base      gstreamer1.0-plugins-base
-                    gst-plugins-base-libs
-                    gst-plugins-good       gstreamer1-plugins-good      gstreamer1.0-plugins-good
-                    gst-plugins-bad        gstreamer2-plugins-bad-free  gstreamer1.0-plugins-bad
-                    gst-plugins-bad-libs   
-OpenSSL                                    openssl                      openssl
-libshout            libshout               libshout                     libshout3
-------------        ------------           ------------                 ------------
-Icecast             icecast                icecast                      icecast2
-logrotate           logrotate              logrotate                    logrotate
-Apache HTTPD        apache                 https                        apache2
-============        ============           ============                 ============
+
+===========================  ===========================  ===========================  ===========================
+Package Name                 Arch Linux                   Fedora                       Debian/Ubuntu
+===========================  ===========================  ===========================  ===========================
+zstd                                                      zstd                         zstd
+---------------------------  ---------------------------  ---------------------------  ---------------------------
+Python 3                     python                       python3                      python3-all
+Python Build                 python-build                 python3-build
+                                                          python3-devel
+Python Setup Tools           python-setuptools            python3-setuptools           python3-setuptools
+---------------------------  ---------------------------  ---------------------------  ---------------------------
+Python GObject               python-gobject               python3-gobject              python3-gi
+Python Autobahn              python-autobahn              python3-autobahn             python3-autobahn
+Python systemd               python-systemd               python3-systemd              python3-systemd
+Python Levenshtein           python-levenshtein           python3-Levenshtein          python3-levenshtein
+Python fuzzywuzzy            python-fuzzywuzzy            python3-fuzzywuzzy           python3-fuzzywuzzy
+Python mutagen               python-mutagen               python3-mutagen              python3-mutagen
+Python tqdm                  python-tqdm                  python3-tqdm                 python3-tqdm
+Python Pillow                python-pillow                python3-pillow               python3-willow
+---------------------------  ---------------------------  ---------------------------  ---------------------------
+FFmpeg                       ffmpeg                       ffmpeg                       ffmpeg
+SQLite3                      sqlite                       sqlite                       sqlite3
+GStreamer                    gstreamer                    gstreamer1
+GStreamer plugins            gst-plugins-base             gstreamer1-plugins-base      gstreamer1.0-plugins-base
+                             gst-plugins-base-libs
+                             gst-plugins-good             gstreamer1-plugins-good      gstreamer1.0-plugins-good
+                             gst-plugins-bad              gstreamer2-plugins-bad-free  gstreamer1.0-plugins-bad
+                             gst-plugins-bad-libs         
+OpenSSL                                                   openssl                      openssl
+libshout                     libshout                     libshout                     libshout3
+---------------------------  ---------------------------  ---------------------------  ---------------------------
+Icecast                      icecast                      icecast                      icecast2
+logrotate                    logrotate                    logrotate                    logrotate
+Apache HTTPD                 apache                       https                        apache2
+===========================  ===========================  ===========================  ===========================
 
 
 In some distributions packages have different names.
@@ -167,6 +168,10 @@ For example Debian and Ubuntu have the following changes:
 .. code-block:: bash
 
         # Example for Fedora 35
+
+        # Update the System
+        dnf upgrade
+
         apt update
         apt install zstd
         apt install python3-all python3-setuptools
@@ -191,8 +196,8 @@ For example Debian and Ubuntu have the following changes:
 
 After installing the dependencies MusicDB can be installed.
 Again, the following shell commands show the required steps for Fedora 35.
-The commands may be a little bit different on other distributons.
-For example on Arch Linux and Fedora the Python command is called ``python`` instead of ``python3``.
+The commands may be a little bit different on other distributions.
+For example on Debian/Ubuntu the Python command is called ``python3`` instead of ``python``.
 
 .. code-block:: bash
 
@@ -206,8 +211,8 @@ For example on Arch Linux and Fedora the Python command is called ``python`` ins
         cd musicdb-8.0.0-src
 
         # Build the Back-End
-        python3 setup.py build
-        sudo python3 setup.py install --skip-build --optimize=1
+        python setup.py build
+        sudo python setup.py install --skip-build --optimize=1
         #sudo python3 -m complileall --incalidation-mode=checked-hash
 
 Initial Setup
@@ -546,29 +551,6 @@ For example:
 
    mkdir -p /usr/share/doc/musicdb/htmldoc
    tar -xf musicdb-8.0.0-doc.tar.zst --strip-components=1 -C /usr/share/doc/musicdb/htmldoc
-
-
-OLD
-===
-
-TODO: REMOVE
-
-Additional Steps for Ubuntu
-
-**Important for Ubuntu users (and maybe Debian) only**
-
-Usually I do not support Ubuntu for several technical reasons.
-But I had a clean virtual machine with the latest Ubuntu installed, so I tried test the installation process.
-The following *additional* steps are mandatory to get MusicDB to work on Ubuntu:
-
-Before installation:
-
-.. code-block:: bash
-
-   apt install python-is-python3    # when executing python, python3 gets called and not the dead python2
-   apt install icecast2             # Do not use the configuration dialog, MusicDB provides a secure config
-                                    # Ignore that check.sh does not find icecast after installation.
-                                    # This is because on Debian/Ubuntu the binary is called "icecast2".
 
 
 
