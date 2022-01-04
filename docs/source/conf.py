@@ -38,6 +38,7 @@ extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.imgmath',
     'sphinx.ext.ifconfig',
     'sphinx.ext.graphviz',
+    'sphinx.ext.autosectionlabel',
     'sphinx_inline_tabs',
     'sphinx.ext.viewcode']
     #'sphinx_js',
@@ -60,7 +61,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'MusicDB'
-copyright = '2018,2019,2020,2021 Ralf Stemmer'
+copyright = '2017 - 2022 Ralf Stemmer'
 author = 'Ralf Stemmer'
 
 # The version info for the project you're documenting, acts as replacement for

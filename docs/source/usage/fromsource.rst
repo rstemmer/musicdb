@@ -4,6 +4,8 @@ Installation From Source
 To install MusicDB from source, download the source archive: ``musicdb-8.0.0-src.tar.zst``.
 Make sure you download the one with the latest version number.
 
+If you want to use the package manager of you system check the :doc:`/usage/install` documentation.
+
 The following steps show how to install MusicDB on an Fedora 35.
 There will be some minor differences with other Linux distributions.
 Before installing MusicDB you should update your system.
@@ -19,6 +21,9 @@ The installation process can be split into the following parts:
 First you need to install all libraries and tools used by MusicDB.
 This can be done with the package manager of your Linux Distribution.
 In case of Fedora it is ``dnf``.
+
+Dependencies
+------------
 
 The following list shows the packaged that are required by MusicDB.
 On each Linux distribution the package names may change a little bit, are split into multiple or merged together.
@@ -145,6 +150,10 @@ Then the required packages for MusicDB can be installed:
    sudo dnf install icecast
    sudo dnf install httpd
 
+
+Installing the Back-End
+-----------------------
+
 After installing the dependencies for MusicDB, the Back-End can be installed.
 Again, the following shell commands show the required steps for Fedora 35.
 The commands may be a little bit different on other distributions.
@@ -179,6 +188,10 @@ If you see an exception then something went wrong.
 You can open an Issue at the `MusicDB GitHub Page <https://github.com/rstemmer/musicdb/issues>`_ to ask for support.
 Please include the full exception and mention the Linux Distribution you use.
 
+
+Installing the Front-End
+------------------------
+
 Next step is to install the Front-End.
 This is done by the following commands:
 
@@ -188,6 +201,10 @@ This is done by the following commands:
    sudo cp -r -a --no-preserve=ownership webui/* /usr/share/webapps/musicdb
 
 That's it for the Front-End.
+
+
+Installing Data and Configuration Files
+---------------------------------------
 
 Next the data and configuration files needed by MusicDB needs to be installed.
 This is done by the following commands:
@@ -223,7 +240,6 @@ Make sure that the path to the ``musicdb`` executable in the ``musicdb.service``
    systemctl daemon-reload
 
 
-
 In a final step the ``musicdb`` UNIX user and group must be created as well as some further data directories.
 For these final steps systemd will be used.
 
@@ -234,7 +250,16 @@ For these final steps systemd will be used.
    sudo systemd-sysusers
    sudo systemd-tmpfiles --create
 
-In case your distribution used SELinux, some additional steps are necessary to provide correct context to the new files and directories:
+If your Linux distribution does not use SELinux,
+continue with the :ref:`Initial Setup` sections to create a working environment.
+
+
+Configure SELinux
+-----------------
+
+In case your distribution used SELinux, some additional steps are necessary to provide correct context to the new files and directories.
+If you do not know if your Linux distribution uses SELinux enter ``getenforce`` into a terminal.
+If something else than ``Enforcing`` is printed, you can skip the this section.
 
 .. code-block:: bash
 
@@ -242,5 +267,7 @@ In case your distribution used SELinux, some additional steps are necessary to p
    restorecon -R /usr/share/webapps/musicdb
 
 That's it. MusicDB is now installed and can be configured.
-Continue with the next sections to create a working environment.
+Continue with the :ref:`Initial Setup` sections to create a working environment.
+
+
 

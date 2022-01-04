@@ -26,6 +26,8 @@ The following sections describe how to install MusicDB and its dependencies.
 
 
 For Arch Linux and Fedora, a package is provided that can be installed via ``pacman`` on Arch Linux or ``dnf`` on Fedora.
+If you do not use Arch Linux or Fedora, see the :doc:`/usage/fromsource` documentation.
+
 Download the latest MusicDB package and execute the following commands.
 To make the web interface accessible ``apache`` is used as web server.
 Any other web server can be used as well.
@@ -36,6 +38,8 @@ This step is optional.
 
    In Germany, password protecting the audio stream is mandatory for legal reasons (GEMA).
    Configure Icecast to ask for a password if the stream is accessible from the internet.
+
+   See :ref:`Password Protected Audio Stream` for information on how to configure Icecast that way.
 
 Download
 --------
