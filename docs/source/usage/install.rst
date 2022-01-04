@@ -501,11 +501,12 @@ After installation and configuration, the server can be started via ``systemd``:
 Now the web server is running. You can check the status via ``systemctl status httpd``.
 
 You should now be able to access the MusicDB WebUI via ``http://127.0.0.1/musicdb/``.
-When where is no music managed by MusicDB yet, the WebUI will show you a Welcome-Message telling you that there is no music in the Queue.
-This is fine because you have not hand over any music to MusicDB.
 
-.. figure:: ./images/welcome.png
+.. figure:: ../images/welcome.jpg
    :align: center
+
+   When there is no music managed by MusicDB yet, the WebUI will show you a Welcome-Message telling you that there is no music in the Queue.
+   This is fine because you have not hand over any music to MusicDB.
 
 Please consider a Apache server configuration that supports HTTPS.
 For details see :doc:`/basics/security`.
