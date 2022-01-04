@@ -16,7 +16,7 @@ BuildRequires:  python3-build
 BuildRequires:  /usr/bin/pathfix.py
 BuildRequires:  systemd-rpm-macros
 
-Requires: python3 >= 3.8
+Requires: python3 >= 3.9
 Requires: ffmpeg
 Requires: libshout
 Requires: gstreamer1

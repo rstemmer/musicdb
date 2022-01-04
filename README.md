@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/github/release/rstemmer/musicdb.svg" alt="MusicDB releases"/>
   </a>
   <a href="https://www.python.org/">
-    <img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="Python 3.8+"/>
+    <img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="Python 3.9+"/>
   </a>
   <a href="https://github.com/rstemmer/musicdb/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/License-GPLv3-green.svg" alt="License"/>
@@ -43,6 +43,8 @@
 | Source Code     | [📦 musicdb-8.0.0-src.tar.zst](https://github.com/rstemmer/musicdb/releases) | [⚙️ Install from Source Code](https://rstemmer.github.io/musicdb/build/html/usage/install.html) |
 
 [⚙️ Setup and Run MusicDB with Apache and Icecast](https://rstemmer.github.io/musicdb/build/html/usage/install.html)
+
+MusicDB requires Python 3 version 3.9.0 or later.
 
 MusicDB is hardware independent. It works with any listed Linux distribution installed on PC, ARM (like [Raspberry Pi](https://www.raspberrypi.com/)) or Mac.
 
@@ -164,7 +166,7 @@ Then please create an issue including the name and version of the dependency tha
 In case MusicDB does not run on outdated operating systems, update your system :wink:
 
 * A Linux operating system (Obviously :smiley: )
-* [Python3 >= 3.8](https://www.python.org/) for the Back End
+* [Python3 >= 3.9](https://www.python.org/) for the Back End
 * [Icecast](https://icecast.org/) and [GStreamer](https://gstreamer.freedesktop.org/) for streaming
 * [Apache](https://httpd.apache.org/) for serving the Web User Interface
 * A detailed list of all dependencies can be found in the [Install from Source](https://rstemmer.github.io/musicdb/build/html/usage/install.html) documentation
@@ -180,6 +182,8 @@ The following matrix shows on which Linux Distributions I tested the MusicDB bac
 | MusicDB | [Arch Linux](https://archlinux.org/) | [Fedora](https://getfedora.org) | [openSUSE](https://www.opensuse.org/) |
 | --- | --- | --- | --- |
 | 8.0.0 | 🟢 OK | 🟢 OK | 🟡 not tested |
+
+* Ubuntu 20.04 LTS: 🔴 failed - Python version 3.8 is too old.
 
 The following matrix shows with which web browsers I tested the MusicDB front end and if it succeeded.
 

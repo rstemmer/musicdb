@@ -58,13 +58,13 @@ setuptools.setup(
             "pillow",
             "tqdm"
             ],
-        python_requires = ">=3.8",
+        python_requires = ">=3.9",
         keywords        = "music streaming cloud music-player music-library music-collection music-streaming music-manager streaming-audio musicdb",
         license         = "GPL",
         classifiers     = [
             "Programming Language :: Python :: 3",
-            "Programming Language :: Python :: 3.8",
             "Programming Language :: Python :: 3.9",
+            "Programming Language :: Python :: 3.10",
             "Development Status :: 5 - Production/Stable",
             "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
             "Operating System :: POSIX :: Linux",

@@ -116,14 +116,12 @@ The installation process can be split into the following parts:
 
 First you need to install all libraries and tools used by MusicDB.
 This can be done with the package manager of your Linux Distribution.
-In case of Ubuntu it is ``apt``.
+In case of Ubuntu it is ``dnf``.
 
 The following list shows the Arch Linux package names that need to be installed:
 
-      ``python3-mutagen``,
-      ``python3-tqdm``, 
-      ``python3-willow``
-      
+MusicDB requires Python 3.9 or later.
+If ``python3 --version`` returns a version number less than 3.9.0 MusicDB will not work on your Linux Distribution.
 
 ============        ============           ============                 ============
 Package Name        Arch Linux             Fedora                       Debian/Ubuntu
@@ -168,7 +166,7 @@ For example Debian and Ubuntu have the following changes:
 
 .. code-block:: bash
 
-        # Example for Ubuntu 20.04 LTS
+        # Example for Fedora 35
         apt update
         apt install zstd
         apt install python3-all python3-setuptools
@@ -192,7 +190,7 @@ For example Debian and Ubuntu have the following changes:
         systemctl stop apache2
 
 After installing the dependencies MusicDB can be installed.
-Again, the following shell commands show the required steps for Ubuntu 20.04 LTS.
+Again, the following shell commands show the required steps for Fedora 35.
 The commands may be a little bit different on other distributons.
 For example on Arch Linux and Fedora the Python command is called ``python`` instead of ``python3``.
 

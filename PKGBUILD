@@ -8,7 +8,7 @@ arch=("any")
 url="https://github.com/rstemmer/musicdb"
 license=('GPL3')
 groups=()
-depends=("python>=3.8"
+depends=("python>=3.9"
     "ffmpeg"
     "libshout"
     "gstreamer"
