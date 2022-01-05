@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/github/release/rstemmer/musicdb.svg" alt="MusicDB releases"/>
   </a>
   <a href="https://www.python.org/">
-    <img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="Python 3.9+"/>
+    <img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="Python 3.9+"/>
   </a>
   <a href="https://github.com/rstemmer/musicdb/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/License-GPLv3-green.svg" alt="License"/>
@@ -39,10 +39,10 @@
 | --- | --- | --- |
 | Arch Linux      | [📦 musicdb-8.0.0-1-any.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases) | `pacman -U ./musicdb-8.0.0-1-any.pkg.tar.zst` |
 | Fedora 35       | [📦 musicdb-8.0.0-1.fc35.noarch.rpm](https://github.com/rstemmer/musicdb/releases) | `dnf install ./musicdb-8.0.0-1.fc35.noarch.rpm` |
-| openSUSE 15.3   | [📦 musicdb-8.0.0-1.](https://github.com/rstemmer/musicdb/releases) | `zypper install musicdb-8.0.0-1.` |
-| Source Code     | [📦 musicdb-8.0.0-src.tar.zst](https://github.com/rstemmer/musicdb/releases) | [⚙️ Install from Source Code](https://rstemmer.github.io/musicdb/build/html/usage/install.html) |
+| Source Code     | [📦 musicdb-8.0.0-src.tar.zst](https://github.com/rstemmer/musicdb/releases) | [⚙️ Install from Source Code](https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html) |
+| Documentation   | [📦 musicdb-8.0.0-doc.tar.zst](https://github.com/rstemmer/musicdb/releases) | [⚙️ Install Documentation](https://rstemmer.github.io/musicdb/build/html/usage/installdocs.html) |
 
-[⚙️ Setup and Run MusicDB with Apache and Icecast](https://rstemmer.github.io/musicdb/build/html/usage/install.html)
+[⚙️ Install, Setup and Run MusicDB with Apache and Icecast](https://rstemmer.github.io/musicdb/build/html/usage/install.html)
 
 MusicDB requires Python 3 version 3.9.0 or later.
 
@@ -166,30 +166,32 @@ Then please create an issue including the name and version of the dependency tha
 In case MusicDB does not run on outdated operating systems, update your system :wink:
 
 * A Linux operating system (Obviously :smiley: )
-* [Python3 >= 3.9](https://www.python.org/) for the Back End
+* [Python3 >= 3.9](https://www.python.org/) for the Back-end
 * [Icecast](https://icecast.org/) and [GStreamer](https://gstreamer.freedesktop.org/) for streaming
 * [Apache](https://httpd.apache.org/) for serving the Web User Interface
-* A detailed list of all dependencies can be found in the [Install from Source](https://rstemmer.github.io/musicdb/build/html/usage/install.html) documentation
+* A detailed list of all dependencies can be found in the [Install from Source](https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html) documentation
 
 I develop and operate MusicDB on an [Arch Linux](https://www.archlinux.org/) for x86-64. So on this system it will run most reliable :smiley:.
-Periodically I test MusicDB also on an [Raspberry Pi 4](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/) with [Ubuntu Server 20.04.2 LTS](https://ubuntu.com/download/raspberry-pi).
+Periodically I test MusicDB also on an [Raspberry Pi 4](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/) with [Ubuntu Server 20.04 LTS](https://ubuntu.com/download/raspberry-pi).
 
 
 ### Tests
 
-The following matrix shows on which Linux Distributions I tested the MusicDB back end and if it succeeded.
+🟢 Test succeeded, 🔴 Test failed, 🟡 Not tested
 
-| MusicDB | [Arch Linux](https://archlinux.org/) | [Fedora](https://getfedora.org) | [openSUSE](https://www.opensuse.org/) |
-| --- | --- | --- | --- |
-| 8.0.0 | 🟢 OK | 🟢 OK | 🟡 not tested |
+The following list shows on which Linux Distributions I tested the MusicDB back-end and if it succeeded.
 
-* Ubuntu 20.04 LTS: 🔴 failed - Python version 3.8 is too old.
+* 🟢 [Arch Linux](https://archlinux.org/)
+* 🟢 [Fedora 35](https://getfedora.org)
+* 🔴 [Ubuntu 20.04 LTS](https://ubuntu.com/) (Python version 3.8 is too old)
+* 🔴 [openSUSE Tumbleweed](https://get.opensuse.org/tumbleweed) (Python version 3.8 is too old)
+* 🟡 [Raspberry PI OS](https://www.raspberrypi.com/software/)
 
-The following matrix shows with which web browsers I tested the MusicDB front end and if it succeeded.
+The following list shows with which web browsers I tested the MusicDB front-end and if it succeeded.
 
-| MusicDB | [Firefox](https://www.mozilla.org/en-US/) | [Chrome](https://www.google.com/chrome/index.html) | [Safari](https://www.apple.com/safari/) |
-| --- | --- | --- | --- |
-| 8.0.0 | 🟢 OK | 🔴 failed<sup>1</sup> | 🟡 not tested |
+* 🟢 [Firefox](https://www.mozilla.org/en-US/)
+* 🔴 [Chrome](https://www.google.com/chrome/index.html)<sup>1</sup>
+* 🟡 [Safari](https://www.apple.com/safari/)
 
 <sup>1: **Not yet supported** as long as mandatory [CSS features](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) are missing</sup>
 
