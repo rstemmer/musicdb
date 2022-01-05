@@ -15,7 +15,7 @@ if [ ! -d "$repository/.git" ] ; then
 fi
 
 
-mkdir -p "$repository/dist"
+mkdir -p "$repository/pkg"
 
 oldwd=$(pwd)
 cd $repository
@@ -24,18 +24,18 @@ echo -e "\e[1;35m - \e[1;34mCreating Source Archive…"
 tmp="/tmp/${pkgname}"
 mkdir -p $tmp
 
-cp -r musicdb           $tmp
-cp -r webui             $tmp
-cp -r share             $tmp
-cp -r sql               $tmp
-cp    README.md         $tmp
-cp    LICENSE           $tmp
-cp    VERSION           $tmp
-cp    CHANGELOG         $tmp
-cp    setup.py          $tmp
-cp    pyproject.toml    $tmp
+cp -r musicdb              $tmp
+cp -r webui                $tmp
+cp -r share                $tmp
+cp -r sql                  $tmp
+cp    README.md            $tmp
+cp    LICENSE              $tmp
+cp    VERSION              $tmp
+cp    CHANGELOG            $tmp
+cp    dist/setup.py        $tmp
+cp    dist/pyproject.toml  $tmp
 
-tar -c --zstd --exclude="__pycache__" -C ${tmp}/.. -f dist/${pkgname}.tar.zst $pkgname
+tar -c --zstd --exclude="__pycache__" -C ${tmp}/.. -f pkg/${pkgname}.tar.zst $pkgname
 
 rm -r $tmp
 echo -e "\e[1;32mdone"

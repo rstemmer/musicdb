@@ -7,4 +7,4 @@ tmp/*
 id3edit/id3edit
 docs/build/doctrees
 scripts/WebUI UML Class Diagram.png
-dist/*
+pkg/*

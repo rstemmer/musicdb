@@ -12,12 +12,12 @@ if [ ! -d "$repository/.git" ] ; then
 fi
 
 oldwd=$(pwd)
-cd $repository
+cd $repository/dist
 
-cp dist/*src.tar.zst ~/rpmbuild/SOURCES/.
-cp share/sysusers.conf ~/rpmbuild/SOURCES/musicdb.sysusers
+cp ../pkg/*src.tar.zst ~/rpmbuild/SOURCES/.
+cp ../share/sysusers.conf ~/rpmbuild/SOURCES/musicdb.sysusers
 rpmbuild -bb musicdb.spec
-cp ~/rpmbuild/RPMS/noarch/musicdb* dist/.
+cp ~/rpmbuild/RPMS/noarch/musicdb* ../pkg/.
 
 echo -e "\e[1;32mdone"
 

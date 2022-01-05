@@ -19,7 +19,7 @@ if [[ -d $tmp ]] ; then
     rm -r $tmp
 fi
 
-SRCDEST=$tmp BUILDDIR=$tmp PKGDEST=./dist makepkg
+SRCDEST=$tmp BUILDDIR=$tmp PKGDEST=./pkg makepkg
 rm -r $tmp
 
 echo -e "\e[1;32mdone"
