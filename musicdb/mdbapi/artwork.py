@@ -258,12 +258,23 @@ class MusicDBArtwork(object):
         Tries to set the on owner of a file as configured in the MusicDB Configuration and
         the access permission to ``rw-rw-r--``.
 
+        If the path is ``"default.jpg"`` only ``True`` gets returned without changing anything.
+        The default artwork is part of the MusicDB data and gets managed by high level classes.
+
         Args:
             path: path to the artwork
 
         Returns:
             ``True`` on success, otherwise ``False``
         """
+        if path == "default.jpg":
+            logging.debug("File attributes of default.jpg will not be changed.")
+            return True
+
+        logging.debug("Trying to changing file attributes of \"%s\" to rw-rw-r-- and ownership to %s:%s.",
+                path,
+                self.cfg.musicdb.username, self.cfg.musicdb.groupname)
+
         # Set permissions to rw-rw-r--
         try:
             self.artworkroot.SetAccessPermissions(path, "rw-rw-r--")
