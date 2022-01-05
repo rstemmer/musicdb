@@ -32,4 +32,16 @@ pacman Package
 
 Based on the source package, a ``pacman`` package can be build with the ``pkg-build.sh`` script.
 
+Fedora rpm Package
+------------------
 
+.. code-block:: bash
+
+   sudo dnf install rpmdevtools
+   rpmdev-setuptree
+
+   sudo dnf install python3-devel python3-build /usr/bin/pathfix.py
+
+   cd scripts
+   ./src-build.sh
+   ./rpm-build.sh
