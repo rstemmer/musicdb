@@ -28,7 +28,7 @@ make html BUILDDIR=$tmp 2>&1
 
 echo -e "\e[1;35m - \e[1;34mCreating Source Archive…"
 mv ${tmp}/html ${tmp}/${pkgname}
-tar -c --zstd -C ${tmp} -f ${repository}/dist/${pkgname}.tar.zst $pkgname
+tar -c --zstd -C ${tmp} -f ${repository}/pkg/${pkgname}.tar.zst $pkgname
 
 rm -r "$tmp"
 echo -e "\e[1;32mdone"

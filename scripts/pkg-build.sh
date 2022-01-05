@@ -12,14 +12,14 @@ if [ ! -d "$repository/.git" ] ; then
 fi
 
 oldwd=$(pwd)
-cd $repository
+cd $repository/dist
 
 tmp=/tmp/mkpkg
 if [[ -d $tmp ]] ; then
     rm -r $tmp
 fi
 
-SRCDEST=$tmp BUILDDIR=$tmp PKGDEST=./pkg makepkg
+SRCDEST=$tmp BUILDDIR=$tmp PKGDEST=../pkg makepkg
 rm -r $tmp
 
 echo -e "\e[1;32mdone"
