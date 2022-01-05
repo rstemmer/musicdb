@@ -1,40 +1,55 @@
 
-Music
-=====
+Music Naming Scheme
+===================
 
 This chapter explains how to handle music files for and with MusicDB.
 
-Naming
-------
+In some sections, music videos are mentioned.
+Managing videos is an experimental feature of MusicDB and is not yet available.
+This feature will come in future (maybe around 2025).
+
+
+Overview of the Naming Scheme
+-----------------------------
+
+The names of files and directories managed my MusicDB must follow certain rules.
+MusicDB takes care that these rules are applied.
+The reason behind this concept is, that when the user decides to switch to a different music management system,
+the music collection is in a good shape.
 
 The path to a song follows the scheme ``artist directory/album directory/song file``.
 The names of the artist and album director and the song files must follow a specific scheme.
 
-All characters are allowed for the names.
+The path to a video follows the scheme ``artist directory/video file``.
+The names of the artist director and the video files must follow a specific scheme.
+
+All characters of the `Unicode <https://home.unicode.org/>`_ are allowed for the names.
 Obviously, the file system that contains your music collection must be Unicode compatible.
-Name containing a slash (/) will be problematic due to the fact that this character is reserved for separating
+On Linux this is usually the case. If your music is stored on an external device make sure to use a modern file system.
+The file systems *exFAT* and *NTFS* have some restrictions that are not considered by MusicDB.
+
+Names containing a slash (/) will be problematic due to the fact that this character is reserved for separating
 directories inside a path.
 Therefore the character DIVISION SLASH (U+2215 - ∕ ) must be used.
 Do *not* use FRACTION SLASH because it influences how numbers around that character are displayed.
 
-When using the ``musicdb database add`` command, you have to rename the files and directories before.
-When using ``musicdb add`` MusicDB provides a user interface that supports you by renaming the files
-and checks if the names are following the scheme.
+MusicDB guides you by naming the files during the Import process.
+
 
 Artist Directory Name
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 The name of the artist directory is the name of the artist.
 
 Album Directory Name
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 The album directory name consists of the release date of the album and the album name itself, separated by a space surrounded dash: ``$Release - $Albumname``.
 The release date is the year using 4 digits.
 For example: ``2016 - Ærdenbrand``
 
 Song File Name
-^^^^^^^^^^^^^^
+--------------
 
 For song files two slightly different schemes exists, depending if the album is split into multiple CDs or not.
 For single CD albums the file name is constructed out of the song number and the song name separated by a space: ``$Songnumber $Songname.$Fileextension``.
@@ -43,7 +58,7 @@ In case the album has multiple dist, the disk number is set in front of the song
 A complete path to a song file would be: ``$Artistname/$Release - $Albumname/$Songnumber $Songname.$Fileextension``. For example: ``Rammstein/2005 - Rosenrot/01 Benzin.flac``
 
 Music Video File Name
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 The music video files are placed in the artists directory beneath the album directories.
 They also follow a similar naming scheme: ``$Release - $Videoname.$Fileextension``.
@@ -52,105 +67,4 @@ This may be a different year than a corresponding album or song was released.
 Separated by a space surrounded dash, the name of song or music video is required.
 Then, separated by a dot, the file extension.
 A complete path to the music video *Sonne* by *Rammstein* would be: ``Rammstein/2001 - Sonne.m4v``
-
-Importing Albums to MusicDB
----------------------------
-
-TODO: UPDATE
-
-There are three ways to import music:
-
-   * The ``musicdb add`` command: /mod/add (the semi-automatic way)
-   * The ``musicdb database`` command: :doc:`/mod/database` (the hard way)
-   * The ``musicdb repair`` command: /mod/repair (not recommended - it was not made for importing)
-
-After adding the music via ``musicdb database`` or ``musicdb repair``,
-the artwork must be imported using ``musicdb artwork`` (:doc:`/mod/artwork`).
-It can happen that the automatic import of the artwork does not work.
-This is usually the case when there is no artwork embedded in the audio files.
-In this case the artwork file path must be given to ``musicdb artwork`` explicitly.
-See the :doc:`/mod/artwork` documentation where this step is described.
-
-Usually the import methods trigger the server to update its caches, when the server is running.
-Sometimes this fails.
-If you do not see the new added album in the WebUI, trigger the server again by writing ``refresh`` into the servers FIFO file:
-
-.. code-block:: bash
-
-   echo "refresh" > $DATADIR/musicdb.fifo
-
-
-Using the database module
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The following example shows how to add artists and albums using the ``database`` module.
-For details see :doc:`/mod/database`.
-
-.. code-block:: bash
-
-   # add an artist (and all albums and songs)
-   musicdb database add $MusicPath/$ArtistName
-   musicdb artwork -u
-
-   # add an album (and all songs)
-   musicdb database add $MusicPath/$ArtistName/$Release\ -\ $AlbumName
-   musicdb artwork -u
-
-
-Using the repair module
-^^^^^^^^^^^^^^^^^^^^^^^
-
-TODO: UPDATE
-
-The following example shows how to add artists and albums using the ``repair`` module.
-For details see /mod/repair.
-
-.. code-block:: bash
-
-   musicdb repair
-   # select the "Orphan Album/Artist"
-   # and press ``a`` to add it to the album.
-
-   musicdb artwork -u
-
-
-Using the add module
-^^^^^^^^^^^^^^^^^^^^
-
-TODO: UPDATE
-
-The following example shows how to add artists and albums using the ``add`` module.
-For details see /mod/add.
-
-.. code-block:: bash
-
-   musicdb add
-   # select the Album to add
-   # repair the names
-
-
-   
-Updating Songs
---------------
-
-TODO: UPDATE
-
-When updating a song file, or when renaming it, MusicDB won't find it anymore because of the changed path.
-Call the ``musicdb repair`` module to repair the connection between file and database entry.
-Select the "Orphan File" in the left list, press ``tab`` to switch to the right list and select the "Orphan DB Entry".
-Then press ``u`` to update the database entry with the new file.
-For further details see /mod/repair.
-
-
-Importing Videos to MusicDB
----------------------------
-
-Use the ``musicdb database`` command: :doc:`/mod/database` to import videos.
-And the ``musicdb videoframes`` command: :doc:`/mod/videoframes` to generate the artwork used by the WebUI.
-
-.. code-block:: bash
-
-   # add an album (and all songs)
-   musicdb database add $MusicPath/$ArtistName/$Release\ -\ $VideoName.$Ext
-   musicdb videoframes --video $MusicPath/$ArtistName/$Release\ -\ $VideoName.$Ext -u
 

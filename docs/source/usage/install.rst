@@ -398,7 +398,7 @@ Final Steps
 At this point everything is ready to run and to use.
 Next you need to add Music to MusicDB.
 
-* :doc:`/usage/music`
+* :doc:`/usage/import`
 * :doc:`/usage/installdocs`
 * :doc:`/basics/security`
 
