@@ -136,6 +136,9 @@ This directory can be empty but it must be accessible by the MusicDB server.
 The expected ownership is ``$username:musicdb`` with the permission ``rwxrwxr-x``.
 More details about the directories and files managed by MusicDB can be found in the :doc:`/basics/data` section of the documentation.
 
+When your Linux Distribution uses SELinux, make sure the context of the music directory is set to ``httpd_sys_content_t`` if you want to access the music files from your web browser.
+For details see :doc:`/basics/data`.
+
 The following example expects that you do not have a music directory yet.
 If you have one, just check if the permissions are fine.
 The placeholder ``$username`` must be replaced by the user you use to login into you system (your personal user account).
@@ -150,6 +153,10 @@ Of course it is also possible to create a new user that is only responsible for 
 
    # Update [directories]->music if you do not use /var/music
    vim /etc/musicdb.ini
+
+   # Optional when using SELinux
+   semanage fcontext -a -t httpd_sys_content_t "/var/music(/.*)?"
+   restorecon -R /var/music
 
 Websocket Settings
 ^^^^^^^^^^^^^^^^^^

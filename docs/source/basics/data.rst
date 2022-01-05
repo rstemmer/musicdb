@@ -29,6 +29,14 @@ In case it only has read access it can be executed, but some features will not w
 To give the Web Server access to the music directory you have to enable it inside the MusicDB web server configuration.
 See the :doc:`/usage/install` instruction for further details on how to setup the web server.
 
+In case you use SELinux and want to serve the music by the HTTP server, you need to set the correct context:
+
+.. code-block:: bash
+
+   # Assuming the music directory is at /var/music
+   semanage fcontext -a -t httpd_sys_content_t "/var/music(/.*)?"
+   restorecon -R /var/music
+
 
 MusicDB Data Directory
 ----------------------
