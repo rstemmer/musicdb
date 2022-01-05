@@ -86,6 +86,9 @@ install -Dm 644 LICENSE "%{buildroot}%{_datadir}/licenses/%{name}/LICENSE"
 %pre
 %sysusers_create_compat %{SOURCE1}
 
+%post
+semanage fcontext -a -t httpd_sys_content_t '%{_datadir}/webapps/%{name}(/.*)?' 2>/dev/null
+restorecon -R %{_datadir}/webapps/%{name}
 
 %files -f INSTALLED_FILES
 %license %{_datadir}/licenses/%{name}/LICENSE
