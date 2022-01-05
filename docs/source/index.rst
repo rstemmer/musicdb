@@ -63,6 +63,9 @@ Those chapters are for users as well as for developers.
    :caption: Usage
    :glob:
 
+   usage/install
+   usage/import
+   usage/music
    usage/*
 
 
@@ -71,6 +74,11 @@ Those chapters are for users as well as for developers.
    :caption: Concepts
    :glob:
 
+   basics/concept
+   basics/config
+   basics/security
+   basics/data
+   basics/overview
    basics/*
 
 
