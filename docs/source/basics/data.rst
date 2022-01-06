@@ -102,6 +102,13 @@ Directory                       Owner        Group        Permissions
 /var/log/musicdb/debuglog.ansi  ``musicdb``  ``musicdb``  ``rw-r-----``
 ==============================  ===========  ===========  =============
 
+There are two programs that create a lot of logging data: ``icecast`` and ``musicdb server`` itself.
+To handle those log files it is recommended to make use of `logrotate <https://linux.die.net/man/8/logrotate>`_ .
+
+The following example configuration contains settings for MusicDB.
+If you have installed logrotate, it will use this configuration.
+
+.. literalinclude:: ../../../share/logrotate.conf
 
 
 

@@ -6,30 +6,51 @@
 Welcome to MusicDB's documentation!
 ===================================
 
-.. figure:: ./images/mdblogo.png
-   :align: left
+.. figure:: ./images/WebUI-3.2.0.jpg
+   :align: center
 
-**MusicDB** is a music manager, server and player that focus on music, not the software itself.
-It manages music on a server following the "strange" concept of *The Filesystem is Always Right; the Database is Just for Augmentation*.
-So, the tidiness of you music is not just inside *MusicDB* but all devices like your portable music-player or your car.
+   MusicDB WebUI. Artworks blurred for copyright reasons.
+
+.. figure:: ./images/mdblogo.png
+   :align: right
+
+**MusicDB** is a music manager with focus on remote access to your music collection using a web-based user interface.
+It allows you to manage an audio stream based on a song-queue.
+The WebUI is focusing on being a presentation of your music rather than being a database front-end.
+
 The music can be streamed by MusicDB and can be received by all kind of players like iTunes or VLC.
 For streaming, MusicDB connects as source client to a local `Icecast <https://icecast.org/>`_ server.
-This allows encrypted and protected streams so that they can be send  out to the internet.
-The stream gets controlled by a WebUI that hides the ugliness of software behind a nice, music-oriented frontend.
+This allows encrypted and protected streams so that they can be send out to the internet.
+Your Music. Your Cloud.
+
+The stream gets controlled by a WebUI that hides the ugliness of software behind a nice, music-oriented web front-end.
 Your music gets presented and is not just a database entry in a boring list of artists and albums.
 
-With *MusicDB* you control a queue of music that gets streamed.
+With MusicDB you control a queue of music that gets streamed.
 There is no playlist-management and no repeating loop of songs. 
 If you are lazy to fill the queue with new songs, a random songs get append to the queue.
 This random song selector does not use cryptographic randomness.
 It uses lots of constraints that the selection *feels random*.
-So recently played artists, albums and songs are blocked for a specific time until they can be added again.
+So, recently played artists, albums and songs are blocked for a specific time until they can be added again.
 Furthermore, only songs with a playtime within a configurable span will be append to prevent adding intros or "long-silent-songs".
 
-*MusicDB* is for people who hate all other players. If there is another music player/manager you like (Beets, iTunes, Spotify, ...), you probably hate this one ;)
-In the :doc:`/basics/comparison` chapter is a comparison with tools similar to *MusicDB*.
+MusicDB is for people who hate all other players. If there is another music player/manager you like (Beets, iTunes, Spotify, Ampache ...), you will probably hate this one ;)
+In the :doc:`/basics/comparison` chapter is a comparison with tools similar to MusicDB.
 
-See the :doc:`/basics/concept` chapter and  :doc:`/basics/overview` to get an idea what it is like to use *MusicDB*.
+The following user documentation will guide you through the installation process and the initial setup of MusicDB.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: User Documentation
+   :glob:
+
+   usage/install
+   usage/import
+   usage/music
+   usage/webui
+   usage/stream
+   usage/*
+
 
 ------------------------------------
 
@@ -47,50 +68,43 @@ MusicDB has several abstraction layers shown in the following table:
 | Python            | Linux Tools       |
 +-------------------+-------------------+
 
-*Linux Tools*  are tools like ``icecast``, ``ffmpeg`` or ``id3edit``.
-Some of those tools and libraries are side projects of the MusicDB project and also documented.
-A list of these side projects can be found in the subsection `Other tools and Libraries`_.
-
-With *Python*, the interpreter itself and all python modules needed to run MusicDB are meant.
-
 In the following chapters, the basic concepts and philosophy of MusicDB and its components are explained.
 Furthermore usage guides for MusicDB and how to handle its environment are provided.
 Those chapters are for users as well as for developers.
 
+See the :doc:`/basics/concept` chapter and  :doc:`/basics/overview` to get an idea what it is like to use MusicDB.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Usage
-   :glob:
-
-   usage/install
-   usage/import
-   usage/music
-   usage/webui
-   usage/stream
-   usage/*
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Concepts
+   :caption: Concepts and Configuration
    :glob:
 
    basics/concept
    basics/config
    basics/security
    basics/data
+   basics/definitions
    basics/overview
-   basics/*
+   basics/comparison
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Deeper Insight for Hackers
+   :glob:
+
+   basics/streaming
+   basics/mods
+   basics/distribution
+   basics/webapi
 
 
 MusicDB API
 ===========
 
-The MusicDB API Classes are made to be used inside MusicDB.
+The MusicDB API Classes are made to be used inside MusicDB or by command line modules.
 These classes implement the features of MusicDB.
 Their input will not be perfectly checks for sanity, so do not confront those classes with the wild.
-Check user-inputs before applying them to these classes - This should be done in the `MusicDB CLI`_ modules.
+Check user-inputs before applying them to these classes - This should be done in the MusicDB CLI modules.
 The documentation for these classes are for developer.
 Users may also want look at this documentation to understand whats behind the functionality.
 
@@ -102,16 +116,14 @@ Then a section with all API modules follows
 Quick Development Start
 -----------------------
 
-Here are some links to places worth reading before starting improving MusicDB:
+Here are some links to places worth reading before starting with working on the MusicDB code:
 
    * An overview of the whole MusicDB Environment: :doc:`/basics/overview`
-   * Adding a new column into the music database: :mod:`lib.db.musicdb`
+   * Adding a new column into the music database: :mod:`musicdb.lib.db.musicdb`
    * Creating a new command line module: :doc:`/basics/mods`
-   * Creating a new MusicDB API module: Place the file at ``mdbapi/*.py`` and follow :doc:`/basics/concept`
-   * Adding a new option to the MusicDB Configuration: :mod:`lib.cfg.musicdb`
+   * Adding a new option to the MusicDB Configuration: :mod:`musicdb.lib.cfg.musicdb`
 
-The best way to start learning how a feature works is by starting reading the UI module description.
-Then reading the documentation of the API class, followed by the documentation of the used library classes.
+The best way to start learning how a feature works is by starting reading the API module description.
 
 .. toctree::
    :maxdepth: 1
@@ -136,21 +148,6 @@ When developing a new module for MusicDB, never bypass these libraries!
    :glob:
 
    lib/*
-
-
-MusicDB WebUI
-=============
-
-The documentation of the WebUI is not complete, and will never be.
-The whole WebUI must and will be rebuilt in future using `WebAssembly (no HTTPS) <http://webassembly.org/>`_  technology.
-JavaScript is simply not the right language for such a complex application.
-
-.. toctree::
-   :maxdepth: 1
-   :caption: JaveScript Classes
-   :glob:
-
-   webui/*
 
 
 MusicDB Task Management Modules
@@ -183,20 +180,29 @@ With each start of the MusicDB back-end, these modules check if the environment 
    maintain/*
 
 
+MusicDB WebUI
+=============
+
+The documentation of the WebUI is not complete yet.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: JaveScript Classes
+   :glob:
+
+   webui/*
+
+
 Other tools and Libraries
 =========================
 
-There are lots of tools used by MusicDB's modules.
+There are some external tools used by MusicDB's modules.
 Whenever a method or function uses an external program, it is mentioned in the documentation.
 
 ``ID3Edit`` (optional):
    Is a tool that is used by MusicDB to edit and repair `ID3 Tags (no HTTPS) <http://id3.org/>`_ in mp3-files.
    Type ``id3edit --help`` for a short help. There is no more documentation yet, sorry.
-   Source code can be found at `GitHub <https://github.com/rstemmer/id3edit>`__
-
-``libprinthex`` (optional):
-   Supports ID3Edit with fancy hexadecimal outputs for debugging invalid ID3 tags.
-   Source code and documentation can be found at `GitHub <https://github.com/rstemmer/libprinthex>`__
+   Source code can be found at `GitHub <https://github.com/rstemmer/id3edit>`_.
 
 ``FFmpeg`` (mandatory):
    Used for analyzing music files. `FFmpeg <https://www.ffmpeg.org/>`_ is used a lot by MusicDB for collecting

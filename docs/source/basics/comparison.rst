@@ -8,22 +8,6 @@ information are complete.
 It should just give you an overview of other tools existing.
 Of cause they are all open source, too.
 
-Introducing other tools
------------------------
-
-   * `Beets <http://beets.io/>`_ 
-   * `CherryMusic <http://www.fomori.org/cherrymusic/index.html>`_
-   * `Ampache <http://ampache.org/index.html>`_
-   * `Sonerezh <https://www.sonerezh.bzh/>`_
-   * `Music Player Daemon <https://musicpd.org/>`_
-   * `Modipy <https://www.mopidy.com/>`_
-
-Some tools use `MusicBrainz <https://musicbrainz.org/>`_.
-This project collects music meta data and provides them to the world.
-In general this is a good idea.
-Sadly the information quality is too bad for my claims.
-So using MusicBrainz is both, a feature and an anti feature.
-
 Metrics
 -------
 
@@ -75,48 +59,84 @@ Metrics
 Comparison
 ----------
 
+Candidates are:
 
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Metric            | MusicDB     | beets       | CherryMusic | Ampache     | Sonerezh    | Modipy      | mpd         |
-+===================+=============+=============+=============+=============+=============+=============+=============+
-| Focus             | Presenting  | File and    | Web audio   | Remote music| Web audio   | Streaming   | Streaming   |
-|                   | music,      | meta data   | player      | managing via| player      | server, web | server and  |
-|                   | Music queue | management  |             | WebUI       |             | player (1)  | clients (2) |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Information Source| Filesystem, | Tags,       | Tags        | Tags,       |             | Tags        | Tags        |
-|                   | Analysis,   | MusicBrainz |             | MusicBrainz |             |             |             |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| External Sources  | ffmpeg      | MusicBrainz |             | MusicBrainz |             |             | None        |
-|                   |             |             |             |             |             |             |             |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| File management   | By user only| Renameing / | None        |             | None        | None        | None        |
-|                   |             | Moving      |             |             |             |             |             |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| File meta data    | None        | Read/Write  | Read        | Read?       | Read?       | Read        | Read        |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Artwork managing  | Yes         |             |             |             |             |             | No          |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Lyrics managing   | Yes         |             |             | No          | No          |             | No          |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Export            | Yes         | Yes         | No          | No          | No          | No          | No          |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Streaming         | Yes         | Yes         | No          | Yes         | No          | Yes         | Yes         |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| UI                | CLI/WebUI   | CLI         | WebUI       | CLI/WebUI   | WebUI       | CLI/(1)     | CLI/(2)     |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Playlist          | Queue,      |             | Playlist,   | Playlist,   | Playlist,   | Playlist    | Queue,      |
-|                   | Random      |             | Queue,      | Random      | Queue,      |             | Playlist,   |
-|                   |             |             | Random      |             | Random      |             | Random      |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Multiuser         | No          |             | Yes         | Yes         | Yes         | No          | Yes         |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+   * `Beets <http://beets.io/>`_ 
+   * `CherryMusic <https://github.com/devsnd/cherrymusic>`_
+   * `Ampache <http://ampache.org/index.html>`_
+   * `Sonerezh <https://www.sonerezh.bzh/>`_
+   * `Music Player Daemon <https://musicpd.org/>`_
+   * `Modipy <https://www.mopidy.com/>`_
 
-(1):
-   There are extensions to access the server from the `web <https://docs.mopidy.com/en/latest/ext/web/#ext-web>`_.
-   *Modipy* also supports `MPD Clients <https://docs.mopidy.com/en/latest/clients/mpd/>`_.
+Some tools use `MusicBrainz <https://musicbrainz.org/>`_.
+This project collects music meta data and provides them to the world.
+In general this is a good idea.
+Sadly the information quality is too bad for my requirements.
+So using MusicBrainz is both, a feature and an anti feature.
 
-(2):
-   There exist also `Music Player Daemon Clients <https://www.musicpd.org/clients/>`_
+Web UI and Streaming Capabilities
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The most obvious features of MusicDB are the WebUI and the streaming features.
+The following tables compares all tools regarding these features.
+
++------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| Metric     | MusicDB     | beets       | CherryMusic | Ampache     | Sonerezh    | Modipy      | mpd         |
++============+=============+=============+=============+=============+=============+=============+=============+
+| Streaming  | Yes         | Yes         | No          | Yes         | No          | Yes         | Yes         |
++------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| Web UI     | Yes         | No          | Yes         | Yes         | Yes         | No (1)      | No (2)      |
++------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+* (1): There are extensions to access the server from the `web <https://docs.mopidy.com/en/latest/ext/web/#ext-web>`_. Modipy also supports `MPD Clients <https://docs.mopidy.com/en/latest/clients/mpd/>`_.
+* (2): There exist also `Music Player Daemon Clients <https://www.musicpd.org/clients/>`_
+
+   * `Ampache <http://ampache.org/index.html>`_
+   * `Music Player Daemon <https://musicpd.org/>`_
+   * `Modipy <https://www.mopidy.com/>`_
+
+The `Beets <http://beets.io/>`_ project may not be a replacement for MusicDB, but it might be a very good addition.
+Beets could be a tool that is used to prepare a music collection or an album before importing it into the MusicDB universe.
+
+
+Detailed Look
+^^^^^^^^^^^^^
+
++-------------------+-------------+-------------+-------------+-------------+
+| Metric            | MusicDB     | Ampache     | Modipy      | mpd         |
++===================+=============+=============+=============+=============+
+| Focus             | Presenting  | Remote music| Streaming   | Streaming   |
+|                   | music,      | managing via| server, web | server and  |
+|                   | Music queue | WebUI       | player (1)  | clients (2) |
++-------------------+-------------+-------------+-------------+-------------+
+| Information Source| Filesystem, | Tags,       | Tags        | Tags        |
+|                   | Tags,       | MusicBrainz |             |             |
+|                   | Analysis    |             |             |             |
++-------------------+-------------+-------------+-------------+-------------+
+| External Sources  | FFmpeg      | MusicBrainz |             | None        |
+|                   |             |             |             |             |
++-------------------+-------------+-------------+-------------+-------------+
+| File management   | Yes         |             | None        | None        |
+|                   |             |             |             |             |
++-------------------+-------------+-------------+-------------+-------------+
+| File meta data    | Read        | Read?       | Read        | Read        |
++-------------------+-------------+-------------+-------------+-------------+
+| Artwork managing  | Yes         |             |             | No          |
++-------------------+-------------+-------------+-------------+-------------+
+| Lyrics managing   | Yes         | No          |             | No          |
++-------------------+-------------+-------------+-------------+-------------+
+| Export            | Yes         | No          | No          | No          |
++-------------------+-------------+-------------+-------------+-------------+
+| Playlist          | Queue,      | Playlist,   | Playlist    | Queue,      |
+|                   | Random      | Random      |             | Playlist,   |
+|                   |             |             |             | Random      |
++-------------------+-------------+-------------+-------------+-------------+
+| Multiuser         | No          | Yes         | No          | Yes         |
++-------------------+-------------+-------------+-------------+-------------+
+
+* (1): There are extensions to access the server from the `web <https://docs.mopidy.com/en/latest/ext/web/#ext-web>`_. Modipy also supports `MPD Clients <https://docs.mopidy.com/en/latest/clients/mpd/>`_.
+* (2): There exist also `Music Player Daemon Clients <https://www.musicpd.org/clients/>`_
+
 
 Conclusion
 ----------
@@ -124,7 +144,7 @@ Conclusion
 If you are looking for something like Spotify you should try `Ampache <http://ampache.org/index.html>`_.
 In case you only want to access your music from your web browser, 
 then `Sonerezh <https://www.sonerezh.bzh/>`_ 
-and `CherryMusic <http://www.fomori.org/cherrymusic/index.html>`_ are a good choice.
+and `CherryMusic <https://github.com/devsnd/cherrymusic>`_ are a good choice.
 When you have a totally messed up collection of files you want to organize, the `Beets <http://beets.io/>`_ is the tool you need and you should start with.
 **MusicDB** is for those who manage their files by himself and want to have music centric WebUI and streaming solution.
 If you cannot live with any of those tools and you want to develop your own solution, 
