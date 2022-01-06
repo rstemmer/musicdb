@@ -17,36 +17,29 @@ Since version 8.0.0 this command line interface, see ``musicdb --help``, is supp
 The MusicDB command line interface is a low level interface to some basic functionality of MusicDB.
 Its main purpose is to debug and repair MusicDB.
 The command liner interface (CLI) consists of several sub-commands.
-These sub commands are listed as sub-section in the left menu of this documentation.
-
-
-OLD:
-
-
-Modules are extensions for the command-line interface. 
-Those classes are not supposed to be used inside MusicDB.
-In the following documentation of each module the usage of them is also explained.
-These chapters will help users to use MusicDB.
-They provide lots of examples on how to use the MusicDB command line tool.
-
-CLI Usage
----------
+These sub-commands are listed as sub-section in the left menu of this documentation.
 
 To call a module give its name as parameter to ``musicdb``.
 The name is the last parameter for ``musicdb``, all following parameters are parameters of the module.
+To be allowed to execute ``musicdb``, you need to be in the group ``musicdb``.
 
 .. code-block:: bash
 
-   # Show help for musicdb, and after that, for the musicai-module
+   # Change effective groupe
+   newgrp musicb
+
+   # Show help for musicdb, and after that, for the artwork-module
    musicdb --help
    musicdb artwork --help
-
-   # List all availabe modules
-   musicdb --version
 
    # Call the stats-module:
    musicdb stats
 
+   # Remove an artist from the database. Restart the server to update its caches
+   musicdb database remove /var/music/Bad\ Artist
+   sudo systemctl restart musicdb
+
+The following command line modules exist:
 
 .. toctree::
    :maxdepth: 1
@@ -55,18 +48,3 @@ The name is the last parameter for ``musicdb``, all following parameters are par
 
    ../mod/*
 
-
-Using the database module
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The following example shows how to add artists and albums using the ``database`` module.
-For details see :doc:`/mod/database`.
-
-* The ``musicdb database`` command: :doc:`/mod/database` (the hard way)
-
-After adding the music via ``musicdb database`` or ``musicdb repair``,
-the artwork must be imported using ``musicdb artwork`` (:doc:`/mod/artwork`).
-It can happen that the automatic import of the artwork does not work.
-This is usually the case when there is no artwork embedded in the audio files.
-In this case the artwork file path must be given to ``musicdb artwork`` explicitly.
-See the :doc:`/mod/artwork` documentation where this step is described.
