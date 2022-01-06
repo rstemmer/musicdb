@@ -38,11 +38,11 @@ MusicDB has several abstraction layers shown in the following table:
 +-------------------+-------------------+
 | Bash Scripts      | HTML Documents    |
 +-------------------+-------------------+
-| `MusicDB CLI`_    | `MusicDB WebUI`_  |
+| MusicDB CLI       | MusicDB WebUI     |
 +-------------------+-------------------+
-| `MusicDB API`_                        |
+| MusicDB API                           |
 +-------------------+-------------------+
-| `MusicDB Libraries`_                  |
+| MusicDB Libraries                     |
 +-------------------+-------------------+
 | Python            | Linux Tools       |
 +-------------------+-------------------+
@@ -82,42 +82,6 @@ Those chapters are for users as well as for developers.
    basics/data
    basics/overview
    basics/*
-
-
-MusicDB CLI
-===========
-
-Modules are extensions for the command-line interface. 
-Those classes are not supposed to be used inside MusicDB.
-In the following documentation of each module the usage of them is also explained.
-These chapters will help users to use MusicDB.
-They provide lots of examples on how to use the MusicDB command line tool.
-
-.. toctree::
-   :maxdepth: 1
-   :caption: CLI Modules
-   :glob:
-
-   mod/*
-
-
-CLI Usage
----------
-
-To call a module give its name as parameter to ``musicdb``.
-The name is the last parameter for ``musicdb``, all following parameters are parameters of the module.
-
-.. code-block:: bash
-
-   # Show help for musicdb, and after that, for the musicai-module
-   musicdb --help
-   musicdb artwork --help
-
-   # List all availabe modules
-   musicdb --version
-
-   # Call the stats-module:
-   musicdb stats
 
 
 MusicDB API
