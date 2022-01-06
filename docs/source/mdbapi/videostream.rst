@@ -5,8 +5,8 @@ Video Streaming Server
    :members: StartVideoStreamingThread, StopVideoStreamingThread, VideoStreamingThread
 
 
-Stream Manager Class
---------------------
+Video Stream Manager Class
+--------------------------
 
 .. autoclass:: musicdb.mdbapi.videostream.VideoStreamManager
    :members:

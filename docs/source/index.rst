@@ -180,8 +180,8 @@ With each start of the MusicDB back-end, these modules check if the environment 
    maintain/*
 
 
-MusicDB WebUI
-=============
+MusicDB Web User Interface
+==========================
 
 The documentation of the WebUI is not complete yet.
 

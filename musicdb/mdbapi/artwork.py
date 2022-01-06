@@ -18,8 +18,8 @@ This module handles the artwork (cover) of albums.
 Its main task is to cache, scale and provide them to the GUI.
 
 
-Database
---------
+Artwork Related Database Entries
+--------------------------------
 
 The artwork data is part of the album entry in the MusicDB Database.
 The artwork part consists of the following entries:
@@ -47,8 +47,8 @@ bgcolor, fgcolor, hlcolor (string)
     Keep in mind that the user may set all three colors to the same hue so that a monochromatic scheme gets forced.
     
 
-Path structure
---------------
+Artwork Path structure
+----------------------
 
 The artwork root directory can be configured in the MusicDB Configuration file.
 Everything related to artwork takes place in this directory.
@@ -76,16 +76,16 @@ Web Browsers
 Web browsers have to prefix the path with ``artwork/``.
 So, the server must be configured.
 
-Scaling
---------
+Scaled Artwork
+--------------
 
 Scales that shall be provides are set in the MusicDB Configuration as list of edge-lengths.
 For example, to generate 50x50, 100x100 and 500x500 versions of an artwork, the configuration would look like this: ``scales=50, 100, 500``
 The **scaled artwork gets stored as progressive JPEGs** to get a better responsiveness for the WebUI.
 
 
-Configuration
--------------
+Configuration for Artworks
+--------------------------
 
 .. code-block:: ini
 
@@ -93,8 +93,8 @@ Configuration
     scales=50, 150, 500
 
 
-Algorithm
----------
+Algorithm to Create Artworks
+----------------------------
 
 To update the album artwork cache the following steps are done:
 

@@ -1,6 +1,6 @@
 
-Artwork Management
-==================
+Artwork Tasks Management
+========================
 
 .. automodule:: musicdb.taskmanagement.artworkmanager
 

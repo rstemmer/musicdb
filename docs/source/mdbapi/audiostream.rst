@@ -5,8 +5,8 @@ Audio Streaming Server
    :members: StartAudioStreamingThread, StopAudioStreamingThread, AudioStreamingThread
 
 
-Stream Manager Class
---------------------
+Audio Stream Manager Class
+--------------------------
 
 .. autoclass:: musicdb.mdbapi.audiostream.AudioStreamManager
    :members:

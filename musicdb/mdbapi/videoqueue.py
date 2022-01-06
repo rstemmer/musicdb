@@ -17,8 +17,8 @@
 This module implements the Video Queue.
 The video queue consists of a global FIFO organized list.
 
-Queue Management
-----------------
+Video Queue Management
+----------------------
 
 An entry in this queue is a dictionary having the following keys:
 
@@ -45,8 +45,8 @@ Furthermore this module cooperates the Randy module (see: :doc:`/mdbapi/randy`)
 When the queue runs empty, a new random video gets append to the queue.
 
 
-Event Management
-----------------
+Video Queue Event Management
+----------------------------
 
 This module provided a callback interface to react on events triggered on changes in the Video Queue.
 

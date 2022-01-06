@@ -51,8 +51,8 @@ Download the one that matches to your Linux Distribution.
 Be aware that MusicDB requires lots of libraries because of its dependency to `FFmpeg <https://www.ffmpeg.org/>`_ and `gstreamer <https://gstreamer.freedesktop.org/>`_.
 All libraries and dependencies are available in the Arch Linux repository so that they will be installed automatically by the package manager.
 
-Installation
-------------
+Installation via Package Manager
+--------------------------------
 
 Update your system before installing MusicDB.
 
@@ -120,8 +120,8 @@ All users in the ``musicdb`` group can maintain MusicDB and use the MusicDB comm
 
    usermod -G musicdb $username
 
-Music Directory
-^^^^^^^^^^^^^^^
+Creating a Music Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The music directory is the directory that contains the music files
 that will be managed, presented and streamed by MusicDB.

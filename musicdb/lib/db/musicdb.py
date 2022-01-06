@@ -18,13 +18,12 @@ This class manages the *MusicDB Database* the core of *MusicDB*.
 It caches information from the filesystem and provides augmentation of those files.
 This database handles the following components:
 
-    * `Songs`_
-    * `Videos`_
-    * `Albums`_
-    * `Artists`_
-    * `Artworks`_
-    * `Lyrics`_
-    * `Tags`_
+    * `Songs Table`_
+    * `Videos Table`_
+    * `Albums Table`_
+    * `Artists Table`_
+    * `Lyrics Table`_
+    * `Tags Table`_
 
 All database entries (= rows) are handled as dictionaries.
 The key of the dictionary corresponds to the column name of the database.
@@ -73,8 +72,8 @@ When a new column shall be added, the following steps are necessary.
 Furthermore be sure that all command line modules and API modules handle the new added column, and so new added feature correct.
 For example, methods creating a new entry in the modified table may be adopted.
 
-Songs
------
+Songs Table
+-----------
 
 The columns of the songs table are the following:
 
@@ -140,8 +139,8 @@ The following methods exist to handle song entries in the database:
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.RemoveSong`
 
 
-Videos
-------
+Videos Table
+------------
 
 The columns of the videos table are the following:
 
@@ -232,8 +231,8 @@ The following methods exist to handle video entries in the database:
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.SetVideoTimeFrame`
 
 
-Albums
-------
+Albums Table
+------------
 
 Data structure:
 
@@ -263,8 +262,8 @@ Album Related Methods
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetAllAlbumIds`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.RemoveAlbum`
 
-Artworks
-^^^^^^^^
+Artwork Related Methods
+^^^^^^^^^^^^^^^^^^^^^^^
 
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.SetArtwork`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.SetArtworkColorByAlbumId`
@@ -280,8 +279,8 @@ Valid values:
     * ``"CD"`` as fallback for unknown *flac* files
     * ``"internet"`` as fallback for any other unknown files
 
-Artists
--------
+Artists Table
+-------------
 
 Database structure:
 
@@ -295,8 +294,8 @@ Database structure:
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetArtistById`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.RemoveArtist`
 
-Lyrics
-------
+Lyrics Table
+------------
 
 Lyrics state is part of the *songs* table.
 The lyrics itself are stored in the *lyrics* table with the following layout:
@@ -346,8 +345,8 @@ The *lyrics* column can have the following states:
     * ``SONG_LYRICSSTATE_FROMUSER`` - The lyrics were reviewed by the user. This noted the highest state of quality for lyrics.
     * ``SONG_LYRICSSTATE_NONE`` - There are no lyrics for this song - it is an instrumental song.
 
-Tags
-----
+Tags Table
+----------
 
 In this section, the tag management is described.
 A *Toxi* scheme is used to implement the tag system in MusicDB.

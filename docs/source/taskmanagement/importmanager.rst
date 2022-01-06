@@ -1,6 +1,6 @@
 
-Import Management
-=================
+Import Tasks Management
+=======================
 
 .. automodule:: musicdb.taskmanagement.importmanager
 
