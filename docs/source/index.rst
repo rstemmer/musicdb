@@ -66,6 +66,7 @@ Those chapters are for users as well as for developers.
    usage/install
    usage/import
    usage/music
+   usage/webui
    usage/stream
    usage/*
 

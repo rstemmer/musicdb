@@ -114,14 +114,63 @@ When a new song starts to get streamed, its album will automatically be opened i
 
 The Album View itself consist of different parts:
 
-# TODO: Add Screenshot of Album View parts
-
-# TODO: Show impact of Song Properties
-
 .. figure:: ../images/TestAlbum.jpg
    :align: center
 
    An album shown in the Album View
+
+The Album View consists of four parts.
+The headline on the top left, the album artwork on the top right.
+Below the headline is the songs list. Below the artwork are the genres and sub-genres of the album listed.
+
+You can drag the album artwork and move it into the Queue View to insert all songs of the album into the queue.
+You can also drag and drop individual songs from the song list into the Queue View.
+
+Additional to the Drag'n'Drop feature you can use the two round buttons to add a song from the list at the end of the Queue, or right after the current screamed song.
+With the two buttons in the headliner section you can insert a random song from the selected album into the queue.
+
+.. figure:: ../images/AlbumContextMenu.jpg
+   :align: center
+
+   Right click on the album headline opens the album settings menu
+
+With a right click on the headline of the album, a setting menu appears.
+This menu allows you to do the following changes to the Album:
+
+- Add or remove genre tags
+- Add or remove sub-genre tags
+- Upload a new album artwork
+- Change the color theme connected to that album
+- Hide the album (The whole album is then no longer visible in the WebUI)
+- Open an advanced album settings layer that allows you to rename the album
+- Open an advanced songs settings layer that allows you to rename songs of the album
+
+.. figure:: ../images/SongContextMenu.jpg
+   :align: center
+
+   Right click on a song opens the song settings menu
+
+When you right click on a song, a similar menu appears.
+Where you can change the following song properties:
+
+- Add or remove genre tags
+- Add or remove sub-genre tags
+- Changing mood-flags
+- Changing song property flags
+- Listen to the song directly without inserting it into the queue (Preview feature)
+
+The mood flags and some of the song property flags are also visible in the songs list.
+
+The Like/Dislike ration is visualized by a small box that is gray when there are no likes or dislikes.
+The ratio itself is represented by a red (dislike) and green (like) part.
+In the screenshot, song number 2 got two likes and one dislike.
+Beside the flag icons itself, some song property flags have the further effects on the visualization.
+Hated songs have a lower opacity (Song number 3 on the screenshot).
+Deactivated songs are shown with even less contrast (Song number 6).
+
+Between the song property information and the buttons to add the song into the queue is a button that shows the current state of the lyrics annotation to the song.
+You can read or add lyrics to a song when clicking on them.
+
 
 Queue View
 ^^^^^^^^^^
@@ -139,8 +188,14 @@ You can append one at the end of the queue or add it right after the current str
 Of course only songs associated to the activated genres were considered.
 
 
+Lyrics View
+^^^^^^^^^^^
+
+To Do.
+
+
 WebUI Settings Mode
 -------------------
 
-# TODO: Start with explaining the Main Menu
+To Do.
 
