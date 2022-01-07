@@ -68,6 +68,9 @@ tasks/:
    Persistent state of tasks that are processed by the :mod:`musicdb.taskmanagement.managementthread`
    and managed by the :doc:`/taskmanagement/taskmanager`.
 
+config/:
+   In this directory configuration files are placed that are managed by MusicDB.
+
 webdata/:
    This directory contains all data that needs to be available by the HTTPS web server.
    It contains the WebUI configuration ``config.js`` as well as the artwork directory.
@@ -81,6 +84,7 @@ Directory        Owner        Group        Permissions
 state            ``musicdb``  ``musicdb``  ``rwxr-xr-x``
 uploads          ``musicdb``  ``musicdb``  ``rwxr-x---``
 tasks            ``musicdb``  ``musicdb``  ``rwxr-x---``
+config           ``musicdb``  ``musicdb``  ``rwxr-xr-x``
 webdata          ``musicdb``  ``musicdb``  ``rwxr-xr-x``
 webdata/artwork  ``musicdb``  ``musicdb``  ``rwxrwxr-x``
 ===============  ===========  ===========  =============
@@ -163,11 +167,13 @@ Most categories and keys are the same.
 | Old Path                            | New Path                           |
 +-------------------------------------+------------------------------------+
 | /opt/musicdb/data/musicdb.ini       | /etc/muiscdb.ini                   |
-| /opt/musicdb/data/webui.ini         | /var/lib/muiscdb/webui.ini         |
++-------------------------------------+------------------------------------+
+| /opt/musicdb/data/webui.ini         | /var/lib/muiscdb/config/webui.ini  |
++-------------------------------------+------------------------------------+
 | /opt/musicdb/server/webui/config.js | /var/lib/musicdb/webdata/config.js |
 +-------------------------------------+------------------------------------+
 
-The WebUI configuration must also be transfered.
+The WebUI configuration must also be transferred.
 
 +--------------------------------------+------------------------------------+
 | Old Path                             | New Path                           |

@@ -48,6 +48,7 @@ class DataDirectoryMaintainer(object):
         self.AddDirectory(self.config.directories.artwork, self.user, self.group, "rwxrwxr-x") # TODO include sub directories
         self.AddDirectory(self.config.directories.uploads, self.user, self.group, "rwxr-x---")
         self.AddDirectory(self.config.directories.tasks,   self.user, self.group, "rwxr-x---")
+        self.AddDirectory(self.config.directories.config,  self.user, self.group, "rwxr-xr-x")
 
         # Collect all files (expected directory, initial file source)
         sourcedir = self.config.directories.share

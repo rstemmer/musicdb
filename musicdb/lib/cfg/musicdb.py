@@ -137,14 +137,15 @@ class MusicDBConfig(Config):
         self.directories.uploads    = self.directories.data + "/uploads"
         self.directories.tasks      = self.directories.data + "/tasks"
         self.directories.state      = self.directories.data + "/state"
+        self.directories.config     = self.directories.data + "/config"
         self.directories.share      = "/usr/share/musicdb"
         self.directories.artwork    = self.directories.webdata + "/artwork"
 
         # files
         self.files = SECTION()
-        self.files.webuiconfig      = self.directories.data + "/webui.ini"
-        self.files.musicdatabase    = self.directories.data + "/music.db"
-        self.files.trackerdatabase  = self.directories.data + "/tracker.db"
+        self.files.webuiconfig      = self.directories.config  + "/webui.ini"
+        self.files.musicdatabase    = self.directories.data    + "/music.db"
+        self.files.trackerdatabase  = self.directories.data    + "/tracker.db"
         self.files.defaultalbumcover= self.directories.artwork + "/default.jpg"
         self.files.webuijsconfig    = self.directories.webdata + "/config.js"
 
