@@ -48,6 +48,9 @@ MusicDB requires Python 3 version 3.9.0 or later.
 
 MusicDB is hardware independent. It works with any listed Linux distribution installed on PC, ARM (like [Raspberry Pi](https://www.raspberrypi.com/)) or Mac.
 
+**Important:** See [Transition for 7.2.0 to 8.0.0](https://rstemmer.github.io/musicdb/build/html/basics/data.html#transition-from-7-2-0-to-8-0-0) in case you already have MusicDB installed.
+
+
 ---
 
 ## 🔍 Details

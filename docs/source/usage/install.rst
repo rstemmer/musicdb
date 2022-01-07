@@ -103,6 +103,10 @@ Update your system before installing MusicDB.
 Initial Setup
 -------------
 
+.. note::
+
+   In case you just upgraded from an old MusicDB installation, see :doc:`/basics/data` for the transition to the new file and directory structure.
+
 This section describes the initial setup for MusicDB.
 Those steps are required to provide MusicDB a valid environment.
 
