@@ -85,4 +85,12 @@ MusicDB State Files
    :members:
 
 
+WebSocket API Key File
+----------------------
+
+.. automodule:: musicdb.lib.cfg.wsapikey
+
+.. autoclass:: musicdb.lib.cfg.wsapikey.WebSocketAPIKey
+   :members:
+
 

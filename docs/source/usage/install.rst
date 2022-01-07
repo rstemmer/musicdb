@@ -173,44 +173,6 @@ The websocket server required an SSL cert/key pair. This is automatically genera
 The paths are also configured in ``/etc/musicdb.ini`` in the ``[websocket]`` section.
 If you want to use your own certificates, for example managed by `Let's Encrypt <https://letsencrypt.org/>`_, you may want to change that paths as well.
 
-API-Key Setup
-^^^^^^^^^^^^^
-
-MusicDB has no user authentication integrated.
-The MusicDB websocket server relies on the HTTPS server configuration to provide user authentication (For example via LDAP or client-side certificate authentication).
-
-For details see :doc:`/basics/security`
-
-.. note::
-
-   There exists the following assumption:
-   *Anyone can access the Websocket Port. Only authenticated users can access the WebUI (more precise: ``/var/lib/musicdb/webdata/config.js``).*
-
-To only handle websocket traffic from authenticated users, the data must contain a secret only the WebUI knows - the API-Key.
-Before the first run, you have to generate a key and provide it to the MusicDB server configuration
-as well as to the MusicDB WebUI configuration.
-
-**Generating a key is mandatory to use MusicDB.**
-
-To generate a good key you can use ``openssl``:
-
-.. code-block:: bash
-
-   openssl rand -base64 32
-   #> 52bRSRLIeBSOHVxN/L4SQgsxxP8IHmDDskmg8H/d0C0=
-   # DO NOT COPY THIS KEY. CREATE YOUR OWN!
-
-This key now must be entered into the server configuration.
-When starting MusicDB for the first time, this key gets propagated into the generated client configuration (``webdata/config.js``) automatically.
-
-To write the generated random key into the MusicDB server configuration edit ``/etc/muiscdb.ini`` and update the ``[websocket]->apikey`` value.
-
-.. code-block:: ini
-
-   [websocket]
-   ; Example! Use your own generated key!
-   apikey=52bRSRLIeBSOHVxN/L4SQgsxxP8IHmDDskmg8H/d0C0=
-
 
 Debugging logs
 ^^^^^^^^^^^^^^

@@ -22,6 +22,7 @@ import logging
 import stat
 from datetime           import datetime
 from musicdb.lib.filesystem     import Filesystem
+from musicdb.lib.cfg.wsapikey   import WebSocketAPIKey
 
 
 class DataDirectoryMaintainer(object):
@@ -79,45 +80,6 @@ class DataDirectoryMaintainer(object):
 
 
 
-    def InsertWSAPIKey(self, wsapikey: str, configjs: str) -> bool:
-        """
-        This method copies the WebSocket API Key given by the parameter ``wsapikey``
-        into a new generated WebUI ``config.js`` file addressed by the ``configjs`` parameter.
-        The API key should be read from ``/etc/musicdb.ini``: ``[websocket]->apikey``.
-
-        It is expected that the addressed file in ``configjs`` exists.
-        If not a ``FileNotFound`` exception will raise.
-
-        The WebUI JavaScript configuration must already exist.
-        If that file already has a key, it will not be replaced.
-        If no key exists yet (a dummy key ``WSAPIKEY`` is expected in place) the key will be set.
-
-        Args:
-            wsapikey (str): The API key to set
-            configjs (str): Path to the config.js file of the WebUI client that shall use the API Key
-
-        Returns:
-            *Nothing*
-        """
-        # Prepare API Key to become valid JavaScript
-        wsapikey = "\"" + wsapikey + "\";"
-
-        # Read file
-        with open(configjs) as file:
-            lines = file.read()
-
-        # Process file: Replace WSAPIKEY dummy by actual key
-        lines = lines.splitlines()
-        lines = [line.replace("WSAPIKEY", wsapikey) for line in lines]
-        lines = "\n".join(lines)
-
-        # Write file
-        with open(configjs, "w") as file:
-            file.write(lines)
-        return
-
-
-
     def Check(self):
         """
         This method just checks if everything is correct including existence, ownership and access mode.
@@ -159,6 +121,8 @@ class DataDirectoryMaintainer(object):
             *Nothing*
         """
         for subdir in self.subdirpaths:
+            logging.debug("Validating %s", subdir["path"])
+
             if not self.filesystem.IsDirectory(subdir["path"]):
                 logging.warning("Sub-directory \"%s\" missing. \033[1;30m(Directory will be created)", subdir["path"])
                 self.filesystem.CreateSubdirectory(subdir["path"])
@@ -170,6 +134,8 @@ class DataDirectoryMaintainer(object):
 
 
         for file in self.filepaths:
+            logging.debug("Validating %s", file["path"])
+
             if not self.filesystem.IsFile(file["path"]):
                 logging.warning("File \"%s\" missing. \033[1;30m(File will be created from %s)", file["path"], file["source"])
                 self.filesystem.CopyFile(file["source"], file["path"])
@@ -179,8 +145,10 @@ class DataDirectoryMaintainer(object):
                 self.filesystem.SetAccessPermissions(file["path"], file["mode"])
                 self.filesystem.SetOwner(file["path"], file["user"], file["group"])
 
-        # Make sure the WebSocket API Key is set in the config.js file
-        self.InsertWSAPIKey(self.config.websocket.apikey, self.config.files.webuijsconfig)
+        # Check WS API Key
+        logging.debug("Validating WebSocket API Key")
+        wsapikey = WebSocketAPIKey(self.config)
+        wsapikey.CreateIfMissing()
         return
 
 

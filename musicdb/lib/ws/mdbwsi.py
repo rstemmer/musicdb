@@ -155,6 +155,7 @@ from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.cfg.mdbstate   import MDBState
 from musicdb.lib.cfg.webui      import WebUIConfig
+from musicdb.lib.cfg.wsapikey   import WebSocketAPIKey
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.metatags       import MetaTags
 import os
@@ -189,6 +190,7 @@ class MusicDBWebSocketInterface(object):
         # The autobahn framework silently hides all exceptions - that sucks
         # So all possible exceptions must be caught here, so that they can be made visible.
         try:
+            self.apikey     = WebSocketAPIKey(self.cfg).Read()
             self.fs         = Filesystem(self.cfg.directories.music)
             self.tags       = MusicDBTags(self.cfg, self.database)
             self.mdbstate   = MDBState(self.cfg.directories.state, self.database)
@@ -579,8 +581,8 @@ class MusicDBWebSocketInterface(object):
         logging.debug("method: %s, fncname: \033[1;37m%s\033[1;30m, fncsig: %s, arguments: %.200s, pass: %s", 
                 str(method),str(fncname),str(fncsig),str(arguments),str(passthrough))
 
-        if apikey != self.cfg.websocket.apikey:
-            logging.error("Invalid WebSocket API Key! \033[1;30m(Check your configuration. If they are correct check your HTTP servers security!)\033[0m\nreceived: %s\nexpected: %s", str(apikey), str(self.cfg.websocket.apikey))
+        if apikey != self.apikey:
+            logging.error("Invalid WebSocket API Key! \033[1;30m(Check your configuration. If they are correct check your HTTP servers security!)\033[0m\nreceived: %s\nexpected: %s", str(apikey), str(self.apikey))
             return False
 
         if not method in ["call", "request", "broadcast"]:

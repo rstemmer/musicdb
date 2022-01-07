@@ -144,6 +144,7 @@ class MusicDBConfig(Config):
         # files
         self.files = SECTION()
         self.files.webuiconfig      = self.directories.config  + "/webui.ini"
+        self.files.wsapikey         = self.directories.config  + "/wsapikey.txt"
         self.files.musicdatabase    = self.directories.data    + "/music.db"
         self.files.trackerdatabase  = self.directories.data    + "/tracker.db"
         self.files.defaultalbumcover= self.directories.artwork + "/default.jpg"
@@ -178,9 +179,6 @@ class MusicDBConfig(Config):
         self.websocket.port         = self.Get(int, "websocket",    "port",         9000)
         self.websocket.opentimeout  = self.Get(int, "websocket",    "opentimeout",  10)
         self.websocket.closetimeout = self.Get(int, "websocket",    "closetimeout",  5)
-        self.websocket.apikey       = self.Get(str, "websocket",    "apikey",       None)
-        if not self.websocket.apikey:
-            logging.warning("Value of [websocket]->apikey is not set!")
         self.websocket.cert         = self.Get(str, "websocket", "cert", self.directories.data + "websocket.cert")
         self.websocket.key          = self.Get(str, "websocket", "key",  self.directories.data + "websocket.key")
         # The certificate and key files are validated in detail when MusicDB starts. No need to check them here.
