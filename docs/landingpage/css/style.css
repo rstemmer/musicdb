@@ -18,15 +18,16 @@
 
 :root
 {
-    --fgcolor:      #CCC;
-    --bgcolor:      #181819;
+    --fgcolor:              #CCC;
+    --bgcolor:              #181819;
 
-    --navfgcolor:   #CCC;
-    --navbgcolor:   #131314;
+    --navfgcolor:           #FEC;
+    --navbgcolor:           #131314;
 
-    --buttoncolor:  #0A0A0A;
+    --headlinecolor:        #EB8;
+    --buttoncolor:          #0A0A0A;
 
-    --radius:       0.5rem;
+    --radius:               0.5rem;
 }
 
 *
@@ -64,16 +65,31 @@ header, main
 
 footer
 {
-    margin-top:             2rem;
-    margin-bottom:          1rem;
+    margin-top:             1rem;
+    padding:                1.5rem;
+
     font-size:              8pt;
+    max-width:              100ch;
+
+    border-top:             0.2rem solid var(--headlinecolor);
 }
 
 
 
+h1
+{
+    margin-bottom:          1rem;
+}
+h1, h2, h3
+{
+    color:                  var(--headlinecolor);
+}
+
 img
 {
     max-width:              95%;
+    margin-bottom:          1rem;
+    border-radius:          var(--radius);
 }
 
 footer, nav
@@ -86,10 +102,7 @@ p, figcaption
     width:                  95%;
     max-width:              80ch;
     line-height:            1.5rem;
-}
-p+p
-{
-    margin-top:             1rem;
+    margin-bottom:          1rem;
 }
 
 
@@ -106,7 +119,6 @@ ul
 ul.navigation
 {
     background-color:       var(--navbgcolor);
-    color:                  var(--navfgcolor);
     border-radius:          var(--radius);
 }
 @media only screen and (min-width: 600px)
@@ -126,10 +138,13 @@ ul.navigation > li
 ul.navigation > li > a
 {
     display:                flex;
+    flex-grow:              1;
+
     padding:                1rem 2rem;
+
     background-color:       var(--buttoncolor);
     border-radius:          calc(var(--radius) / 2);
-    flex-grow:              1;
+    text-decoration:        none;
 }
 
 li
@@ -146,10 +161,23 @@ li strong
 
 a
 {
-    text-decoration:        none;
-    color:                  inherit;
+    color:                  var(--navfgcolor);
 }
 
+
+
+img.avatar
+{
+    height:                 5rem;
+    float:                  left;
+    margin-right:           1rem;
+}
+img.logo
+{
+    height:                 5rem;
+    float:                  right;
+    margin-left:            1rem;
+}
 
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 

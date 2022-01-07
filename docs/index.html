@@ -3,11 +3,19 @@
 
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" type="image/png" href="landingpage/img/favicon.png">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>MusicDB by Ralf Stemmer</title>
+        <link rel="icon" type="image/svg+xml" href="landingpage/img/favicon.svg" sizes="any">
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
         <meta name="viewport" content="width=device-width" />
+
+        <meta name="description"      content="MusicDB is a music manager, server and player that focus on music.">
+        <meta name="theme-color"      content="#181819">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="format-detection" content="date=no">
+        <meta name="format-detection" content="address=no">
+        <meta name="format-detection" content="email=no">
 
         <link rel="stylesheet" href="landingpage/css/style.css" />
     </head>
@@ -24,9 +32,9 @@
         <!-- Navigation -->
         <nav>
             <ul class="navigation">
-                <li><a href="#">Get MusicDB</a></li>
-                <li><a href="#">Source Code</a></li>
-                <li><a href="#">Documentation</a></li>
+                <li><a href="https://github.com/rstemmer/musicdb">Get MusicDB</a></li>
+                <li><a href="https://github.com/rstemmer/musicdb">Source Code</a></li>
+                <li><a href="build/html/index.html">Documentation</a></li>
             </ul>
         </nav>
 
@@ -37,13 +45,7 @@
                     <h2>Introduction</h2>
                 </header>
                 <p>
-MusicDB is a music manager with focus on remote access to your music collection using a web-based user interface.
-It allows you to manage an audio stream based on a song-queue.
-                </p>
-                <p>
-The WebUI is focusing on being a presentation of your music rather than being a database front-end.
-When you are listening to your music, you do not work with software.
-Instead you explore your music collection.
+MusicDB is a music manager, server and player that focus on music. It is more like a music presenter than a database front-end.
                 </p>
             </article>
 
@@ -69,6 +71,16 @@ Instead you explore your music collection.
                 <header>
                     <h2>Features</h2>
                 </header>
+                <p>
+MusicDB allows remote access to your music collection using a web-based user interface.
+You can listen to your music from anywhere via an audio stream.
+The stream is based on a song queue that can be managed by you or gets filled by a sophisticated random song selection algorithm.
+                </p>
+                <p>
+The WebUI is focusing on being a presentation of your music rather than being a database front-end.
+When you are listening to your music, you do not work with software.
+Instead you explore your music collection.
+                </p>
 
                 <article>
                     <header>
@@ -80,11 +92,11 @@ Instead you explore your music collection.
                                 Albums and songs are represented by their artwork. The UI color matches the album artwork.</li>
                             <li><strong>Presentation</strong>
                                 MusicDB presents your music. It does not feel like a Database Front-end. No meta data overloaded list-based UI.</li>
-                            <li><strong>Typos Allowed</strong>
-                                Fuzzy search allows you to have some typos when searching your music collection.</li>
-                            <li><strong>Focused</strong>
+                            <li><strong>Fuzzy search</strong>
+                                The search allows you to have some typos when searching your music collection.</li>
+                            <li><strong>Focus on a Genre</strong>
                                 Hide all music not tagged with the genres you currently like to listen to.</li>
-                            <li><strong>Annotate</strong>
+                            <li><strong>Annotate your Mood</strong>
                                 Use custom flags to annotate songs with specific moods or themes.</li>
                         </ul>
                     </p>
@@ -115,7 +127,7 @@ Instead you explore your music collection.
                 </header>
                 <p>
                     MusicDB can be installed on any Linux Distribution.
-                    To use MusicDB properly you need to have the following dependencies installed.
+                    To use MusicDB properly you need to have the following dependencies installed:
                 </p>
                 <p>
                     <ul>
@@ -125,25 +137,25 @@ Instead you explore your music collection.
                     </ul>
                 </p>
                 <p>
-                    See the <a href="https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html">Install from Source</a> documentation for a detailed list of all required packaged.
-                </p>
-                <p>
-                    There are packages provided for some Linux distributions.
+                    See the <a href="build/html/usage/fromsource.html">Install from Source</a> documentation for a detailed list of all required packaged.
                 </p>
                 <nav>
                     <ul class="navigation">
-                        <li><a href="#">Get MusicDB</a></li>
+                        <li><a href="https://github.com/rstemmer/musicdb">Get MusicDB</a></li>
+                        <li><a href="build/html/usage/install.html">Installation Instruction</a></li>
                     </ul>
                 </nav>
             </article>
         </main>
 
         <footer>
-            <ul class="navigation">
-                <li><a href="#">by Ralf Stemmer</a></li>
-                <li><a href="#">Impressum</a></li>
-                <li><a href="#">GitHub</a></li>
-                <li><a href="#">Twitter</a></li>
+            <img class="logo" src="landingpage/img/favicon.svg" alt="MusicDB Logo">
+            <img class="avatar" src="landingpage/img/me.jpg" alt="Photo of Ralf Stemmer">
+            <ul class="navigationx">
+                <li>&copy; 2022 by Ralf Stemmer</li>
+                <li><a href="build/html/other/impressum.html">Impressum</a></li>
+                <li><a href="https://github.com/rstemmer">rstemmer @ GitHub</a></li>
+                <li><a href="https://twitter.com/MusicDBProject">MusicDBProject @ Twitter</a></li>
             </ul>
         </footer>
     </body>
