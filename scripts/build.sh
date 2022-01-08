@@ -12,7 +12,8 @@ if [ ! -d "$repository/.git" ] ; then
     exit 1
 fi
 
-version="8.0.0"
+VersionFile="../VERSION"
+version=$(grep MusicDB $VersionFile | cut -d ":" -f 2 | tr -d " ")
 
 mkdir -p "$repository/pkg"
 
