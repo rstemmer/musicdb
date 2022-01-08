@@ -188,6 +188,8 @@ Run  git log --oneline  for more details
 ┝━ MINOR CHANGES
 │ * Log output ends with setting terminal color to default (\e[0m)
 │ * [Artwork] Fixes issue with mutagenx package and importing artworks from mp3 files
+│ * [Artwork] Fixed wrong interpretation of relative path arguments
+│ * [Artwork] Fixed a bug that make the --album or --artwork option crash
 │ * [Add] Highlight in the summary when there are invalid song names
 │ * [Add] Exceptions during album import were captured to create better error messages
 │ + [Add] In case there is invalid unicode in a song file name, the module exits immediately
@@ -222,6 +224,7 @@ Run  git log --oneline  for more details
 │ * [Stream] Fixed a bug that crashes the streaming process when the song queue is empty
 │ * [Installation] Fixed a bug in the database creating process that leads to a wrong version number in new databases
 │ * [Installation] Fixed a bug that gets triggered when there is more than one bash-entry in /etc/shells
+│ * Some CSS-Updates to increase font size on 4k screens
 └───────────────────────────────────────╌╌
 
 
@@ -245,6 +248,9 @@ Run  git log --oneline  for more details
 │ + [Randy] Blacklist entries older than a configured age will be removed
 │ * [Tracker] Does not track any random songs to keep the relations clean
 │ - The deprecated SIGUSR1 signal to update the caches got removed. Use the FIFO interface instead. (SIGTERM will remain)
+│ * All added songs will be pushed onto the blacklist now
+│ * Replaces old imp module by importlib
+│ * Fixes problem caused by asyncio changes in Python3.7
 │
 ┝━ MINOR CHANGES
 │ * [Tracker] Time to pass between two songs until there relationship gets not tracked is now configurable
@@ -260,12 +266,14 @@ Run  git log --oneline  for more details
 │ * CSV Files now have headers
 │ * The server now only accepts request from clients with a valid API Key
 │ * WebSocket configuration for WebUI is now in separate config.js
+│ * MP3 decode is now more tolerant for unusual MP3 files
 │
 ┝━ MINOR CHANGES
 │ * musicdb.ini now has a version number
 │ * Databases now has a version number
 │ * Scripts are now in a separate directory. Helpers will be moved to the server directory on installation.
 │ - Moved id3edit sources into its own repository
+│ * Normalize Unicode strings when loaded into CLUI TextInput
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2018-05-06 ┣━━━━┫ 3.0.0 ┣━━━━━━━━╍╍
@@ -293,6 +301,8 @@ Run  git log --oneline  for more details
 │ - The following song statistics got removed: qadds, qrndadds, qskips, qremoves. They got NEVER used.
 │ - End of Queue option removed from mdbstate.ini->[queue] -> EoQEvent. It was not used for years.
 │ - The MusicDB state gets now saved in an own directory. The state file is at DATADIR/mdbstate/state.ini
+│ * Avoids adding same song, when "AddSongFromAlbum" method is used multiple times.
+│ * Checks if MusicDB runs in the correct group. Warns when not.
 └───────────────────────────────────────╌╌
 
 
@@ -301,6 +311,11 @@ Run  git log --oneline  for more details
 │ + Adds a new WebSocket API function: GetTables
 │
 ┝━ MINOR CHANGES
+│ * Fixes a bug that leads to chaos when the queue runs empty
+│ * The dialog CLUI is now more tolerant for small terminal sizes
+│ * Fixes a bug in the add module that makes importing lyrics crash
+│ * Fixes sloppy path handling in artwork manager
+│ * Makes WebUI more tolerant for missing MPD connection
 │ * Fixes a bug that leads to chaos when the queue runs empty
 │ * The dialog CLUI is now more tolerant for small terminal sizes
 │ * Fixes a bug in the add module that makes importing lyrics crash
@@ -315,6 +330,10 @@ Run  git log --oneline  for more details
 │
 ┝━ MINOR CHANGES
 │ * Better installation instructions
+│ * Fixes crash when using MusicAI in add-module
+│ * Fixes an IndexError when blacklists have length of zero
+│ * Makes named pipes more explicit 
+│ * Fixes a bug that made the add command try to analyse metadata from cover artworks
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2018-01-05 ┣━━━━┫ 2.0.0 ┣━━━━━━━━╍╍
