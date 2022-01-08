@@ -15,7 +15,7 @@ def ReadVersion():
     with open(versionpath, "r") as versionfile:
         firstline = versionfile.readline()
 
-    version = firstline.split("-")[0].strip()
+    version = firstline.split(":")[1].strip()
     return version
 
 
