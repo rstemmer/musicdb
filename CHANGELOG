@@ -59,7 +59,7 @@ Run  git log --oneline  for more details
 │       CreateSongEntry, CreateArtistEntry,
 │       SetAlbumOrigin, SetAlbumImportTime, Bounce
 │    * Renamed: GetUploads -> GetCurrentTasks
-│ * Solved Issues: #68, #66, #65, #22, #27, #72, #64
+│ * Solved Issues: #68, #66, #65, #22, #27, #72, #64, #40, #50
 │
 ┝━ MINOR CHANGES
 │ * [metadata] Uses mutagen instead of mutagenx module
