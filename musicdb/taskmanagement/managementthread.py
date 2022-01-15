@@ -218,7 +218,7 @@ def TaskManagementThread():
         # Sleep a bit to reduce the load on the CPU. If nothing to do, sleep a bit longer
         tasks = taskmanager.GetTasks()
         if len(tasks) > 0:
-            time.sleep(1)
+            time.sleep(0.01)
         else:
             time.sleep(1)
 
