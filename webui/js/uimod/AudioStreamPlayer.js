@@ -62,9 +62,12 @@ class AudioStreamPlayer extends AudioPlayer
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "LoadWebUIConfiguration" || sig == "UpdateConfig")
+        if(fnc == "LoadWebUIConfiguration" || fnc == "SaveWebUIConfiguration")
         {
-            this.Configure(args.Stream.url, args.Stream.username, args.Stream.password);
+            if(sig == "UpdateConfig" || "SetupWebUI")
+            {
+                this.Configure(args.Stream.url, args.Stream.username, args.Stream.password);
+            }
         }
 
         return;

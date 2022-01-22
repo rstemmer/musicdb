@@ -131,10 +131,7 @@ class AudioStreamControl extends Element
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "LoadWebUIConfiguration")
-        {
-            this.player.onMusicDBMessage(fnc, sig, args, pass);
-        }
+        this.player.onMusicDBMessage(fnc, sig, args, pass);
     }
 }
 
