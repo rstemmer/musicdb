@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -375,7 +375,15 @@ class AlbumView extends MainView2
 
         // Set actual tile to true
         this.songtiles[currentsongid].tile.SetPlayingState(true);
-        this.songtiles[currentsongid].tile.ScrollIntoView();
+
+        // The ScrollIntoView requires the element being rendered.
+        // Especially after a GetAlbum->ShowAlbum message exchange,
+        // the album view may not yet be visible at all.
+        // So this requires a short delay before scrolling to the currently playing song.
+        window.setTimeout(()=>
+            {
+                this.songtiles[currentsongid].tile.ScrollIntoView();
+            }, 500/*ms*/);
         return;
     }
 
