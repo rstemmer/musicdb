@@ -204,17 +204,19 @@ function onMusicDBMessage(fnc, sig, args, pass)
             mainviewmanager.ShowWelcome();
         }
 
-        let uimode = args.uimode;
+        let uimode = args.MusicDB.uimode;
         MusicDB_Request("GetArtists",  "UpdateArtistsCache");
         MusicDB_Request("GetTags",     "UpdateTagsCache");
         MusicDB_Request("GetMDBState", "UpdateMDBState");
         if(uimode == "audio")
         {
             MusicDB_Request("GetAudioStreamState",   "UpdateStreamState");
+            MusicDB_Request("GetSongQueue",          "ShowSongQueue"); // Force Queue Update
         }
         else if(uimode == "video")
         {
             MusicDB_Request("GetVideoStreamState",   "UpdateStreamState");
+            MusicDB_Request("GetVideoQueue",         "ShowVideoQueue"); // Force Queue Update
         }
     }
     else if(fnc=="sys:refresh" && sig == "UpdateCaches")    // TODO: Update (make uimode conform)
