@@ -40,6 +40,7 @@ cd musicdb-${version}
 cp -r ${repository}/debian .
 cp    ${repository}/share/musicdb.service ./debian/musicdb.service
 cp    ${repository}/share/tmpfiles.conf   ./debian/musicdb.tmpfile
+cp    ${repository}/share/sysusers.conf   ./debian/musicdb.sysusers
 
 # Build deb package
 echo -e "\e[1;34mBuilding deb package …\e[0m"

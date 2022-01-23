@@ -7,6 +7,8 @@
 
 override_dh_install:
 	dh_install
+	dh_installsysusers
+	dh_installtmpfiles
 	cp -r -a --no-preserve=ownership webui/* debian/musicdb/usr/share/webapps/musicdb/.
 	cp -r -a --no-preserve=ownership share/* debian/musicdb/usr/share/musicdb/.
 	cp -r -a --no-preserve=ownership sql     debian/musicdb/usr/share/musicdb/.
