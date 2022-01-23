@@ -39,6 +39,7 @@
 | --- | --- | --- |
 | Arch Linux      | [📦 musicdb-8.0.0-1-any.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases) | `pacman -U ./musicdb-8.0.0-1-any.pkg.tar.zst` |
 | Fedora 35       | [📦 musicdb-8.0.0-1.fc35.noarch.rpm](https://github.com/rstemmer/musicdb/releases) | `dnf install ./musicdb-8.0.0-1.fc35.noarch.rpm` |
+| Ubuntu 21.10    | [📦 musicdb-8.0.0-1_all.deb](https://github.com/rstemmer/musicdb/releases) | `apt install ./musicdb-8.0.0-1_all.deb` |
 | Source Code     | [📦 musicdb-8.0.0-src.tar.zst](https://github.com/rstemmer/musicdb/releases) | [⚙️ Install from Source Code](https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html) |
 | Documentation   | [📦 musicdb-8.0.0-doc.tar.zst](https://github.com/rstemmer/musicdb/releases) | [⚙️ Install Documentation](https://rstemmer.github.io/musicdb/build/html/usage/installdocs.html) |
 
@@ -187,7 +188,7 @@ The following list shows on which Linux Distributions I tested the MusicDB back-
 * 🟢 [Arch Linux](https://archlinux.org/)
 * 🟢 [Fedora 35](https://getfedora.org)
 * 🔴 [Ubuntu 20.04 LTS](https://ubuntu.com/)<sup>1</sup>
-* 🟡 [Ubuntu 21.10](https://ubuntu.com/)
+* 🟢 [Ubuntu 21.10](https://ubuntu.com/)
 * 🔴 [openSUSE Tumbleweed](https://get.opensuse.org/tumbleweed)<sup>1</sup>
 * 🟡 [Raspberry PI OS](https://www.raspberrypi.com/software/)
 
