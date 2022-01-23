@@ -171,6 +171,11 @@ a.highlight
     background-color:       var(--navfgcolor) !important;
 }
 
+a:hover
+{
+    filter: drop-shadow(0 0 0.75rem var(--navfgcolor));
+}
+
 
 
 img.avatar
