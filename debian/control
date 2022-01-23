@@ -5,7 +5,7 @@ Maintainer: Ralf Stemmer <ralf.stemmer@gmx.net>
 Build-Depends: debhelper (>=11~), dh-exec, dh-python, python3-all
 Standards-Version: 4.1.4
 Homepage: https://github.com/rstemmer/muiscdb/
-X-Python3-Version: >= 3.8
+X-Python3-Version: >= 3.9
 
 Package: musicdb
 Architecture: all
@@ -28,7 +28,7 @@ Depends: ffmpeg,
          ${misc:Depends},
          ${python3:Depends}
 Recommends: logrotate, apache2, icecast2
-Description: A music manager with web-bases UI that focus on music
+Description: Music manager with web-bases UI that focus on music
  MusicDB is a music manager with focus on remote access to your music
  collection using a web-based user interface.  It allows you to manage
  an audio stream based on a song-queue.  The WebUI is focusing on
