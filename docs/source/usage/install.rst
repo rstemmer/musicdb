@@ -258,7 +258,7 @@ There will also be an error "There are no songs in the database yet. Audio strea
 This is also an expected behavior because no music has been added to the MusicDB database.
 
 Now MusicDB is in a state where can be added and managed, but not streamed.
-As soon as you added music to MusicDB, you can restart the server via ``systemctl restart musicdb`` and it will work with all its features including streaming audio.
+**As soon as you added music to MusicDB, you can restart the server via ``systemctl restart musicdb`` and it will work with all its features including streaming audio.**
 
 You can already access the websocket server with your web browser to see if all network settings around MusicDB are correct.
 Use the following address: `<https://127.0.0.1:9000>`_. Of course use the correct IP address and port if you changed the port.
@@ -274,17 +274,21 @@ Of cause any other web server can be used in place.
 A web server is required to serve the *MusicDB WebUI* - The web front-end for MusicDB.
 
 This server can simply be installed via the package manager.
-The default MusicDB Apache server configuration is already installed.
-* On Arch Linux into ``/etc/httpd/conf/extra/musicdb.conf``.
-* On Fedora into ``/etc/httpd/conf/musicdb.conf``.
 
-This configuration just needs to be included into the Apache main configuration ``/etc/httpd/conf/httpd.conf``.
+If you used the package manager to install MusicDB, the Apache HTTP Server has already been installed as dependency.
+The default MusicDB Apache server configuration is already installed in the apache configuration directory.
+
+If you installed MusicDB from source, you find the configuration at ``/usr/share/musicdb/apache.conf``.
+
+This configuration just needs to be included into the Apache main configuration.
 In this example, the web-server would provide the WebUI via HTTP.
 It is recommend to use HTTPS. Please check the web server manual on how to setup SSL encrypted web sites.
 
 .. tab:: Arch Linux
 
-   The following code shows how to install the HTTP server via ``pacman`` on Arch Linux.
+   The following code shows how to install and configure the HTTP server via ``pacman`` on Arch Linux.
+   The configuration file has already been installed to ``/etc/httpd/conf/extra/musicdb.conf``.
+   This configuration just needs to be included into the Apache main configuration: ``/etc/httpd/conf/httpd.conf``.
 
    .. code-block:: bash
 
@@ -297,7 +301,9 @@ It is recommend to use HTTPS. Please check the web server manual on how to setup
 
 .. tab:: Fedora
 
-   The following code shows how to install the HTTP server via ``dnf`` on Fedora.
+   The following code shows how to install and configure the HTTP server via ``dnf`` on Fedora.
+   The configuration file has already been installed to ``/etc/httpd/conf/musicdb.conf``.
+   This configuration just needs to be moved into the Apache configuration directory: ``/etc/httpd/conf.d``.
 
    .. code-block:: bash
 
@@ -306,6 +312,22 @@ It is recommend to use HTTPS. Please check the web server manual on how to setup
 
       # Setup web server for the front end
       mv /etc/httpd/conf/musicdb.conf /etc/httpd/conf.d/.
+
+
+.. tab:: Ubuntu
+
+   The following code shows how to install and configure the HTTP server via ``apt`` on Ubuntu.
+   The configuration file has already been installed to ``/etc/apache2/conf-available``.
+   This configuration just needs to be linked into the Apache configuration directory: ``/etc/apache2/conf-enabled``.
+
+   .. code-block:: bash
+
+      # Install Apache
+      apt install apache2
+
+      # Setup web server for the front end
+      cd /etc/apache2/conf-enabled
+      ln -s ../conf-available/musicdb.conf musicdb.conf
 
 
 Start the Web Server
@@ -341,6 +363,7 @@ Setup Audio Streaming via Icecast
 
 For providing a secured access to the audio stream provided by MusicDB, `Icecast <https://icecast.org/>`_ is recommended.
 This section shows how to setup Icecast and how to connect MusicDB with Icecast.
+If you used the package manager to install MusicDB, Icecast has already been installed as dependency.
 
 .. note::
 
@@ -365,6 +388,15 @@ This section shows how to setup Icecast and how to connect MusicDB with Icecast.
       # Setup Icecast for secure audio streaming
       dnf install icecast
 
+.. tab:: Ubuntu
+
+   The following code shows how to install Icecast via ``apt`` on Fedora.
+
+   .. code-block:: bash
+
+      # Setup Icecast for secure audio streaming
+      apt install icecast2
+
 Setup Icecast
 ^^^^^^^^^^^^^
 
@@ -375,6 +407,8 @@ Some more details about Icecast can be found in the chapter: :doc:`/lib/icecast`
 
 The following listing shows the changes that are mandatory to make inside the ``/etc/icecast.xml`` file
 to connect MusicDB with Icecast.
+In case you are using Debian/Ubuntu, the file is stored at ``/etc/icecast2/icecast.xml``
+
 You should review the whole settings to make sure that Icecast is doing what you expect
 and to secure the Icecast server.
 
@@ -407,6 +441,8 @@ Run Icecast
 
 After setup, you can start Icecast.
 Be sure you have enabled MusicDB to connect to Icecast if you disabled it previously.
+
+On Debian/Ubuntu it must be ``icecast2`` instead of ``icecast``.
 
 .. code-block:: bash
 
