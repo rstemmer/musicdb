@@ -31,25 +31,24 @@
   [&nbsp;&nbsp;
   <a href="https://rstemmer.github.io/musicdb/">🌍 Website</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
   <a href="https://rstemmer.github.io/musicdb/build/html/usage/install.html">⚙️ Installation Guide</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-  <a href="https://rstemmer.github.io/musicdb/build/html/usage/webui.html">🎵 Usage Guide</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-  <a href="https://rstemmer.github.io/musicdb/build/html/index.html">📚 Code Documentation</a>&nbsp;&nbsp;&nbsp;]
+  <a href="https://rstemmer.github.io/musicdb/build/html/usage/webui.html">🎵 Usage Guide</a>&nbsp;&nbsp;&nbsp;]
 </p>
 
-| Distribution | Download | Installation |
+| Distribution | Download | Quick Installation |
 | --- | --- | --- |
-| Arch Linux      | [📦 musicdb-8.0.0-1-any.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases) | `pacman -U ./musicdb-8.0.0-1-any.pkg.tar.zst` |
-| Fedora 35       | [📦 musicdb-8.0.0-1.fc35.noarch.rpm](https://github.com/rstemmer/musicdb/releases) | `dnf install ./musicdb-8.0.0-1.fc35.noarch.rpm` |
-| Ubuntu 21.10    | [📦 musicdb-8.0.0-1_all.deb](https://github.com/rstemmer/musicdb/releases) | `apt install ./musicdb-8.0.0-1_all.deb` |
-| Source Code     | [📦 musicdb-8.0.0-src.tar.zst](https://github.com/rstemmer/musicdb/releases) | [⚙️ Install from Source Code](https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html) |
-| Documentation   | [📦 musicdb-8.0.0-doc.tar.zst](https://github.com/rstemmer/musicdb/releases) | [⚙️ Install Documentation](https://rstemmer.github.io/musicdb/build/html/usage/installdocs.html) |
+| **Arch Linux**   | [📦 musicdb-8.0.0-1-any.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-1-any.pkg.tar.zst) | `pacman -U ./musicdb-8.0.0-1-any.pkg.tar.zst` |
+| **Fedora** 35    | [📦 musicdb-8.0.0-1.fc35.noarch.rpm](https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-1.fc35.noarch.rpm) | `dnf install ./musicdb-8.0.0-1.fc35.noarch.rpm` |
+| **Ubuntu** 21.10 | [📦 musicdb-8.0.0-1_all.deb](        https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-1_all.deb        ) | `apt install ./musicdb-8.0.0-1_all.deb` |
+| Source Code      | [📦 musicdb-8.0.0-src.tar.zst](      https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-src.tar.zst      ) | [⚙️ Install from Source Code](https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html) |
+| Documentation    | [📦 musicdb-8.0.0-doc.tar.zst](      https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-doc.tar.zst      ) | [⚙️ Install Documentation](https://rstemmer.github.io/musicdb/build/html/usage/installdocs.html) |
 
 [⚙️ Install, Setup and Run MusicDB with Apache and Icecast](https://rstemmer.github.io/musicdb/build/html/usage/install.html)
 
 MusicDB requires Python 3 version 3.9.0 or later.
 
-MusicDB is hardware independent. It works with any listed Linux distribution installed on PC, ARM (like [Raspberry Pi](https://www.raspberrypi.com/)) or Mac.
+MusicDB is hardware independent. It works with any Linux distribution installed on PC, ARM (like [Raspberry Pi](https://www.raspberrypi.com/)) or Mac.
 
-**Important:** See [Transition for 7.2.0 to 8.0.0](https://rstemmer.github.io/musicdb/build/html/basics/data.html#transition-from-7-2-0-to-8-0-0) in case you already have MusicDB installed.
+**Important:** See [Transition from 7.2.0 to 8.0.0](https://rstemmer.github.io/musicdb/build/html/basics/data.html#transition-from-7-2-0-to-8-0-0) in case you already have MusicDB 7.2.0 installed.
 
 
 ---
@@ -58,7 +57,6 @@ MusicDB is hardware independent. It works with any listed Linux distribution ins
 
 <p align="center">
   [&nbsp;&nbsp;
-  <a href="https://rstemmer.github.io/musicdb/">🌍 Screenshots</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
   <a href="https://rstemmer.github.io/musicdb/build/html/basics/overview.html">⚙️ Architecture</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
   <a href="https://github.com/rstemmer/musicdb/projects">🏗 Roadmap</a>&nbsp;&nbsp;&nbsp;]
 </p>
@@ -77,14 +75,14 @@ Time to share it with the world. :smiley:
 
 ### Features
 
-* **Private:** Your music is stored on your private server.
-* **Everywhere:** Control via Web Application. Listen via audio stream.
-* **Visual:** Albums and songs are represented by their artwork.
-* **Presentation:** MusicDB presents your music. It does not feel like a Database Front-end. No meta data overloaded list-based UI.
-* **Typos Allowed:** Fuzzy search allows you to have some typos when searching your music collection.
-* **Focused:** Hide all music not tagged with the genres you currently like to listen to.
-* **Annotate:** Use custom flags to annotate songs with specific moods or themes.
+* **Artwork Oriented:** Albums and songs are represented by their artwork.
+* **Clean Presentation:** No meta data overloaded list-based UI.
+* **Fuzzy search:** The search allows you to have  typos and issues with foreign languages.
+* **Focus on a Genre:** Hide all music not tagged with the genres you currently like to listen to.
+* **Annotate your Mood:** Use flags to annotate songs with specific moods or themes.
 * **Queue Based:** No playlist management distracts you from your music. Put a songs into the queue, then it will be played.
+* **Private:** Your music is stored on your private server.
+* **Everywhere:** Control via Web Application. Listen via Audio Stream.
 * **Single User:** MusicDB is a Single-User Multi-Client application. Connect all your computers to MusicDB without messing around with user management.
 * **No Limits:** Scales with music collections of hundreds of albums.
 * **Independence:** Keeps your music directory clean to use it with other tools as well. The file system is ground truth, not the database.
@@ -107,7 +105,7 @@ I'd like to know if anyone is using this software, and what you are doing with i
 * **Star:** Hit the ☆ to make this repository a bit more relevant.
 * **Feedback:** Provide some feedback [on GitHub Discussions](https://github.com/rstemmer/musicdb/discussions). Why do you *like*, *don't like* or *don't care* about MusicDB.
 * **Experience:** Share some experience or screenshots [on GitHub Discussions](https://github.com/rstemmer/musicdb/discussions) or [Twitter](https://twitter.com/MusicDBProject).
-* **Bug Reports:** [Create an Issue](https://github.com/rstemmer/musicdb/issues) if something does not work.
+* **Bug Reports:** [Create an Issue](https://github.com/rstemmer/musicdb/issues) if something does not work as you expect.
 * **Feature Request:** [Create an Issue](https://github.com/rstemmer/musicdb/issues) if you like to see some feature in MusicDB.
 * **Contact Me:** Write me an e-mail if you don't like to write something on the public channels.
 
@@ -149,7 +147,13 @@ If there are any problems setting up MusicDB, create an issue.
 
 ## 🔩 Technical Details
 
-This section gives you a rough overview of some technical details you may need to know before installing MusicDB.
+<p align="center">
+  [&nbsp;&nbsp;
+  <a href="https://rstemmer.github.io/musicdb/build/html/basics/overview.html">⚙️ Architecture</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="https://rstemmer.github.io/musicdb/build/html/index.html">📚 Code Documentation</a>&nbsp;&nbsp;&nbsp;]
+</p>
+
+This section gives you a rough overview of some technical details you may want to know before installing MusicDB.
 
 ### Requirements
 
@@ -177,6 +181,8 @@ Anyway, periodically I test MusicDB also on an [Raspberry Pi 4](https://www.rasp
 Sometime it happens that MusicDB does not run on Debian/Ubuntu because some packages provided by those distributions are too old.
 I consider this as an issue of those distributions, not of MusicDB.
 
+There may be a .deb package for the latest Ubuntu system, but again, expect some difficulties using MusicDB on Debian/Ubuntu.
+
 I recommend Arch Linux or Fedora to run MusicDB on.
 
 ### Tests
@@ -198,8 +204,8 @@ The following list shows with which web browsers I tested the MusicDB front-end 
 * 🔴 [Chrome](https://www.google.com/chrome/index.html)<sup>2</sup>
 * 🟡 [Safari](https://www.apple.com/safari/)
 
-<sup>1: **Python too Old** - Python 3.9+ is required</sup>
-<sup>2: **Not yet supported** as long as mandatory [CSS features](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) are missing</sup>
+<sup>**1: Python too Old** - Python 3.9+ is required; </sup>
+<sup>**2: Not yet supported** as long as mandatory [CSS features](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) are missing</sup>
 
 
 ---
