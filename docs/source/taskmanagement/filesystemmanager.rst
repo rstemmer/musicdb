@@ -1,6 +1,6 @@
 
-Filesystem Manager
-==================
+Files and Directory Tasks Manager
+=================================
 
 .. automodule:: musicdb.taskmanagement.filesystemmanager
 

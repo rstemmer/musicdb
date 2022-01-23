@@ -22,6 +22,13 @@ class Application
     {
         this.notificationhandler = new Array();
         this.messagehandler      = new Array();
+        this.components = new Object();
+        this.components["onMusicDBMessage"]      = new Array();
+        this.components["onMusicDBNotification"] = new Array();
+        this.components["onWatchdogBarks"]       = new Array();
+        this.components["onWebSocketOpen"]       = new Array();
+        this.components["onWebSocketClosed"]     = new Array();
+        this.components["onWebSocketError"]      = new Array();
 
         this.manager = new Object();
         this.views   = new Object();
@@ -93,9 +100,17 @@ class Application
     AddHandler(component)
     {
         if(typeof component.onMusicDBNotification === "function")
-            this.notificationhandler.push(component);
+            this.components["onMusicDBNotification"].push(component);
         if(typeof component.onMusicDBMessage === "function")
-            this.messagehandler.push(component);
+            this.components["onMusicDBMessage"].push(component);
+        if(typeof component.onWatchdogBarks === "function")
+            this.components["onWatchdogBarks"].push(component);
+        if(typeof component.onWebSocketOpen === "function")
+            this.components["onWebSocketOpen"].push(component);
+        if(typeof component.onWebSocketClosed === "function")
+            this.components["onWebSocketClosed"].push(component);
+        if(typeof component.onWebSocketError === "function")
+            this.components["onWebSocketError"].push(component);
     }
 
 
@@ -126,16 +141,22 @@ class Application
     onWebSocketOpen()
     {
         window.console?.log("[WebSocket] Open");
+        for(let component of this.components["onWebSocketOpen"])
+            component.onWebSocketOpen();
     }
 
     onWebSocketClosed()
     {
         window.console?.log("[WebSocket] Closed");
+        for(let component of this.components["onWebSocketClosed"])
+            component.onWebSocketClosed();
     }
 
     onWebSocketError()
     {
         window.console?.log("[WebSocket] Error");
+        for(let component of this.components["onWebSocketError"])
+            component.onWebSocketError();
     }
 
 
@@ -143,6 +164,8 @@ class Application
     onWatchdogBarks()
     {
         window.console?.log("[Watchdog] Barks");
+        for(let component of this.components["onWatchdogBarks"])
+            component.onWatchdogBarks();
     }
 
 
@@ -151,7 +174,7 @@ class Application
     {
         window.console?.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#c87a7a");
 
-        for(let component of this.notificationhandler)
+        for(let component of this.components["onMusicDBNotification"])
             component.onMusicDBNotification(fnc, sig, data);
     }
 
@@ -159,7 +182,7 @@ class Application
     {
         window.console?.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
 
-        for(let component of this.messagehandler)
+        for(let component of this.components["onMusicDBMessage"])
             component.onMusicDBMessage(fnc, sig, args, pass);
     }
 }

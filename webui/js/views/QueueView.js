@@ -98,7 +98,13 @@ class QueueView extends Element
         // Nothing in the queue? -> Nothing to do
         // A fresh installed MusicDB may have no queue!
         if(MDBQueue.length === 0)
+        {
+            let nomusicwarning = new MessageBarWarning("There is no Music in the Queue");
+            nomusicwarning.Show();
+            super.RemoveChilds();
+            super.AppendChild(nomusicwarning);
             return;
+        }
 
         // Reset timer
         if(MDBQueue[0].song !== undefined)
@@ -188,11 +194,14 @@ class QueueView extends Element
             mainviewbox.appendChild(WebUI.GetView("Queue").GetHTMLElement());           // /  This should do a Main View Manager
             this.Update("video", args);
         }
-        else if(fnc == "GetAlbum" && sig == "AlbumRenamed")
+        else if(fnc == "GetAlbum")
         {
-            let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
-            if(mode == "audio")
-                MusicDB_Request("GetSongQueue", "ShowSongQueue");
+            if(sig == "AlbumRenamed" || sig == "SongRenamed")
+            {
+                let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
+                if(mode == "audio")
+                    MusicDB_Request("GetSongQueue", "ShowSongQueue");
+            }
         }
     }
 }
@@ -263,7 +272,7 @@ class QueueDropZone extends DropTarget
                 {
                     let songid = parseInt(musicid);
                     MusicDB_Call("AddSongToQueue", {songid: songid, position: this.entryid});
-                    queueview.AddFakeEntry(musictype, this.entryid)
+                    WebUI.GetView("Queue").AddFakeEntry(musictype, this.entryid)
                 }
                 else if(musictype == "video")
                 {

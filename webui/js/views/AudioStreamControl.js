@@ -42,8 +42,8 @@ class AudioStreamControl extends Element
         this.StopStream();
 
         this.AppendChild(this.player);
-        this.AppendChild(this.streamstatus);
         this.AppendChild(this.button);
+        this.AppendChild(this.streamstatus);
         this.AppendChild(this.streamerror);
     }
 
@@ -62,27 +62,39 @@ class AudioStreamControl extends Element
 
     onStreamStatusUpdate(event, state)
     {
+        this.streamstatus.Show();
         switch(state)
         {
             case "error":
                 this.streamstatus.SetStatus("bad", "Connection Failed");
                 break;
+
             case "waiting":
                 this.streamstatus.SetStatus("active", "Waiting for Data");
                 break;
+
             case "stalled":
                 this.streamstatus.SetStatus("active", "Stream Stalled");
                 break;
+
             case "suspend":
                 if(this.player.IsPlaying())
                     this.streamstatus.SetStatus("bad", "Stream Loading Suspend");
+                else
+                    this.streamstatus.Hide();
                 break;
+
             case "ended":
                 this.streamstatus.SetStatus("warn", "Failed");
                 break;
+
             case "canplay":
                 this.streamstatus.SetStatus("good", "Playing");
+                this.streamstatus.Hide();
                 break;
+
+            default:
+                window.console?.warn(`Unhandled status update ${state}`);
         }
     }
 
@@ -119,10 +131,7 @@ class AudioStreamControl extends Element
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "LoadWebUIConfiguration")
-        {
-            this.player.onMusicDBMessage(fnc, sig, args, pass);
-        }
+        this.player.onMusicDBMessage(fnc, sig, args, pass);
     }
 }
 

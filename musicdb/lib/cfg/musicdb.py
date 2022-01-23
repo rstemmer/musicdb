@@ -137,14 +137,16 @@ class MusicDBConfig(Config):
         self.directories.uploads    = self.directories.data + "/uploads"
         self.directories.tasks      = self.directories.data + "/tasks"
         self.directories.state      = self.directories.data + "/state"
+        self.directories.config     = self.directories.data + "/config"
         self.directories.share      = "/usr/share/musicdb"
         self.directories.artwork    = self.directories.webdata + "/artwork"
 
         # files
         self.files = SECTION()
-        self.files.webuiconfig      = self.directories.data + "/webui.ini"
-        self.files.musicdatabase    = self.directories.data + "/music.db"
-        self.files.trackerdatabase  = self.directories.data + "/tracker.db"
+        self.files.webuiconfig      = self.directories.config  + "/webui.ini"
+        self.files.wsapikey         = self.directories.config  + "/wsapikey.txt"
+        self.files.musicdatabase    = self.directories.data    + "/music.db"
+        self.files.trackerdatabase  = self.directories.data    + "/tracker.db"
         self.files.defaultalbumcover= self.directories.artwork + "/default.jpg"
         self.files.webuijsconfig    = self.directories.webdata + "/config.js"
 
@@ -177,9 +179,6 @@ class MusicDBConfig(Config):
         self.websocket.port         = self.Get(int, "websocket",    "port",         9000)
         self.websocket.opentimeout  = self.Get(int, "websocket",    "opentimeout",  10)
         self.websocket.closetimeout = self.Get(int, "websocket",    "closetimeout",  5)
-        self.websocket.apikey       = self.Get(str, "websocket",    "apikey",       None)
-        if not self.websocket.apikey:
-            logging.warning("Value of [websocket]->apikey is not set!")
         self.websocket.cert         = self.Get(str, "websocket", "cert", self.directories.data + "websocket.cert")
         self.websocket.key          = self.Get(str, "websocket", "key",  self.directories.data + "websocket.key")
         # The certificate and key files are validated in detail when MusicDB starts. No need to check them here.
@@ -208,8 +207,9 @@ class MusicDBConfig(Config):
         self.randy = SECTION()
         self.randy.nodisabled       = self.Get(bool, "randy",   "nodisabled",   True)
         self.randy.nohated          = self.Get(bool, "randy",   "nohated",      True)
-        #self.randy.nohidden         = self.Get(bool, "randy",   "nohidden",     True) # TODO
-        #self.randy.nobadaudio       = self.Get(bool, "randy",   "nobadaudio",   True) # TODO
+        self.randy.nohidden         = self.Get(bool, "randy",   "nohidden",     True)
+        self.randy.nobadfile        = self.Get(bool, "randy",   "nobadfile",    True)
+        self.randy.nolivemusic      = self.Get(bool, "randy",   "nolivemusic",  True)
         self.randy.minsonglen       = self.Get(int,  "randy",   "minsonglen",   120)
         self.randy.maxsonglen       = self.Get(int,  "randy",   "maxsonglen",   600)
         self.randy.songbllen        = self.Get(int,  "randy",   "songbllen",    50)
@@ -259,13 +259,6 @@ class MusicDBConfig(Config):
         self.extern.configfile      = self.Get(str, "extern",   "configfile",   "config.ini")
         self.extern.songmap         = self.Get(str, "extern",   "songmap",      "songmap.csv")
 
-
-        # [music] # TODO: OLD -> REMOVE
-        # TODO: REMOVE:
-        self.music.owner            = self.Get(str, "music",    "owner",        "user")
-        self.music.group            = self.Get(str, "music",    "group",        "musicdb")
-
-        logging.info("\033[1;32mdone")
 
 
 

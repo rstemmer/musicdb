@@ -210,7 +210,8 @@ class MetaTags(object):
                 # The suggested API seems to be broken.
                 # This is why I go deeper into the mutagen-classes to get the image:
                 try:
-                    artwork = self.file.tags.getall("APIC")[0]
+                    apic    = self.file.tags.getall("APIC")[0]
+                    artwork = apic.data
                 except:
                     return False
             elif self.ftype == "m4a":

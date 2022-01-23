@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -125,10 +125,9 @@ class ArtworkCache(object):
         # Check if the scale-directory already exist. If not, create one
         if not self.artworkroot.IsDirectory(resolution):
             logging.debug("Creating subdirectory: %s", resolution)
-            mode = stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH
             try:
                 self.artworkroot.CreateSubdirectory(resolution)
-                self.artworkroot.SetAttributes(resoultion, None, None, mode);
+                self.artworkroot.SetAccessPermissions(resolution, "rwxrwxr-x")
             except Exception as e:
                 logging.exception("Creating scaled artwork directory %s failed with error: %s.", resolution, str(e))
                 return False

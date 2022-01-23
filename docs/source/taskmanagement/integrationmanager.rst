@@ -1,6 +1,6 @@
 
-Integration Management
-======================
+Integration Tasks Management
+============================
 
 .. automodule:: musicdb.taskmanagement.integrationmanager
 

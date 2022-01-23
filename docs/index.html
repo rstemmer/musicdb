@@ -1,679 +1,163 @@
 <!doctype html>
 <html lang="en">
+
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" type="image/png" href="landingpage/img/favicon.png">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>MusicDB by Ralf Stemmer</title>
+        <link rel="icon" type="image/svg+xml" href="landingpage/img/favicon.svg" sizes="any">
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
         <meta name="viewport" content="width=device-width" />
 
-        <link href="landingpage/css/bootstrap.css" rel="stylesheet" />
-        <link href="landingpage/css/landing-page.css" rel="stylesheet"/>
+        <meta name="description"      content="MusicDB is a music manager, server and player that focus on music.">
+        <meta name="theme-color"      content="#181819">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="format-detection" content="date=no">
+        <meta name="format-detection" content="address=no">
+        <meta name="format-detection" content="email=no">
 
-        <!--     Fonts and icons     -->
-        <link rel="stylesheet" href="landingpage/css/font-awesome.css">
+        <link rel="stylesheet" href="landingpage/css/style.css" />
     </head>
-    <body class="landing-page landing-page2">
-        <nav class="navbar navbar-transparent navbar-top" role="navigation">
-            <div class="container">
 
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <a href="https://github.com/rstemmer">
-                        <div class="logo-container">
-                            <div class="logo">
-                                <img src="landingpage/img/me.jpg" alt="Picture of me">
-                            </div>
-                            <div class="brand">
-                                Ralf Stemmer
-                            </div>
-                        </div>
-                    </a>
-                </div>
+    <body>
+        <!-- Banner -->
+        <header>
+            <h1>MusicDB</h1>
+            <figure>
+                <img src="landingpage/img/WebUI-3.2.0.jpg" alt="Screenshot showing the MusicDB front-end.">
+            </figure>
+        </header>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="example" >
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="https://github.com/rstemmer/musicdb">
-                            <i class="fa fa-github"></i>
-                            Source Code
-                            </a>
-                        </li>
-                        <li>
-                            <a href="build/html/index.html">
-                            <i class="fa fa-book"></i>
-                            Documentation
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://twitter.com/MusicDBProject">
-                            <i class="fa fa-twitter"></i>
-                            MusicDBProject
-                            </a>
-                        </li>
-                        <!--
-                        <li>
-                            <a href="#">
-                            <i class="fa fa-youtube"></i>
-                            Demos
-                            </a>
-                        </li>
-                        -->
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
+        <!-- Navigation -->
+        <nav>
+            <ul class="navigation">
+                <li><a href="https://github.com/rstemmer/musicdb">Get MusicDB</a></li>
+                <li><a href="https://github.com/rstemmer/musicdb">Source Code</a></li>
+                <li><a href="build/html/index.html">Documentation</a></li>
+            </ul>
         </nav>
 
-        <!-- Head -->
-        <div class="wrapper">
-                <div class="parallax filter-gradient gray" data-color="gray">
-                    <!--<div class="parallax filter-gradient gray" data-color="gray">-->
-                <div class= "container">
-                    <div class="row">
-                        <div class="col-md-7  hidden-xs">
-                            <div class="parallax-image">
-                                <a href="landingpage/img/screenshots/WebUI.png" target="_blank">
-                                <img src="landingpage/img/screenshots/WebUI_900px.jpg">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="description text-center">
-                                <h2>
-                                    <div class="logo-container">
-                                    <div class="logo">
-                                        <img src="landingpage/img/logo.svg" alt="MusicDB Logo">
-                                    </div>
-                                    </div>
-                                    MusicDB
-                                </h2>
-                                <br>
-                                <h5>
-                                    MusicDB is a music manager, server and player that focus on music.
-                                    It is more like a music presenter than a database frontend.
-                                </h5>
-                                <div class="buttons">
-                                    <a href="https://github.com/rstemmer/musicdb" class="btn btn-fill btn-neutral">
-                                    <i class="fa fa-download"></i>
-                                    Download
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Main Content -->
+        <main>
+            <article>
+                <header>
+                    <h2>Introduction</h2>
+                </header>
+                <p>
+MusicDB is a music manager, server and player that focus on music. It is more like a music presenter than a database front-end.
+                </p>
+            </article>
 
-            <!-- Introduction -->
-            <div class="section section-gray section-clients">
-                <div class="container text-center" style="width: 800px;">
-                    <h4 class="header-text">Introduction</h4>
+
+
+            <article>
+                <header>
+                    <h2>Architecture</h2>
+                </header>
+                <figure>
+                    <img src="landingpage/img/Setup.svg" alt="MusicDB streams your music through Icecast to your Web Browser.">
+                    <figcaption>
+                        Your music gets streamed by MusicDB through Icecast to any client that can play audio streams.
+                        The MusicDB Web Application can be accessed by your Browser.
+                        You can consume, control and mange your music collection as well as the audio stream from anywhere.
+                    </figcaption>
+                </figure>
+            </article>
+
+
+
+            <article>
+                <header>
+                    <h2>Features</h2>
+                </header>
+                <p>
+MusicDB allows remote access to your music collection using a web-based user interface.
+You can listen to your music from anywhere via an audio stream.
+The stream is based on a song queue that can be managed by you or gets filled by a sophisticated random song selection algorithm.
+                </p>
+                <p>
+The WebUI is focusing on being a presentation of your music rather than being a database front-end.
+When you are listening to your music, you do not work with software.
+Instead you explore your music collection.
+                </p>
+
+                <article>
+                    <header>
+                        <h3>Your Music</h3>
+                    </header>
                     <p>
-                        <b>MusicDB</b> is a music manager, server and player that focus is on music.
-                        Unlike most other players, it does not feel like using software.
-                    </p>
-                    <p>
-                        MusicDB manages your music collection following the concept
-                        <i>The Filesystem is Always Right. The Database is Only for Augmentation.</i>
-                        The <b>tidiness of your music collection</b> is not just inside MusicDB but on all devices 
-                        like your portable music-player or your car that cannot be accessed by third party software.
-                    </p>
-                    <p>
-                        MusicDB also supports streaming your music.
-                        This stream can be received by all kind of players like 
-                        iTunes or VLC.
-                        The streaming server uses <a href="https://icecast.org/" target="_blank">Icecast</a>
-                        to encrypt the stream. So, it is safe to send it out into the internet.
-                        Then <b>your music is <i>in the cloud</i> but your files stay at home.</b>
-                    </p>
-                    <p>
-                        The stream gets controlled by a WebUI that hides the ugliness of software behind a <b>nice, 
-                        music-oriented and music-presenting web frontend.</b>
-                        Your music gets presented and is not just a database entry in a boring list of artists and albums.
-                    </p>
-                    <p>
-                        (Album covers blurred for copyright reasons!)<br>
-                        (Screenshots may be from different versions and won't be updated.)
-                    </p>
-                </div>
-            </div>
-
-            <div class="section section-presentation">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-5 hidden-xs">
-                            <div class="description">
-                                <h4 class="header-text">It's beautiful</h4>
-                                <p>
-                                    The WebUI presents the music, mostly represented by their album artwork.
-                                    Instead of most other music manager and player, the management part of the music is totally hidden.
-                                    The UI is <b>made to enjoy listening to music, not to work on managing it.</b>
-                                    It allows using the colors of the artwork as individual color theme for each album.
-                                    Further more, MusicDB makes excessive use of Unicode.
-                                    Enjoy your favorite Japanese Metal band, instead of fearing the song titles.
-                                </p>
-                                <p>There are four important panes in the WebUI:</p>
-                                <ol>
-                                    <li><i>HUD (top):</i> 
-                                        Showing the current playing song and allows to quick access flags and tags.</li>
-                                    <li><i>Artist List (left):</i> 
-                                        A list of artists and their albums filtered by genre</li>
-                                    <li><i>Album View (middle):</i> 
-                                        The album of the current playing song, or selected from the list on the left.
-                                        This album defines the color theme for the whole WebUI.</li>
-                                    <li><i>Queue View (right):</i>
-                                        The current queue of songs that will be played.</li>
-                                </ol>
-                            </div>
-                        </div>
-                        <div class="col-md-6 ">
-                            <a href="landingpage/img/screenshots/WebUI.png" target="_blank">
-                            <img src="landingpage/img/screenshots/WebUI.jpg">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- DEMO SECTION -->
-            <div class="section section-demo">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="demo-image">
-                                <a href="landingpage/img/screenshots/HUD.png" target="_blank">
-                                <img src="landingpage/img/screenshots/HUD.png">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-5 col-md-offset-1">
-                            <h4 class="header-text">Head-up Display</h4>
-                            <p>
-                                The head-up display presents the current playing song.
-                                It also shows its genre tags and mood-flags.
-                                The configurable <b>mood-flags represent different moods the user/listener has associates with this song.</b>
-                                Furthermore there are buttons to mark the song as favorite or hated.
-                            </p>
-                            <p>
-                                On the right side, the current time and the time when the queue runs empty is shown.
-                                So, you can see when you can sleep, or if it is worth adding some more songs to the queue.
-                            </p>
-                        </div>
-                    </div>
-
-                    <br>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <h4 class="header-text">Artist List</h4>
-                            <p>
-                                The artist list <b>shows all albums that are in the selected genres</b>
-                                from the genre filter box above.
-                                The albums are grouped by their artists and sorted by release date.
-                                By clicking on the album, it gets presented in the Album View.
-                            </p>
-                            <p>
-                                Albums can have one or more main genre like "Metal", "Classic", ….
-                                If you want to listen to Metal, you simply select the Metal genre and disable all other.
-                                Then only Metal albums are listed.
-                                This feature makes MusicDB perfect for huge music collections.
-                                When you select multiple genre, all albums that belong to at least one of the activated genres are shown.
-                            </p>
-
-                            <h5>Fuzzy Search</h5>
-                            <p>
-                                Beside selecting an album from Artist List and then choose a song, 
-                                you can use a <b>typo tolerant search</b> to find and add a certain song directly.
-                                The search finds all songs, albums and artists that matches the entered string to a
-                                certain probability.
-                                While typing the name, a preview of the results with the five most probable hits gets shown in real-time. 
-                                <!--For Nerds: I mean soft real time, the deadline is reached when the user is annoyed of waiting for the results. -->
-                            </p>
-                            <p>
-                                <center>
-                                    <a  href="landingpage/img/screenshots/SearchPreview.png" target="_blank">
-                                    <img src="landingpage/img/screenshots/SearchPreview_200px.jpg">
-                                    </a>
-                                    <a  href="landingpage/img/screenshots/SearchResults.png" target="_blank">
-                                    <img src="landingpage/img/screenshots/SearchResults_200px.jpg">
-                                    </a>
-                                </center>
-                            </p>
-                        </div>
-                        <div class="col-md-6 col-md-offset-1">
-                            <div class="demo-image">
-                                <a href="landingpage/img/screenshots/Artistview.png" target="_blank">
-                                <img src="landingpage/img/screenshots/Artistview.png">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <br>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="demo-image">
-                                <a href="landingpage/img/screenshots/Albumview.png" target="_blank">
-                                <img src="landingpage/img/screenshots/Albumview.png">
-                                </a>
-                            </div>
-                            <h5>Lyrics Management</h5>
-                            <p>
-                                Beside the audio and artwork, lyrics are the third part of a music collection.
-                                MusicDB comes with a simple <b>lyrics management allowing you to annotate lyrics to songs</b>.
-                                If there are lyrics included in the meta data of a song file, MusicDB imports those.
-                            </p>
-                            <p>
-                                <center>
-                                    <a  href="landingpage/img/screenshots/Lyrics.png" target="_blank">
-                                    <img src="landingpage/img/screenshots/Lyrics_200px.jpg">
-                                    </a>
-                                    <a  href="landingpage/img/screenshots/Lyricist.png" target="_blank">
-                                    <img src="landingpage/img/screenshots/Lyricist_200px.jpg">
-                                    </a>
-                                </center>
-                            </p>
-                        </div>
-                        <div class="col-md-5 col-md-offset-1">
-                            <h4 class="header-text">Album View</h4>
-                            <p>
-                                The Album View shows the current playing album or a selected album from the Artist List.
-                                In this view, all <b>songs of an album get presented</b>.
-                                Beside the song name, their mood flags are displayed.
-                                The diamonds on the screenshot show that these songs are favorite songs.
-                                Furthermore on the very right of each song entry, a "likes/dislikes-bar" is shown.
-                                These information help choosing songs from albums you haven't listen to for a long time.
-                            </p>
-                            <p>
-                                Right click on the album title allows you setting the genre tags of an album and the
-                                colors that will be used for the WebUI when showing this album.
-                                Right click on a song opens a control box similar to the HUD.
-                                There you can set the genre of a song, change flags or direct listen to the song 
-                                in your browser.
-                            </p>
-                            <p>
-                                <center>
-                                    <a  href="landingpage/img/screenshots/Albumedit.png" target="_blank">
-                                    <img src="landingpage/img/screenshots/Albumedit_200px.jpg">
-                                    </a>
-                                </center>
-                            </p>
-
-                            <h5>Artwork management</h5>
-                            <p>
-                                Album artwork is an important part of music.
-                                MusicDB does not only concentrates on the music but also on the artwork.
-                            </p>
-                            <p>
-                                For each album are three colors defined that will be used for the whole WebUI.
-                                <b>The style of the UI fits to the design of the album artwork.</b>
-                            </p>
-
-                        </div>
-                    </div>
-
-                    <br>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <h4 class="header-text">Queue</h4>
-                            <p>
-                                <b>MusicDB does not use playlists, it uses a queue for streaming.</b>
-                                Songs can be added at the end of the queue, or on top right after the current playing song.
-                                The queue view also allows to remove songs from the queue or change their position
-                                by moving them via drag 'n' drop.
-                                When the queue runs empty, a pseudo random song gets added.
-                                So, the music never stops playing and the is no repeating playlist annoying you.
-                            </p>
-
-                            <h5>Subjective-Random Songs</h5>
-                            <p>
-                                While real randomness allows to play the same song several times in succession,
-                                the configurable random song selector from MusicDB
-                                does not add songs to the queue that are too short,
-                                flagged as <i>hated</i> 
-                                or when another song of the same album or artist was recently played.
-                                <b>The selected song is not mathematical random, that's why they feel random.</b>
-                            </p>
-                        </div>
-                        <div class="col-md-6 col-md-offset-1">
-                            <div class="demo-image">
-                                <a href="landingpage/img/screenshots/Queue.png" target="_blank">
-                                <img src="landingpage/img/screenshots/Queue.png">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- FEATURE LIST -->
-            <div class="section section-features">
-                <div class="container">
-                    <h4 class="header-text text-center">Further Features</h4>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card card-gray">
-                                <div class="icon">
-                                    <i class="fa fa-5x fa-cogs"></i>
-                                </div>
-                                <div class="text">
-                                    <h4>Manage - Present - Listen</h4>
-                                    <p>
-                                        Most of the music management takes place on command line
-                                        using MusicDB's command line modules.
-                                    </p>
-                                    <p>
-                                        Managing the queue of the songs that shall be streamed 
-                                        will be done using MusicDB's Web UI that presents the music collection.
-                                    </p>
-                                    <p>
-                                        Listening to the stream can be done by any player that supports streams, 
-                                        like VLC with its powerful signal processing capability.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-gray">
-                                <div class="icon">
-                                    <i class="fa fa-5x fa-cloud"></i>
-                                </div>
-                                <div class="text">
-                                    <h4>Your Music Everywhere</h4>
-                                    <p>
-                                        Due to the fact that this is a server/client application, 
-                                        you can listen to your music wherever there is an internet connection.
-                                        The music is stored on your home computer MusicDB runs on.
-                                        The queue of the music that gets streamed can be managed from anywhere via browser.
-                                        And each device that can play audio streams can be used to listen to that stream.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-gray">
-                                <div class="icon">
-                                    <i class="fa fa-5x fa-globe"></i>
-                                </div>
-                                <div class="text">
-                                    <h4>Global state</h4>
-                                    <p>
-                                        The state of MusicDB is stored on the server.
-                                        So, all clients connected to the server see the same information.
-                                        This is <i>not a multi-user application</i>.
-                                        It is a <i>multi-device application</i>.
-                                        All clients see the same queue, and the same album gets shown in the album view.
-                                        Updating a flag or setting a tag gets immediately visible to all clients.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card card-gray">
-                                <div class="icon">
-                                    <i class="fa fa-5x fa-file-audio-o"></i>
-                                </div>
-                                <div class="text">
-                                    <h4>Powerful export</h4>
-                                    <p>
-                                        MusicDB provides a powerful <a href="build/html/mod/extern.html">export</a>
-                                        functionality that allows you 
-                                        to listen to your music in your car that only supports mp3 encoded files,
-                                        or to pre-scale the artworks so that your portable audio player 
-                                        scrolls smoother through your albums.
-                                        You can also add or remove the artwork from files, 
-                                        or change the file name encoding in case you have to export it
-                                        to an ancient filesystem that does not support Unicode.
-                                    </p>
-                                    <p>
-                                        <a  href="landingpage/img/screenshots/extern.png" target="_blank">
-                                        <img src="landingpage/img/screenshots/extern_200px.jpg">
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-gray">
-                                <!--
-                                <div class="icon">
-                                    <i class="fa fa-5x fa-flask"></i>
-                                </div>
-                                <div class="text">
-                                    <h4>Neural Network based auto tagging</h4>
-                                    <p>
-                                        MusicDB comes with the capability to use a Convolutional Deep Neural Network 
-                                        to classify (tag) your music.
-                                        The <a href="build/html/mod/musicai.html">MusicAI</a>
-                                        can "listen" to a song and sets one or more genre tags for the song.
-                                        This tag can be confirmed or rejected by the user when it gets displayed in the WebUI.
-                                        On the screenshots, you will notice those AI set tags by their "probability-bar"
-                                    </p>
-                                    <p>
-                                        Because each music collection is different, there comes no pre-trained model.
-                                        In case you don't want to spend the effort to train a model, the AI functionality
-                                        can be ignored.
-                                        The AI is disabled by default. <i>This is a Crazy Nerd feature.</i>
-                                    </p>
-                                    <p>
-                                        <a  href="landingpage/img/screenshots/MusicAI-Schlagwetter.png" target="_blank">
-                                        <img src="landingpage/img/screenshots/MusicAI-Schlagwetter_200px.jpg">
-                                        </a>
-                                    </p>
-                                </div>
-                                -->
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-gray">
-                                <div class="icon">
-                                    <i class="fa fa-5x fa-book"></i>
-                                </div>
-                                <div class="text">
-                                    <h4>Well Documented</h4>
-                                    <p>
-                                        This does not sound relevant, but it is a very important feature.
-                                        The whole server code is well documented including all interfaces.
-                                        That makes it very easy to develop own frontends that fits perfect
-                                        to your music listening behavior.
-                                        If there is a feature missing it is easy to add.
-                                        You can also easy add new command line modules to make MusicDB fit better
-                                        into your environment.
-                                    </p>
-                                    <p>
-                                        Some interesting documentation examples on different abstraction layers:
-                                        <ul style="text-align: left;">
-                                            <li><a href="build/html/index.html"><b>Documentation Overview</b></a></li>
-                                            <li><a href="build/html/basics/overview.html">Overview of MusicDB</a></li>
-                                            <li><a href="build/html/usage/install.html">Install MusicDB</a></li>
-                                            <li><a href="build/html/mod/extern.html">How to export your music</a></li>
-                                            <li><a href="build/html/basics/webapi.html">How to build your own WebUI</a></li>
-                                            <!--<li><a href="build/html/mdbapi/musicai.html">How the MusicAI works</a></li>-->
-                                            <li><a href="build/html/lib/websockets.html">How WebSockets are implemented</a></li>
-                                        </ul>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Screenshots -->
-            <div class="section section-gray section-clients">
-                <div class="container text-center">
-                    <h4 class="header-text">Screenshots</h4>
-                    <div class="logos">
-                        <ul class="list-unstyled">
-                            <li> <!-- WebUI -->
-                                <a  href="landingpage/img/screenshots/WebUI.png" target="_blank">
-                                <img src="landingpage/img/screenshots/WebUI_200px.jpg">
-                                </a>
-                            </li>
-                            <li> <!-- Album edit -->
-                                <a  href="landingpage/img/screenshots/Albumedit.png" target="_blank">
-                                <img src="landingpage/img/screenshots/Albumedit_200px.jpg">
-                                </a>
-                            </li>
-                            <!--
-                            <li> <!-- MusicAI -->
-                                <a  href="landingpage/img/screenshots/MusicAI-Aldious.png" target="_blank">
-                                <img src="landingpage/img/screenshots/MusicAI-Aldious_200px.jpg">
-                                </a>
-                            </li>
-                            <li>
-                                <a  href="landingpage/img/screenshots/MusicAI-Schlagwetter.png" target="_blank">
-                                <img src="landingpage/img/screenshots/MusicAI-Schlagwetter_200px.jpg">
-                                </a>
-                            </li>
-                            -->
-                            <li> <!-- Lyrics -->
-                                <a  href="landingpage/img/screenshots/Lyrics.png" target="_blank">
-                                <img src="landingpage/img/screenshots/Lyrics_200px.jpg">
-                                </a>
-                            </li>
-                            <li>
-                                <a  href="landingpage/img/screenshots/Lyricist.png" target="_blank">
-                                <img src="landingpage/img/screenshots/Lyricist_200px.jpg">
-                                </a>
-                            </li>
-                            <li> <!-- Search -->
-                                <a  href="landingpage/img/screenshots/SearchPreview.png" target="_blank">
-                                <img src="landingpage/img/screenshots/SearchPreview_200px.jpg">
-                                </a>
-                            </li>
-                            <li>
-                                <a  href="landingpage/img/screenshots/SearchResults.png" target="_blank">
-                                <img src="landingpage/img/screenshots/SearchResults_200px.jpg">
-                                </a>
-                            </li>
-                            <li>
-                                <a  href="landingpage/img/screenshots/MiSE.png" target="_blank">
-                                <img src="landingpage/img/screenshots/MiSE_200px.jpg">
-                                </a>
-                            </li>
-                            <li> <!-- CLI -->
-                                <a  href="landingpage/img/screenshots/MetadataFuckup.png" target="_blank">
-                                <img src="landingpage/img/screenshots/MetadataFuckup_200px.jpg">
-                                </a>
-                            </li>
-                            <li>
-                                <a  href="landingpage/img/screenshots/extern.png" target="_blank">
-                                <img src="landingpage/img/screenshots/extern_200px.jpg">
-                                </a>
-                            </li>
-                            <li>
-                                <a  href="landingpage/img/screenshots/Reconnect.png" target="_blank">
-                                <img src="landingpage/img/screenshots/Reconnect_200px.jpg">
-                                </a>
-                            </li>
-                            <li>
-                                <a  href="landingpage/img/screenshots/genres.png" target="_blank">
-                                <img src="landingpage/img/screenshots/genres_200px.jpg">
-                                </a>
-                            </li>
-                            <li>
-                                <a  href="landingpage/img/screenshots/moods.png" target="_blank">
-                                <img src="landingpage/img/screenshots/moods_200px.jpg">
-                                </a>
-                            </li>
-                            <li>
-                                <a  href="landingpage/img/screenshots/add.png" target="_blank">
-                                <img src="landingpage/img/screenshots/add_200px.jpg">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- link to repo -->
-            <div class="section section-no-padding">
-                <div class="parallax filter-gradient gray" data-color="gray">
-                    <div class="parallax-background">
-                        <img class ="parallax-background-image" src="landingpage/img/screenshots/WebUI.png">
-                    </div>
-                    <div class="info">
-                        <h1>Clone MusicDB from GitHub and feel free to contribute!</h1>
-                        <p>
-                            MusicDB is a music manager, server and player that focus on music.
-                        </p>
-                        <a href="https://github.com/rstemmer/musicdb" class="btn btn-neutral btn-lg btn-fill">
-                            <i class="fa fa-github"></i> Repository
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <!-- last warning -->
-            <!--
-            <br><br>
-            <div class="section section-gray section-clients">
-                <div class="container text-center" style="width: 800px;">
-                    <h4 class="header-text">Headline</h4>
-                    <p>
-                    </p>
-                    <p>
-                        Screenshots are from version 1.0.0 alpha and won't be updated.
-                    </p>
-                </div>
-            </div>
-            -->
-
-
-            <!-- footer -->
-            <footer class="footer">
-                <div class="container">
-                    <nav class="pull-left">
                         <ul>
-                            <li>
-                                <a href="#">
-                                Home
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://github.com/rstemmer/musicdb">
-                                Repository
-                                </a>
-                            </li>
-                            <li>
-                                <a href="build/html/index.html">
-                                Documentation
-                                </a>
-                            </li>
-                            <li>
-                                <a href="build/html/other/impressum.html">
-                                Impressum
-                                </a>
-                            </li>
+                            <li><strong>Visual</strong>
+                                Albums and songs are represented by their artwork. The UI color matches the album artwork.</li>
+                            <li><strong>Presentation</strong>
+                                MusicDB presents your music. It does not feel like a Database Front-end. No meta data overloaded list-based UI.</li>
+                            <li><strong>Fuzzy search</strong>
+                                The search allows you to have some typos when searching your music collection.</li>
+                            <li><strong>Focus on a Genre</strong>
+                                Hide all music not tagged with the genres you currently like to listen to.</li>
+                            <li><strong>Annotate your Mood</strong>
+                                Use custom flags to annotate songs with specific moods or themes.</li>
                         </ul>
-                    </nav>
-                    <div class="social-area pull-right">
-                        <a class="btn btn-social btn-twitter btn-simple" href="https://twitter.com/MusicDBProject">
-                        <i class="fa fa-twitter">MusicDBProject</i>
-                        </a>
-                    </div>
-                    <div class="copyright">
-                        &copy; 2017 <a href="https://github.com/rstemmer">Ralf Stemmer</a><br>
-                        <a href="https://github.com/creativetimofficial/awesome-landing-page">Awesome-Landing-Page Template</a> by <a href="http://www.creative-tim.com">Creative Tim</a>, made with love
-                        
-                    </div>
-                </div>
-            </footer>
-        </div>
+                    </p>
+                </article>
+
+                <article>
+                    <header>
+                        <h3>Your Cloud</h3>
+                    </header>
+                    <p>
+                        <ul>
+                            <li><strong>Private</strong>
+                                Your music is stored on your private server.</li>
+                            <li><strong>Everywhere</strong>
+                                Control via Web Application. Listen via audio stream.</li>
+                            <li><strong>Single User</strong>
+                                MusicDB is a Single-User Multi-Client application. Connect all your computers to MusicDB without messing around with user management.</li>
+                        </ul>
+                    </p>
+                </article>
+            </article>
+
+
+
+            <article>
+                <header>
+                    <h2>Installation</h2>
+                </header>
+                <p>
+                    MusicDB can be installed on any Linux Distribution.
+                    To use MusicDB properly you need to have the following dependencies installed:
+                </p>
+                <p>
+                    <ul>
+                        <li><a href="https://www.python.org/">Python 3.9+</a> for the back-end</li>
+                        <li><a href="https://icecast.org/">Icecast</a> and <a href="https://gstreamer.freedesktop.org/">GStreamer</a> for streaming</li>
+                        <li>HTTP server like <a href="https://httpd.apache.org/">Apache</a> for serving the Web User Interface</li>
+                    </ul>
+                </p>
+                <p>
+                    See the <a href="build/html/usage/fromsource.html">Install from Source</a> documentation for a detailed list of all required packaged.
+                </p>
+                <nav>
+                    <ul class="navigation">
+                        <li><a href="https://github.com/rstemmer/musicdb">Get MusicDB</a></li>
+                        <li><a href="build/html/usage/install.html">Installation Instruction</a></li>
+                    </ul>
+                </nav>
+            </article>
+        </main>
+
+        <footer>
+            <img class="logo" src="landingpage/img/favicon.svg" alt="MusicDB Logo">
+            <img class="avatar" src="landingpage/img/me.jpg" alt="Photo of Ralf Stemmer">
+            <ul class="navigationx">
+                <li>&copy; 2022 by Ralf Stemmer</li>
+                <li><a href="build/html/other/impressum.html">Impressum</a></li>
+                <li><a href="https://github.com/rstemmer">rstemmer @ GitHub</a></li>
+                <li><a href="https://twitter.com/MusicDBProject">MusicDBProject @ Twitter</a></li>
+            </ul>
+        </footer>
     </body>
-    <script src="landingpage/js/jquery-1.10.2.js" type="text/javascript"></script>
-    <script src="landingpage/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
-    <script src="landingpage/js/bootstrap.js" type="text/javascript"></script>
-    <script src="landingpage/js/awesome-landing-page.js" type="text/javascript"></script>
+
 </html>

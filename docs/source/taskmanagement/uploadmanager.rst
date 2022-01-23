@@ -1,6 +1,6 @@
 
-Upload Management
-=================
+Upload Tasks Management
+=======================
 
 .. automodule:: musicdb.taskmanagement.uploadmanager
 

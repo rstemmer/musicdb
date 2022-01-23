@@ -1,6 +1,6 @@
 
-Configuration
-=============
+Configuration Access
+====================
 
 The following class diagram shows the implementation of MusicDBs configuration and state management.
 Only the more important methods are shown in the diagram.
@@ -26,11 +26,11 @@ For a list of all methods see the related documentation of the class.
       }
 
 
-Base Classes
-------------
+Base Configuration Classes
+--------------------------
 
-Config
-^^^^^^
+ini Files
+^^^^^^^^^
 
 .. automodule:: musicdb.lib.cfg.config
 
@@ -38,8 +38,8 @@ Config
    :members:
 
 
-CSVFile
-^^^^^^^
+csv Files
+^^^^^^^^^
 
 .. automodule:: musicdb.lib.cfg.csv
 
@@ -47,8 +47,8 @@ CSVFile
    :members:
 
 
-MusicDB Configuration
----------------------
+MusicDB Configuration File
+--------------------------
 
 Detail of the MusicDB Configuration can be found under :doc:`/basics/config`.
 
@@ -58,8 +58,8 @@ Detail of the MusicDB Configuration can be found under :doc:`/basics/config`.
    :members:
 
 
-WebUI Configuration
--------------------
+WebUI Configuration File
+------------------------
 
 .. automodule:: musicdb.lib.cfg.webui
 
@@ -67,8 +67,8 @@ WebUI Configuration
    :members:
 
 
-External Storage Configuration
--------------------------------
+External Storage Configuration File
+-----------------------------------
 
 .. automodule:: musicdb.lib.cfg.extern
 
@@ -76,13 +76,21 @@ External Storage Configuration
    :members:
 
 
-MusicDB State
--------------
+MusicDB State Files
+-------------------
 
 .. automodule:: musicdb.lib.cfg.mdbstate
 
 .. autoclass:: musicdb.lib.cfg.mdbstate.MDBState
    :members:
 
+
+WebSocket API Key File
+----------------------
+
+.. automodule:: musicdb.lib.cfg.wsapikey
+
+.. autoclass:: musicdb.lib.cfg.wsapikey.WebSocketAPIKey
+   :members:
 
 

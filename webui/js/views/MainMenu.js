@@ -201,10 +201,15 @@ class MainMenu extends Menu
             else
                 this.HideEntry("modeswitch");
 
-            if(args.WebUI.showstreamplayer == true)
+            if(args.MainMenu.showstreamplayer == true)
                 this.ShowSection("Audio Stream");
             else
                 this.HideSection("Audio Stream");
+
+            if(args.MainMenu.showsystemstatus == true)
+                this.ShowSection("System Status");
+            else
+                this.HideSection("System Status");
         }
 
         return;

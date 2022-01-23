@@ -22,6 +22,7 @@ import logging
 import stat
 from datetime           import datetime
 from musicdb.lib.filesystem     import Filesystem
+from musicdb.lib.cfg.wsapikey   import WebSocketAPIKey
 
 
 class DataDirectoryMaintainer(object):
@@ -42,18 +43,20 @@ class DataDirectoryMaintainer(object):
 
         # Collect all sub-directories
         self.subdirpaths = []
-        self.AddDirectory(self.config.directories.state,   self.user, self.group, 0o755)
-        self.AddDirectory(self.config.directories.webdata, self.user, self.group, 0o755)
-        self.AddDirectory(self.config.directories.artwork, self.user, self.group, 0o775) # TODO include sub directories
-        self.AddDirectory(self.config.directories.uploads, self.user, self.group, 0o750)
-        self.AddDirectory(self.config.directories.tasks,   self.user, self.group, 0o750)
+        self.AddDirectory(self.config.directories.data,    self.user, self.group, "rwxrwxr-x")
+        self.AddDirectory(self.config.directories.state,   self.user, self.group, "rwxr-xr-x")
+        self.AddDirectory(self.config.directories.webdata, self.user, self.group, "rwxr-xr-x")
+        self.AddDirectory(self.config.directories.artwork, self.user, self.group, "rwxrwxr-x") # TODO include sub directories
+        self.AddDirectory(self.config.directories.uploads, self.user, self.group, "rwxr-x---")
+        self.AddDirectory(self.config.directories.tasks,   self.user, self.group, "rwxr-x---")
+        self.AddDirectory(self.config.directories.config,  self.user, self.group, "rwxr-xr-x")
 
         # Collect all files (expected directory, initial file source)
         sourcedir = self.config.directories.share
         self.filepaths = []
-        self.AddFile(self.config.files.webuiconfig,       self.user, self.group, 0o664, sourcedir + "/webui.ini")
-        self.AddFile(self.config.files.defaultalbumcover, self.user, self.group, 0o644, sourcedir + "/default.jpg")
-        self.AddFile(self.config.files.webuijsconfig,     self.user, self.group, 0o664, sourcedir + "/config.js")
+        self.AddFile(self.config.files.webuiconfig,       self.user, self.group, "rw-rw-r--", sourcedir + "/webui.ini")
+        self.AddFile(self.config.files.defaultalbumcover, self.user, self.group, "rw-r--r--", sourcedir + "/default.jpg")
+        self.AddFile(self.config.files.webuijsconfig,     self.user, self.group, "rw-rw-r--", sourcedir + "/config.js")
 
 
     def AddDirectory(self, expectedpath, user, group, mode):
@@ -73,45 +76,6 @@ class DataDirectoryMaintainer(object):
         entry["mode"]   = mode
         entry["source"] = sourcepath
         self.filepaths.append(entry)
-        return
-
-
-
-    def InsertWSAPIKey(self, wsapikey: str, configjs: str) -> bool:
-        """
-        This method copies the WebSocket API Key given by the parameter ``wsapikey``
-        into a new generated WebUI ``config.js`` file addressed by the ``configjs`` parameter.
-        The API key should be read from ``/etc/musicdb.ini``: ``[websocket]->apikey``.
-
-        It is expected that the addressed file in ``configjs`` exists.
-        If not a ``FileNotFound`` exception will raise.
-
-        The WebUI JavaScript configuration must already exist.
-        If that file already has a key, it will not be replaced.
-        If no key exists yet (a dummy key ``WSAPIKEY`` is expected in place) the key will be set.
-
-        Args:
-            wsapikey (str): The API key to set
-            configjs (str): Path to the config.js file of the WebUI client that shall use the API Key
-
-        Returns:
-            *Nothing*
-        """
-        # Prepare API Key to become valid JavaScript
-        wsapikey = "\"" + wsapikey + "\";"
-
-        # Read file
-        with open(configjs) as file:
-            lines = file.read()
-
-        # Process file: Replace WSAPIKEY dummy by actual key
-        lines = lines.splitlines()
-        lines = [line.replace("WSAPIKEY", wsapikey) for line in lines]
-        lines = "\n".join(lines)
-
-        # Write file
-        with open(configjs, "w") as file:
-            file.write(lines)
         return
 
 
@@ -157,33 +121,41 @@ class DataDirectoryMaintainer(object):
             *Nothing*
         """
         for subdir in self.subdirpaths:
+            logging.debug("Validating %s", subdir["path"])
+
             if not self.filesystem.IsDirectory(subdir["path"]):
                 logging.warning("Sub-directory \"%s\" missing. \033[1;30m(Directory will be created)", subdir["path"])
                 self.filesystem.CreateSubdirectory(subdir["path"])
 
             if not self.CheckPath(subdir["path"], subdir["user"], subdir["group"], subdir["mode"]):
                 logging.info("Updating attributes of %s", subdir["path"])
-                self.filesystem.SetAttributes(subdir["path"], subdir["user"], subdir["group"], subdir["mode"])
+                self.filesystem.SetAccessPermissions(subdir["path"], subdir["mode"])
+                self.filesystem.SetOwner(subdir["path"], subdir["user"], subdir["group"])
 
 
         for file in self.filepaths:
+            logging.debug("Validating %s", file["path"])
+
             if not self.filesystem.IsFile(file["path"]):
                 logging.warning("File \"%s\" missing. \033[1;30m(File will be created from %s)", file["path"], file["source"])
                 self.filesystem.CopyFile(file["source"], file["path"])
 
             if not self.CheckPath(file["path"], file["user"], file["group"], file["mode"]):
                 logging.info("Updating attributes of %s", file["path"])
-                self.filesystem.SetAttributes(file["path"], file["user"], file["group"], file["mode"])
+                self.filesystem.SetAccessPermissions(file["path"], file["mode"])
+                self.filesystem.SetOwner(file["path"], file["user"], file["group"])
 
-        # Make sure the WebSocket API Key is set in the config.js file
-        self.InsertWSAPIKey(self.config.websocket.apikey, self.config.files.webuijsconfig)
+        # Check WS API Key
+        logging.debug("Validating WebSocket API Key")
+        wsapikey = WebSocketAPIKey(self.config)
+        wsapikey.CreateIfMissing()
         return
 
 
 
     def CheckPath(self, path, expuser, expgroup, expmode):
         user, group = self.filesystem.GetOwner(path)
-        mode        = self.filesystem.GetMode(path)
+        mode        = self.filesystem.GetAccessPermissions(path)
         success     = True
 
         if user != expuser:
@@ -193,7 +165,7 @@ class DataDirectoryMaintainer(object):
             logging.warning("Group of %s is %s but should be %s!", path, group, expgroup)
             success = False
         if mode != expmode:
-            logging.warning("Access mode of %s is %s but should be %s!", path, oct(mode), oct(expmode))
+            logging.warning("Access mode of %s is %s but should be %s!", path, mode, expmode)
             success = False
         return success
 

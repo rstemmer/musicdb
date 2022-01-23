@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,13 +18,12 @@ This class manages the *MusicDB Database* the core of *MusicDB*.
 It caches information from the filesystem and provides augmentation of those files.
 This database handles the following components:
 
-    * `Songs`_
-    * `Videos`_
-    * `Albums`_
-    * `Artists`_
-    * `Artworks`_
-    * `Lyrics`_
-    * `Tags`_
+    * `Songs Table`_
+    * `Videos Table`_
+    * `Albums Table`_
+    * `Artists Table`_
+    * `Lyrics Table`_
+    * `Tags Table`_
 
 All database entries (= rows) are handled as dictionaries.
 The key of the dictionary corresponds to the column name of the database.
@@ -73,8 +72,8 @@ When a new column shall be added, the following steps are necessary.
 Furthermore be sure that all command line modules and API modules handle the new added column, and so new added feature correct.
 For example, methods creating a new entry in the modified table may be adopted.
 
-Songs
------
+Songs Table
+-----------
 
 The columns of the songs table are the following:
 
@@ -140,8 +139,8 @@ The following methods exist to handle song entries in the database:
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.RemoveSong`
 
 
-Videos
-------
+Videos Table
+------------
 
 The columns of the videos table are the following:
 
@@ -232,8 +231,8 @@ The following methods exist to handle video entries in the database:
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.SetVideoTimeFrame`
 
 
-Albums
-------
+Albums Table
+------------
 
 Data structure:
 
@@ -263,8 +262,8 @@ Album Related Methods
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetAllAlbumIds`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.RemoveAlbum`
 
-Artworks
-^^^^^^^^
+Artwork Related Methods
+^^^^^^^^^^^^^^^^^^^^^^^
 
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.SetArtwork`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.SetArtworkColorByAlbumId`
@@ -280,8 +279,8 @@ Valid values:
     * ``"CD"`` as fallback for unknown *flac* files
     * ``"internet"`` as fallback for any other unknown files
 
-Artists
--------
+Artists Table
+-------------
 
 Database structure:
 
@@ -295,8 +294,8 @@ Database structure:
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetArtistById`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.RemoveArtist`
 
-Lyrics
-------
+Lyrics Table
+------------
 
 Lyrics state is part of the *songs* table.
 The lyrics itself are stored in the *lyrics* table with the following layout:
@@ -346,8 +345,8 @@ The *lyrics* column can have the following states:
     * ``SONG_LYRICSSTATE_FROMUSER`` - The lyrics were reviewed by the user. This noted the highest state of quality for lyrics.
     * ``SONG_LYRICSSTATE_NONE`` - There are no lyrics for this song - it is an instrumental song.
 
-Tags
-----
+Tags Table
+----------
 
 In this section, the tag management is described.
 A *Toxi* scheme is used to implement the tag system in MusicDB.
@@ -453,7 +452,8 @@ Tag Related Methods
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.CreateTag`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetAllTags`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetTagByName`
-    * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.DeleteTag`
+    * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.DeleteTagByName`
+    * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.DeleteTagById`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.ModifyTag`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.SetTargetTag`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.RemoveTargetTag`
@@ -1019,7 +1019,7 @@ class MusicDatabase(Database):
             raise TypeError("artistid must be a decimal number of type integer or string")
 
         with MusicDatabaseLock:
-            sql = "DELETE FROM albums WHERE artistid = ?"
+            sql = "DELETE FROM artists WHERE artistid = ?"
             self.Execute(sql, artistid)
 
         return None
@@ -1667,7 +1667,7 @@ class MusicDatabase(Database):
         return songs
 
 
-    def GetRandomSong(self, filterlist=None, nodisabled=True, nohated=False, minlen=None, maxlen=None, albumid=None):
+    def GetRandomSong(self, filterlist=None, nodisabled=True, nohated=False, nohidden=True, nobadfile=True, nolivemusic=False, minlen=None, maxlen=None, albumid=None):
         r"""
         This method returns a random song that fulfills several constraints.
 
@@ -1721,6 +1721,9 @@ class MusicDatabase(Database):
             filterlist: Optional, default value is ``[]``. A list of genre names or genre tag IDs that limits the search set. The tags have *OR* relations.
             nodisabled (bool): If ``True`` no disables songs will be selected
             nohated (bool): If ``True`` no hated songs will be selected
+            nohidden (bool): If ``True`` no hidden albums will be considered (albumid can override this parameter)
+            nobadfile (bool): If ``True`` no songs marked as "bad file" will be selected
+            nolivemusic (bool): If ``True`` no songs marked as "live recording" will be selected
             minlen (int): If set, no songs with less than *minlen* seconds will be selected
             maxlen (int): If set, no songs with more than *maxlen* seconds will be selected
             albumid (int): Use album with ID ``albumid`` instead of a random album
@@ -1730,15 +1733,24 @@ class MusicDatabase(Database):
             or ``None`` when there is no song fulfilling the constraints
 
         Raises:
-            TypeError: When *nodisabled* or *nohated* are not of type ``bool``
+            TypeError: When *nodisabled*, *nohated*, *nohidden*, *nolivemusic* or *nobadfile* are not of type ``bool``
             TypeError: When *minlen* or *maxlen* is not ``None`` and not of type integer
             TypeError: When *filterlist* is not a list and not ``None``
         """
         if type(nodisabled) != bool:
             raise TypeError("nodisabled must be of type bool")
-            
+
         if type(nohated) != bool:
             raise TypeError("nohated must be of type bool")
+
+        if type(nohidden) != bool:
+            raise TypeError("nohidden must be of type bool")
+
+        if type(nobadfile) != bool:
+            raise TypeError("nobadfile must be of type bool")
+
+        if type(nolivemusic) != bool:
+            raise TypeError("nolivemusic must be of type bool")
 
         if minlen != None and type(minlen) != int:
             raise TypeError("minlen must be None or of type integer")
@@ -1773,6 +1785,8 @@ class MusicDatabase(Database):
 
                 # Get IDs of all albums existing in the database
                 sql      = "SELECT albumid FROM albums"
+                if nohidden:
+                    sql += " WHERE hidden = FALSE"
                 retval   = self.GetFromDatabase(sql, None)
                 albumids = [entry[self.ALBUM_ID] for entry in retval]
 
@@ -1800,7 +1814,13 @@ class MusicDatabase(Database):
 
         # Get all Songs that may be candidate
         with MusicDatabaseLock:
-            songids = self.GetSongIdsByAlbumIds(selectedalbumids, nodisabled, nohated, minlen, maxlen)
+            songids = self.GetSongIdsByAlbumIds(
+                    selectedalbumids,
+                    nodisabled,
+                    nohated,
+                    nobadfile,
+                    nolivemusic,
+                    minlen, maxlen)
 
         if len(songids) == 0:
             return None
@@ -1811,7 +1831,7 @@ class MusicDatabase(Database):
         return song
 
 
-    def GetSongIdsByAlbumIds(self, albumids, nodisabled=True, nohated=False, minlen=None, maxlen=None):
+    def GetSongIdsByAlbumIds(self, albumids, nodisabled=True, nohated=False, nobadfile=True, nolivemusic=False, minlen=None, maxlen=None):
         """
         This method returns a list of songs that belong to the albums addressed by their IDs in the *albumids* list.
         The songs of the returned IDs also fulfill the constraints given by the other parameters.
@@ -1820,6 +1840,8 @@ class MusicDatabase(Database):
             albumids: A list of album IDs that songs are considered to get
             nodisabled (bool): If ``True`` no disables songs will be selected
             nohated (bool): If ``True`` no hated songs will be selected
+            nobadfile (bool): If ``True`` no songs marked as "bad file" will be selected
+            nolivemusic (bool): If ``True`` no songs marked as "live recording" will be selected
             minlen (int): If set, no songs with less than *minlen* seconds will be selected
             maxlen (int): If set, no songs with more than *maxlen* seconds will be selected
 
@@ -1827,7 +1849,7 @@ class MusicDatabase(Database):
             A list of song IDs
 
         Raises:
-            TypeError: When *nodisabled* or *nohated* are not of type ``bool``
+            TypeError: When *nodisabled*, *nohated*, *nolivemusic* or *nobadfile* are not of type ``bool``
             TypeError: When *minlen* or *maxlen* is not ``None`` and not of type integer
             ValueError: When minlen is less than ``0``
             ValueError: When maxlen is less than ``0``
@@ -1835,9 +1857,15 @@ class MusicDatabase(Database):
         """
         if type(nodisabled) != bool:
             raise TypeError("nodisabled must be of type bool")
-            
+
         if type(nohated) != bool:
             raise TypeError("nohated must be of type bool")
+
+        if type(nobadfile) != bool:
+            raise TypeError("nobadfile must be of type bool")
+
+        if type(nolivemusic) != bool:
+            raise TypeError("nolivemusic must be of type bool")
 
         if minlen != None and type(minlen) != int:
             raise TypeError("minlen must be None or of type integer")
@@ -1854,6 +1882,10 @@ class MusicDatabase(Database):
             sql += " AND disabled != 1"
         if nohated:
             sql += " AND favorite >= 0"
+        if nobadfile:
+            sql += " AND badaudio = FALSE"
+        if nolivemusic:
+            sql += " AND liverecording = FALSE"
         if minlen:
             # make sure the argument does not mess up the query-string
             if minlen < 0:
@@ -2733,7 +2765,7 @@ class MusicDatabase(Database):
         See :meth:`~DeleteTagByName`
         """
         logging.debug("DEPRECATED! Please call DeleteTagByName instead (same behavior)");
-        return self.DeleteTag(tagname, tagclass)
+        return self.DeleteTagByName(tagname, tagclass)
 
     def DeleteTagByName(self, tagname, tagclass):
         """

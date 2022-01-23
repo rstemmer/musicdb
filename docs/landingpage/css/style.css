@@ -1,0 +1,185 @@
+/*
+ * MusicDB Landingpage
+ * Copyright (C) 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+:root
+{
+    --fgcolor:              #CCC;
+    --bgcolor:              #181819;
+
+    --navfgcolor:           #FEC;
+    --navbgcolor:           #131314;
+
+    --headlinecolor:        #EB8;
+    --buttoncolor:          #0A0A0A;
+
+    --radius:               0.5rem;
+}
+
+*
+{
+    margin:     0;
+    padding:    0;
+}
+
+
+
+body
+{
+    display:                flex;
+    flex-direction:         column;
+    align-items:            center;
+    
+    background-color:       var(--bgcolor);
+    color:                  var(--fgcolor);
+    font-family:            sans-serif;
+}
+
+
+
+header, figure, article
+{
+    display:                flex;
+    flex-direction:         column;
+    align-items:            center;
+}
+
+header, main
+{
+    margin:                 1rem 0;
+}
+
+footer
+{
+    margin-top:             1rem;
+    padding:                1.5rem;
+
+    font-size:              8pt;
+    max-width:              100ch;
+
+    border-top:             0.2rem solid var(--headlinecolor);
+}
+
+
+
+h1
+{
+    margin-bottom:          1rem;
+}
+h1, h2, h3
+{
+    color:                  var(--headlinecolor);
+}
+
+img
+{
+    max-width:              95%;
+    margin-bottom:          1rem;
+    border-radius:          var(--radius);
+}
+
+footer, nav
+{
+    width:                  95%;
+}
+
+p, figcaption
+{
+    width:                  95%;
+    max-width:              80ch;
+    line-height:            1.5rem;
+    margin-bottom:          1rem;
+}
+
+
+
+ul
+{
+    display:                flex;
+    flex-direction:         column;
+    justify-content:        space-around;
+
+    list-style-type:        none;
+}
+
+ul.navigation
+{
+    background-color:       var(--navbgcolor);
+    border-radius:          var(--radius);
+}
+@media only screen and (min-width: 600px)
+{
+    ul.navigation
+    {
+        flex-direction:         row;
+    }
+}
+
+
+ul.navigation > li
+{
+    display:                flex;
+    flex-grow:              1;
+}
+ul.navigation > li > a
+{
+    display:                flex;
+    flex-grow:              1;
+
+    padding:                1rem 2rem;
+
+    background-color:       var(--buttoncolor);
+    border-radius:          calc(var(--radius) / 2);
+    text-decoration:        none;
+}
+
+li
+{
+    padding:                0.5rem;
+    max-width:              80ch;
+}
+li strong
+{
+    margin-right:           1ch;
+}
+
+
+
+a
+{
+    color:                  var(--navfgcolor);
+}
+
+
+
+img.avatar
+{
+    height:                 5rem;
+    float:                  left;
+    margin-right:           1rem;
+}
+img.logo
+{
+    height:                 5rem;
+    float:                  right;
+    margin-left:            1rem;
+}
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

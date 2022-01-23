@@ -155,6 +155,7 @@ from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.cfg.mdbstate   import MDBState
 from musicdb.lib.cfg.webui      import WebUIConfig
+from musicdb.lib.cfg.wsapikey   import WebSocketAPIKey
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.metatags       import MetaTags
 import os
@@ -189,6 +190,7 @@ class MusicDBWebSocketInterface(object):
         # The autobahn framework silently hides all exceptions - that sucks
         # So all possible exceptions must be caught here, so that they can be made visible.
         try:
+            self.apikey     = WebSocketAPIKey(self.cfg).Read()
             self.fs         = Filesystem(self.cfg.directories.music)
             self.tags       = MusicDBTags(self.cfg, self.database)
             self.mdbstate   = MDBState(self.cfg.directories.state, self.database)
@@ -579,8 +581,8 @@ class MusicDBWebSocketInterface(object):
         logging.debug("method: %s, fncname: \033[1;37m%s\033[1;30m, fncsig: %s, arguments: %.200s, pass: %s", 
                 str(method),str(fncname),str(fncsig),str(arguments),str(passthrough))
 
-        if apikey != self.cfg.websocket.apikey:
-            logging.error("Invalid WebSocket API Key! \033[1;30m(Check your configuration. If they are correct check your HTTP servers security!)\033[0m\nreceived: %s\nexpected: %s", str(apikey), str(self.cfg.websocket.apikey))
+        if apikey != self.apikey:
+            logging.error("Invalid WebSocket API Key! \033[1;30m(Check your configuration. If they are correct check your HTTP servers security!)\033[0m\nreceived: %s\nexpected: %s", str(apikey), str(self.apikey))
             return False
 
         if not method in ["call", "request", "broadcast"]:
@@ -2387,6 +2389,8 @@ class MusicDBWebSocketInterface(object):
         This method removes a song from song queue.
         The song gets identified by the entry ID of the queue entry.
 
+        If the song is currently streamed, playing the next song gets triggered.
+
         Args:
             entryid (str) Queue entry ID of the song
 
@@ -2403,7 +2407,17 @@ class MusicDBWebSocketInterface(object):
             logging.warning("entryid must be of type string! Actual type was %s. \033[1;30m(RemoveSongFromQueue will be ignored)", str(type(entryid)))
             return None
 
-        self.songqueue.RemoveSong(int(entryid))
+        currentsong = self.songqueue.GetQueue()[0]
+        if currentsong == None:
+            logging.warning("There is no song in the queue. So there is also no song with the ID %s! \033[1;30m(RemoveSongFromQueue will be ignored)", entryid)
+            return None
+
+        if currentsong["entryid"] == int(entryid):
+            logging.debug("Current song cannot be removed from queue because it is currently streamed. Calling PlayNextSong instead.")
+            self.audiostream.PlayNextSong()
+        else:
+            self.songqueue.RemoveSong(int(entryid))
+
         return None
 
 
@@ -2411,6 +2425,8 @@ class MusicDBWebSocketInterface(object):
         """
         This method removes a video from the video queue.
         The video gets identified by the entry ID of the queue entry.
+
+        If the video is currently streamed, playing the next video gets triggered.
 
         Args:
             entryid (str) Queue entry ID of the video
@@ -2428,7 +2444,16 @@ class MusicDBWebSocketInterface(object):
             logging.warning("entryid must be of type string! Actual type was %s. \033[1;30m(RemoveVideoFromQueue will be ignored)", str(type(entryid)))
             return None
 
-        self.videoqueue.RemoveVideo(int(entryid))
+        currentvideo = self.videoqueue.GetQueue()[0]
+        if currentvideo == None:
+            logging.warning("There is no video in the queue. So there is also no song with the ID %s! \033[1;30m(RemoveVideoFromQueue will be ignored)", entryid)
+            return None
+
+        if currentvideo["entryid"] == int(entryid):
+            logging.debug("Current video cannot be removed from queue because it is currently streamed. Calling PlayNextVideo instead.")
+            self.videostream.PlayNextVideo()
+        else:
+            self.videoqueue.RemoveVideo(int(entryid))
         return None
     
     
@@ -3889,40 +3914,26 @@ class MusicDBWebSocketInterface(object):
 
             
         """
-        # Check if old path is a valid path to a file in the Music Directory
-        if not self.musicdirectory.IsFile(oldpath):
-            logging.warning("Rename Music Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
-            return False
-
-        # Check if new path addresses an already existing file
-        if self.musicdirectory.Exists(newpath):
-            logging.warning("Rename Music Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
-            return False
-
-        # Check if path if path is plausible
+        # Determine if the music file could be a song or a video
         oldcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldpath)
-        newcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldpath)
-        if oldcontenttype != newcontenttype:
-            logging.warning("Old path (\"%s\") was estimated as \"%s\", the new one (\"%s\") as \"%s\". \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype, newpath, newcontenttype)
-            return False
 
-        # Check if exists in database
+        # Check if exists in database and rename
         databaseentry = None
-        if   oldcontenttype == "song":
+        success       = False
+        if oldcontenttype == "song":
             databaseentry = self.database.GetSongByPath(oldpath)
+            success       = self.musicdirectory.RenameSongFile(oldpath, newpath)
+
         elif oldcontenttype == "video":
             databaseentry = self.database.GetVideoByPath(oldpath)
+            success       = self.musicdirectory.RenameSongFile(oldpath, newpath)
 
-        # Rename path
-        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
-        try:
-            success = self.musicdirectory.Rename(oldpath, newpath)
-        except Exception as e:
-            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
-            success = False
+        else:
+            logging.warning("Old path (\"%s\") was estimated as \"%s\". \"song\" or \"video\" was expected. \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype)
+            return False
 
-        if not success:
-            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
+        # Check if renaming succeeded. If not an error has already been logged
+        if success == False:
             return False
 
         # Update database if needed
@@ -4003,46 +4014,18 @@ class MusicDBWebSocketInterface(object):
                 }
 
         """
-        # Check if old path is a valid path to a file in the Music Directory
-        if not self.musicdirectory.IsDirectory(oldpath):
-            logging.warning("Rename Album Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
-            return False
-
-        # Check if new path addresses an already existing file
-        if self.musicdirectory.Exists(newpath):
-            logging.warning("Rename Album Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
-            return False
-
-        # Check if path if path is plausible
-        oldcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldpath)
-        newcontenttype = self.musicdirectory.EstimateContentTypeByPath(newpath)
-        if oldcontenttype != newcontenttype:
-            logging.warning("Old path (\"%s\") was estimated as \"%s\", the new one (\"%s\") as \"%s\". \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype, newpath, newcontenttype)
-            return False
-
-        if oldcontenttype != "album":
-            logging.warning("Old path (\"%s\") was estimated as \"%s\". An Album was expected. \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype)
-            return False
-
-        # Check if exists in database
+        # Check if exists in database and rename
         databaseentry = self.database.GetAlbumByPath(oldpath)
+        success       = self.musicdirectory.RenameAlbumDirectory(oldpath, newpath)
 
-        # Rename path
-        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
-        try:
-            success = self.musicdirectory.Rename(oldpath, newpath)
-        except Exception as e:
-            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
-            success = False
-
+        # Check if renaming succeeded. If not an error has already been logged
         if not success:
-            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
             return False
 
         # Update database if needed
         if databaseentry != None:
             targetid = databaseentry["id"]
-            logging.info("Updating database entry for \033[0;36m%s\033[1;34m with ID \033[0;36m%s", oldcontenttype, str(targetid))
+            logging.info("Updating database entry for \033[0;36mAlbum\033[1;34m with ID \033[0;36m%s", str(targetid))
             self.music.UpdateAlbum(targetid, newpath)
 
         return True
@@ -4096,46 +4079,17 @@ class MusicDBWebSocketInterface(object):
                 }
 
         """
-        # Check if old path is a valid path to a file in the Music Directory
-        if not self.musicdirectory.IsDirectory(oldpath):
-            logging.warning("Rename Artist Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
-            return False
-
-        # Check if new path addresses an already existing file
-        if self.musicdirectory.Exists(newpath):
-            logging.warning("Rename Artist Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
-            return False
-
-        # Check if path if path is plausible
-        oldcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldpath)
-        newcontenttype = self.musicdirectory.EstimateContentTypeByPath(newpath)
-        if oldcontenttype != newcontenttype:
-            logging.warning("Old path (\"%s\") was estimated as \"%s\", the new one (\"%s\") as \"%s\". \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype, newpath, newcontenttype)
-            return False
-
-        if oldcontenttype != "artist":
-            logging.warning("Old path (\"%s\") was estimated as \"%s\". An Artist was expected. \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype)
-            return False
-
-        # Check if exists in database
+        # Check if exists in database and rename
         databaseentry = self.database.GetArtistByPath(oldpath)
-
-        # Rename path
-        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
-        try:
-            success = self.musicdirectory.Rename(oldpath, newpath)
-        except Exception as e:
-            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
-            success = False
+        success       = self.musicdirectory.RenameArtistDirectory(oldname, newname)
 
         if not success:
-            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
             return False
 
         # Update database if needed
         if databaseentry != None:
             targetid = databaseentry["id"]
-            logging.info("Updating database entry for \033[0;36m%s\033[1;34m with ID \033[0;36m%s", oldcontenttype, str(targetid))
+            logging.info("Updating database entry for \033[0;36mArtist\033[1;34m with ID \033[0;36m%s", str(targetid))
             self.music.UpdateArtist(targetid, newpath)
 
         return True

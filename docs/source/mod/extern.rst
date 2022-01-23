@@ -1,17 +1,11 @@
 
-extern - Music File Uploader
+extern - Music File Exporter
 ============================
 
 .. automodule:: musicdb.mod.extern
 
-class
------
-
-.. autoclass:: musicdb.mod.extern.extern
-   :members:
-
-Automatization
---------------
+File Export to External Device
+------------------------------
 
 It is recommended to write a short script to automate the update-process.
 The following script mounts a SD-Card and runs the update-process.

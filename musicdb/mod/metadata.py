@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,10 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-The metadata command line module loads all metadata from a file.
+The metadata command line module loads all meta data from a file.
 The read data gets printed to the screen.
 Therefor each method of the :doc:`/lib/metatags` module gets applied.
-Its only option is ``--check`` followed by a path to a song file.
 
 This module is made for testing and analysing bugs in the :class:`musicdb.lib.metatags.MetaTags` class.
 
@@ -25,11 +24,11 @@ Example:
 
     .. code-block:: bash
 
-        musicdb metadata --check /data/music/Artist/2000\ -\ Album/01\ Song.m4a
+        musicdb metadata /data/music/Artist/2000\ -\ Album/01\ Song.m4a
 """
 
 import argparse
-import os
+from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.modapi         import MDBModule
 from musicdb.lib.metatags       import MetaTags
 
@@ -64,7 +63,6 @@ class metadata(MDBModule, MetaTags):
     def MDBM_CreateArgumentParser(parserset, modulename):
         parser = parserset.add_parser(modulename, help="manage external storage")
         parser.set_defaults(module=modulename)
-        parser.add_argument("-c", "--check",   action="store_true", help="check the metadata. Does not store anything")
         parser.add_argument("path", help="absolute path to the file.")
 
 
@@ -72,14 +70,15 @@ class metadata(MDBModule, MetaTags):
     # return exit-code
     def MDBM_Main(self, args):
 
-        args.path = os.path.abspath(args.path)
+        fs = Filesystem()
+        path = fs.AbsolutePath(args.path)
+        path = fs.ToString(path)
 
-        if not os.path.exists(args.path):
-            print("\033[1;31mERROR: Mountpoint "+args.path+" does not exist!\033[0m")
+        if not fs.IsFile(path):
+            print("\033[1;31mERROR: path \033[1;30m%s\033[1;31m does not exist!\033[0m"%(path))
             return 1
 
-        if args.check:
-            self.CheckFile(args.path)
+        self.CheckFile(path)
 
         return 0
 

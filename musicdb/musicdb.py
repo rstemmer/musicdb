@@ -136,7 +136,12 @@ def main():
     debugfile = config.log.debugfile
     logfile   = config.log.logfile
     loglevel  = config.log.loglevel
-    log.Reconfigure(logfile, loglevel, debugfile, config)
+    try:
+        log.Reconfigure(logfile, loglevel, debugfile, config)
+    except Exception as e:
+        print("\033[1;31mFATAL ERROR: Opening debug log file failed!\033[0m (" + debugfile + ")", file=sys.stderr)
+        print(traceback.format_exc())
+        exit(1)
     logging.info("\033[1;31mMusicDB [\033[1;34m" + VERSION + "\033[1;31m]\033[0m")
 
 

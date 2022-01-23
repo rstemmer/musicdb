@@ -21,8 +21,8 @@ Its main task is to cache, scale and provide them to the GUI.
 
     Frame and preview scaling has not been implemented yet.
 
-Definitions
------------
+Definitions in Context of Videos
+--------------------------------
 
 frame:
     One frame extracted from a music video stored as a picture.
@@ -38,8 +38,8 @@ preview:
     The file names begin with the prefix ``preview``.
 
 
-Database
---------
+Relevant Database Entries
+-------------------------
 
 The thumbnail and preview data is part of the video entry in the MusicDB Database.
 The thumbnail and preview part consists of the following entries:
@@ -53,8 +53,8 @@ framesdirectory:
     To access a scaled version of the artwork, the scale as suffix can be used.
 
 
-Path structure
---------------
+Video Frames Path structure
+---------------------------
 
 The video frames root directory can be configured in the MusicDB Configuration file.
 Everything related to video frames takes place in this directory.
@@ -98,7 +98,7 @@ The sub directory name for each video gets created by
 the method :meth:`~musicdb.mdbapi.videoframes.VideoFrames.CreateFramesDirectoryName`.
 This method replaces "/" by an Unicode division slash (U+2215) to avoid problems with the filesystem.
 
-All new creates files and directories were set to the ownership ``[music]->owner:[music]->group``
+All new creates files and directories were set to the ownership ``[musicdb]->username:[musicdb]->groupname``
 and gets the permission ``rw-rw-r--`` (``+x`` for directories)
 
 .. attention::
@@ -106,16 +106,16 @@ and gets the permission ``rw-rw-r--`` (``+x`` for directories)
     Existing frames and previews will not be overwritten.
     In case the settings change, video frames and previews need to be removed manually before recreating them.
 
-HTTPS Server
-------------
+HTTPS Server Configuration for Video Frames
+-------------------------------------------
 
 Web browsers has to prefix the path with ``videoframes/``.
 So, the server must be configured.
 The resulting path will then be for example ``"videoframes/$framesdirectory/$previewfile"``.
 
 
-Scaling
---------
+Scaling Video Frames
+--------------------
 
 Scales that shall be provides are set in the MusicDB Configuration as list of edge-lengths.
 For example, to generate 50×27 and 150×83 versions of a frame,
@@ -126,8 +126,8 @@ Usually videos do not have a ration of 1:1.
 If the aspect ration of a frame differs from the desired thumbnail, the borders will be cropped.
 
 
-Configuration
--------------
+Configuration of Video Frames
+-----------------------------
 
 An example configuration can look like the following one:
 
@@ -146,8 +146,8 @@ Inside the database, this path is stored as ``Rammstein - Sonne``.
 Inside the HTML code of the WebUI the following path would be used: ``Rammstein/Sonne/preview (150×83).webp``.
 
 
-Algorithm
----------
+Algorithm for Creating Video Frames
+-----------------------------------
 
 To update the frames cache the following steps are done:
 
@@ -252,7 +252,7 @@ class VideoFrames(object):
         # Set permissions to -rwxrwxr-x
         try:
             self.framesroot.SetAttributes(dirname,
-                    self.cfg.music.owner, self.cfg.music.group,
+                    self.cfg.musicdb.username, self.cfg.musicdb.groupname,
                     stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR |
                     stat.S_IRGRP | stat.S_IWGRP | stat.S_IXGRP |
                     stat.S_IROTH |                stat.S_IXOTH )

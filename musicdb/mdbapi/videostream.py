@@ -20,13 +20,13 @@ This module provides a thread that takes the videos from a :class:`musicdb.mdbap
 
 So this module consist of the following parts:
 
-    * The `Streaming Thread`_ that manages the Video Stream.
-    * An `Event Management`_ that provides a callback interface to get updated about what's going on in the Streaming Thread.
+    * The `Video Streaming Thread`_ that manages the Video Stream.
+    * An `Video Stream Event Management`_ that provides a callback interface to get updated about what's going on in the Streaming Thread.
     * The :class:`~VideoStreamManager` that does management behind streaming.
 
 
-Interface
----------
+Video Streaming Interface
+-------------------------
 
 This module maintains a global state!
 All functions work on the settings in the :class:`~musicdb.lib.cfg.musicdb.MusicDBConfig` configuration object and the internal state of this module.
@@ -43,14 +43,14 @@ There are two functions and one class that are available to manage the Stream:
     * :class:`~VideoStreamManager` is the class to manage the Stream.
 
 
-Streaming Thread
-----------------
+Video Streaming Thread
+----------------------
 
 The Streaming Thread mainly manages updating the queue based on played videos by the stream player (WebUI).
 This thread is the point where the music managed by MusicDB gets handed over to the users web browser
 so that the user can watch the video stream.
 
-The :class:`~VideoStreamManager` communicates with the :meth:`~VideoStreamingThread` with a `Command Queue`_.
+The :class:`~VideoStreamManager` communicates with the :meth:`~VideoStreamingThread` with a `Video Stream Command Queue`_.
 
 The thread maintains a global dictionary that holds the state of the thread - The **Stream State**.
 It can be accessed via :meth:`musicdb.mdbapi.videostream.VideoStreamManager.GetStreamState`.
@@ -60,8 +60,8 @@ It contains the following information:
 More details are in the :meth:`~VideoStreamingThread` description.
 
 
-Command Queue
--------------
+Video Stream Command Queue
+--------------------------
 
 The Command Queue is a FIFO buffer of tuple.
 Each tuple has a command name and an optional argument.
@@ -73,8 +73,8 @@ The :meth:`~VideoStreamingThread` reads the command from that queue and processe
 More details are in the :meth:`~VideoStreamingThread` description.
 
 
-Event Management
-----------------
+Video Stream Event Management
+-----------------------------
 
 This module provided a callback interface to react on events triggered by Streaming Thread or by actions done by the :class:`~VideoStreamManager` class.
 
@@ -456,7 +456,7 @@ class VideoStreamManager(object):
 
     def PushCommand(self, command, argument=None):
         """
-        Class internal interface to the `Command Queue`_ used to communicate with the :meth:`VideoStreamingThread`.
+        Class internal interface to the `Video Stream Command Queue`_ used to communicate with the :meth:`VideoStreamingThread`.
         You should not access the queue directly, because the Streaming Thread expects valid data inside the queue.
         This is guaranteed by the methods that use this method.
 

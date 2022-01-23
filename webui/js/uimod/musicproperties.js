@@ -73,7 +73,6 @@ class MusicProperties
 
     onPropertyClicked(propertyname, newstate)
     {
-        window.console && console.log("Setting " + propertyname + " to " + newstate);
         let key   = null;
         let value = null;
 
@@ -115,12 +114,10 @@ class MusicProperties
              || propertyname == "lyricsvideo"
                )
         {
-            window.console && console.log("Setting " + propertyname + " to " + newstate);
             if(newstate === true)
                 value = "yes";
             else if(newstate === false)
                 value = "no";
-            window.console && console.log("Setting " + propertyname + " to " + value);
 
             key = propertyname;
         }

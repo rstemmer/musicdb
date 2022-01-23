@@ -30,7 +30,7 @@ let curtain         = WebUI.AddLayer("MenuBackground",  new Curtain());
 let mainmenu        = WebUI.AddLayer("MainMenu",        new MainMenu(curtain));
 let mainmenubutton  = WebUI.AddLayer("MainMenuButton",  new MenuButton("1rem", "1rem", "Menu", ()=>{mainmenu.ToggleMenu();}, "Show main menu"));
 
-let layerbackground = WebUI.AddLayer("LayerBackground", new LayerBackground());
+let layerbackground = WebUI.AddLayer("LayerBackground", new LayerBackground(1));
 WebUI.AddLayer("AlbumImport",               new AlbumImportLayer(layerbackground));
 WebUI.AddLayer("AlbumIntegration",          new AlbumIntegrationLayer(layerbackground));
 WebUI.AddLayer("AlbumUploadProgress",       new AlbumUploadProgress(layerbackground));
@@ -38,6 +38,10 @@ WebUI.AddLayer("AlbumIntegrationProgress",  new AlbumIntegrationProgress(layerba
 WebUI.AddLayer("AlbumImportProgress",       new AlbumImportProgress(layerbackground));
 WebUI.AddLayer("AlbumSettings",             new AlbumSettingsLayer(layerbackground));
 WebUI.AddLayer("SongsSettings",             new SongsSettingsLayer(layerbackground));
+
+let errorbackground = WebUI.AddLayer("ErrorBackground", new LayerBackground(3));
+WebUI.AddLayer("WebSocketClosed",           new WebSocketClosed(errorbackground));
+WebUI.AddLayer("WebSocketError",            new WebSocketError(errorbackground));
 
 // Create Basic MusicDB WebUI Components
 WebUI.AddView("MusicDBControls",    new MusicDBControls(),      "ControlBox");
@@ -87,9 +91,6 @@ window.onload = function ()
     // Do some last DOM changes
     WebUI.onWindowLoad();
 
-    let body = new Element(document.body);
-    body.AppendChild(musicdbstatus.GetReconnectButtonHTMLElement());
-
     leftviewmanager     = new LeftViewManager();
     mainviewmanager     = new MainViewManager();
     videopanelmanager   = new VideoPanelManager();
@@ -104,7 +105,6 @@ function onMusicDBConnectionOpen()
     WebUI.onWebSocketOpen();
 
     musicdbstatus.onMusicDBConnectionOpen();
-
     MusicDB_Request("LoadWebUIConfiguration", "SetupWebUI");
 }
 function onMusicDBConnectionError()
@@ -112,7 +112,7 @@ function onMusicDBConnectionError()
     WebUI.onWebSocketError();
 
     musicdbstatus.onMusicDBConnectionError();
-    mainviewmanager.ShowWebSocketError();
+    WebUI.GetLayer("WebSocketError").Show();
 }
 function onMusicDBWatchdogBarks()
 {
@@ -125,6 +125,7 @@ function onMusicDBConnectionClosed()
     WebUI.onWebSocketClosed();
 
     musicdbstatus.onMusicDBConnectionClosed();
+    WebUI.GetLayer("WebSocketClosed").Show();
 }
 
 function onMusicDBNotification(fnc, sig, rawdata)
@@ -203,17 +204,19 @@ function onMusicDBMessage(fnc, sig, args, pass)
             mainviewmanager.ShowWelcome();
         }
 
-        let uimode = args.uimode;
+        let uimode = args.MusicDB.uimode;
         MusicDB_Request("GetArtists",  "UpdateArtistsCache");
         MusicDB_Request("GetTags",     "UpdateTagsCache");
         MusicDB_Request("GetMDBState", "UpdateMDBState");
         if(uimode == "audio")
         {
             MusicDB_Request("GetAudioStreamState",   "UpdateStreamState");
+            MusicDB_Request("GetSongQueue",          "ShowSongQueue"); // Force Queue Update
         }
         else if(uimode == "video")
         {
             MusicDB_Request("GetVideoStreamState",   "UpdateStreamState");
+            MusicDB_Request("GetVideoQueue",         "ShowVideoQueue"); // Force Queue Update
         }
     }
     else if(fnc=="sys:refresh" && sig == "UpdateCaches")    // TODO: Update (make uimode conform)

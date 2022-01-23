@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@ This module handles the artwork (cover) of albums.
 Its main task is to cache, scale and provide them to the GUI.
 
 
-Database
---------
+Artwork Related Database Entries
+--------------------------------
 
 The artwork data is part of the album entry in the MusicDB Database.
 The artwork part consists of the following entries:
@@ -47,8 +47,8 @@ bgcolor, fgcolor, hlcolor (string)
     Keep in mind that the user may set all three colors to the same hue so that a monochromatic scheme gets forced.
     
 
-Path structure
---------------
+Artwork Path structure
+----------------------
 
 The artwork root directory can be configured in the MusicDB Configuration file.
 Everything related to artwork takes place in this directory.
@@ -68,7 +68,7 @@ This method replaces "/" by an Unicode division slash to avoid problems with the
 
 In case there is no artwork given for an album, the default artwork is ``default.jpg``.
 
-All new creates files were set to the ownership ``[music]->owner:[music]->group`` and gets the permission ``rw-rw-r--``
+All new creates files were set to the ownership ``[musicdb]->username:[musicdb]->groupname`` and gets the permission ``rw-rw-r--``
 
 Web Browsers
 ^^^^^^^^^^^^
@@ -76,16 +76,16 @@ Web Browsers
 Web browsers have to prefix the path with ``artwork/``.
 So, the server must be configured.
 
-Scaling
---------
+Scaled Artwork
+--------------
 
 Scales that shall be provides are set in the MusicDB Configuration as list of edge-lengths.
 For example, to generate 50x50, 100x100 and 500x500 versions of an artwork, the configuration would look like this: ``scales=50, 100, 500``
 The **scaled artwork gets stored as progressive JPEGs** to get a better responsiveness for the WebUI.
 
 
-Configuration
--------------
+Configuration for Artworks
+--------------------------
 
 .. code-block:: ini
 
@@ -93,8 +93,8 @@ Configuration
     scales=50, 150, 500
 
 
-Algorithm
----------
+Algorithm to Create Artworks
+----------------------------
 
 To update the album artwork cache the following steps are done:
 
@@ -222,11 +222,8 @@ class MusicDBArtwork(object):
                 logging.exception("Copying artwork into the artwork directory failed with error: %s", str(e))
                 return False
 
-            # Set permissions to -rw-rw-r--
-            try:
-                self.artworkroot.SetAttributes(artworkname, self.cfg.music.owner, self.cfg.music.group, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH)
-            except Exception as e:
-                logging.warning("Setting artwork file attributes failed with error %s. \033[1;30m(Leaving them as they are)", str(e))
+            # Set permissions to rw-rw-r--
+            self.UpdateFileAttributes(artworkname)
 
         if not self.artworkroot.Exists(artworkname):
             logging.error("Artwork \"%s\" does not exist but was expected to exist!", artworkname)
@@ -247,14 +244,49 @@ class MusicDBArtwork(object):
             relpath = self.awcache.GetArtwork(artworkname, resolution)
 
             # Try setting permissions to -rw-rw-r--
-            try:
-                self.artworkroot.SetAttributes(relpath, None, None, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH)
-            except Exception as e:
-                logging.warning("Setting artwork file attributes failed with error %s. \033[1;30m(Leaving them as they are)", str(e))
+            self.UpdateFileAttributes(artworkname)
 
         # Update database entry
         self.db.SetArtwork(albumid, artworkname)
 
+        return True
+
+
+
+    def UpdateFileAttributes(self, path):
+        """
+        Tries to set the on owner of a file as configured in the MusicDB Configuration and
+        the access permission to ``rw-rw-r--``.
+
+        If the path is ``"default.jpg"`` only ``True`` gets returned without changing anything.
+        The default artwork is part of the MusicDB data and gets managed by high level classes.
+
+        Args:
+            path: path to the artwork
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+        """
+        if path == "default.jpg":
+            logging.debug("File attributes of default.jpg will not be changed.")
+            return True
+
+        logging.debug("Trying to changing file attributes of \"%s\" to rw-rw-r-- and ownership to %s:%s.",
+                path,
+                self.cfg.musicdb.username, self.cfg.musicdb.groupname)
+
+        # Set permissions to rw-rw-r--
+        try:
+            self.artworkroot.SetAccessPermissions(path, "rw-rw-r--")
+        except Exception as e:
+            logging.warning("Setting artwork file attributes to rw-rw-r-- failed with error %s. \033[1;30m(Leaving them as they are)", str(e))
+            return False
+
+        # Set Owner
+        if not self.artworkroot.SetOwner(path, self.cfg.musicdb.username, self.cfg.musicdb.groupname):
+            logging.warning("Setting artwork owner to %s:%s not allowed. \033[1;30m(Leaving them as they are)",
+                    self.cfg.musicdb.username, self.cfg.musicdb.groupname)
+            return False
         return True
 
 

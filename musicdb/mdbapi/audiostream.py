@@ -21,13 +21,13 @@ Further more this module provides some callback interfaces to inform the rest of
 
 So this module consist of the following parts:
 
-    * The `Streaming Thread`_ that manages the Song Stream.
-    * An `Event Management`_ that provides a callback interface to get updated about what's going on in the Streaming Thread.
+    * The `Audio Streaming Thread`_ that manages the Song Stream.
+    * An `Audio Stream Event Management`_ that provides a callback interface to get updated about what's going on in the Streaming Thread.
     * The :class:`~musicdb.AudioStreamManager` that does management behind streaming.
 
 
-Interface
----------
+Audio Streaming Interface
+-------------------------
 
 This module maintains a global state!
 All functions work on the settings in the :class:`~musicdb.lib.cfg.musicdb.MusicDBConfig` configuration object and the internal state of this module.
@@ -44,13 +44,13 @@ There are two functions and one class that are available to manage the Stream:
     * :class:`~AudioStreamManager` is the class to manage the Stream.
 
 
-Streaming Thread
-----------------
+Audio Streaming Thread
+----------------------
 
 The Streaming Thread mainly manages sending mp3-file chunks to the Icecast server.
 This thread is the point where the music managed by MusicDB gets handed over to Icecast so the user can listen to it.
 
-The :class:`~AudioStreamManager` communicates with the :meth:`~AudioStreamingThread` with a `Command Queue`_.
+The :class:`~AudioStreamManager` communicates with the :meth:`~AudioStreamingThread` with a `Audio Stream Command Queue`_.
 
 More details are in the :meth:`~AudioStreamingThread` description.
 
@@ -63,8 +63,8 @@ It contains the following information:
     * ``isplaying`` (bool): ``True`` when streaming, otherwise ``False``
 
 
-Command Queue
--------------
+Audio Stream Command Queue
+--------------------------
 
 The Command Queue is a FIFO buffer of tuple.
 Each tuple has a command name and an optional argument.
@@ -84,8 +84,8 @@ The following commands are available:
         If streaming is paused, only the next song gets selected as new current song.
 
 
-Event Management
-----------------
+Audio Stream Event Management
+-----------------------------
 
 This module provided a callback interface to react on events triggered by Streaming Thread or by actions done by the :class:`~AudioStreamManager` class.
 
@@ -285,6 +285,16 @@ def AudioStreamingThread():
 
         return
 
+
+    # Do nothing if there are no songs in the database
+    if len(musicdb.GetAllSongs()) == 0:
+        logging.error("There are no songs in the database yet. Audio stream disabled. \033[1;37m(Import albums and restart the server to enable audio streaming again.)")
+        while RunThread:
+            time.sleep(1)
+            Event_TimeChanged(0)
+        return
+
+
     # Start streaming …
     while RunThread:
         # Sleep a bit to reduce the load on the CPU. If disconnected, sleep a bit longer
@@ -470,7 +480,7 @@ class AudioStreamManager(object):
 
     def PushCommand(self, command, argument=None):
         """
-        Class internal interface to the `Command Queue`_ used to communicate with the :meth:`AudioStreamingThread`.
+        Class internal interface to the `Audio Stream Command Queue`_ used to communicate with the :meth:`AudioStreamingThread`.
         You should not access the queue directly, because the Streaming Thread expects valid data inside the queue.
         This is guaranteed by the methods that use this method.
 

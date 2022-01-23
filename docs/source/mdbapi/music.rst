@@ -1,6 +1,6 @@
 
-Music
-=====
+Music Management
+================
 
 .. automodule:: musicdb.mdbapi.music
 

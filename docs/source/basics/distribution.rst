@@ -23,7 +23,7 @@ It consists of the following files and directories:
 * CHANGELOG
 
 The script to create this archive is ``src-build.sh``.
-It builds the archive into ``dist/musicdb-$version-src.tar.zst``.
+It builds the archive into ``pkg/musicdb-$version-src.tar.zst``.
 The archive extracts into a ``musicdb-$version-src`` directory.
 
 
@@ -32,4 +32,25 @@ pacman Package
 
 Based on the source package, a ``pacman`` package can be build with the ``pkg-build.sh`` script.
 
+.. code-block:: bash
 
+   cd scripts
+   ./doc-build.sh # optional
+   ./src-build.sh
+   ./pkg-build.sh
+
+
+Fedora rpm Package
+------------------
+
+.. code-block:: bash
+
+   sudo dnf install rpmdevtools
+   rpmdev-setuptree
+
+   sudo dnf install python3-devel python3-build /usr/bin/pathfix.py
+
+   cd scripts
+   ./doc-build.sh # optional
+   ./src-build.sh
+   ./rpm-build.sh

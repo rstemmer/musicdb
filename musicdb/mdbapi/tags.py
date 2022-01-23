@@ -157,21 +157,21 @@ class MusicDBTags(object):
         """
         See :meth:`musicdb.lib.db.musicdb.MusicDatabase.DeleteTag`
         """
-        self.db.DeleteTag(name, MusicDatabase.TAG_CLASS_GENRE);
+        self.db.DeleteTagByName(name, MusicDatabase.TAG_CLASS_GENRE);
         return None
 
     def DeleteSubgenre(self, name):
         """
         See :meth:`musicdb.lib.db.musicdb.MusicDatabase.DeleteTag`
         """
-        self.db.DeleteTag(name, MusicDatabase.TAG_CLASS_SUBGENRE);
+        self.db.DeleteTagByName(name, MusicDatabase.TAG_CLASS_SUBGENRE);
         return None
 
     def DeleteMood(self, name):
         """
         See :meth:`musicdb.lib.db.musicdb.MusicDatabase.DeleteTag`
         """
-        self.db.DeleteTag(name, MusicDatabase.TAG_CLASS_MOOD);
+        self.db.DeleteTagByName(name, MusicDatabase.TAG_CLASS_MOOD);
         return None
 
 

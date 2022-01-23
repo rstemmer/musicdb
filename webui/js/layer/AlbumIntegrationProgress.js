@@ -141,6 +141,25 @@ class AlbumIntegrationProgress extends Layer
 
 
 
+    onWebSocketClosed()
+    {
+        this.tasks?.onConnectionLost();
+    }
+    onWebSocketError()
+    {
+        this.tasks?.onConnectionLost();
+    }
+    onWatchdogBarks()
+    {
+        this.tasks?.onConnectionLost();
+    }
+    onWebSocketOpen()
+    {
+        this.tasks?.onReconnect();
+    }
+
+
+
     onMusicDBMessage(fnc, sig, args, pass)
     {
         if(sig == "ConfirmAlbumIntegrationTask")

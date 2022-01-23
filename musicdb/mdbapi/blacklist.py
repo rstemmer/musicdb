@@ -18,8 +18,8 @@ The *blacklist* module provides an interface to the blacklists of artist, albums
 that shall not be played for a certain (configured) time.
 
 
-Blacklist
----------
+Music Selection Blacklist
+-------------------------
 
 There are four FIFO organized blacklists: For videos, songs, albums and artists.
 Each blacklist holds the IDs of the last played videos, songs, albums and artists.

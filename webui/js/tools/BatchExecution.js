@@ -28,6 +28,7 @@ class BatchExecution extends StatusList
         this.idseed        = 1;
         this.currenttask   = null;
         this.finishedtasks = new Array();
+        this.connected     = false; // Indicate if connection to MusicDB server is established
     }
 
 
@@ -113,9 +114,11 @@ class BatchExecution extends StatusList
 
 
 
-    UpdateState(newstate)
+    UpdateState(newstate, forcenexttask)
     {
         if(newstate === null)
+            return;
+        if(this.currenttask === null)
             return;
 
         this.currenttask["statuselement"].SetState(newstate);
@@ -130,7 +133,10 @@ class BatchExecution extends StatusList
                 this.onfinishcallback([this.currenttask, ...this.tasks], this.finishedtasks);
         }
 
-        if(newstate == "good" || (newstate == "bad" && this.currenttask["canfail"] == true))
+        if(newstate == "good"
+        || (newstate == "bad" && this.currenttask["canfail"] == true)
+        || forcenexttask === true
+        )
         {
             // This task has now finished. Continue with the next task.
             this.finishedtasks.push(this.currenttask);
@@ -138,6 +144,34 @@ class BatchExecution extends StatusList
             this.ExecuteTasks();
         }
         return;
+    }
+
+
+
+    onConnectionLost()
+    {
+        // Do nothing if already in disconnected-state
+        if(!this.connected)
+            return;
+
+        this.connected = false;
+        this.UpdateState("warn");
+        window.console?.warn("Connection to MusicDB WebSocket Server lost. Batch execution stalled.");
+    }
+
+
+
+    onReconnect()
+    {
+        if(this.connected)
+        {
+            window.console?.error(`Unexpected reconnection. Connected-state was ${this.connected}.`);
+            return;
+        }
+
+        this.connected = true;
+        this.UpdateState("warn", true /*Force next task*/);
+        window.console?.info("Connection to MusicDB WebSocket Server established. Batch execution continued.");
     }
 
 
@@ -150,7 +184,7 @@ class BatchExecution extends StatusList
         let state = null;
         if(typeof this.currenttask["notificationfunction"] === "function")
             state = this.currenttask["notificationfunction"](fnc, sig, rawdata);
-        if(typeof rawdata.message === "string")
+        if(typeof rawdata?.message === "string")
             this.currenttask["lastmessage"] = rawdata.message;
 
         this.UpdateState(state);

@@ -17,12 +17,12 @@
 """
 This module transcodes the users source music into mp3 data that can be streamed via :class:`musicdb.lib.stream.icecast.IcecastInterface`.
 Therefore it uses the :class:`musicdb.lib.stream.gstreamer.GStreamerInterface` class.
-A `GStreamer Pipeline`_ will be created to transcode m4a, mp3 and flac files into a specific mp3 encoding.
+A GStreamer Pipeline will be created to transcode m4a, mp3 and flac files into a specific mp3 encoding.
 The output of the GStreamer Pipeline gets written into a `UNIX Pipe`_.
 The data can then be accessed via :meth:`~MP3Transcoder.GetChunk`.
 
-GStreamer Pipeline
-------------------
+GStreamer Pipeline for Transcoding
+----------------------------------
 
 As shown in the graph below, GStreamer is used for the transcoding.
 The files get read by the ``filesrc`` element and then be decoded.

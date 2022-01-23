@@ -53,6 +53,303 @@ class MusicDirectory(Fileprocessing):
 
 
 
+    def RenameSongFile(self, oldpath, newpath):
+        """
+        Renames a song inside the Music Directory.
+        In general it is not checked if the new path fulfills the Music Naming Scheme (See :doc:`/usage/music`).
+        The position of the file should be plausible anyway.
+        So a song file should be inside a artist/album/-directory.
+
+        The complete path, relative to the Music Directory must be given.
+        The artist and album directories must not be different.
+        Only the file name can be different.
+
+        If the old path does not address a file, the Method returns ``False``.
+        If the new path does address an already existing file, the method returns ``False`` as well.
+        No files will be overwritten.
+
+        Args:
+            oldpath (str): Path to the file that shall be renamed
+            newpath (str): New name of the file
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+
+        Example:
+            .. code-block:: Python
+
+                // Will succeed
+                oldpath = "Artist/2021 - Album Name/01 old file name.mp3"
+                newpath = "Artist/2021 - Album Name/01 new file name.mp3"
+                musicdirectory.RenameSongFile(oldpath, newpath)
+
+                // Will succeed even when the song name does not fulfill the naming scheme for song files
+                oldpath = "Artist/2021 - Album Name/old file name.mp3"
+                newpath = "Artist/2021 - Album Name/new file name.mp3"
+                musicdirectory.RenameSongFile(oldpath, newpath)
+
+                // Will fail if because album name changed as well
+                oldpath = "Artist/Old Album Name/Old Song Name.flac",
+                newpath = "Artist/2021 - New Album Name/01 New Song Name.flac"
+                musicdirectory.RenameSongFile(oldpath, newpath)
+
+        """
+        # Check if old path is a valid path to a file in the Music Directory
+        if not self.IsFile(oldpath):
+            logging.warning("Rename Music Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
+            return False
+
+        # Check if new path addresses an already existing file
+        if self.Exists(newpath):
+            logging.warning("Rename Music Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
+            return False
+
+        # Check if path if path is plausible
+        oldcontenttype = self.EstimateContentTypeByPath(oldpath)
+        newcontenttype = self.EstimateContentTypeByPath(newpath)
+        if oldcontenttype != "song":
+            logging.warning("Old path (\"%s\") does not address a song. It was estimated as: %s \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype)
+            return False
+
+        if newcontenttype != "song":
+            logging.warning("New path (\"%s\") does not address a song. It was estimated as: %s \033[1;30m(Old path will not be renamed)", newpath, newcontenttype)
+            return False
+
+        # Rename path
+        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
+        try:
+            success = self.Rename(oldpath, newpath)
+        except Exception as e:
+            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
+            success = False
+
+        if not success:
+            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
+            return False
+        return True
+
+
+
+    def RenameVideoFile(self, oldpath, newpath):
+        """
+        Renames a video inside the Music Directory.
+        In general it is not checked if the new path fulfills the Music Naming Scheme (See :doc:`/usage/music`).
+        The position of the file should be plausible anyway.
+        So a song file should be inside a artist-directory.
+
+        The complete path, relative to the Music Directory must be given.
+        The artist and album directories must not be different.
+        Only the file name can be different.
+
+        If the old path does not address a file, the Method returns ``False``.
+        If the new path does address an already existing file, the method returns ``False`` as well.
+        No files will be overwritten.
+
+        Args:
+            oldpath (str): Path to the file that shall be renamed
+            newpath (str): New name of the file
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+
+        Example:
+            .. code-block:: Python
+
+                // Will succeed
+                oldpath = "Artist/2021 - old file name.m4v"
+                newpath = "Artist/2021 - new file name.m4v"
+                musicdirectory.RenameVideoFile(oldpath, newpath)
+
+                // Will succeed even when the video name does not fulfill the naming scheme for video files
+                oldpath = "Artist/old file name.m4v"
+                newpath = "Artist/new file name.m4v"
+                musicdirectory.RenameVideoFile(oldpath, newpath)
+
+                // Will fail if because artist name changed as well
+                oldpath = "Artist/Old Video Name.m4v",
+                newpath = "Different Artist/2020 - New Video Name.m4v"
+                musicdirectory.RenameVideoFile(oldpath, newpath)
+
+        """
+        # Check if old path is a valid path to a file in the Music Directory
+        if not self.IsFile(oldpath):
+            logging.warning("Rename Music Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
+            return False
+
+        # Check if new path addresses an already existing file
+        if self.Exists(newpath):
+            logging.warning("Rename Music Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
+            return False
+
+        # Check if path if path is plausible
+        oldcontenttype = self.EstimateContentTypeByPath(oldpath)
+        newcontenttype = self.EstimateContentTypeByPath(newpath)
+        if oldcontenttype != "video":
+            logging.warning("Old path (\"%s\") does not address a video. It was estimated as: %s \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype)
+            return False
+
+        if newcontenttype != "video":
+            logging.warning("New path (\"%s\") does not address a video. It was estimated as: %s \033[1;30m(Old path will not be renamed)", newpath, newcontenttype)
+            return False
+
+        # Rename path
+        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
+        try:
+            success = self.Rename(oldpath, newpath)
+        except Exception as e:
+            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
+            success = False
+
+        if not success:
+            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
+            return False
+        return True
+
+
+
+    def RenameAlbumDirectory(self, oldpath, newpath):
+        """
+        Renames an album directory.
+        In general it is not checked if the new path fulfills the Music Naming Scheme (See :doc:`/usage/music`).
+        The position of the album should be plausible anyway.
+        So it must be placed inside an artist directory.
+
+        The complete path, relative to the Music Directory must be given.
+        Anyway, the artist directories must not be different.
+        Only the album directory name can be different.
+
+        If the old path does not address a directory, the Method returns ``False``.
+        If the new path does address an already existing file or directory, the method returns ``False`` as well.
+        No files will be overwritten.
+
+        Args:
+            oldpath (str): Path to the directory that shall be renamed
+            newpath (str): New name of the file
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+
+        Example:
+            .. code-block:: javascript
+
+                // Will succeed
+                oldpath = "Artist/2021 - Old Album Name"
+                newpath = "Artist/2021 - New Album Name"
+                musicdirectory.RenameAlbumDirectory(oldpath, newpath)
+
+                // Will succeed even if the album name does not fulfill the naming requirements
+                oldpath = "Artist/Old Album Name"
+                newpath = "Artist/New Album Name"
+                musicdirectory.RenameAlbumDirectory(oldpath, newpath)
+
+                // Will fail because artist name changed as well.
+                oldpath = "Artist/Old Album Name"
+                newpath = "New Artist/2021 - New Album Name"
+                musicdirectory.RenameAlbumDirectory(oldpath, newpath)
+
+        """
+        # Check if old path is a valid path to a file in the Music Directory
+        if not self.IsDirectory(oldpath):
+            logging.warning("Rename Album Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
+            return False
+
+        # Check if new path addresses an already existing file
+        if self.Exists(newpath):
+            logging.warning("Rename Album Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
+            return False
+
+        # Check if path if path is plausible
+        oldcontenttype = self.EstimateContentTypeByPath(oldpath)
+        newcontenttype = self.EstimateContentTypeByPath(newpath)
+        if oldcontenttype != newcontenttype:
+            logging.warning("Old path (\"%s\") was estimated as \"%s\", the new one (\"%s\") as \"%s\". \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype, newpath, newcontenttype)
+            return False
+
+        if oldcontenttype != "album":
+            logging.warning("Old path (\"%s\") was estimated as \"%s\". An Album was expected. \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype)
+            return False
+
+        # Rename path
+        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
+        try:
+            success = self.Rename(oldpath, newpath)
+        except Exception as e:
+            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
+            success = False
+
+        if not success:
+            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
+            return False
+        return True
+
+
+
+    def RenameArtistDirectory(self, oldpath, newpath):
+        """
+        Renames an artist directory.
+        In general it is not checked if the new path fulfills the Music Naming Scheme (See :doc:`/usage/music`).
+        The position of the artist should be plausible anyway.
+
+        The complete path, relative to the Music Directory must be given.
+        Anyway, the artist directories must not be different.
+        Only the album directory name can be different.
+        So it must be placed inside the music directory and not being a sub directory.
+
+        If the old path does not address a directory, the Method returns ``False``.
+        If the new path does address an already existing file or directory, the method returns ``False`` as well.
+        No files will be overwritten.
+
+        Args:
+            oldpath (str): Path to the directory that shall be renamed
+            newpath (str): New name of the file
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+
+        Example:
+            .. code-block:: javascript
+
+                oldpath = "Old Artist"
+                newpath = "New Artist"
+                musicdirectory.RenameArtistDirectory(oldpath, newpath)
+
+        """
+        # Check if old path is a valid path to a file in the Music Directory
+        if not self.IsDirectory(oldpath):
+            logging.warning("Rename Artist Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
+            return False
+
+        # Check if new path addresses an already existing file
+        if self.Exists(newpath):
+            logging.warning("Rename Artist Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
+            return False
+
+        # Check if path if path is plausible
+        oldcontenttype = self.EstimateContentTypeByPath(oldpath)
+        newcontenttype = self.EstimateContentTypeByPath(newpath)
+        if oldcontenttype != newcontenttype:
+            logging.warning("Old path (\"%s\") was estimated as \"%s\", the new one (\"%s\") as \"%s\". \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype, newpath, newcontenttype)
+            return False
+
+        if oldcontenttype != "artist":
+            logging.warning("Old path (\"%s\") was estimated as \"%s\". An Artist was expected. \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype)
+            return False
+
+        # Rename path
+        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
+        try:
+            success = self.Rename(oldpath, newpath)
+        except Exception as e:
+            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
+            success = False
+
+        if not success:
+            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
+            return False
+        return True
+
+
+
 
     def FixAttributes(self, path: Union[str, Path]):
         """
@@ -274,15 +571,18 @@ class MusicDirectory(Fileprocessing):
 
     def AnalysePath(self, musicpath):
         """
-        This method analyses a path to a song or video and extracts all the information encoded in the path.
-        The path must consist of three parts: The artist directory, the album directory and the song file.
-        For videos only two parts are expected: The artist directory and the video file
+        This method analyses a path to an artist, and album, a song or video and extracts all the information encoded in the path.
+        For songs, path must consist of three parts: The artist directory, the album directory and the song file.
+        For alums and videos only two parts are expected: The artist directory and the video file.
+        For artist only one part.
 
         A valid path has one the following structures: 
         
             * ``{artistname}/{albumrelease} - {albumname}/{songnumber} {songname}.{extension}``
             * ``{artistname}/{albumrelease} - {albumname}/{cdnumber}-{songnumber} {songname}.{extension}``
             * ``{artistname}/{videorelease} - {videoname}.{extension}``
+            * ``{artistname}/{albumrelease} - {albumname}``
+            * ``{artistname}``
 
         The returned dictionary holds all the extracted information from the scheme listed above.
         The following entries exists but may be ``None`` depending if the path addresses a video or song.
@@ -300,7 +600,10 @@ class MusicDirectory(Fileprocessing):
         The names can have all printable Unicode characters and of cause spaces.
 
         If an error occurs because the path does not follow the scheme, ``None`` gets returned.
-        This method does not check if the path exists!
+        This method also checks if the file or directory exists!
+
+        The path must also address a file or directory inside the music directory.
+        Anyway the path can be relative or absolute.
 
         Args:
             musicpath (str/Path): A path of a song including artist and album directory or a video including the artists directory.
@@ -309,8 +612,11 @@ class MusicDirectory(Fileprocessing):
             On success, a dictionary with information about the artist, album and song or video is returned.
             Otherwise ``None`` gets returned.
         """
+        if self.Exists(musicpath):
+            logging.debug("Path \"%s\" does not exist.", str(musicpath));
 
-        path = str(musicpath)
+        path = self.TryRemoveRoot(musicpath)
+        path = self.ToString(path)
 
         # Define all possibly used variables to a avoid undefined behavior
         result = {}
@@ -329,20 +635,25 @@ class MusicDirectory(Fileprocessing):
 
         # separate parts of the path
         parts = path.count("/")
-        if parts == 1:  # This my be a video or an album (let's see if it is a directory)
+        if parts == 0: # This must be an artist
+            if self.IsDirectory(path):
+                artist = path
+        elif parts == 1: # This my be a video or an album (let's see if it is a directory)
             if self.IsDirectory(path):
                 [artist, album] = path.split("/")[-2:]
             else:
                 [artist, video] = path.split("/")[-2:]
         elif parts == 2: # This may be a song
-            [artist, album, song] = path.split("/")[-3:]
+            if self.IsFile(path):
+                [artist, album, song] = path.split("/")[-3:]
+
+        # analyze the artist information
+        if artist:
+            result["artist"] = artist
         else:
             logging.warning("Analysing \"%s\" failed!", path)
             logging.warning("Path cannot be split into three parts {artist}/{album}/{song} or two parts {artist}/{video}")
             return None
-
-        # analyze the artist information
-        result["artist"] = artist
 
         # analyze the album information
         if album:
@@ -486,6 +797,7 @@ class MusicDirectory(Fileprocessing):
         contenttype = None
         parts       = path.count("/") + 1           # n slash means n+1 parts of a path
         suffix      = self.GetFileExtension(path)   # If there is a file extension, it may be a file
+        logging.debug("Estimating content type: parts: %i, suffix: %s", parts, suffix)
 
         # Try to check if path addresses a file.
         # This only works when the path exists.
@@ -495,12 +807,10 @@ class MusicDirectory(Fileprocessing):
             isfile = self.IsFile(path)
         elif suffix != None:
             # Now check if something points against a file
-            if len(suffix) != 3:
-                isfile = False
-            elif not suffix in ["m4a", "flac", "aac", "mp4", "mp3", "m4v"]:
-                isfile = False
+            if suffix in ["m4a", "flac", "aac", "mp4", "mp3", "m4v"]:
+                isfile = True
             else:
-                iffile = True
+                isfile = False
 
         # Estimate path type
         if parts == 1:
@@ -646,138 +956,6 @@ class MusicDirectory(Fileprocessing):
 
         return True
 
-
-
-
-    # TODO/FIXME: Sehr ähnlich zu TryAnalysePath aus mdbapi.database. Ggf irgendwie vereinen
-    # -> no, they follow different ideas. But both require better documentation!
-
-    # Check if a path is a valid artist path
-    # The path should be relative to the music root directory, otherwise its obviously not valid
-    # As all functions of this type, there is no guarantee
-    def IsArtistPath(self, path, ignorealbums=None, ignoresongs=None, isabsolute=False):
-        logging.warning("MusicDirectory.IsArtistPath is DEPRECATED")
-        if isabsolute:
-            path = self.RemoveRoot(path)
-
-        if not self.IsDirectory(path):
-            logging.debug("Artist path (%s) is not a directory!", path)
-            return False
-
-        if len(path.split("/")) != 1:
-            logging.debug("Artist path (%s) is not inside music root directory!", path)
-            return False
-
-        albumpaths = self.GetSubdirectories(path, ignorealbums)
-        for albumpath in albumpaths:
-            #albumpath = os.path.join(path, albumdir)    # Create artist/album - path
-            if not self.IsAlbumPath(albumpath, ignoresongs):
-                return False
-        return True
-
-
-    def IsAlbumPath(self, path, ignoresongs=None, isabsolute=False):
-        logging.warning("MusicDirectory.IsAlbumPath is DEPRECATED")
-        if isabsolute:
-            path = self.RemoveRoot(path)
-
-        if not self.IsDirectory(path):
-            logging.debug("Album path (%s) is not a directory!", path)
-            return False
-
-        # Check for "year - name of the album"
-        try:
-            [artist, album] = path.split("/")
-        except:
-            logging.debug("Album path (%s) is not inside an artist directory!", path)
-            return False
-
-        if not self.AnalyseAlbumDirectoryName(album):
-            logging.debug("Album name (%s) does not follow the scheme!", album)
-            return False
-
-        # Check if there is at least one valid song
-        songpaths = self.GetFiles(path, ignoresongs)
-        for songpath in songpaths:
-            if self.IsSongPath(songpath):
-                return True
-        return False
-
-
-
-    def IsVideoPath(self, path: Union[str, Path], isabsolute: bool=False) -> bool:
-        """
-        This method checks if the given path is a possible path to a music video.
-        It checks if the path follows the naming scheme and exists as file.
-
-        Args:
-            path (str): A path to a possible video file
-            isabsolute (bool): Optional boolean in case the path is absolute. Then the root prefix gets removed.
-
-        Returns:
-            ``True`` if the path could be a video file, otherwise ``False``
-        """
-        logging.warning("MusicDirectory.IsAlbumPath is DEPRECATED")
-        if isabsolute:
-            path = self.RemoveRoot(path)
-
-        if not self.IsFile(path):
-            logging.debug("Video path (%s) is not a file!", path)
-            return False
-
-        # Check path structure
-        try:
-            [artist, video] = str(path).split("/")
-        except:
-            logging.debug("Video path (%s) is not inside an artist directory!", path)
-            return False
-
-        if not self.AnalyseVideoFileName(video):
-            logging.debug("Video name (%s) does not follow the scheme!", video)
-            return False
-
-        return True
-
-
-
-    def IsSongPath(self, path, isabsolute=False):
-        logging.warning("MusicDirectory.IsAlbumPath is DEPRECATED")
-        if isabsolute:
-            path = self.RemoveRoot(path)
-
-        if not self.IsFile(path):
-            logging.debug("Song path (%s) is not a file!", path)
-            return False
-
-        try:
-            [artist, album, song] = path.split("/")
-            _ = int(album[0:4])
-            number = song.split(" ")[0]
-        except:
-            logging.debug("Song path (%s) is not inside an artist/album-directory tree!", path)
-            return False
-
-        if album[4:7] != " - ":
-            logging.debug("Album name (%s) does not follow the scheme!", album)
-            return False
-
-        try:
-            if "-" in number:
-                [cdnumber, songnumber] = number.split("-")
-                _ = int(cdnumber)
-                _ = int(songnumber)
-            else:
-                _ = int(number)
-        except:
-            logging.debug("Song name (%s) does not follow the scheme!", song)
-            return False
-
-        ext = os.path.splitext(song)[1]
-        if not ext in [".flac", ".mp3", ".m4a", ".aac", ".MP3"]:
-            logging.debug("Song file (%s) has an unsupported extension!", song)
-            return False
-
-        return True
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

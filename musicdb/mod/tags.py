@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -61,17 +61,6 @@ For the list and delete command (``-l|-d``) all other arguments will be ignored.
 
 For the create-command (``-c``) only the ``--set-name`` and the ``--set-parent`` argument will be used.
 
-.. note::
-
-    TODO: DEPRECATED - This behavior changed in MusicDB 8.0.0
-
-    After changing something, the server or clients my need to update cached tag lists.
-    This can be done sending the command ``refresh`` via named pipe to the server.
-
-    .. code-block:: bash
-
-        echo "refresh" > /data/musicdb/musicdb.fifo
-
 
 Style Guide
 -----------
@@ -131,9 +120,9 @@ Create an initial set of mood tags
 
     LOGFILE="moodlog.ansi"
 
-    musicdb -q --logfile $LOGFILE tags -c mood --set-name Sing    --set-posx 1 --set-posy 0 --set-icon ♫︎
-    musicdb -q --logfile $LOGFILE tags -c mood --set-name Lucky   --set-posx 2 --set-posy 0 --set-icon ☺︎ --set-color "#00A000"
-    musicdb -q --logfile $LOGFILE tags -c mood --set-name Sad     --set-posx 3 --set-posy 0 --set-icon ☹︎
+    musicdb tags -c mood --set-name Sing    --set-posx 1 --set-posy 0 --set-icon ♫︎
+    musicdb tags -c mood --set-name Lucky   --set-posx 2 --set-posy 0 --set-icon ☺︎ --set-color "#00A000"
+    musicdb tags -c mood --set-name Sad     --set-posx 3 --set-posy 0 --set-icon ☹︎
 """
 
 import argparse

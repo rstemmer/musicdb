@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -682,10 +682,11 @@ class Filesystem(object):
         Returns:
             ``True`` on success, otherwise ``False``
         """
+        abspath = self.AbsolutePath(xpath)
         try:
-            shutil.chown(abspath, owner, group)
+            shutil.chown(abspath, user, group)
         except PermissionError as e:
-            logging.error("Setting ownership of %s to %s:%s failed with error %s", abspath, owner, group, str(e))
+            logging.error("Setting ownership of %s to %s:%s failed with error %s", abspath, user, group, str(e))
             return False
 
         return True
@@ -808,6 +809,7 @@ class Filesystem(object):
 
         Raises:
             ValueError: When *mode* does not have exact 9 characters.
+            PermissionError: When setting mode is not allowed
 
         Example:
 
@@ -842,8 +844,8 @@ class Filesystem(object):
             logging.debug("Changing access permissions of %s to %s (%s)", abspath, mode, oct(permissions))
             abspath.chmod(permissions)
         except PermissionError as e:
-            logging.error("Setting mode of %s to %s failed with error %s", abspath, oct(permissions), str(e))
-            return False
+            logging.debug("Setting mode of %s to %s failed with error %s", abspath, oct(permissions), str(e))
+            raise e
 
         return True
 
@@ -1183,7 +1185,7 @@ class Filesystem(object):
         Executes an external program.
         The command line is a list of arguments with the executable name as first element.
         So ``commandline[0]`` is the program name like ``"ls"`` and the next elements are a list of arguments to this program (like ``"-l", "-h"``).
-        All entries in this list must be of type string.
+        All entries in this list must be representable as string.
 
         The I/O interfaces *stderr*, *stdout* and *stdin* are piped to ``/dev/null``
 
@@ -1198,7 +1200,7 @@ class Filesystem(object):
             *Nothing*
 
         Raises:
-            TypeError: When one entry of the commandline list is not of type string
+            TypeError: When one entry of the commandline list can not be converted to string
             ChildProcessError: If the return value of the executed program is not 0
 
         Example:
@@ -1218,9 +1220,8 @@ class Filesystem(object):
                 sync
 
         """
-        for entry in commandline:
-            if type(entry) is not str:
-                raise TypeError("All entries in the command line list must be of type string!")
+        commandline = [str(entry) for entry in commandline]
+
         devnull = open(os.devnull, "w")
         retval = subprocess.run(commandline, stdin=devnull, stdout=devnull, stderr=devnull).returncode
         if retval != 0:

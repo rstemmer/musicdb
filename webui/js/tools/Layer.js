@@ -19,9 +19,10 @@
 
 class LayerBackground extends Curtain
 {
-    constructor()
+    constructor(zindex=1, cssclasses=[])
     {
-        super();
+        super(cssclasses);
+        this.element.style.zIndex = zindex;
         this.element.onclick     = "";
         this.element.ondragenter = "";
         this.element.ondragleave = "";
@@ -39,7 +40,19 @@ class Layer extends Element
     {
         super("div", ["Layer", "frame", "opaque"], id);
         this.background = background;
+        this.SetZIndex();
         this.Hide();
+    }
+
+
+
+    SetZIndex(zindex=null)
+    {
+        if(zindex === null)
+        {
+            zindex = parseInt(this.background.element.style.zIndex);
+        }
+        this.element.style.zIndex = zindex;
     }
 
 
@@ -58,10 +71,12 @@ class Layer extends Element
 
 
 
+    /*
     onMusicDBMessage(fnc, sig, args, pass)
     {
         window.console?.warn("Derived class must implement a onMusicDBMessage method!");
     }
+    */
 }
 
 

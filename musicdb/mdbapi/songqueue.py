@@ -17,8 +17,8 @@
 This module implements the Song Queue.
 The song queue consists of a global FIFO organized list.
 
-Queue Management
-----------------
+Song Queue Management
+---------------------
 
 An entry in this queue is a dictionary having the following keys:
 
@@ -45,8 +45,8 @@ Furthermore this module cooperates the Randy module (see: :doc:`/mdbapi/randy`)
 When the queue runs empty, a new random song gets append to the queue.
 
 
-Event Management
-----------------
+Song Queue Event Management
+---------------------------
 
 This module provided a callback interface to react on events triggered on changes in the Song Queue.
 

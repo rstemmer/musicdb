@@ -62,8 +62,19 @@ class WebUISettings extends MainSettingsView
             "Show Audio Stream Player inside the Main Menu",
             "If set, an audio stream player is shown in the main menu. This player connects to the configured audio stream. With this audio player it is possible to listen to the MusicDB audio stream directly from the browser.",
             (state)=>{
-                if(state == true) this.ChangeSetting("WebUI", "showstreamplayer", true);
-                else              this.ChangeSetting("WebUI", "showstreamplayer", false);
+                if(state == true) this.ChangeSetting("MainMenu", "showstreamplayer", true);
+                else              this.ChangeSetting("MainMenu", "showstreamplayer", false);
+            }
+        );
+
+        this.showsystemstatuscheckbox = new SettingsCheckbox(
+            "Show System Status inside the Main Menu",
+            "If set, the system status is shown in the main menu."+
+            " It shows if the connection between the MusicDB Server and Icecast is up and if data gets streamed."+
+            " These information are not mandatory to know but help you to quickly identify issues with the audio stream.",
+            (state)=>{
+                if(state == true) this.ChangeSetting("MainMenu", "showsystemstatus", true);
+                else              this.ChangeSetting("MainMenu", "showsystemstatus", false);
             }
         );
 
@@ -73,6 +84,7 @@ class WebUISettings extends MainSettingsView
         settingslist.AddEntry(this.avshowreleasecheckbox);
         settingslist.AddEntry(this.gsvshowothercheckbox);
         settingslist.AddEntry(this.showstreamplayercheckbox);
+        settingslist.AddEntry(this.showsystemstatuscheckbox);
 
         this.AppendChild(settingslist);
         this.settings = null;
@@ -88,7 +100,8 @@ class WebUISettings extends MainSettingsView
         this.lyricscheckbox.SetState(settings.WebUI.lyrics    == "enabled");
         this.avshowreleasecheckbox.SetState(settings.ArtistsView.showrelease == true);
         this.gsvshowothercheckbox.SetState(settings.GenreSelectionView.showother == true);
-        this.showstreamplayercheckbox.SetState(settings.WebUI.showstreamplayer == true);
+        this.showstreamplayercheckbox.SetState(settings.MainMenu.showstreamplayer == true);
+        this.showsystemstatuscheckbox.SetState(settings.MainMenu.showsystemstatus == true);
         return;
     }
 

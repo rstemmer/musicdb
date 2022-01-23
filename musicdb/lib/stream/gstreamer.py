@@ -18,8 +18,8 @@
 GStreamer Pipeline
 ------------------
 
-Installation
-^^^^^^^^^^^^
+Installation of GStreamer Plugins
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. code-block:: bash
 
@@ -27,8 +27,8 @@ Installation
         # -good for mp3
         # -bad  for m4a/aac
 
-Example
-^^^^^^^
+Example for Using Plugins
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. code-block:: bash
 

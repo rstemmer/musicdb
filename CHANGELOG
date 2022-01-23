@@ -21,6 +21,9 @@ Run  git log --oneline  for more details
 │ - [lycra] Lyrics Crawler feature removed (Data quality was bad, feature was never used)
 │ + [logging] Allow logging to journald
 │ + [artwork] Long broken app-cache manifest generation removed
+│ - [server] SIGUSR1 removed
+│ + [server] WebSocket API Key is now generated when missing. No user configuration needed anymore
+│ - [namedpipe] NamedPipe class removed
 │ * [database] musicdb.mdbapi.database.MusicDBDatabase is now called musicdb.mdbapi.music.MusicDBMusic
 │ * [music] FindLostPaths now uses a similar interface to FindNewPaths and supports videos as well
 │ * [music] FindNewPaths now provides an additional list that contains only new songs of imported albums
@@ -28,7 +31,19 @@ Run  git log --oneline  for more details
 │ + [tracker] Configuration added to decide if random songs shall be tracked: [tracker]->trackrandom
 │ + [filesystem] New methods: SetOwner, SetAccessPermissions, GetAccessPermissions, CheckAccessPermissions
 │ + [accesspermissions] New module for high level access permission checks added
+│ * [randy] Fixed ignoring maxsonglen for random songs
+│ + [randy] New filter options:
+│       nohidden: do not select songs from hidden albums
+│       nobadfile: do not select songs that are flagged by the "bad file" flag
+│       nolivemusic: do not select songs that are flagged by the "live recording" flag
+│ * Command Line Interface
+│    - Old high level command line user interface removed. The WebUI provides a better, more reliable alternative.
+│       repair, add, moods, genres
+│    - [recache] removed
+│    - [database] removed sub commands: add, getlyrics, update
+│    * [metadata] --check is no longer expected. Just give the path.
 │ + [WebUI] Audio stream player + settings form added
+│ + [WebUI] Settings added to allow hiding Audio stream player and System Status inside the main menu
 │ + [WebUI] Allow uploading albums via web front-end
 │ + [WebUI] Allow importing albums via web front-end
 │ + [WebUI] Allow updating and renaming albums and songs via web front-end
@@ -44,7 +59,7 @@ Run  git log --oneline  for more details
 │       CreateSongEntry, CreateArtistEntry,
 │       SetAlbumOrigin, SetAlbumImportTime, Bounce
 │    * Renamed: GetUploads -> GetCurrentTasks
-│ * Solved Issues: #68, #66, #65, #22, #27, #72
+│ * Solved Issues: #68, #66, #65, #22, #27, #72, #64, #40, #50, #59
 │
 ┝━ MINOR CHANGES
 │ * [metadata] Uses mutagen instead of mutagenx module
@@ -173,6 +188,8 @@ Run  git log --oneline  for more details
 ┝━ MINOR CHANGES
 │ * Log output ends with setting terminal color to default (\e[0m)
 │ * [Artwork] Fixes issue with mutagenx package and importing artworks from mp3 files
+│ * [Artwork] Fixed wrong interpretation of relative path arguments
+│ * [Artwork] Fixed a bug that make the --album or --artwork option crash
 │ * [Add] Highlight in the summary when there are invalid song names
 │ * [Add] Exceptions during album import were captured to create better error messages
 │ + [Add] In case there is invalid unicode in a song file name, the module exits immediately
@@ -207,6 +224,7 @@ Run  git log --oneline  for more details
 │ * [Stream] Fixed a bug that crashes the streaming process when the song queue is empty
 │ * [Installation] Fixed a bug in the database creating process that leads to a wrong version number in new databases
 │ * [Installation] Fixed a bug that gets triggered when there is more than one bash-entry in /etc/shells
+│ * Some CSS-Updates to increase font size on 4k screens
 └───────────────────────────────────────╌╌
 
 
@@ -230,6 +248,9 @@ Run  git log --oneline  for more details
 │ + [Randy] Blacklist entries older than a configured age will be removed
 │ * [Tracker] Does not track any random songs to keep the relations clean
 │ - The deprecated SIGUSR1 signal to update the caches got removed. Use the FIFO interface instead. (SIGTERM will remain)
+│ * All added songs will be pushed onto the blacklist now
+│ * Replaces old imp module by importlib
+│ * Fixes problem caused by asyncio changes in Python3.7
 │
 ┝━ MINOR CHANGES
 │ * [Tracker] Time to pass between two songs until there relationship gets not tracked is now configurable
@@ -245,12 +266,14 @@ Run  git log --oneline  for more details
 │ * CSV Files now have headers
 │ * The server now only accepts request from clients with a valid API Key
 │ * WebSocket configuration for WebUI is now in separate config.js
+│ * MP3 decode is now more tolerant for unusual MP3 files
 │
 ┝━ MINOR CHANGES
 │ * musicdb.ini now has a version number
 │ * Databases now has a version number
 │ * Scripts are now in a separate directory. Helpers will be moved to the server directory on installation.
 │ - Moved id3edit sources into its own repository
+│ * Normalize Unicode strings when loaded into CLUI TextInput
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2018-05-06 ┣━━━━┫ 3.0.0 ┣━━━━━━━━╍╍
@@ -278,6 +301,8 @@ Run  git log --oneline  for more details
 │ - The following song statistics got removed: qadds, qrndadds, qskips, qremoves. They got NEVER used.
 │ - End of Queue option removed from mdbstate.ini->[queue] -> EoQEvent. It was not used for years.
 │ - The MusicDB state gets now saved in an own directory. The state file is at DATADIR/mdbstate/state.ini
+│ * Avoids adding same song, when "AddSongFromAlbum" method is used multiple times.
+│ * Checks if MusicDB runs in the correct group. Warns when not.
 └───────────────────────────────────────╌╌
 
 
@@ -286,6 +311,11 @@ Run  git log --oneline  for more details
 │ + Adds a new WebSocket API function: GetTables
 │
 ┝━ MINOR CHANGES
+│ * Fixes a bug that leads to chaos when the queue runs empty
+│ * The dialog CLUI is now more tolerant for small terminal sizes
+│ * Fixes a bug in the add module that makes importing lyrics crash
+│ * Fixes sloppy path handling in artwork manager
+│ * Makes WebUI more tolerant for missing MPD connection
 │ * Fixes a bug that leads to chaos when the queue runs empty
 │ * The dialog CLUI is now more tolerant for small terminal sizes
 │ * Fixes a bug in the add module that makes importing lyrics crash
@@ -300,6 +330,10 @@ Run  git log --oneline  for more details
 │
 ┝━ MINOR CHANGES
 │ * Better installation instructions
+│ * Fixes crash when using MusicAI in add-module
+│ * Fixes an IndexError when blacklists have length of zero
+│ * Makes named pipes more explicit 
+│ * Fixes a bug that made the add command try to analyse metadata from cover artworks
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2018-01-05 ┣━━━━┫ 2.0.0 ┣━━━━━━━━╍╍

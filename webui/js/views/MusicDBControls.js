@@ -24,7 +24,7 @@ class MusicDBControls extends Element
 {
     constructor()
     {
-        super("div", ["MusicDBControlsBox", "frame", "hovpacity", "hlcolor"]);
+        super("div", ["MusicDBControlsBox", "flex", "flex-column", "frame", "hovpacity", "hlcolor"]);
 
         this.controls = new Object();
         this.controls["audio"] = this._CreateControls("audio");
@@ -72,7 +72,7 @@ class MusicDBControls extends Element
         }
         else if(state == "stopped")
         {
-            this.UpdateButton(playbutton, "Play Audio Stream", "Continue audio streaming on server side for all clients", "play");
+            this.UpdateButton(playbutton, "Start Audio Stream", "Continue audio streaming on server side for all clients", "play");
         }
     }
     SetVideoStatus(state) // "playing"/"stopped"
