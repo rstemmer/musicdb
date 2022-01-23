@@ -29,4 +29,7 @@ Depends: ffmpeg,
          ${python3:Depends}
 Recommends: logrotate, apache2, icecast2
 Description: A music manager with web-bases UI that focus on music
- MusicDB is a music manager with focus on remote access to your music collection using a web-based user interface. It allows you to manage an audio stream based on a song-queue. The WebUI is focusing on being a presentation of your music rather than being a database front-end.
+ MusicDB is a music manager with focus on remote access to your music
+ collection using a web-based user interface.  It allows you to manage
+ an audio stream based on a song-queue.  The WebUI is focusing on
+ being a presentation of your music rather than being a database front-end.
