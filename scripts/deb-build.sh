@@ -48,7 +48,7 @@ debuild -uc -us --lintian-opts --profile debian
 # -uc -us: Do not sign source and changes
 # --profile debian: See: https://bugs.launchpad.net/ubuntu/+source/lintian/+bug/1303603
 
-cp ${builddir}/musicdb*.deb ${repository}/dist/.
+cp ${builddir}/musicdb*.deb ${repository}/pkg/.
 echo -e "\e[1;32mdone"
 
 cd $oldwd
