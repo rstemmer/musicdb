@@ -1,5 +1,0 @@
-The configuration templates in this directory are just templates!
-
-There are some variables (in capital letters only) that get replaces via sed.
-When changing some templates, check the install.sh script if the used variable gets replaced, or if a sed call must be added.
-
