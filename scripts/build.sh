@@ -20,7 +20,7 @@ mkdir -p "$repository/pkg"
 
 
 function PrintHelp {
-    echo "./build.sh [--help] [src] [doc] [pkg] [rpm]"
+    echo "./build.sh [--help] [src] [pkg] [rpm] [deb] [doc]"
 }
 
 
@@ -93,6 +93,54 @@ function BuildRPM {
 
 
 
+function BuildDEB {
+    oldwd=$(pwd)
+    cd $repository/dist
+
+    rm -f "../pkg/musicdb-${version}-1_all.deb"
+
+    local builddir="${HOME}/debbuild/musicdb"
+    echo -e "\e[1;34mCreating build directory \e[0;36m${builddir} \e[1;34m…"
+    rm -rf ${builddir}
+    mkdir -p ${builddir}
+    cd ${builddir}
+
+    # Prepare sources
+    local sourcename="musicdb-${version}-src"
+    echo -e "\e[1;34mPreparing source files …"
+    cp ${repository}/pkg/musicdb-${version}-src.tar.zst .
+    unzstd ${sourcename}.tar.zst
+    gzip   ${sourcename}.tar
+    mv ${sourcename}.tar.gz musicdb-${version}.tar.gz
+    ln -s musicdb-${version}.tar.gz musicdb_${version}.orig.tar.gz
+
+    echo -e "\e[1;34mExtracting source files …"
+    tar xf musicdb-${version}.tar.gz
+    mv ${sourcename} musicdb-${version}
+
+    # Prepare deb build environment
+    echo -e "\e[1;34mPreparing deb build environment …"
+    cd musicdb-${version}
+    cp -r ${repository}/dist/debian .
+    cp    ${repository}/share/musicdb.service ./debian/musicdb.service
+    cp    ${repository}/share/tmpfiles.conf   ./debian/musicdb.tmpfiles
+    cp    ${repository}/share/sysusers.conf   ./debian/musicdb.sysusers
+
+    # Build deb package
+    echo -e "\e[1;34mBuilding deb package …\e[0m"
+    debuild -uc -us --lintian-opts --profile debian
+    # -uc -us: Do not sign source and changes
+    # --profile debian: See: https://bugs.launchpad.net/ubuntu/+source/lintian/+bug/1303603
+
+    cp ${builddir}/musicdb*.deb ${repository}/pkg/.
+
+    echo -e "\e[1;32mdone"
+
+    cd $oldwd
+}
+
+
+
 function BuildDocumentation {
     pkgname="musicdb-${version}-doc"
     tmp="/tmp/${pkgname}"
@@ -135,6 +183,9 @@ while [[ $# -gt 0 ]]; do
             ;;
         pkg)
             BuildPKG
+            ;;
+        deb)
+            BuildDEB
             ;;
         doc)
             BuildDocumentation
