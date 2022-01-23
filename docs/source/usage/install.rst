@@ -67,7 +67,7 @@ Update your system before installing MusicDB.
       su
 
       # Install MusicDB
-      pacman -U musicdb-$version-any.pkg.tar.zst
+      pacman -U ./musicdb-$version-any.pkg.tar.zst
 
 .. tab:: Fedora
 
@@ -97,7 +97,48 @@ Update your system before installing MusicDB.
    .. code-block:: bash
 
       # Install MusicDB
-      sudo dnf install musicdb-8.0.0-1.fc$(rpm -E %fedora).noarch.rpm
+      sudo dnf install ./musicdb-8.0.0-1.fc$(rpm -E %fedora).noarch.rpm
+
+.. tab:: Ubuntu
+
+   After downloading the latest MusicDB package for Ubuntu, you can install it with the Ubuntu package manager ``apt``.
+   MusicDB is optimized for the latest version of Ubuntu and not for the LTS version.
+
+   Before beeing able to install downloaded package, you need to make sure that the user ``_apt`` is allowed to access that file.
+   The package manager is working under this user ID for tasks that do not require ``root`` priviledges.
+
+   .. warning::
+
+      The Debian/Ubuntu package manager ``apt`` starts services automatically during the installation phase.
+      It does not let you to configure the services before they are started.
+
+      The web server, Icecast and MusicDB will are running right after the installation before you are able to set them up correctly.
+      Keep this in mind!
+      MusicDB's default configuration consideres such a use case and is limited to only access connections from localhost by default.
+      Other dependencies are not!
+
+
+   .. code-block:: bash
+
+      # Install MusicDB
+      sudo apt install ./musicdb_8.0.0-1_all.deb
+
+      # Stop automatically started unconfigured services
+      sudo systemctl stop apache2  # if fresh installed
+      sudo systemctl stop icecast2
+      sudo systemctl stop musicdb
+
+   During the installation, the packet manager asks you to configure icecast2.
+   You can shoud use this opportunity to set the passwords for Icecast otherwise Icecast gets online with default passwords!
+   Anyway we will come to the Icecast configuration later in this installation instruction.
+
+   The installation ends with the following Waring:
+   
+      N: Can't drop privileges for downloading as file '/home/$USERNAME/Downloads/musicdb_8.0.0-1_all.deb' couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permission denied)
+
+   This is a well known issue I will not care about because I do not want to waste my time fixing Debian/Ubuntu issues.
+   It seems to be save to ignore this warning.
+   You are welcome post a solution for avoiding this message in the `Issues tracker <https://github.com/rstemmer/musicdb/issues/>`_ or on the `Discussions page <https://github.com/rstemmer/musicdb/discussions>`_.
 
 
 Initial Setup
@@ -122,7 +163,7 @@ All users in the ``musicdb`` group can maintain MusicDB and use the MusicDB comm
 
 .. code-block:: bash
 
-   usermod -G musicdb $username
+   sudo usermod -G musicdb $username
 
 Creating a Music Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -148,15 +189,27 @@ If you have one, just check if the permissions are fine.
 The placeholder ``$username`` must be replaced by the user you use to login into you system (your personal user account).
 Of course it is also possible to create a new user that is only responsible for the music.
 
+If you want to use the default music directory under ``/var/music`` you can skip the next code block.
+
+.. code-block:: bash
+
+   # Create a new music directory (as root)
+   mkdir -p /opt/music
+   chmod ug=rwx,o=rx /opt/music
+   chown -R $username:musicdb /opt/music
+
+   # Update [directories]->music
+   vim /etc/musicdb.ini
+
+Make sure the music directory has the right permissions set.
+This should be checked for new created one as well as for the default one.
+In the following code example I reference to the default directory at ``/var/music``.
+Replace this path with your own music directory if you changed it.
+
 .. code-block:: bash
 
    # as root
-   mkdir /var/music
    chown -R $username:musicdb /var/music
-   chmod ug=rwx,o=rx /var/music
-
-   # Update [directories]->music if you do not use /var/music
-   vim /etc/musicdb.ini
 
    # Optional when using SELinux
    semanage fcontext -a -t httpd_sys_content_t "/var/music(/.*)?"
