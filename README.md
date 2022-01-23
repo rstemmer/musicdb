@@ -57,8 +57,9 @@ MusicDB is hardware independent. It works with any Linux distribution installed 
 
 <p align="center">
   [&nbsp;&nbsp;
-  <a href="https://rstemmer.github.io/musicdb/build/html/basics/overview.html">⚙️ Architecture</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-  <a href="https://github.com/rstemmer/musicdb/projects">🏗 Roadmap</a>&nbsp;&nbsp;&nbsp;]
+  <a href="https://rstemmer.github.io/musicdb/build/html/usage/install.html">⚙️ Installation Guide</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="https://rstemmer.github.io/musicdb/build/html/usage/webui.html">🎵 Usage Guide</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="https://rstemmer.github.io/musicdb/build/html/basics/overview.html">⚙️ Architecture</a>&nbsp;&nbsp;&nbsp;]
 </p>
 
 MusicDB is a music manager with focus on remote access to your music collection using a web-based user interface.
