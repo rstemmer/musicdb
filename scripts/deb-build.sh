@@ -24,7 +24,7 @@ cd ${builddir}
 # Prepare sources
 sourcename="musicdb-${version}-src"
 echo -e "\e[1;34mPreparing source files …"
-cp ${repository}/dist/musicdb-${version}-src.tar.zst .
+cp ${repository}/pkg/musicdb-${version}-src.tar.zst .
 unzstd ${sourcename}.tar.zst
 gzip   ${sourcename}.tar
 mv ${sourcename}.tar.gz musicdb-${version}.tar.gz
@@ -39,7 +39,7 @@ echo -e "\e[1;34mPreparing deb build environment …"
 cd musicdb-${version}
 cp -r ${repository}/debian .
 cp    ${repository}/share/musicdb.service ./debian/musicdb.service
-cp    ${repository}/share/tmpfiles.conf   ./debian/musicdb.tmpfile
+cp    ${repository}/share/tmpfiles.conf   ./debian/musicdb.tmpfiles
 cp    ${repository}/share/sysusers.conf   ./debian/musicdb.sysusers
 
 # Build deb package
