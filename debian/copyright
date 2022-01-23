@@ -5,7 +5,8 @@ Source: https://github.com/rstemmer/musicdb
 #
 # Please double check copyright with the licensecheck(1) command.
 
-Files: *
+Files: musicdb/*
+       webui/*
 Copyright: 2010-2021 Ralf Stemmer <ralf.stemmer@gmx.net>
 License:   GPL-3.0+
  This program is free software: you can redistribute it and/or modify
