@@ -3,7 +3,7 @@
 
 <p align="center"><b>Your Music. Your Cloud.</b></p>
 
-![MusicDB WebUI Screenshot](graphics/Screenshots/WebUI-2021-09-17.png?raw=true)
+![MusicDB WebUI Screenshot](docs/landingpage/img/WebUI-3.2.0.jpg?raw=true)
 
 
 <p align="center">
