@@ -13,8 +13,8 @@ The focus is always on the music, usually visually represented by the album artw
 The management part consisting of configuration and music upload/import can be reached via the Main Menu at the top right.
 
 
-Architecture and Terms
-----------------------
+Architecture and Wording
+------------------------
 
 The WebUI has a modular architecture consisting of different Views and Layers.
 A View is an exchangeable tile embedded inside the User Interface (UI).
@@ -24,9 +24,9 @@ The WebUI can be in different modes.
 Depending on the modes, the Views of the UI change.
 The following modes exist:
 
-#. *audio mode*: Default mode. You collection of Albums are presented in this mode.
-#. *video mode*: (This mode is experimental and does not work yet)
-#. *settings mode*: Provides several views to manage MusicDB and your Music Collection
+#. *Audio Mode*: Default mode. Your collection of music albums are presented in this mode.
+#. *Video Mode*: (This mode is experimental and does not work yet)
+#. *Settings Mode*: Provides several views to manage MusicDB and your Music Collection
 
 The following sections describe the modes and their views.
 
