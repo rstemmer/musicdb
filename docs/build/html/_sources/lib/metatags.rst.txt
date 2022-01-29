@@ -1,12 +1,12 @@
 
 Meta Tags
-=============
+=========
 
-.. automodule:: lib.metatags
+.. automodule:: musicdb.lib.metatags
 
 MetaTags Class
-------------------
+--------------
 
-.. autoclass:: lib.metatags.MetaTags
+.. autoclass:: musicdb.lib.metatags.MetaTags
    :members:
 

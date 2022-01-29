@@ -2,7 +2,7 @@
 PID File Handling
 ==========================
 
-.. automodule:: lib.pidfile
+.. automodule:: musicdb.lib.pidfile
    :members: CreatePIDFile, DeletePIDFile, CheckPIDFile
 
 
