@@ -38,7 +38,7 @@
 | --- | --- | --- |
 | **Arch Linux**   | [📦 musicdb-8.0.0-1-any.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-1-any.pkg.tar.zst) | `pacman -U ./musicdb-8.0.0-1-any.pkg.tar.zst` |
 | **Fedora** 35    | [📦 musicdb-8.0.0-1.fc35.noarch.rpm](https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-1.fc35.noarch.rpm) | `dnf install ./musicdb-8.0.0-1.fc35.noarch.rpm` |
-| **Ubuntu** 21.10 | [📦 musicdb-8.0.0-1_all.deb](        https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-1_all.deb        ) | `apt install ./musicdb-8.0.0-1_all.deb` |
+| **Ubuntu** 21.10 | [📦 musicdb_8.0.0-1_all.deb](        https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb_8.0.0-1_all.deb        ) | `apt install ./musicdb_8.0.0-1_all.deb` |
 | Source Code      | [📦 musicdb-8.0.0-src.tar.zst](      https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-src.tar.zst      ) | [⚙️ Install from Source Code](https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html) |
 | Documentation    | [📦 musicdb-8.0.0-doc.tar.zst](      https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-doc.tar.zst      ) | [⚙️ Install Documentation](https://rstemmer.github.io/musicdb/build/html/usage/installdocs.html) |
 
