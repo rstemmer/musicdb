@@ -13,7 +13,7 @@ Packages are created from a release candidate branch.
 
 .. code-block:: bash
 
-   git checkout -b v8.0.0-rc1
+   git checkout -b v8.0.0-rc
 
 
 Update Version Numbers
