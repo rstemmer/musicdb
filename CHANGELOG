@@ -7,7 +7,7 @@
 
 Run  git log --oneline  for more details
 
-┍━━━━┫ 2022-??-?? ┣━━━━┫ 8.0.0 ┣━━━━━━━━╍╍
+┍━━━━┫ 2022-01-30 ┣━━━━┫ 8.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ * MusicDB got off of /opt and now lives in the system like any other application
 │       -> Expects all your path settings need to be reviewed
