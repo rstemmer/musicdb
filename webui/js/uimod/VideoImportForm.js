@@ -154,30 +154,30 @@ class VideoImportForm extends ImportForm
 
 
 
-    onSave(uploadid)
+    onSave(taskid)
     {
         let artist  = this.table.GetArtist();
         let name    = this.table.GetName();
         let release = this.table.GetRelease();
         let origin  = this.table.GetOrigin();
 
-        MusicDB_Call("AnnotateUpload", {uploadid: uploadid, name: name, artistname: artist, release: release, origin: origin});
+        MusicDB_Call("AnnotateUpload", {taskid: taskid, name: name, artistname: artist, release: release, origin: origin});
     }
 
 
 
-    onImport(uploadid)
+    onImport(taskid)
     {
-        this.onSave(uploadid);  // Make sure all changes of the annotations are saved
-        MusicDB_Call("IntegrateUpload", {uploadid: uploadid, triggerimport: true});
+        this.onSave(taskid);  // Make sure all changes of the annotations are saved
+        MusicDB_Call("IntegrateUpload", {taskid: taskid, triggerimport: true});
     }
 
 
 
-    onRemove(uploadid)
+    onRemove(taskid)
     {
         window.console && console.log("Remove Video");
-        MusicDB_Call("RemoveUpload", {uploadid: uploadid});
+        MusicDB_Call("RemoveUpload", {taskid: taskid});
     }
 }
 

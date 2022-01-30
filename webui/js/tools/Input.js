@@ -18,27 +18,44 @@
 
 class Input extends Element
 {
-    constructor(type, oninput, initvalue, tooltip="")
+    constructor(type, onvalidate, initvalue, tooltip="")
     {
         super("input", ["Input"]);
         this.element.type    = type;
         this.element.oninput = ()=>{this.onInput();};
         this.element.value   = initvalue;
         this.element.title   = tooltip;
-        this.oninput         = oninput;
+        this.onvalidate      = onvalidate;
         this.onInput(); // initialization is something like input
+    }
+
+
+
+    SetValidateEventCallback(callback)
+    {
+        this.onvalidate = callback;
+    }
+    SetAfterValidateEventCallback(callback)
+    {
+        this.onaftervalidation = callback;
     }
 
 
 
     onInput()
     {
-        if(typeof this.oninput !== "function")
-            return;
-
-        let value = this.GetValue();
-        let valid = this.oninput(value);
-        this.SetValidState(valid);
+        if(typeof this.onvalidate === "function")
+        {
+            let value = this.GetValue();
+            let valid = this.onvalidate(value);
+            this.SetValidState(valid);
+        }
+        if(typeof this.onaftervalidation === "function")
+        {
+            let value = this.GetValue();
+            let valid = this.GetValidState();
+            this.onaftervalidation(value, valid);
+        }
     }
 
 
@@ -67,13 +84,18 @@ class Input extends Element
     {
         this.element.style.width = csswidth;
     }
+
+    SetEnabled(enabled=true)
+    {
+        this.element.disabled = !enabled;
+    }
 }
 
 
 
 class TextInput extends Input
 {
-    constructor(oninput, initvalue="", tooltip="")
+    constructor(oninput="", initvalue="", tooltip="")
     {
         super("text", oninput, initvalue, tooltip)
     }
@@ -81,9 +103,61 @@ class TextInput extends Input
 
 class NumberInput extends Input
 {
-    constructor(oninput, initvalue="", tooltip="")
+    constructor(oninput="", initvalue="", tooltip="")
     {
         super("number", oninput, initvalue, tooltip)
+    }
+}
+
+class BooleanInput extends Input
+{
+    constructor(oninput="", initvalue=false, tooltip="")
+    {
+        super("checkbox", oninput, initvalue, tooltip)
+    }
+
+    SetValue(checked)
+    {
+        this.element.checked == true
+        this.onInput();
+        return;
+    }
+
+    GetValue()
+    {
+        if(this.element.checked == true)
+            return true;
+        return false;
+    }
+}
+
+// SetValue/GetValue use unix time stamps as integer in seconds
+// Only the date (day, month, year) will be available as input.
+// The time of the day will be preserved
+class DateInput extends Input
+{
+    constructor(oninput="", initvalue="", tooltip="")
+    {
+        super("date", oninput, initvalue, tooltip)
+    }
+
+    SetValue(unixvalue)
+    {
+        const oneday = 24*60*60;
+        this.time = unixvalue % oneday;
+        let day   = unixvalue - this.time;
+
+        this.element.valueAsNumber = `${day}000`;
+        this.onInput();
+        return;
+    }
+
+    GetValue()
+    {
+        let jstimestamp = this.element.valueAsNumber;
+        let unixday     = Math.floor(jstimestamp / 1000);
+        let unixvalue   = unixday + this.time;
+        return unixvalue;
     }
 }
 

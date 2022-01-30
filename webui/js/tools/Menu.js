@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@ class MenuButton extends SVGButton
     constructor(offset_top, offset_right, iconname, onclick, tooltip)
     {
         super(iconname, onclick, tooltip);
-        this.element.classList.add("MenuButton");
-        this.element.classList.add("hovpacity");
+        this.AddCSSClass("MenuButton");
+        this.AddCSSClass("hovpacity");
 
         this.element.style.top   = offset_top;
         this.element.style.right = offset_right;
@@ -41,25 +41,17 @@ class MenuEntry extends Element
 
     Update(icon, label, onclick, tooltip)
     {
-        let labelelement = document.createElement("label");
-        labelelement.innerText = label;
+        let labelelement = new Element("label");
+        labelelement.SetInnerText(label);
 
-        this.element.innerHTML = "";
+        this.RemoveChilds();
         this.element.onclick = onclick;
         this.SetTooltip(tooltip);
-        this.element.appendChild(icon.GetHTMLElement());
-        this.element.appendChild(labelelement);
-    }
-
-    Hide()
-    {
-        this.element.style.display = "none";
-    }
-    Show()
-    {
-        this.element.style.display = "flex";
+        this.AppendChild(icon);
+        this.AppendChild(labelelement);
     }
 }
+
 
 class MenuEntryButton extends MenuEntry
 {
@@ -125,6 +117,7 @@ class Menu extends Element
     {
         super("div", ["Menu", "flex-column", ...classes], elementid);
         this.entries = new Object();
+        this.sections= new Object();
         this.HideMenu();
     }
 
@@ -132,13 +125,13 @@ class Menu extends Element
 
     HideMenu()
     {
-        this.element.style.display = "none";
+        this.Hide();
         this.isopen = false;
     }
 
     ShowMenu()
     {
-        this.element.style.display = "flex";
+        this.Show();
         this.isopen = true;
     }
 
@@ -156,7 +149,7 @@ class Menu extends Element
     {
         let entry = new MenuEntryButton(icon, label, ()=>{onclick(); this.ToggleMenu();}, tooltip);
         this.entries[name] = entry;
-        this.element.appendChild(entry.GetHTMLElement());
+        this.AppendChild(entry);
         return
     }
 
@@ -168,26 +161,27 @@ class Menu extends Element
         let entry = new MenuEntrySwitch(icona, labela, onclicka, tooltipa,
                                         iconb, labelb, onclickb, tooltipb)
         this.entries[name] = entry;
-        this.element.appendChild(entry.GetHTMLElement());
+        this.AppendChild(entry);
         return
     }
 
 
 
-    AddSection(headlinetext, htmlelement)
+    AddSection(headlinetext, element)
     {
-        htmlelement.classList.add("sectionbody");
+        element.AddCSSClass("sectionbody");
 
-        let sectiontitle = document.createElement("div");
-        sectiontitle.innerText = headlinetext;
-        sectiontitle.classList.add("sectiontitle");
-        sectiontitle.classList.add("hlcolor");
+        let sectiontitle = new Element("div", ["sectiontitle", "hlcolor"]);
+        sectiontitle.SetInnerText(headlinetext);
 
-        let element = document.createElement("div");
-        element.classList.add("section");
-        element.appendChild(sectiontitle);
-        element.appendChild(htmlelement);
-        this.element.appendChild(element);
+        let section = new Element("div", ["section"]);
+        section.AppendChild(sectiontitle);
+        section.AppendChild(element);
+
+        let sectionname = headlinetext.replace(/ /g, "_");
+
+        this.sections[sectionname] = section;
+        this.AppendChild(section);
     }
 
 
@@ -224,6 +218,31 @@ class Menu extends Element
             return;
         }
         this.entries[entryname].Show();
+    }
+
+
+
+    HideSection(sectionheadline)
+    {
+        let sectionname = sectionheadline.replace(/ /g, "_");
+        if(!(sectionname in this.sections))
+        {
+            window.console?.warn(`Invalid section name ${sectionname}`);
+            return;
+        }
+        this.sections[sectionname].Hide();
+        return;
+    }
+    ShowSection(sectionheadline)
+    {
+        let sectionname = sectionheadline.replace(/ /g, "_");
+        if(!(sectionname in this.sections))
+        {
+            window.console?.warn(`Invalid section name ${sectionname}`);
+            return;
+        }
+        this.sections[sectionname].Show();
+        return;
     }
 }
 

@@ -31,11 +31,11 @@ class MainSettingsView extends MainView
 
     onViewMounted()
     {
-        settingsmenu.HighlightMenuEntry(this);
+        WebUI.GetView("SettingsMenu").HighlightMenuEntry(this);
     }
     onViewUnmounted()
     {
-        settingsmenu.ClearHighlightedEntries();
+        WebUI.GetView("SettingsMenu").ClearHighlightedEntries();
     }
 }
 

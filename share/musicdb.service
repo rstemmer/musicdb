@@ -1,0 +1,28 @@
+# systemd unit file for MusicDB
+
+[Unit]
+Description=MusicDB WebSocket Server
+After=network.target
+
+Wants=icecast.service
+After=icecast.service
+
+[Service]
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/musicdb server
+
+Type=notify
+NotifyAccess=main
+
+User=musicdb
+Group=musicdb
+
+Restart=on-failure
+RestartSec=10
+
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target
+
+# vim: syntax=systemd nospell

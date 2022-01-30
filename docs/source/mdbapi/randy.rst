@@ -15,12 +15,12 @@ This is why MusicDB uses a less random randomizer that feels more random.
 Randy Module
 ------------
 
-.. automodule:: mdbapi.randy
+.. automodule:: musicdb.mdbapi.randy
 
 
 Randy Class
 -----------
 
-.. autoclass:: mdbapi.randy.Randy
+.. autoclass:: musicdb.mdbapi.randy.Randy
    :members:
 

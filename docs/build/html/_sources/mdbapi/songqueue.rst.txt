@@ -1,12 +1,12 @@
 MusicDB Song Queue
 ==================
 
-.. automodule:: mdbapi.songqueue
+.. automodule:: musicdb.mdbapi.songqueue
 
 
 Song Queue Class
 ----------------
 
-.. autoclass:: mdbapi.songqueue.SongQueue
+.. autoclass:: musicdb.mdbapi.songqueue.SongQueue
    :members:
 

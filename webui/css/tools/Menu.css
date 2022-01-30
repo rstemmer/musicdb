@@ -1,6 +1,6 @@
 /*
  * MusicDB,  a music manager with web-bases UI that focus on music.
- * Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,26 +27,6 @@
     width:              1.5em;
     height:             1.5em;
 }
-
-
-div#MDBReconnectButton
-{
-    position:           absolute;
-    top:                1em;
-    right:              calc(1em + 1.5em + 1em); /* left to menu button*/
-    background-color:   #5E5E1F;
-    width:              1.5em;
-    height:             1.5em;
-}
-div#MDBReconnectButton[data-visible=true]
-{
-    visibility:         visible;
-}
-div#MDBReconnectButton[data-visible=false]
-{
-    visibility:         hidden;
-}
-
 
 
 .Menu
@@ -76,6 +56,11 @@ div#MDBReconnectButton[data-visible=false]
 /********************/
 /* Status Container */
 /********************/
+
+.Menu .section
+{
+    display:            block;
+}
 
 .Menu .sectiontitle
 {

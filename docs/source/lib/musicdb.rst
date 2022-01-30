@@ -2,11 +2,11 @@
 MusicDatabase
 =============
 
-.. automodule:: lib.db.musicdb
+.. automodule:: musicdb.lib.db.musicdb
 
 MusicDatabase Class
 -------------------
 
-.. autoclass:: lib.db.musicdb.MusicDatabase
+.. autoclass:: musicdb.lib.db.musicdb.MusicDatabase
    :members:
 

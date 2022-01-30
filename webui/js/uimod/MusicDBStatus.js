@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -36,20 +36,7 @@ class MusicDBStatus extends StatusList
         this.AddState("audiostream", "Audio Stream");
         this.AddState("videostream", "Video Stream");
 
-        // Create reconnect button
-        this.reconnectbutton  = new SVGButton("Reconnect", ()=>{ConnectToMusicDB();});
-        this.reconnectbutton.SetTooltip("Reconnect to MusicDB server");
-        this.reconnectelement = this.reconnectbutton.GetHTMLElement();
-        this.reconnectelement.id = "MDBReconnectButton";
-        this.reconnectelement.dataset.visible = false;
-
-
         return;
-    }
-
-    GetReconnectButtonHTMLElement()
-    {
-        return this.reconnectelement;
     }
 
 
@@ -87,17 +74,16 @@ class MusicDBStatus extends StatusList
         // Show / Hide reconnect button
         if(statename == "musicdb")
         {
+            let mainmenu = WebUI.GetLayer("MainMenu");
             if(state == "connected")
             {
                 if(typeof mainmenu === "object")
                     mainmenu.SwitchEntry("disconnect", "a"); // Show Disconnect Entry
-                this.reconnectelement.dataset.visible = false;
             }
             else
             {
                 if(typeof mainmenu === "object")
                     mainmenu.SwitchEntry("disconnect", "b"); // Show Reconnect Entry
-                this.reconnectelement.dataset.visible = true;
             }
         }
 

@@ -24,19 +24,20 @@ class MessageBar extends Element
         super("div", ["MessageBar", "flex-row"]);
         this.icon = svgicon;
         
-        this.message = document.createElement("div");
+        this.message = new Element("div");
         if(typeof htmlmessage === "string")
-            this.message.innerHTML = htmlmessage;
-        this.message.classList.add("message");
+            this.message.SetInnerHTML(htmlmessage);
+        this.AddCSSClass("message");
 
         this.closebutton = new SVGButton("Approve", ()=>{this.Hide();});
         this.closebutton.SetTooltip("Confirm and hide this message");
 
-        this.element.appendChild(this.icon.GetHTMLElement());
-        this.element.appendChild(this.message);
-        this.element.appendChild(this.closebutton.GetHTMLElement());
+        this.AppendChild(this.icon);
+        this.AppendChild(this.message);
+        this.AppendChild(this.closebutton);
 
-        this.autohidedelay = null;
+        this.autohidedelay   = null;
+        this.hideclosebutton = true;
 
         this.Hide();
     }
@@ -45,7 +46,7 @@ class MessageBar extends Element
 
     UpdateMessage(htmlmessage)
     {
-        this.message.innerHTML = htmlmessage;
+        this.message.SetInnerHTML(htmlmessage);
     }
 
 
@@ -58,18 +59,34 @@ class MessageBar extends Element
 
 
 
+    ShowCloseButton()
+    {
+        this.hideclosebutton = false;
+        this.closebutton.Show();
+    }
+    HideCloseButton()
+    {
+        this.hideclosebutton = true;
+        this.closebutton.Hide();
+    }
+
+
+
     Show()
     {
         this.element.style.display = "flex";
 
         if(typeof this.autohidedelay === "number")
         {
-            this.closebutton.Hide();
+            this.HideCloseButton();
             window.setTimeout(()=>{this.Hide()}, this.autohidedelay);
         }
         else
         {
-            this.closebutton.Show();
+            if(this.hideclosebutton === true)
+                this.HideCloseButton();
+            else
+                this.ShowCloseButton();
         }
     }
 
@@ -88,7 +105,7 @@ class MessageBarInfo extends MessageBar
     constructor(htmlmessage=null)
     {
         super(new SVGIcon("StatusInfo"), htmlmessage);
-        this.element.dataset.messagetype = "info";
+        this.SetData("messagetype", "info");
     }
 }
 
@@ -98,8 +115,8 @@ class MessageBarWarning extends MessageBar
 {
     constructor(htmlmessage=null)
     {
-        super(new SVGIcon("StatusBad"), htmlmessage);
-        this.element.dataset.messagetype = "warning";
+        super(new SVGIcon("StatusWarning"), htmlmessage);
+        this.SetData("messagetype", "warning");
     }
 }
 
@@ -110,7 +127,7 @@ class MessageBarError extends MessageBar
     constructor(htmlmessage=null)
     {
         super(new SVGIcon("StatusBad"), htmlmessage);
-        this.element.dataset.messagetype = "error";
+        this.SetData("messagetype", "error");
     }
 }
 
@@ -121,7 +138,7 @@ class MessageBarConfirm extends MessageBar
     constructor(htmlmessage=null)
     {
         super(new SVGIcon("StatusGood"), htmlmessage);
-        this.element.dataset.messagetype = "confirm";
+        this.SetData("messagetype", "confirm");
     }
 }
 
@@ -133,7 +150,7 @@ class MessageBarConfirmDelete extends MessageBar
     constructor(htmlmessage, expectedinput, ondelete)
     {
         super(new SVGIcon("StatusWarning"), htmlmessage);
-        this.element.dataset.messagetype = "warning";
+        this.SetData("messagetype", "warning");
         this.closebutton.SetTooltip("Cancel deletion and hide this message");
 
         this.ondelete      = ondelete;
@@ -142,7 +159,7 @@ class MessageBarConfirmDelete extends MessageBar
         this.input.SetWidth(expectedinput.length + "ch");
         this.input.GetHTMLElement().onkeyup = (event)=>{this.onKeyUp(event);};
 
-        this.element.appendChild(this.input.GetHTMLElement());
+        this.AppendChild(this.input);
     }
 
 
@@ -160,11 +177,22 @@ class MessageBarConfirmDelete extends MessageBar
     onKeyUp(event)
     {
         let keycode = event.which || event.keyCode;
-        if(keycode == 13 /*ENTER*/ && this.input.GetHTMLElement().value == this.expectedinput)
+        if(keycode == 13 /*ENTER*/ && this.input.GetValue() == this.expectedinput)
         {
             this.Hide();
             this.ondelete();
         }
+    }
+}
+
+
+
+class MessageBarProcessing extends MessageBar
+{
+    constructor(htmlmessage=null)
+    {
+        super(new SVGIcon("StatusActive"), htmlmessage);
+        this.SetData("messagetype", "active");
     }
 }
 

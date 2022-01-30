@@ -42,7 +42,7 @@ class WebUISettings extends MainSettingsView
 
         this.avshowreleasecheckbox = new SettingsCheckbox(
             "Show album release date in Artists View",
-            "If set, the release date of an album is shown next to its name in the Artists View. If false, the release date will not be shown.</br>In any case, the albums of an artist are sorted by their release date.",
+            "If set, the release date of an album is shown next to its name in the Artists View. If false, the release date will not be shown.</br>In any case, the albums of an artist are sorted by their release date.</br><span style=\"color:red\">Requires reloading the WebUI!</span> (Press F5)",
             (state)=>{
                 if(state == true) this.ChangeSetting("ArtistsView", "showrelease", true);
                 else              this.ChangeSetting("ArtistsView", "showrelease", false);
@@ -58,11 +58,33 @@ class WebUISettings extends MainSettingsView
             }
         );
 
+        this.showstreamplayercheckbox = new SettingsCheckbox(
+            "Show Audio Stream Player inside the Main Menu",
+            "If set, an audio stream player is shown in the main menu. This player connects to the configured audio stream. With this audio player it is possible to listen to the MusicDB audio stream directly from the browser.",
+            (state)=>{
+                if(state == true) this.ChangeSetting("MainMenu", "showstreamplayer", true);
+                else              this.ChangeSetting("MainMenu", "showstreamplayer", false);
+            }
+        );
+
+        this.showsystemstatuscheckbox = new SettingsCheckbox(
+            "Show System Status inside the Main Menu",
+            "If set, the system status is shown in the main menu."+
+            " It shows if the connection between the MusicDB Server and Icecast is up and if data gets streamed."+
+            " These information are not mandatory to know but help you to quickly identify issues with the audio stream.",
+            (state)=>{
+                if(state == true) this.ChangeSetting("MainMenu", "showsystemstatus", true);
+                else              this.ChangeSetting("MainMenu", "showsystemstatus", false);
+            }
+        );
+
         let settingslist = new SettingsList();
         settingslist.AddEntry(this.videocheckbox);
         settingslist.AddEntry(this.lyricscheckbox);
         settingslist.AddEntry(this.avshowreleasecheckbox);
         settingslist.AddEntry(this.gsvshowothercheckbox);
+        settingslist.AddEntry(this.showstreamplayercheckbox);
+        settingslist.AddEntry(this.showsystemstatuscheckbox);
 
         this.AppendChild(settingslist);
         this.settings = null;
@@ -78,6 +100,8 @@ class WebUISettings extends MainSettingsView
         this.lyricscheckbox.SetState(settings.WebUI.lyrics    == "enabled");
         this.avshowreleasecheckbox.SetState(settings.ArtistsView.showrelease == true);
         this.gsvshowothercheckbox.SetState(settings.GenreSelectionView.showother == true);
+        this.showstreamplayercheckbox.SetState(settings.MainMenu.showstreamplayer == true);
+        this.showsystemstatuscheckbox.SetState(settings.MainMenu.showsystemstatus == true);
         return;
     }
 

@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -344,7 +344,9 @@ class GenreListEditor extends Element
         infos.innerHTML = infotext;
 
         let numdependencies = numsongs + numalbums + numvideos + numchildren;
-        let confirmmessage  = new MessageBarConfirmDelete(`Do you want to delete all ${numdependencies} associations to the "${MDBTag.name}" Tag?<br>Enter "${numdependencies}" and confirm with <i>Enter</i>`, `${numdependencies}`, ()=>{this.onRemove(MDBTag);});
+        let confirmmessage  = new MessageBarConfirmDelete(
+		`Do you want to delete all ${numdependencies} associations to the "${MDBTag.name}" Tag?<br>Enter "${numdependencies}" and confirm with <i>Enter</i>`,
+		`${numdependencies}`, ()=>{this.onRemove(MDBTag);});
         let removebutton    = new SVGButton("Remove", ()=>{this.onRemove(MDBTag, numdependencies);});
 
         // When there are dependencies, make the remove-button a bit less opaque

@@ -106,7 +106,7 @@ function OptimizeAlbumName(albumname)
     }
 
     // Make nicer dashes
-    name = name.replace(" - ", " – ");
+    name = name.replaceAll(" - ", " – ");
     return name;
 }
 

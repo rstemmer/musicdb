@@ -14,86 +14,87 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-let curtain             = new Curtain();
+// Create WebUI Application
+let WebUI = new Application();
+
+// Create Basic MusicDB Logic Components
+WebUI.AddManager("Tags",        new TagManager());
+WebUI.AddManager("Artists",     new ArtistsCache());
+WebUI.AddManager("Color",       new ColorManager());
+WebUI.AddManager("Fullscreen",  new FullscreenManager());
+WebUI.AddManager("MusicMode",   new MDBModeManager());
+WebUI.AddManager("Upload",      new UploadManager());
+
+// Create some Layers on top of the main layout
+let curtain         = WebUI.AddLayer("MenuBackground",  new Curtain());
+let mainmenu        = WebUI.AddLayer("MainMenu",        new MainMenu(curtain));
+let mainmenubutton  = WebUI.AddLayer("MainMenuButton",  new MenuButton("1rem", "1rem", "Menu", ()=>{mainmenu.ToggleMenu();}, "Show main menu"));
+
+let layerbackground = WebUI.AddLayer("LayerBackground", new LayerBackground(1));
+WebUI.AddLayer("AlbumImport",               new AlbumImportLayer(layerbackground));
+WebUI.AddLayer("AlbumIntegration",          new AlbumIntegrationLayer(layerbackground));
+WebUI.AddLayer("AlbumUploadProgress",       new AlbumUploadProgress(layerbackground));
+WebUI.AddLayer("AlbumIntegrationProgress",  new AlbumIntegrationProgress(layerbackground));
+WebUI.AddLayer("AlbumImportProgress",       new AlbumImportProgress(layerbackground));
+WebUI.AddLayer("AlbumSettings",             new AlbumSettingsLayer(layerbackground));
+WebUI.AddLayer("SongsSettings",             new SongsSettingsLayer(layerbackground));
+
+let errorbackground = WebUI.AddLayer("ErrorBackground", new LayerBackground(3));
+WebUI.AddLayer("WebSocketClosed",           new WebSocketClosed(errorbackground));
+WebUI.AddLayer("WebSocketError",            new WebSocketError(errorbackground));
 
 // Create Basic MusicDB WebUI Components
-let fullscreenmanager   = new FullscreenManager();
-let mdbmodemanager      = new MDBModeManager();
-let uploadmanager       = new UploadManager();
-let colormanager        = new ColorManager();
-let tagmanager          = new TagManager();
-let artistscache        = new ArtistsCache();
-let musicdbhud          = new MusicDBHUD();
-let genreselectionview  = new GenreSelectionView();
-let alphabetbar         = new AlphabetBar();
-let searchinput         = new SearchInput(curtain);
-let musicdbstatus       = new MusicDBStatus();
-let musicdbcontrols     = new MusicDBControls();
-let queuetimemanager    = new QueueTimeManager();
+WebUI.AddView("MusicDBControls",    new MusicDBControls(),      "ControlBox");
+WebUI.AddView("QueueTime",          new QueueTimeManager(),     "MDBQueueTimeBar");
+WebUI.AddView("QueueControl",       new QueueControlView(),     "QueueControl");
+WebUI.AddView("MusicDBHUD",         new MusicDBHUD(),           "HUDBox");
+WebUI.AddView("GenreSelection",     new GenreSelectionView(),   "GenreBox");
+WebUI.AddView("AlphabetBar",        new AlphabetBar(),          "AlphabetBox");
+WebUI.AddView("SearchInput",        new SearchInput(curtain),   "SearchBox");
+let musicdbstatus =     WebUI.AddView("MusicDBStatus",      new MusicDBStatus());
+let audiostreamplayer = WebUI.AddView("AudioStreamPlayer",  new AudioStreamControl());
+
+WebUI.AddView("Artists",        new ArtistsView());
+WebUI.AddView("Album",          new AlbumView());
+WebUI.AddView("Lyrics",         new LyricsView());
+WebUI.AddView("SearchResults",  new SearchResultsView());
+WebUI.AddView("SongRelations",  new SongRelationsView());
+WebUI.AddView("Video",          new VideoView());
+WebUI.AddView("Queue",          new QueueView());
+let streamview = WebUI.AddView("VideoStream", new StreamView());
+
+WebUI.AddView("WebUISettings",  new WebUISettings());
+WebUI.AddView("StreamSettings", new StreamSettings());
+WebUI.AddView("GenreSettings",  new GenreSettings());
+WebUI.AddView("MoodSettings",   new MoodManager());
+WebUI.AddView("HiddenAlbums",   new HiddenAlbums());
+WebUI.AddView("AlbumImport",    new AlbumImport());
+WebUI.AddView("VideoImport",    new VideoImport());
+WebUI.AddView("TaskList",       new TaskListView());
+WebUI.AddView("Repair",         new RepairView());
+WebUI.AddView("SettingsMenu",   new SettingsMenu()); // Accesses references to settings views
 
 let leftviewmanager     = null; // \_
 let mainviewmanager     = null; // / Can only be created when the document is created
 let videopanelmanager   = null;
-let artistsview         = new ArtistsView();
-let albumview           = new AlbumView();
-let lyricsview          = new LyricsView();
-let streamview          = new StreamView();
-let searchresultsview   = new SearchResultsView();
-let songrelationsview   = new SongRelationsView();
-let videoview           = new VideoView();
-let queueview           = new QueueView();
-let queuecontrolview    = new QueueControlView();
-
-let webuisettings       = new WebUISettings();
-let genresettings       = new GenreSettings();
-let moodmanager         = new MoodManager();
-let hiddenalbums        = new HiddenAlbums();
-let videoimport         = new VideoImport();
-let settingsmenu        = new SettingsMenu(); // Accesses references to settings views
 
 let configuration       = null; // Needs to be loaded from the Server
 
-// Create Main Menu
-let mainmenu           = new MainMenu(curtain);
-mainmenu.AddSection("MusicDB Status", musicdbstatus.GetHTMLElement()); // FIXME
+// Extend Main Menu
+mainmenu.AddSection("Audio Stream",  audiostreamplayer);
+mainmenu.AddSection("System Status", musicdbstatus);
 
 
 
 window.onload = function ()
 {
     // Do some last DOM changes
-    let HUDparent   = document.getElementById("HUDBox");
-    HUDparent.appendChild(musicdbhud.GetHTMLElement());
-
-    let genrebox    = document.getElementById("GenreBox");
-    genrebox.appendChild(genreselectionview.GetHTMLElement());
-
-    let alphabetbox    = document.getElementById("AlphabetBox");
-    alphabetbox.appendChild(alphabetbar.GetHTMLElement());
-
-    let searchbox    = document.getElementById("SearchBox");
-    searchbox.appendChild(searchinput.GetHTMLElement());
-
-    let controlsbox = document.getElementById("ControlBox");
-    controlsbox.appendChild(musicdbcontrols.GetHTMLElement());
-
-    let queuetimebar= document.getElementById("MDBQueueTimeBar");
-    queuetimebar.appendChild(queuetimemanager.GetHTMLElement());
-
-    let queuecontrolsbox   = document.getElementById("QueueControl");
-    queuecontrolsbox.appendChild(queuecontrolview.GetHTMLElement());
-
-    let mainmenubutton = new MenuButton("1rem", "1rem", "Menu", ()=>{mainmenu.ToggleMenu();}, "Show main menu");
-    document.body.appendChild(curtain.GetHTMLElement());
-    document.body.appendChild(mainmenubutton.GetHTMLElement());
-    document.body.appendChild(mainmenu.GetHTMLElement());
-    document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
+    WebUI.onWindowLoad();
 
     leftviewmanager     = new LeftViewManager();
     mainviewmanager     = new MainViewManager();
     videopanelmanager   = new VideoPanelManager();
     streamview.ShowInVideoPanel();
-
 
     // Connect to MusicDB
     ConnectToMusicDB();
@@ -101,37 +102,35 @@ window.onload = function ()
 
 function onMusicDBConnectionOpen()
 {
-    window.console && console.log("[MDB] Open");
-    musicdbstatus.onMusicDBConnectionOpen();
+    WebUI.onWebSocketOpen();
 
+    musicdbstatus.onMusicDBConnectionOpen();
     MusicDB_Request("LoadWebUIConfiguration", "SetupWebUI");
 }
 function onMusicDBConnectionError()
 {
-    window.console && console.log("[MDB] Error");
+    WebUI.onWebSocketError();
+
     musicdbstatus.onMusicDBConnectionError();
-    mainviewmanager.ShowWebSocketError();
+    WebUI.GetLayer("WebSocketError").Show();
 }
 function onMusicDBWatchdogBarks()
 {
-    window.console && console.log("[MDB] WD Barks");
+    WebUI.onWatchdogBarks();
+
     musicdbstatus.onMusicDBWatchdogBarks();
 }
 function onMusicDBConnectionClosed()
 {
-    window.console && console.log("[MDB] Closed");
+    WebUI.onWebSocketClosed();
+
     musicdbstatus.onMusicDBConnectionClosed();
+    WebUI.GetLayer("WebSocketClosed").Show();
 }
 
 function onMusicDBNotification(fnc, sig, rawdata)
 {
-    window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#c87a7a");
-    musicdbhud.onMusicDBNotification(fnc, sig, rawdata);
-    musicdbstatus.onMusicDBNotification(fnc, sig, rawdata);
-    queuetimemanager.onMusicDBNotification(fnc, sig, rawdata);
-    streamview.onMusicDBNotification(fnc, sig, rawdata);
-    uploadmanager.onMusicDBNotification(fnc, sig, rawdata);
-    albumview.onMusicDBNotification(fnc, sig, rawdata);
+    WebUI.onMusicDBNotification(fnc, sig, rawdata);
 
     if(fnc == "MusicDB:AudioStream")
     {
@@ -177,40 +176,11 @@ function onMusicDBNotification(fnc, sig, rawdata)
 }
 function onMusicDBMessage(fnc, sig, args, pass)
 {
-    window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
+    WebUI.onMusicDBMessage(fnc, sig, args, pass);
 
-    // Background objects
-    tagmanager.onMusicDBMessage(fnc, sig, args, pass);
-    artistscache.onMusicDBMessage(fnc, sig, args, pass);
-    mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
-    colormanager.onMusicDBMessage(fnc, sig, args, pass);
-    uploadmanager.onMusicDBMessage(fnc, sig, args, pass);
-    // Controls
-    musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
-    musicdbstatus.onMusicDBMessage(fnc, sig, args, pass);
-    mainmenu.onMusicDBMessage(fnc, sig, args, pass);
     // Views
     leftviewmanager.onMusicDBMessage(fnc, sig, args, pass);
     mainviewmanager.onMusicDBMessage(fnc, sig, args, pass);
-    musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
-    genreselectionview.onMusicDBMessage(fnc, sig, args, pass);
-    searchinput.onMusicDBMessage(fnc, sig, args, pass);
-    searchresultsview.onMusicDBMessage(fnc, sig, args, pass);
-    songrelationsview.onMusicDBMessage(fnc, sig, args, pass);
-    artistsview.onMusicDBMessage(fnc, sig, args, pass);
-    albumview.onMusicDBMessage(fnc, sig, args, pass);
-    lyricsview.onMusicDBMessage(fnc, sig, args, pass);
-    streamview.onMusicDBMessage(fnc, sig, args, pass);
-    videoview.onMusicDBMessage(fnc, sig, args, pass);
-    queueview.onMusicDBMessage(fnc, sig, args, pass);
-    // Setting Views
-    settingsmenu.onMusicDBMessage(fnc, sig, args, pass);
-    webuisettings.onMusicDBMessage(fnc, sig, args, pass);
-    genresettings.onMusicDBMessage(fnc, sig, args, pass);
-    moodmanager.onMusicDBMessage(fnc, sig, args, pass);
-    hiddenalbums.onMusicDBMessage(fnc, sig, args, pass);
-    videoimport.onMusicDBMessage(fnc, sig, args, pass);
-
 
     // Handle Messages form the server
     if(fnc == "LoadWebUIConfiguration" && sig == "SetupWebUI")
@@ -234,17 +204,19 @@ function onMusicDBMessage(fnc, sig, args, pass)
             mainviewmanager.ShowWelcome();
         }
 
-        let uimode = args.uimode;
+        let uimode = args.MusicDB.uimode;
         MusicDB_Request("GetArtists",  "UpdateArtistsCache");
         MusicDB_Request("GetTags",     "UpdateTagsCache");
         MusicDB_Request("GetMDBState", "UpdateMDBState");
         if(uimode == "audio")
         {
             MusicDB_Request("GetAudioStreamState",   "UpdateStreamState");
+            MusicDB_Request("GetSongQueue",          "ShowSongQueue"); // Force Queue Update
         }
         else if(uimode == "video")
         {
             MusicDB_Request("GetVideoStreamState",   "UpdateStreamState");
+            MusicDB_Request("GetVideoQueue",         "ShowVideoQueue"); // Force Queue Update
         }
     }
     else if(fnc=="sys:refresh" && sig == "UpdateCaches")    // TODO: Update (make uimode conform)

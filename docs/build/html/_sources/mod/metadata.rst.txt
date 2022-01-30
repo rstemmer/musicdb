@@ -2,5 +2,5 @@
 metadata - Metadata Reader
 ==========================
 
-.. automodule:: mod.metadata
+.. automodule:: musicdb.mod.metadata
 

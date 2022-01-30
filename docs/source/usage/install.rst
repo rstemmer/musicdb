@@ -21,455 +21,447 @@ The following sections describe how to install MusicDB and its dependencies.
    Before updating MusicDB **backup the MusicDB Data directory**.
    Major updates change the configuration file and the database scheme.
 
+   **MusicDB requires Python 3.9 or later.**
+   If ``python3 --version`` returns a version number less than 3.9.0 MusicDB will not work on your Linux Distribution.
 
-Installation (Automatic)
-------------------------
 
-To install MusicDB, there is a script ``scripts/install.sh`` that will help you.
-Execute this script from the scripts directory to install MusicDB.
-The following subsections explain how to install MusicDB using this script.
+For Arch Linux and Fedora, a package is provided that can be installed via ``pacman`` on Arch Linux or ``dnf`` on Fedora.
+If you do not use Arch Linux or Fedora, see the :doc:`/usage/fromsource` documentation.
 
-Install Dependencies
-^^^^^^^^^^^^^^^^^^^^
-
-Execute the ``check.sh`` script to see what dependencies are missing.
-Install at least all mandatory (none optional) dependencies.
-You can use your system package manager or pythons package manager ``pip`` (``pip3`` on Debian) to install them.
-
-Required system packages:
-
-   * python (3.6+)
-   * openssl
-   * sqlite3
-   * sed
-   * icecast (2)
-   * gstreamer (python module, good and bad plugins)
-   * ffmpeg
-   * dialog
-   * rsync
-   * A HTTPS server for the WebUI - apache recommend
-
-
-Optional for :doc:`/mod/extern`:
-
-   * git
-   * clang
-   * `id3edit <https://github.com/rstemmer/id3edit>`_
-
-Required gstreamer packages:
-
-   * **Arch Linux:** gst-python, gst-plugins-good, gst-plugins-bad
-   * **Fedora:** python3-gstreamer1 gstreamer1-plugins-good gstreamer1-plugins-bad-free
-
-Required Python modules:
-
-   * gi
-   * sqlite3
-   * configparser
-   * json
-   * csv
-   * hashlib
-   * mutangenx
-   * Levenshtein
-   * fuzzywuzzy
-   * unicodedata
-   * asyncio
-   * autobahn (asyncio websocket)
-   * PIL
-   * tqdm
-
-Execute ``pip install -r requirements.txt`` to install a basic set of Python modules needed for MusicDB.
-I recommend to try to get the modules from the distributions package manager
-so that they are updated with each system update.
-
-Additional Steps for Ubuntu
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-**Important for Ubuntu users (and maybe Debian) only**
-
-Usually I do not support Ubuntu for several technical reasons.
-But I had a clean virtual machine with the latest Ubuntu installed, so I tried test the installation process.
-The following *additional* steps are mandatory to get MusicDB to work on Ubuntu:
-
-Before installation:
-
-.. code-block:: bash
-
-   apt install python-is-python3    # when executing python, python3 gets called and not the dead python2
-   apt install icecast2             # Do not use the configuration dialog, MusicDB provides a secure config
-                                    # Ignore that check.sh does not find icecast after installation.
-                                    # This is because on Debian/Ubuntu the binary is called "icecast2".
-                                    # Important scripts handle this situation of different naming.
-
-   pip3 install -r requirements.txt # pip is called pip3 on Ubuntu
-
-
-
-
-Executing the install.sh Script
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Now you can simply execute the ``install.sh`` script from the scripts directory in the source directory,
-after you have cloned the `MusicDB git repository <https://github.com/rstemmer/musicdb>`_ from GitHub.
-
-.. code-block:: bash
-
-   # cd to a place where the source repository shall be downloaded
-   cd /src
-
-   # download MusicDB
-   git clone https://github.com/rstemmer/musicdb
-   cd musicdb/scripts
-
-   # check for dependencies (and install them)
-   ./check.sh
-
-   # start the installation
-   su    # you need to be root
-   ./install.sh
-   # set and confirm the installation setup to start, or cancle and nothing will be done.
-
-After starting the ``install.sh`` script, the script tries to determine some variables.
-It also recognizes if this is a new installation or an update by checking for the symlink ``/etc/musicdb.ini``.
-(For updates, you should use the ``update.sh`` script).
-Then it opens a dialog where these variables can be confirmed or modified.
-
-The following settings must be configured for the installation (and will be recognized when MusicDB shall only be updated):
-
-   Source directory:
-      The git repository with the source code.
-
-   Server directory:
-      In this directory will the MusicDB code be installed
-
-   Data directory:
-      The directory for MusicDB's data and configuration as wall as the data and configuration for its dependencies
-
-   Music directory:
-      The music collection following the :doc:`/usage/music` naming scheme
-
-   HTTP group:
-      The Unix group for HTTP documents necessary to access the WebUI
-
-   SSL Certificate:
-      Certificate file for the SSL encryption of the WebSocket communication
-
-   SSL Key:
-      Key file for the WebSocket SSL certificate
-
-
-During the installation process, SSL certificates gets generated for the WebSocket connection.
-The following files will be generated during installation: ``musicdb.key``, ``musicdb.crt``, ``musicdb.pfx`` and ``musicdb.pem``.
-At least the *.key*, *.crt* and *.pem* files are needed to start the MusicDB server and Icecast.
-If you want to use your own already available files, you can set in the settings mentioned above.
-For details on how the files are created, search inside the ``install.sh`` file for ``CreateMusicDBSSLKeys``.
-
-Whenever there is a problem, the installation process stops with an error message.
-After solving the problem you can just restart the install script.
-Make sure the settings are the same or still valid.
-The script always tries to determine the state of a single installation step and recognizes if it is already done.
-
-Configuring MusicDB
-^^^^^^^^^^^^^^^^^^^
-
-To configure MusicDB edit the ``musicdb.ini`` file in the data directory (that is also linked to /etc/musicdb.ini).
-Furthermore you should check ``icecast/config.xml`` (also in MusicDB's data directory) if those settings are what you want.
-Details are described in the following section.
-
-
-Configuring MusicDB WebUI
--------------------------
-
-The WebUI configuration must be done inside the file ``webui/config.js``
-
-At the begin of this file, the variable ``WEBSOCKET_URL`` must be configured.
-In particular the port number must match the one set in the MusicDB Configuration file /etc/musicdb.ini.
-An example variable is ``WEBSOCKET_URL = "wss://localhost:9000"``.
-
-For further details, read the :doc:`/webui/websockets` documentation
-See the sections for the watchdog and the communication to the server.
-
-This configuration will be persistent when updating.
-The update process saves the lines with the configuration and restores them after the file got replaced by a new one.
-
-The web server must provide the following virtual directories:
-
-   * ``/musicdb/`` pointing to the WebUI directory (``$SERVERDIR/webui``)
-   * ``/musicdb/artwork/`` pointing to the artwork directory (``$DATADIR/artwork``)
-   * ``/musicdb/music/`` pointing to the music source directory (``*/music``)
-   * ``/musicdb/docs/`` pointing to the documentation directory (``$SERVERDIR/docs``)
-   * ``/musicdb/videoframes/`` pointing to the video frames directory (``$SERVERDIR/videoframes``) if you want to use the video management feature
-
-An example `Apache <https://httpd.apache.org/>`_ configuration can look like this:
-
-.. code-block:: apache
-
-   Alias /musicdb/webui/artwork/ "/opt/musicdb/data/artwork/"
-   <Directory "/opt/musicdb/data/artwork">
-      AllowOverride None
-      Options +FollowSymLinks
-      Require all granted
-   </Directory>
-
-   Alias /musicdb/music/ "/data/music/"
-   <Directory "/data/music>
-      AllowOverride None
-      Options +FollowSymLinks
-      Require all granted
-   </Directory>
-
-   Alias /musicdb/docs/ "/opt/musicdb/server/docs/"
-   <Directory "/opt/musicdb/server/docs">
-       AllowOverride None
-       Options +FollowSymLinks
-       Require all granted
-   </Directory>
-
-   Alias /musicdb/ "/opt/musicdb/server/webui/"
-   <Directory "/opt/musicdb/server/webui">
-      AllowOverride None
-      Options +ExecCGI +FollowSymLinks
-      Require all granted
-      AddType text/cache-manifest .iOSmanifest
-   </Directory>
-                              
-
-When everything is correct, and the server is running, the WebUI can be reached via ``http://localhost/musicdb/webui/moderator.html``
-
-
-Configuring MusicDB
--------------------
-
-MusicDB comes with good default settings.
-The passwords for accessing IceCast are auto-generated (``openssl rand -base64 32``) during the installation process.
-For details of the configuration, see :doc:`/basics/config`.
-
-Anyway, MusicDB is configured in a way that they are only accessible from *localhost*.
-When everything is set up as you like, you may want to change the following setting:
-
-   * In /etc/musicdb.ini: ``[websocket]->address = 0.0.0.0``
-
-
-First Run
----------
-
-For starting and stopping the MusicDB WebSocket Server and its dependent processes, 
-the scripts described in :doc:`/usage/scripts` are recommended.
-
-You can access the WebUI by opening the file ``webui/moderator.html`` in your web browser.
-
-The first time you want to connect to the WebSocket server you have to tell the browser that your SSL
-certificates are "good".
-Open the WebSocket URL in the browser with ``https`` instead of ``wss`` and create an exception.
-So if your WebSocket address is ``wss://localhost:9000`` visit `https://localhost:9000`.
-
-
-Update
-------
-
-For updating, you can do following steps.
-Read the *Important News* of the README.md file for manual steps to do before updating to a new major release.
-Only execute the scripts as root, that are followed by the comment "as root"!
-
-Update to a New Version
-^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: bash
-
-   git checkout master # Only install from master branch!
-   git pull
-
-   cd scripts
-   ./update.sh # as root
-
-
-
-Installation (Manually)
------------------------
+Download the latest MusicDB package and execute the following commands.
+To make the web interface accessible ``apache`` is used as web server.
+Any other web server can be used as well.
+Finally Icecast is used to provide an SSL secured audio stream.
+This step is optional.
 
 .. warning::
 
-   **This section is no longer maintained!**
-   Anyway, it will give you an overview of *some* steps the install script does.
-   See this section as an incomplete documentation of the internal installation process of install.sh
+   In Germany, password protecting the audio stream is mandatory for legal reasons (GEMA).
+   Configure Icecast to ask for a password if the stream is accessible from the internet.
+
+   See :ref:`Password Protected Audio Stream` for information on how to configure Icecast that way.
+
+Download
+--------
+
+Download the latest package file from the `MusicDB Releases page on GitHub <https://github.com/rstemmer/musicdb/releases>`_.
+There are several packages available.
+Download the one that matches to your Linux Distribution.
+
+Be aware that MusicDB requires lots of libraries because of its dependency to `FFmpeg <https://www.ffmpeg.org/>`_ and `gstreamer <https://gstreamer.freedesktop.org/>`_.
+All libraries and dependencies are available in the Arch Linux repository so that they will be installed automatically by the package manager.
+
+Installation via Package Manager
+--------------------------------
+
+Update your system before installing MusicDB.
+
+.. tab:: Arch Linux
+
+   After downloading the latest MusicDB package, you can simply install it with the package manager ``pacman``.
+   Make sure you downloaded the package with the file extension ``.pkg.tar.zst``.
+
+   .. code-block:: bash
+
+      # Become root
+      su
+
+      # Install MusicDB
+      pacman -U ./musicdb-$version-any.pkg.tar.zst
+
+.. tab:: Fedora
+
+   After downloading the latest MusicDB package for Fedora, you can install it with the Fedora package manager ``dnf``.
+   MusicDB is optimized for the latest version of Fedora.
+   To make the instruction version independent, ``rpm -E %fedora`` is used to get the version of your Fedora distribution.
+   The output should match the fedora version encoded in the downloaded packaged.
+
+   If ``rpm -E %fedora`` returns ``35``, the downloaded file should contain ``fc35`` in its file name. For example: *musicdb-8.0.0-1.fc35.noarch.rpm*.
+
+   First you have to make sure you can install dependencies from the rpmfusion repository.
+   MusicDB requires some dependencies that do not follow the strict free software policy fedora follows.
+   Those dependencies (in our case multimedia transcoding tools like ``ffmpeg``) must be installed from a third party repository.
+
+   .. code-block:: bash
+
+      dnf repolist
+      # Output should contain:
+      #  rpmfusion-free
+      #  rpmfusion-nonfree
+
+      # If not, install the repository via the following commands:
+      sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+      sudo dnf install https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 
-The whole installation and updating process can be concluded into the steps in the table below.
+   .. code-block:: bash
 
-+-----------------------+------------------------------------------+------------------------------------------+
-|         Step          |               Installation               |                  Update                  |
-+=======================+==========================================+==========================================+
-| MusicDB User          | - Create ``musicdb`` User and Group      |                                          |
-|                       | - Add music owner to ``musicdb`` group   |                                          |
-+-----------------------+------------------------------------------+------------------------------------------+
-| Generate SSL Key      | - Generate an SSL certificate and key    |                                          |
-+-----------------------+------------------------------------------+------------------------------------------+
-| Create directory tree | - Create data and server base directory  | - Update ``artwork/default.jpg``         |
-|                       | - Create Artwork Cache                   |                                          |
-+-----------------------+------------------------------------------+------------------------------------------+
-| MusicDB Configuration | - Install ``musicdb.ini``                | - Update ``musicdb.ini``                 |
-|                       | - Set default parameters                 |                                          |
-|                       | - Create symlink to ``/etc/musicdb.ini`` |                                          |
-+-----------------------+------------------------------------------+------------------------------------------+
-| Create databases      | - Create all databases                   | - Update database schemes                |
-+-----------------------+------------------------------------------+------------------------------------------+
-| Icecast Configuration | - Create icecast user and group          | - Update icecast configuration           |
-|                       | - Create icecast configuration           |                                          |
-|                       | - Copy SSL certificates                  |                                          |
-|                       | - Generate icecast passwords             |                                          |
-|                       | - Update ``musicdb.ini`` with source PW  |                                          |
-+-----------------------+------------------------------------------+------------------------------------------+
-| System environment    | - Install logrotate configuration        | - Update logrotate configuration         |
-|                       | - Install shell profile                  |                                          |
-+-----------------------+------------------------------------------+------------------------------------------+
-| ID3Edit Installation  | - Install ID3Edit                        | - Update ID3Edit                         |
-+-----------------------+------------------------------------------+------------------------------------------+
-| MusicDB Installation  | - Install MusicDB                        | - Update MusicDB                         |
-+-----------------------+------------------------------------------+------------------------------------------+
+      # Install MusicDB
+      sudo dnf install ./musicdb-8.0.0-1.fc$(rpm -E %fedora).noarch.rpm
+
+.. tab:: Ubuntu
+
+   After downloading the latest MusicDB package for Ubuntu, you can install it with the Ubuntu package manager ``apt``.
+   MusicDB is optimized for the latest version of Ubuntu and not for the LTS version.
+
+   Before beeing able to install downloaded package, you need to make sure that the user ``_apt`` is allowed to access that file.
+   The package manager is working under this user ID for tasks that do not require ``root`` priviledges.
+
+   .. warning::
+
+      The Debian/Ubuntu package manager ``apt`` starts services automatically during the installation phase.
+      It does not let you to configure the services before they are started.
+
+      The web server, Icecast and MusicDB will are running right after the installation before you are able to set them up correctly.
+      Keep this in mind!
+      MusicDB's default configuration consideres such a use case and is limited to only access connections from localhost by default.
+      Other dependencies are not!
 
 
-The following steps give an idea of how to install MusicDB.
+   .. code-block:: bash
 
-System Preparation
+      # Install MusicDB
+      sudo apt install ./musicdb_8.0.0-1_all.deb
+
+      # Stop automatically started unconfigured services
+      sudo systemctl stop apache2  # if fresh installed
+      sudo systemctl stop icecast2
+      sudo systemctl stop musicdb
+
+   During the installation, the packet manager asks you to configure icecast2.
+   You can shoud use this opportunity to set the passwords for Icecast otherwise Icecast gets online with default passwords!
+   Anyway we will come to the Icecast configuration later in this installation instruction.
+
+   The installation ends with the following Waring:
+   
+      N: Can't drop privileges for downloading as file '/home/$USERNAME/Downloads/musicdb_8.0.0-1_all.deb' couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permission denied)
+
+   This is a well known issue I will not care about because I do not want to waste my time fixing Debian/Ubuntu issues.
+   It seems to be save to ignore this warning.
+   You are welcome post a solution for avoiding this message in the `Issues tracker <https://github.com/rstemmer/musicdb/issues/>`_ or on the `Discussions page <https://github.com/rstemmer/musicdb/discussions>`_.
+
+
+Initial Setup
+-------------
+
+.. note::
+
+   In case you just upgraded from an old MusicDB installation, see :doc:`/basics/data` for the transition to the new file and directory structure.
+
+This section describes the initial setup for MusicDB.
+Those steps are required to provide MusicDB a valid environment.
+
+For the following examples, the placeholder ``$username`` is used to represent the user
+that owns or maintains the music collection.
+The placeholder ``$username`` must be replaced by that user name.
+If you do not know your user name, enter ``id`` in the terminal.
+The name behind the UID is your user names.
+
+I recommend to add your user to the ``musicdb`` group: ``usermod -G musicdb $username``.
+Then you have extended read and write access to data managed by MusicDB.
+All users in the ``musicdb`` group can maintain MusicDB and use the MusicDB command line interface.
+
+.. code-block:: bash
+
+   sudo usermod -G musicdb $username
+
+Creating a Music Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The music directory is the directory that contains the music files
+that will be managed, presented and streamed by MusicDB.
+
+**Its existence is mandatory for MusicDB to work correctly.**
+
+Before you can start the MusicDB server, a music directory needs to be defined.
+This can be done in the :doc:`/basics/config` file that is placed at ``/etc/musicdb.ini``.
+In this file you need to set the music directory in the section->entry: ``[directories]->music``.
+The default directory is ``/var/music``.
+This directory can be empty but it must be accessible by the MusicDB server.
+The expected ownership is ``$username:musicdb`` with the permission ``rwxrwxr-x``.
+More details about the directories and files managed by MusicDB can be found in the :doc:`/basics/data` section of the documentation.
+
+When your Linux Distribution uses SELinux, make sure the context of the music directory is set to ``httpd_sys_content_t`` if you want to access the music files from your web browser.
+For details see :doc:`/basics/data`.
+
+The following example expects that you do not have a music directory yet.
+If you have one, just check if the permissions are fine.
+The placeholder ``$username`` must be replaced by the user you use to login into you system (your personal user account).
+Of course it is also possible to create a new user that is only responsible for the music.
+
+If you want to use the default music directory under ``/var/music`` you can skip the next code block.
+
+.. code-block:: bash
+
+   # Create a new music directory (as root)
+   mkdir -p /opt/music
+   chmod ug=rwx,o=rx /opt/music
+   chown -R $username:musicdb /opt/music
+
+   # Update [directories]->music
+   vim /etc/musicdb.ini
+
+Make sure the music directory has the right permissions set.
+This should be checked for new created one as well as for the default one.
+In the following code example I reference to the default directory at ``/var/music``.
+Replace this path with your own music directory if you changed it.
+
+.. code-block:: bash
+
+   # as root
+   chown -R $username:musicdb /var/music
+
+   # Optional when using SELinux
+   semanage fcontext -a -t httpd_sys_content_t "/var/music(/.*)?"
+   restorecon -R /var/music
+
+Websocket Settings
 ^^^^^^^^^^^^^^^^^^
 
-   - create a user ``musicdb`` and a group ``musicdb``
-   - add your user (here called ``user``) to group ``musicdb`` so you can access the files created by MusicDB as user.
-     MusicDB will set music and artwork files ownerships to ``user:musicdb``, other files are ``musicdb:musicdb``.
-   - Create a directory for MusicDB installation (here ``/srv/musicdb``) and for MusicDB's data (here ``/data/musicdb``).
-     The ownership must be ``musicdb:musicdb``.
-   - Create a music-directory (here ``/data/music``) and set the ownership to ``user:musicdb``
+For security reasons, by default MusicDB only accepts connections from *localhost*.
+To make the MusicDB websocket server available from the local network, or internet if you setup your router correct, change the following setting: ``[websocket]->bind=0.0.0.0`` in ``/etc/musicdb.ini``
 
-.. code-block:: bash
+.. code-block:: ini
 
-   # as root in /
-   groupadd -g 2666 musicdb
-   useradd -d /data/musicdb -s /usr/bin/zsh -g 2666 -u 2666 -M musicdb
-   usermod -a -G http musicdb
-   usermod -a -G musicdb user
+   [websocket]
+   bind=0.0.0.0
 
-   mkdir /srv/musicdb  && chown -R musicdb:musicdb /srv/musicdb
-   mkdir /data/musicdb && chown -R musicdb:musicdb /data/musicdb
-   mkdir /data/music   && chown -R user:musicdb    /data/music
+The websocket server required an SSL cert/key pair. This is automatically generated on the first run of the MusicDB server if they do not exist.
+The paths are also configured in ``/etc/musicdb.ini`` in the ``[websocket]`` section.
+If you want to use your own certificates, for example managed by `Let's Encrypt <https://letsencrypt.org/>`_, you may want to change that paths as well.
 
 
-Install dependencies
-^^^^^^^^^^^^^^^^^^^^
-
-Some:
-
-   * ``git``
-   * ``clang``
-   * ``python``
-   * ``pip``
-   * GStreamer with all plugins
-   * ``icecast``
-   * ``libshout``
-   * ``ffmpeg``
-   * ``openssl``
-   * ``sqlite3``
-   * ``rsync``
-
-Further more, everything ``check`` tells you is missing.
-The following list gives you some details about the listed modules.
-
-   * If an optional dependency is missing, read the ``check.sh`` script. The comments help you to decide if you need them.
-   * The *PIL* module can be found as ``pillow``.
-   * ``icecast`` won't be detected on Debian because there it is called ``icecast2`` (This has no impact).
-   * ``apachectl`` my be not found if it is only available for root user. Or you simply use another HTTP server.
-   * ``jsdoc`` can be installed via ``npm install -g jsdoc``.
-
-.. attention::
-
-   On Debian the ``python`` command runs the ancient Python 2.
-   Whenever this documentation is talking about Python, Python 3 is meant!
-
-Basic packages
+Debugging logs
 ^^^^^^^^^^^^^^
 
-There are some external tools necessary.
-Furthermore there are lots of python packages needed.
-You can use the ``check.sh`` script to see what packages are missing.
+If you want to turn off the debug log file edit ``/etc/musicdb.ini`` and change ``[log]->debugfile`` to ``/dev/null``.
 
-The missing ``id3edit`` tool is optional since MusicDB 7.1.0.
-It is only required by the :doc:`/mod/extern` module
-which is used to export the music collection onto an external storage device like an SD card
-or a Smartphone.
 
-Download MusicDB
-^^^^^^^^^^^^^^^^
+Start MusicDB Server
+--------------------
+
+After setting up the music directory, the WebSocket API Key and possibly other settings, the MusicDB websocket server can be started via ``systemctl start musicdb``.
+If you want to autostart the server after a reboot (recommended), you have to enable it via ``systemctl enable musicdb``.
 
 .. code-block:: bash
 
-   # as user in ~/projects
-   git clone https://github.com/rstemmer/musicdb.git
+   # as root
+   systemctl start musicdb
+   systemctl enable musicdb
 
-   # optional for MusicDB extern module
-   git clone https://github.com/rstemmer/libprinthex.git
-   git clone https://github.com/rstemmer/id3edit.git
+Now MusicDB is running. You can check the status via ``systemctl status musicdb``
+and/or check the debug log file via ``less -R /var/log/musicdb/debuglog.ansi``.
+
+When you start MusicDB server for the first time, there will appear some warnings because of missing files in the MusicDB *state* directory (csv-files).
+This is fine. These files will automatically be created when you use MusicDB for streaming music.
+There will also be an error "There are no songs in the database yet. Audio stream disabled. (Import albums and restart the server to enable audio streaming again.)".
+This is also an expected behavior because no music has been added to the MusicDB database.
+
+Now MusicDB is in a state where can be added and managed, but not streamed.
+**As soon as you added music to MusicDB, you can restart the server via ``systemctl restart musicdb`` and it will work with all its features including streaming audio.**
+
+You can already access the websocket server with your web browser to see if all network settings around MusicDB are correct.
+Use the following address: `<https://127.0.0.1:9000>`_. Of course use the correct IP address and port if you changed the port.
+The default SSL certificate is self-signed and needs to be confirmed explicitly.
+Then the *"AutobahnPython"* web page should load telling you the version number and that this is not an actual web server.
 
 
+Setup Web User Interface via Apache
+-----------------------------------
 
-libprinthex
+An optional but highly recommended dependency to MusicDB is the `Apache HTTP Sever <https://httpd.apache.org/>`_.
+Of cause any other web server can be used in place.
+A web server is required to serve the *MusicDB WebUI* - The web front-end for MusicDB.
+
+This server can simply be installed via the package manager.
+
+If you used the package manager to install MusicDB, the Apache HTTP Server has already been installed as dependency.
+The default MusicDB Apache server configuration is already installed in the apache configuration directory.
+
+If you installed MusicDB from source, you find the configuration at ``/usr/share/musicdb/apache.conf``.
+
+This configuration just needs to be included into the Apache main configuration.
+In this example, the web-server would provide the WebUI via HTTP.
+It is recommend to use HTTPS. Please check the web server manual on how to setup SSL encrypted web sites.
+
+.. tab:: Arch Linux
+
+   The following code shows how to install and configure the HTTP server via ``pacman`` on Arch Linux.
+   The configuration file has already been installed to ``/etc/httpd/conf/extra/musicdb.conf``.
+   This configuration just needs to be included into the Apache main configuration: ``/etc/httpd/conf/httpd.conf``.
+
+   .. code-block:: bash
+
+      # Install Apache
+      pacman -S apache
+
+      # Setup web server for the front end
+      echo "Include conf/extra/musicdb.conf" >> /etc/httpd/conf/httpd.conf
+
+
+.. tab:: Fedora
+
+   The following code shows how to install and configure the HTTP server via ``dnf`` on Fedora.
+   The configuration file has already been installed to ``/etc/httpd/conf/musicdb.conf``.
+   This configuration just needs to be moved into the Apache configuration directory: ``/etc/httpd/conf.d``.
+
+   .. code-block:: bash
+
+      # Install Apache
+      dnf install httpd
+
+      # Setup web server for the front end
+      mv /etc/httpd/conf/musicdb.conf /etc/httpd/conf.d/.
+
+
+.. tab:: Ubuntu
+
+   The following code shows how to install and configure the HTTP server via ``apt`` on Ubuntu.
+   The configuration file has already been installed to ``/etc/apache2/conf-available``.
+   This configuration just needs to be linked into the Apache configuration directory: ``/etc/apache2/conf-enabled``.
+
+   .. code-block:: bash
+
+      # Install Apache
+      apt install apache2
+
+      # Setup web server for the front end
+      cd /etc/apache2/conf-enabled
+      ln -s ../conf-available/musicdb.conf musicdb.conf
+
+
+Start the Web Server
+^^^^^^^^^^^^^^^^^^^^
+
+After installation and configuration, the server can be started via ``systemd``:
+
+.. code-block:: bash
+
+   # Start web server and enable autostart
+   systemctl start httpd
+   systemctl enable httpd
+
+Now the web server is running. You can check the status via ``systemctl status httpd``.
+
+You should now be able to access the MusicDB WebUI via ``http://127.0.0.1/musicdb/``.
+
+.. figure:: ../images/welcome.jpg
+   :align: center
+
+   When there is no music managed by MusicDB yet, the WebUI will show you a Welcome-Message telling you that there is no music in the Queue.
+   This is fine because you have not hand over any music to MusicDB.
+
+Please consider a Apache server configuration that supports HTTPS.
+For details see :doc:`/basics/security`.
+
+You may also want to give access to your music directory.
+Therefore edit the Apache configuration at ``/etc/httpd/conf/extra/musicdb.conf``.
+
+
+Setup Audio Streaming via Icecast
+---------------------------------
+
+For providing a secured access to the audio stream provided by MusicDB, `Icecast <https://icecast.org/>`_ is recommended.
+This section shows how to setup Icecast and how to connect MusicDB with Icecast.
+If you used the package manager to install MusicDB, Icecast has already been installed as dependency.
+
+.. note::
+
+   If you do not want to use Icecase, deactivate the responsible interface in MusicDB.
+   Open ``/etc/musicdb.ini`` and set ``[debug]->disableicecast`` to ``True``.
+
+.. tab:: Arch Linux
+
+   The following code shows how to install Icecast via ``pacman`` on Arch Linux.
+
+   .. code-block:: bash
+
+      # Setup Icecast for secure audio streaming
+      pacman -S icecast
+
+.. tab:: Fedora
+
+   The following code shows how to install Icecast via ``dnf`` on Fedora.
+
+   .. code-block:: bash
+
+      # Setup Icecast for secure audio streaming
+      dnf install icecast
+
+.. tab:: Ubuntu
+
+   The following code shows how to install Icecast via ``apt`` on Fedora.
+
+   .. code-block:: bash
+
+      # Setup Icecast for secure audio streaming
+      apt install icecast2
+
+Setup Icecast
+^^^^^^^^^^^^^
+
+The default settings in ``/etc/musicdb.ini`` match the default Icecast settings in ``/etc/icecast.xml``.
+Only the source password needs to be configured.
+Again you can use ``openssl rand -base64 32`` to generate a secure password.
+Some more details about Icecast can be found in the chapter: :doc:`/lib/icecast`
+
+The following listing shows the changes that are mandatory to make inside the ``/etc/icecast.xml`` file
+to connect MusicDB with Icecast.
+In case you are using Debian/Ubuntu, the file is stored at ``/etc/icecast2/icecast.xml``
+
+You should review the whole settings to make sure that Icecast is doing what you expect
+and to secure the Icecast server.
+
+.. code-block:: xml
+
+   <icecast>
+
+      <!-- … -->
+
+      <authentication>
+         <!-- … -->
+
+         <!-- 
+         The password set here must also be set as password in /etc/musicdb.ini [Icecast]->password
+         -->
+         <source-password>hackme</source-password>
+
+         <!-- … -->
+      </authentication>
+
+      <!-- … -->
+
+   </icecast>
+
+Do not forget to also set the source password in ``/etc/musicdb.ini`` at ``[Icecast]->password``.
+
+
+Run Icecast
 ^^^^^^^^^^^
 
-Since MusicDB 7.1.0 id3edit is optional. It is only required by the :doc:`/mod/extern` module.
+After setup, you can start Icecast.
+Be sure you have enabled MusicDB to connect to Icecast if you disabled it previously.
+
+On Debian/Ubuntu it must be ``icecast2`` instead of ``icecast``.
 
 .. code-block:: bash
 
-   cd libprinthex
-   ./build.sh
-   ./install.sh
+   systemctl start   icecast
+   systemctl enable  icecast
+   systemctl restart musicdb # Just to be sure it uses the correct configuration
+
+You then can, for example with `VLC <https://www.videolan.org/vlc/index.de.html>`_, connect to the audio stream.
+The stream URL is ``http://127.0.0.1:8000/stream``.
 
 
-id3edit
-^^^^^^^
+Final Steps
+-----------
 
-Since MusicDB 7.1.0 id3edit is optional. It is only required by the :doc:`/mod/extern` module.
+At this point everything is ready to run and to use.
+Next you need to add Music to MusicDB.
 
-.. code-block:: bash
-
-   cd id3edit
-   ./build.sh
-   ./install.sh
-
-musicdb
-^^^^^^^
-
-.. code-block:: bash
-
-   cd /srv/musicdb
-   cp ~/projects/musicdb/update.sh .
-   # edit update.sh and make sure it does what you expect
-   ./update.sh
-
-   # config
-   cd /data/musicdb
-   cp ~/projects/musicdb/share/musicdb.ini .
-   cp ~/projects/musicdb/share/mdbstate.ini .
-   chown musicdb:musicdb musicdb.ini
-   chown musicdb:musicdb mdbstate.ini
-   chmod g+w musicdb.ini
-   chmod g+w mdbstate.ini
-   vim musicdb.ini
-    
-   # this config can also be the default config
-   cd /etc
-   ln -s /data/musicdb/musicdb.ini musicdb.ini
-   cd -
-    
-   # artwork
-   mkdir -p artwork
-   chown -R user:musicdb artwork
-   chmod -R g+w artwork 
-    
-   cp ~/projects/musicdb/share/default.jpg artwork/default.jpg
-   chown musicdb:musicdb artwork/default.jpg 
-    
-   # logfile
-   touch debuglog.ansi && chown musicdb:musicdb debuglog.ansi
-    
-   # logrotate
-   cp ~/projects/musicdb/share/logrotate.conf /etc/logrotate.d/musicdb
+* :doc:`/usage/import`
+* :doc:`/usage/installdocs`
+* :doc:`/basics/security`
 
 

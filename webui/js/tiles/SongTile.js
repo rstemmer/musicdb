@@ -165,8 +165,8 @@ class SongEntryTile extends Draggable
 
     CreateSongName(MDBSong)
     {
-        let songname   = MDBSong.name.replace(" - ", " – ");
-            songname   = songname.replace(    " ∕ ", " / ");
+        let songname   = MDBSong.name.replaceAll(" - ", " – ");
+            songname   = songname.replaceAll(    " ∕ ", " / ");
         let disabled   = MDBSong.disabled;
         let lastplayed = new Date(MDBSong.lastplayed * 1000);
         let element    = new Element("div", ["songname"]);

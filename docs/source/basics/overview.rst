@@ -1,33 +1,88 @@
 Overview of MusicDB
 ===================
 
-The following graph shows a complete overview of MusicDB's information flow through all its components.
+The following figure shows a complete overview of MusicDB and how it is integrated into the operating system.
 It shows what happens with the music and its annotated information like the meta data and artworks.
-Furthermore the image shows how everything is connected and how MusicDB integrates in the system.
+Furthermore the image shows how the client applications are connected to the server.
 
-.. figure:: ../images/Map2_1.svg
+.. figure:: ../images/overview.svg
 
-In the following sections, I describe the tasks of each block and how the interact with each other.
+In the following sections, I describe the purpose of each block and how the interact with each other.
 The sections represent the colors of the rectangles and arrows, that represent the components of the environment of MusicDB.
+
+
+MusicDB (Green)
+---------------
+
+MusicDB is split into two applications.
+The *MusicDB Server* as back-end and the *MusicDB WebUI* as front-end.
+
+MusicDB Server
+^^^^^^^^^^^^^^
+
+The MusicDB Server runs as daemon on the server. The daemon is managed via `systemd <https://systemd.io/>`_.
+For streaming, the MusicDB Server connects to an `Icecast <https://icecast.org/>`_ server.
+In this figure, Icecast is executed on the same server as MusicDB.
+It is also possible to connect to a remote Icecast server.
+
+MusicDB WebUI
+^^^^^^^^^^^^^
+
+The second part of MusicDB is the MusicDB WebUI (or only WebUI).
+This is a JavaScript application being executed in the clients web browser.
+Beside other data this application gets served by a HTTP server.
+A WebSocket connection gets established to communicate with the MusicDB Server using the :doc:`/basics/webapi`.
+
+
+External Servers (Black)
+------------------------
+
+There are two external tools involved in the MusicDB setup.
+The HTTP Server serves the MusicDB WebUI.
+The Icecast Server manages the audio stream provided by the MusicDB Server.
+
+HTTP Server
+^^^^^^^^^^^
+
+To serve the WebUI files to the client, a HTTP server is needed.
+In the setup shown in the figure above, `Apache <https://httpd.apache.org/>`_ is used.
+The HTTP server needs to have access to the audio files, artwork cache and the MusicDB WebUI files.
+The audio file access is needed by the WebUI to provide the possibility to listen to a single song without having it add to the queue.
+Of course it can also be used to serve the documentation.
+
+Icecast Server
+^^^^^^^^^^^^^^
+
+The `Icecast <https://icecast.org/>`_ server gets the audio data from the MusicDB Server and provides additional encryption and user management based protection to the stream.
+From the point of view from Icecast, MusicDB is a Source Client.
+More details are documented in the :doc:`/lib/icecast` documentation.
 
 
 Music Information (Purple)
 --------------------------
 
-There are two main paths (bold purple arrows) the data of the music collections goes to reach the listener.
-One path is for the audio part the listener wants to hear,
-the other path is for the information the listener wants to see when he listens to a song or manages the queue of songs that will be played in future.
+There are two main paths (purple arrows) the data of the music collections goes to reach the listener.
+One path is the audio stream that is managed by the MusicDB server.
+The other path through the HTTP server is a direct access to the music files so that the user can "preview" singe files.
 
-Everything starts with the users music collection shown in the bottom left corner.
-This collection is the source of all information MusicDB works with.
-As the arrow shows, MusicDB will never change anything in the users files.
+The primary way a user listens to music via MusicDB is through streams.
+To provide a continuous stream of music, MusicDB reads the music files from the Music Directory (Purple)
+and sends the audio data to an `Icecast <https://icecast.org/>`_ server.
+The Icecast server then provides the stream to any Audio Player including the users Web Browser.
+Details can be found at :doc:`/basics/streaming`.
+
+If the user wants to listen into a song directly, the WebUI provides a preview feature.
+The audio file can then be played in the browser without adding it into the stream.
+Therefore the HTTP server needs to have read access to the Music Directory.
+See :doc:`/usage/install` on how to setup the HTTP server.
+
 
 MusicDB Data (Blue)
 -------------------
 
-The music files get read by `MusicDB Components (Green)`_.
-At this point, the Music Collection gets split in two separate kind of information:
-The `Artwork Cache`_ for the artworks and the `Music Database`_ for the meta data.
+Beside the music itself MusicDB manages lots of other data.
+For example meta data from the music files, annotated information by the user and also album artworks.
+
 
 Music Database
 ^^^^^^^^^^^^^^
@@ -42,74 +97,4 @@ Artwork Cache
 
 The artwork cache contains all albums artworks and scaled version of those artworks managed by the :doc:`/mdbapi/artwork`.
 
-MusicDB Data & Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Beside the music database, there are lots of other data in the MusicDB data directory.
-For example the :doc:`/basics/config` and the database of the :doc:`/mdbapi/tracker`.
-There are also files storing the state of the server (selected genres) and allowing controlling the server via :doc:`/lib/namedpipe`
-
-
-MusicDB Components (Green)
---------------------------
-
-MusicDB itself can be divided into three parts: The `MusicDB WebUI`_, the `MusicDB Server` and the `Command-Line Modules`_.
-
-Command-Line Modules
-^^^^^^^^^^^^^^^^^^^^
-
-The command line modules provide the interface from the users music collection to the MusicDB world.
-These modules manage the `Music Database`_, the `Artwork Cache`_ and many more.
-Details of the modules can be found in the :doc:`/basics/mods` documentation.
-One special module is the `MusicDB Server`_ module that will be described later in this section.
-
-MusicDB WebUI
-^^^^^^^^^^^^^
-
-The MusicDB WebUI is the front end part of MusicDB.
-It is written in JavaScript and gets executed on the client side.
-A WebSocket connection gets established to communicate with the `MusicDB Server`_ using the :doc:`/basics/webapi`.
-The WebUI allows the user to interact with the audio stream by adding, removing or moving songs in the queue of songs to play in future.
-Furthermore the WebUI shows all kind of information of the music currently playing and the music collection.
-
-MusicDB Server
-^^^^^^^^^^^^^^
-
-While the other modules are simple tools that get executed, do their job, and exit, 
-the MusicDB Server module runs permanent to serve information to the WebUI via :doc:`/basics/webapi`,
-and to provide an audio stream.
-Details of how the server works can be found in the :doc:`/mdbapi/server` and :doc:`/mdbapi/audiostream` documentation.
-
-
-External Servers (Black)
-------------------------
-
-There are two external tools involved in the MusicDB setup.
-The `HTTP Server`_ serves the `MusicDB WebUI`_.
-The `Icecast Server`_ manages the audio stream provided by the `MusicDB Server`_
-
-HTTP Server
-^^^^^^^^^^^
-
-To serve the WebUI files to the client, a HTTP server is needed.
-In the setup shown in the figure above, `Apache <https://httpd.apache.org/>`_ is used.
-The HTTP server needs to have access to the audio files, artwork cache and the MusicDB WebUI files.
-The audio file access is needed by the WebUI to provide the possibility to listen to a single song without having it add to the queue.
-Of course it can also be used to serve the documentation.
-The HTTP server is not bound to MusicDB in the way MPD is.
-So Apache can be replaced by any other web server.
-
-Icecast Server
-^^^^^^^^^^^^^^
-
-The `Icecast <https://icecast.org/>`_ server gets the audio data from the `MusicDB Server`_ and provides additional encryption and user management based protection to the stream.
-From the point of view from Icecast, MusicDB is a Source Client.
-More details are documented in the :doc:`/lib/icecast` documentation.
-
-Consuming Music (Orange)
-------------------------
-
-At the top of the figure, all information streams come together to the user.
-The user can see and control the audio stream using a web browser.
-To listen to the stream the user can connect with any media player that can receive mp3 audio streams.
 

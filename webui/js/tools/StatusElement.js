@@ -31,12 +31,10 @@ class StatusElementBase extends Element
     }
 
 
-    // state: unknown, good, bad, active, open
+    // state: unknown, good, bad, active, open, warn, info
     SetState(state)
     {
-        this.element.dataset.state = state;
-        if(typeof text === "string")
-            this.SetText(text);
+        this.SetData("state", state);
     }
 
 
@@ -52,7 +50,7 @@ class StatusElementBase extends Element
 
     SetText(text)
     {
-        this.element.innerText = text;
+        this.SetInnerHTML(text);
     }
 }
 
@@ -67,28 +65,66 @@ class StatusText extends StatusElementBase
 }
 
 
-
-class UploadStatusText extends StatusText
+class StatusHTMLText extends StatusText
 {
-    constructor(uploadstatus="")
+    constructor(htmltext=null, state=null)
     {
-        switch(uploadstatus)
+        super(null, state);
+        if(typeof htmltext === "string")
+            this.SetHTMLText(htmltext);
+    }
+
+
+
+    SetHTMLText(htmltext)
+    {
+        this.SetInnerHTML(htmltext);
+    }
+}
+
+
+
+class TaskStatusText extends StatusText
+{
+    constructor(taskstatus="nostatus")
+    {
+        // This is a complete list from the MusicDB Task Management Task States
+        switch(taskstatus)
         {
-            case "waitforchunk"     : super("Uploading …",              "active"); break;
-            case "uploadcomplete"   : super("Upload Succeeded",         "good");   break;
-            case "uploadfailed"     : super("Upload Failed",            "bad");    break;
-            case "notexisting"      : super("Internal Chaos",           "bad");    break;
-            case "preprocessed"     : super("Upload Succeeded",         "good");   break;
-            case "invalidcontent"   : super("Invalid Content",          "bad");    break;
-            case "integrated"       : super("Integration Succeeded",    "good");   break;
-            case "integrationfailed": super("Integration Failed",       "bad");    break;
-            case "startimport"      : super("Importing …",              "active"); break;
-            case "importfailed"     : super("Import Failed",            "bad");    break;
-            case "importartwork"    : super("Importing …",              "active"); break;
-            case "importcomplete"   : super("Import Succeeded",         "good");   break;
-            case "remove"           : super("Removing Upload",          "active"); break;
-            default                 : super("No upload processing",     "open");   break;
+            case "notexisting"          : super("Internal Chaos",           "bad");    break;
+            case "waitforchunk"         : super("Uploading …",              "active"); break;
+            case "uploadcomplete"       : super("Upload Succeeded",         "good");   break;
+            case "uploadfailed"         : super("Upload Failed",            "bad");    break;
+            case "preprocessing"        : super("Preprocessing Upload …",   "active"); break;
+            case "readyforintegration"  : super("Ready for Integration",    "open");   break;
+            case "integrating"          : super("Integrating …",            "active"); break;
+            case "invalidcontent"       : super("Invalid Content",          "bad");    break;
+            case "readyforimport"       : super("Integration Succeeded",    "good");   break;
+            case "integrationfailed"    : super("Integration Failed",       "bad");    break;
+            case "startmusicimport"     : super("Importing Music …",        "active"); break;
+            case "importingmusic"       : super("Importing Music …",        "active"); break;
+            case "startartworkimport"   : super("Importing Artwork …",      "active"); break;
+            case "importingartwork"     : super("Importing Artwork …",      "active"); break;
+            case "importfailed"         : super("Import Failed",            "bad");    break;
+            case "importcomplete"       : super("Import Succeeded",         "good");   break;
+            case "scanningfs"           : super("Scanning File System",     "active"); break;
+            case "fsscancomplete"       : super("File System Scan Succeeded","good");  break;
+            case "fsscanfailed"         : super("File System Scan Failed",  "bad");    break;
+            case "remove"               : super("Removing Upload",          "active"); break;
+            default                     : super(`Invalid State \"${taskstatus}\"!`, "bad"); break;
         }
+    }
+}
+
+class UploadStatusText extends TaskStatusText
+{
+    constructor(uploadstatus)
+    {
+        super(uploadstatus);
+
+        // Special case where something is good in context of uploading files
+        if(uploadstatus === "readyforintegration")
+            this.SetStatus("good");
     }
 }
 
@@ -129,7 +165,7 @@ class StatusList extends Element
     {
         let item = new StatusItem(statelabel, "unknown");
         this.states[statename] = item;
-        this.element.appendChild(item.GetHTMLElement());
+        this.AppendChild(item);
         return;
     }
 
@@ -140,5 +176,6 @@ class StatusList extends Element
         this.states[statename].SetState(state);
     }
 }
+
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

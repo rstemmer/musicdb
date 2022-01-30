@@ -1,7 +1,7 @@
 import argparse
-from lib.modapi         import MDBModule
-from lib.cfg.musicdb    import MusicDBConfig
-from lib.db.musicdb     import MusicDatabase
+from musicdb.lib.modapi         import MDBModule
+from musicdb.lib.cfg.musicdb    import MusicDBConfig
+from musicdb.lib.db.musicdb     import MusicDatabase
 
 class module(MDBModule):
     def __init__(self, config, database):
@@ -10,14 +10,14 @@ class module(MDBModule):
 
     @staticmethod
     def MDBM_CreateArgumentParser(parserset, modulename):
-        parser = parserset.add_parser(modulename, help="moduleinfo")
+        parser = parserset.add_parser(modulename, help="This is an example module")
         parser.set_defaults(module=modulename)
 
 
     # return exit-code
     def MDBM_Main(self, args):
 
-        # execte command
+        # execute command
         try:
             print("Hello from MusicDB")
             return 0

@@ -1,0 +1,1963 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>musicdb.lib.filesystem &mdash; MusicDB 8.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="MusicDB 8.0.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> MusicDB
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                8.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/install.html">Installation &amp; Update</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#installation-via-package-manager">Installation via Package Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#initial-setup">Initial Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#creating-a-music-directory">Creating a Music Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#websocket-settings">Websocket Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#debugging-logs">Debugging logs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#start-musicdb-server">Start MusicDB Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#setup-web-user-interface-via-apache">Setup Web User Interface via Apache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#start-the-web-server">Start the Web Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#setup-audio-streaming-via-icecast">Setup Audio Streaming via Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#setup-icecast">Setup Icecast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#run-icecast">Run Icecast</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#final-steps">Final Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/import.html">Upload and Importing Music</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/import.html#open-import-manager">Open Import Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/import.html#uploading-an-album">Uploading an Album</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/import.html#importing-an-album">Importing an Album</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/music.html">Music Naming Scheme</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#overview-of-the-naming-scheme">Overview of the Naming Scheme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#music-video-file-name">Music Video File Name</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/webui.html">WebUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/webui.html#architecture-and-wording">Architecture and Wording</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/webui.html#webui-in-audio-mode">WebUI in Audio Mode</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#genre-view">Genre View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#hud">HUD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#stream-control">Stream Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#artists-view">Artists View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#album-view">Album View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#queue-view">Queue View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#lyrics-view">Lyrics View</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/webui.html#webui-settings-mode">WebUI Settings Mode</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/stream.html">Audio Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/stream.html#managing-the-audio-stream">Managing the Audio Stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/stream.html#connection-to-audio-stream-via-vlc">Connection to Audio Stream via VLC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/stream.html#connection-to-audio-stream-via-webui">Connection to Audio Stream via WebUI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/cli.html">Command Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/artwork.html">artwork - Artwork Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/database.html">database - Music DB Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/extern.html">extern - Music File Exporter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mod/extern.html#file-export-to-external-device">File Export to External Device</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/metadata.html">metadata - Metadata Reader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/mise.html">mise - Micro Search Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/server.html">server - MusicDB Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/stats.html">stats - MusicDB Song Statistic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mod/tags.html#main-commands">Main commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mod/tags.html#style-guide">Style Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mod/tags.html#example-calls">Example calls</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/fromsource.html">Installation From Source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/fromsource.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/fromsource.html#installing-the-back-end">Installing the Back-End</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/fromsource.html#installing-the-front-end">Installing the Front-End</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/fromsource.html#installing-data-and-configuration-files">Installing Data and Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/fromsource.html#configure-selinux">Configure SELinux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/installdocs.html">Documentation Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Concepts and Configuration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/concept.html">Philosophy of MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#meta">meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#musicdb">musicdb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#directories">directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#websocket">websocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#music">music</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#albumcover">albumcover</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#uploads">uploads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#extern">extern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#tracker">tracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#icecast">Icecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#randy">randy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#log">log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/security.html">Security Concept</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/security.html#file-access-permissions">File Access Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/security.html#password-protected-audio-stream">Password Protected Audio Stream</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/data.html">MusicDB Data Files and Directories</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/data.html#music-directory">Music Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/data.html#musicdb-data-directory">MusicDB Data Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/data.html#musicdb-log-file">MusicDB Log File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/data.html#transition-from-7-2-0-to-8-0-0">Transition from 7.2.0 to 8.0.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/data.html#databases">Databases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/data.html#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/data.html#artworks">Artworks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/data.html#music">Music</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/data.html#web-server-and-logrotate">Web Server and Logrotate</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/overview.html">Overview of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#musicdb-green">MusicDB (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#music-database">Music Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/comparison.html">Comparison to Other Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#comparison">Comparison</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/comparison.html#web-ui-and-streaming-capabilities">Web UI and Streaming Capabilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/comparison.html#detailed-look">Detailed Look</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deeper Insight for Hackers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/streaming.html">MusicDB Streaming Concept</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/mods.html">Creating new CLI Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/mods.html#loading-of-modules">Loading of Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/distribution.html">Workflow for distribution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/distribution.html#create-release-candidate-branch">Create Release Candidate Branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/distribution.html#update-version-numbers">Update Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/distribution.html#source-tarball">Source Tarball</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/distribution.html#arch-linux-pacman-package">Arch Linux pacman Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/distribution.html#fedora-rpm-package">Fedora rpm Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/distribution.html#debian-ubuntu-deb-package">Debian/Ubuntu deb Package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/webapi.html">MusicDB Websocket API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#communication">Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#packet-format">Packet format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#client-side-interface">Client side interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#callback-functions">Callback functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#events">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#module-musicdb.lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#available-methods">Available Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#special-functions">Special Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#artists">Artists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#albums">Albums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#videos">Videos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#queue">Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#tag-related">Tag related</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#uploading">Uploading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#file-handling">File Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#other">Other</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/accesspermissions.html">Access Permissions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/accesspermissions.html#accesspermissions-class">AccessPermissions Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/artwork.html">Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#artwork-related-database-entries">Artwork Related Database Entries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#artwork-path-structure">Artwork Path structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/artwork.html#web-browsers">Web Browsers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#scaled-artwork">Scaled Artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#configuration-for-artworks">Configuration for Artworks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#algorithm-to-create-artworks">Algorithm to Create Artworks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#module-musicdb.lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#audio-streaming-interface">Audio Streaming Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#audio-streaming-thread">Audio Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#audio-stream-command-queue">Audio Stream Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#audio-stream-event-management">Audio Stream Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#audio-stream-manager-class">Audio Stream Manager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/blacklist.html">Blacklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/blacklist.html#module-musicdb.mdbapi.blacklist">Blacklist Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/blacklist.html#music-selection-blacklist">Music Selection Blacklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/blacklist.html#blacklist-interface-class">Blacklist Interface Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/extern.html">MusicDBExtern</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/extern.html#initializing-a-storage">Initializing a Storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/extern.html#storage-configuration">Storage Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/extern.html#the-state-file">The State-File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/extern.html#updating-a-storage">Updating a Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/extern.html#handling-toxic-environments">Handling Toxic Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/extern.html#musicdbextern-class">MusicDBExtern Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/mise.html">Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/music.html">Music Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/music.html#musicdbmusic-class">MusicDBMusic Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/musicdirectory.html">MusicDirectory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicdirectory.html#musicdirectory-class">MusicDirectory Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/randy.html">Randomizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#module-musicdb.mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#randy-class">Randy Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#song-queue-management">Song Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#song-queue-event-management">Song Queue Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/tags.html">MusicDBTags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/tracker.html">Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#module-musicdb.lib.db.trackerdb">Tracker Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#definitions-in-context-of-videos">Definitions in Context of Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#relevant-database-entries">Relevant Database Entries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#video-frames-path-structure">Video Frames Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#https-server-configuration-for-video-frames">HTTPS Server Configuration for Video Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#scaling-video-frames">Scaling Video Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#configuration-of-video-frames">Configuration of Video Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#algorithm-for-creating-video-frames">Algorithm for Creating Video Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#video-queue-management">Video Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#video-queue-event-management">Video Queue Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#video-streaming-interface">Video Streaming Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#video-streaming-thread">Video Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#video-stream-command-queue">Video Stream Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#video-stream-event-management">Video Stream Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#video-stream-manager-class">Video Stream Manager Class</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/config.html">Configuration Access</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#base-configuration-classes">Base Configuration Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/config.html#module-musicdb.lib.cfg.config">ini Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/config.html#module-musicdb.lib.cfg.csv">csv Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#musicdb-configuration-file">MusicDB Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-musicdb.lib.cfg.webui">WebUI Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-musicdb.lib.cfg.extern">External Storage Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-musicdb.lib.cfg.mdbstate">MusicDB State Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-musicdb.lib.cfg.wsapikey">WebSocket API Key File</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/database.html">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/filesystem.html">Filesystem Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/gstreamer.html#installation-of-gstreamer-plugins">Installation of GStreamer Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/gstreamer.html#example-for-using-plugins">Example for Using Plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/logging.html">MusicDB Logging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/logging.html#musicdblogger-class">MusicDBLogger Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/metatags.html">Meta Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/metatags.html#metatags-class">MetaTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#gstreamer-pipeline-for-transcoding">GStreamer Pipeline for Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#validity-of-columns">Validity of columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#songs-table">Songs Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#videos-table">Videos Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#video-relates-methods">Video Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#albums-table">Albums Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#artwork-related-methods">Artwork Related Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#origin">Origin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#artists-table">Artists Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#lyrics-table">Lyrics Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#tags-table">Tags Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-related-methods">Tag Related Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/pidfile.html">PID File Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/websockets.html#module-musicdb.lib.ws.server">Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/websockets.html#module-musicdb.lib.ws.websocket">Websocket Protocol</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Management Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/artworkmanager.html">Artwork Tasks Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../taskmanagement/artworkmanager.html#artworkmanager-class">ArtworkManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/filesystemmanager.html">Files and Directory Tasks Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../taskmanagement/filesystemmanager.html#filesystemmanager-class">FilesystemManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/importmanager.html">Import Tasks Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../taskmanagement/importmanager.html#importmanager-class">ImportManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/integrationmanager.html">Integration Tasks Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../taskmanagement/integrationmanager.html#integrationmanager-class">IntegrationManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/taskmanager.html">Task Management Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/taskmanager.html#module-musicdb.taskmanagement.taskmanager">Task Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../taskmanagement/taskmanager.html#taskmanager-class">TaskManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/uploadmanager.html">Upload Tasks Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../taskmanagement/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Maintain Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintain/configuration.html">Configuration and Data Maintaining Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintain/database.html">Database Maintaining Modules</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../webui/websockets.html">Websocket Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#connection-process">Connection Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#watchdog">Watchdog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../webui/websockets.html#sending-data">Sending Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../webui/websockets.html#receiving-data">Receiving Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#minimal-usage">Minimal usage</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/impressum.html">Impressum</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#kontakt">Kontakt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#verantwortlich-fur-den-inhalt-nach-55-abs-2-rstv">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#haftung-fur-inhalte">Haftung für Inhalte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#haftung-fur-links">Haftung für Links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#urheberrecht">Urheberrecht</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/impressum.html#datenschutzerklarung-privacy-statement">Datenschutzerklärung / Privacy Statement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#datenschutz">Datenschutz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#cookies">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#server-log-files">Server-Log-Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#facebook-plugins-like-button">Facebook-Plugins (Like-Button)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#twitter">Twitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#google">Google+</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#youtube">YouTube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#ssl-verschlusselung">SSL-Verschlüsselung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#widerspruch-werbe-mails">Widerspruch Werbe-Mails</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MusicDB</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>musicdb.lib.filesystem</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for musicdb.lib.filesystem</h1><div class="highlight"><pre>
+<span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
+<span class="c1"># Copyright (C) 2017 - 2022  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># </span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1"># </span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1"># </span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">stat</span>
+<span class="kn">import</span> <span class="nn">grp</span>
+<span class="kn">import</span> <span class="nn">pwd</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span>  <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">mimetypes</span>
+<span class="n">mimetypes</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Filesystem"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem">[docs]</a><span class="k">class</span> <span class="nc">Filesystem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class provides an interface to the filesystem.</span>
+<span class="sd">    The whole class assumes that it is used with an Unicode capable UNIX-style filesystem.</span>
+
+<span class="sd">    Whenever I write about *root director* the path set in this class as root is meant.</span>
+<span class="sd">    Otherwise I would call it *system root directory*.</span>
+
+<span class="sd">    The root path must exist and must be a directory.</span>
+
+<span class="sd">    Some naming conventions:</span>
+
+<span class="sd">        * **abspath:** Absolute path. They *always* start with a ``&quot;/&quot;``.</span>
+<span class="sd">        * **relpath:** Relative path - Relative to the root directory. They should *not* start with a ``&quot;./&quot;``. This leads to undefined behavior!</span>
+<span class="sd">        * **xpath:** Can be absolute or relative.</span>
+
+
+<span class="sd">    Args:</span>
+<span class="sd">        root (str/Path): Path to the internal used root directory. It is allowed to start with &quot;./&quot;.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the root path does not exist</span>
+<span class="sd">        TypeError: If root is not of type ``str`` or ``Path``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="o">!=</span> <span class="n">Path</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;root path must be of type str or pathlib.Path&quot;</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_root</span> <span class="o">=</span> <span class="n">root</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;root path </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> is not an existing directory!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">root</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;root path </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> is not an existing directory!&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">root</span><span class="p">)))</span>
+
+
+
+<div class="viewcode-block" id="Filesystem.GetRoot"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetRoot">[docs]</a>    <span class="k">def</span> <span class="nf">GetRoot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the root path.</span>
+<span class="sd">        User name directories are resolved. The path is absolute.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Returns a pathlib.Path object with the root path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.ToString"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.ToString">[docs]</a>    <span class="k">def</span> <span class="nf">ToString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts a Path object or a list of path objects into a string or a list of strings</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            paths (str,Path,list): A single path or a list of paths</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A single string or a list of strings</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">strings</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.RemoveRoot"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.RemoveRoot">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveRoot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method makes a path relative to the root path.</span>
+<span class="sd">        The existence of the path gets not checked!</span>
+
+<span class="sd">        It is assumed that ``path`` is an absolute path.</span>
+<span class="sd">        Anyway it will be processed by :meth:`~AbsolutePath` to resolve</span>
+<span class="sd">        a user directory ``~``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            abspath (str, Path): A path that shall be made relative</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A relative path to the root directory</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the path is not inside the root path</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+<span class="sd">                </span>
+<span class="sd">                fs = Filesystem(&quot;/data/music&quot;)</span>
+
+<span class="sd">                abspath = &quot;/data/music/Artist/Album&quot;</span>
+<span class="sd">                relpath = fs.RemoveRoot(abspath)</span>
+<span class="sd">                print(relpath)  # &gt; Artist/Album</span>
+
+<span class="sd">                _ = fs.RemoveRoot(&quot;/data/backup/Artist/Album&quot;)</span>
+<span class="sd">                # -&gt; ValueError-Excpetion</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">relpath</span> <span class="o">=</span> <span class="n">abspath</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_root</span><span class="p">)</span>   <span class="c1"># Raises ValueError</span>
+        <span class="k">return</span> <span class="n">relpath</span></div>
+
+<div class="viewcode-block" id="Filesystem.TryRemoveRoot"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.TryRemoveRoot">[docs]</a>    <span class="k">def</span> <span class="nf">TryRemoveRoot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Like :meth:`~RemoveRoot` just that exceptions are suppressed.</span>
+<span class="sd">        If an exception occurs, ``path`` gets returned as it is.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">retval</span></div>
+        
+
+
+<div class="viewcode-block" id="Filesystem.AbsolutePath"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.AbsolutePath">[docs]</a>    <span class="k">def</span> <span class="nf">AbsolutePath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns an absolute path by adding the root directory to the path.</span>
+<span class="sd">        If the path is already absolute (starts with ``&quot;/&quot;``) it gets returned as it is.</span>
+<span class="sd">        </span>
+<span class="sd">        If the path starts with a ``~`` the user home directories will be resolved.</span>
+
+<span class="sd">        If path is exact ``&quot;.&quot;``, the root path gets returned.</span>
+
+<span class="sd">        In all other cases the root path gets prepended.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): A relative or absolute path</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An absolute path as Path object</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If *xpath* is ``None``</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                fs   = Filesystem()</span>
+<span class="sd">                home = fs.AbsolutePath(&quot;~&quot;)</span>
+<span class="sd">                # PosixPath(&#39;/home/ralf&#39;)</span>
+<span class="sd">                home = fs.ToString(home)</span>
+<span class="sd">                # &#39;/home/ralf&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">xpath</span>
+
+        <span class="c1"># Check if already absolute</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_absolute</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">path</span>
+
+        <span class="c1"># Check if user directory</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;~&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+
+        <span class="c1"># Make absolute</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span> <span class="o">/</span> <span class="n">path</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">path</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.AssertDirectory"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.AssertDirectory">[docs]</a>    <span class="k">def</span> <span class="nf">AssertDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Raises an AssertionError if :meth:`~IsDirectory` fails.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">retval</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Path </span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">+</span><span class="n">xpath</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> is not a Directory&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+    
+<div class="viewcode-block" id="Filesystem.IsDirectory"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.IsDirectory">[docs]</a>    <span class="k">def</span> <span class="nf">IsDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method checks if a directory exists.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): A relative or absolute path to a directory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` if the directory exists, otherwise ``False``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">abspath</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.AssertFile"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.AssertFile">[docs]</a>    <span class="k">def</span> <span class="nf">AssertFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Raises an AssertionError if :meth:`~musicdb.lib.filesystem.Filesystem.IsFile` fails.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IsFile</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">retval</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Path </span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">+</span><span class="n">xpath</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> is not a File&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="Filesystem.IsFile"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.IsFile">[docs]</a>    <span class="k">def</span> <span class="nf">IsFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method checks if a file exists.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): A relative or absolute path to a directory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` if the file exists, otherwise ``False``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">abspath</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.Exists"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.Exists">[docs]</a>    <span class="k">def</span> <span class="nf">Exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method checks if a path exist. It can be a file or a directory</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str): A relative or absolute path</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` if the path exists, otherwise ``False``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">abspath</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.RemoveFile"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.RemoveFile">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method removes a file from the filesystem.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            **Handle with care!**</span>
+
+<span class="sd">        If the file does not exist, ``False`` gets returned</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): A relative or absolute path to a file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``False`` if the file does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">IsFile</span><span class="p">(</span><span class="n">abspath</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">abspath</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.RemoveDirectory"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.RemoveDirectory">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method removes a directory from the filesystem.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            **Handle with care!**</span>
+
+<span class="sd">        If the file does not exist, ``False`` gets returned</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): A relative or absolute path to a directory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``False`` if the directory does not exist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">abspath</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">abspath</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.MoveFile"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.MoveFile">[docs]</a>    <span class="k">def</span> <span class="nf">MoveFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xsrcpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">xdstpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method moves a file in the filesystem.</span>
+<span class="sd">        **Handle with care!**</span>
+
+<span class="sd">        If the source file does not exist, ``False`` gets returned.</span>
+<span class="sd">        To move directories, see :meth:`~MoveDirectory`.</span>
+<span class="sd">        The directory in that the file shall be moved must exist.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xsrcpath (str/Path): A relative or absolute path of the source</span>
+<span class="sd">            xdstpath (str/Path): A relative or absolute path where the source file shall be moves to</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``False`` if the file or the destination directory does not exist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abssource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xsrcpath</span><span class="p">)</span>
+        <span class="n">absdest</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xdstpath</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">IsFile</span><span class="p">(</span><span class="n">abssource</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">abssource</span><span class="p">,</span> <span class="n">absdest</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Filesystem.MoveDirectory"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.MoveDirectory">[docs]</a>    <span class="k">def</span> <span class="nf">MoveDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xsrcpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">xdstpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method moves a directory in the filesystem.</span>
+<span class="sd">        **Handle with care!**</span>
+
+<span class="sd">        If the source directory does not exist, ``False`` gets returned.</span>
+<span class="sd">        To move files, see :meth:`~MoveFile`.</span>
+<span class="sd">        The directory in that the directory shall be moved in must exist.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xsrcpath (str/Path): A relative or absolute path of the source</span>
+<span class="sd">            xdstpath (str/Path): A relative or absolute path where the source file shall be moves to</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``False`` if the source directory does not exist.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                # Tree:</span>
+<span class="sd">                # dira/subdira/fa1.txt</span>
+<span class="sd">                # dirb/</span>
+
+<span class="sd">            fs.MoveDirectory(&quot;dira/subdira&quot;, &quot;dirb&quot;)</span>
+
+<span class="sd">                # Tree:</span>
+<span class="sd">                # dira/</span>
+<span class="sd">                # dirb/subdira/fa1.txt</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abssource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xsrcpath</span><span class="p">)</span>
+        <span class="n">absdest</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xdstpath</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">abssource</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">abssource</span><span class="p">,</span> <span class="n">absdest</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.Rename"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.Rename">[docs]</a>    <span class="k">def</span> <span class="nf">Rename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xsrcpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">xdstpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Renames a file or a directory.</span>
+<span class="sd">        If the destination path name exists, the method returns ``False``.</span>
+<span class="sd">        Only the last part of a path is allowed to be different, otherwise the renaming fails.</span>
+
+<span class="sd">        If the source file or directory does not exist, ``False`` gets returned.</span>
+<span class="sd">        To move a file or directory to different places see :meth:`~MoveFile` or :meth:`~MoveDirectory`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xsrcpath (str/Path): A relative or absolute path of the source</span>
+<span class="sd">            xdstpath (str/Path): A relative or absolute path where the source file shall be moves to</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``False`` if the source file or directory does not exist.</span>
+
+<span class="sd">        Exception:</span>
+<span class="sd">            OSError: When renaming is not possible</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                # Tree:</span>
+<span class="sd">                # dira/fa1.txt</span>
+<span class="sd">                # dira/fa2.txt</span>
+<span class="sd">                # dirb/fb1.txt</span>
+<span class="sd">                # dirb/fb2.txt</span>
+
+<span class="sd">            fs.Rename(&quot;dira&quot;, &quot;dirb&quot;)                   # -&gt; Returns False, does nothing</span>
+<span class="sd">            fs.Rename(&quot;dira&quot;, &quot;dirc&quot;)                   # -&gt; Returns True, renames dira to dirc</span>
+<span class="sd">            fs.Rename(&quot;dira/fa1.txt&quot;, &quot;dira/fa3.txt&quot;)   # -&gt; Returns True, renames fa1.txt to fa3.txt</span>
+<span class="sd">            fs.Rename(&quot;dira/fa1.txt&quot;, &quot;dirb/fa3.txt&quot;)   # -&gt; Returns False, does nothing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abssource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xsrcpath</span><span class="p">)</span>
+        <span class="n">abstarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xdstpath</span><span class="p">)</span>
+
+        <span class="c1"># Check that only the last part changed</span>
+        <span class="n">sourcebase</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetDirectory</span><span class="p">(</span><span class="n">abssource</span><span class="p">)</span>
+        <span class="n">targetbase</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetDirectory</span><span class="p">(</span><span class="n">abstarget</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sourcebase</span> <span class="o">!=</span> <span class="n">targetbase</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># if target exists, or source does not, do nothing</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">abssource</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">abstarget</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">abssource</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">abstarget</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.CopyFile"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.CopyFile">[docs]</a>    <span class="k">def</span> <span class="nf">CopyFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xsrcpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">xdstpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method copies a file.</span>
+<span class="sd">        **Handle with care!**</span>
+
+<span class="sd">        If the source file does not exist, ``False`` gets returned.</span>
+<span class="sd">        If the destination file exists, it gets overwritten!</span>
+<span class="sd">        When the destination path is a directory, the file gets copied into the directory.</span>
+<span class="sd">        All parent directories must exist, otherwise a ``FileNotFoundError`` exception gets raised.</span>
+
+<span class="sd">        The UNIX shell alternative would be like the following line:</span>
+
+<span class="sd">        .. code-block:: bash</span>
+
+<span class="sd">            cp $SRCPATH $DSTPATH</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xsrcpath (str/Path): A relative or absolute path of the source</span>
+<span class="sd">            xdstpath (str/Path): A relative or absolute path where the source file shall be copied to</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``False`` if the file does not exist.</span>
+
+<span class="sd">        Excpetions:</span>
+<span class="sd">            PermissionError: When there is no write access to the destination directory</span>
+<span class="sd">            FileNotFoundError: When the destination directory does not exist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abssource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xsrcpath</span><span class="p">)</span>
+        <span class="n">absdest</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xdstpath</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">IsFile</span><span class="p">(</span><span class="n">abssource</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">abssource</span><span class="p">,</span> <span class="n">absdest</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+    
+
+<div class="viewcode-block" id="Filesystem.CreateSubdirectory"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.CreateSubdirectory">[docs]</a>    <span class="k">def</span> <span class="nf">CreateSubdirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xnewpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method creates a subdirectory.</span>
+<span class="sd">        The directories are made recursively.</span>
+<span class="sd">        So *xnewpath* can address the last directory of a path that will be created.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xnewpath (str/Path): A path that addresses a new directory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">absnewpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xnewpath</span><span class="p">)</span>
+        <span class="n">absnewpath</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.GetFileExtension"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetFileExtension">[docs]</a>    <span class="k">def</span> <span class="nf">GetFileExtension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns the file extension of the file addressed by *xpath*.</span>
+<span class="sd">        It will not be checked if the file exists.</span>
+
+<span class="sd">        If xpath does not address a file or the file does not have an extension, ``None`` gets returned.</span>
+<span class="sd">        Otherwise only the extension without the leading ``&quot;.&quot;`` gets returned.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): A path or name of a file that extension shall be returned</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The file extension without the leading dot, or ``None`` if the file does not have an extension.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            </span>
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                fs  = FileSystem(&quot;/tmp&quot;)</span>
+<span class="sd">                ext = fs.GetFileExtension(&quot;test.txt&quot;)</span>
+<span class="sd">                if ext:</span>
+<span class="sd">                    print(&quot;File Extension is: \&quot;%s\&quot;&quot;%(ext))    # in this example: &quot;txt&quot;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">xpath</span>
+
+        <span class="n">extension</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span>
+        <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">extension</span> <span class="o">=</span> <span class="n">extension</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>               <span class="c1"># remove the &quot;.&quot; (&quot;.py&quot;-&gt;&quot;py&quot;)</span>
+        <span class="k">return</span> <span class="n">extension</span></div>
+
+
+<div class="viewcode-block" id="Filesystem.GuessMimeType"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GuessMimeType">[docs]</a>    <span class="k">def</span> <span class="nf">GuessMimeType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Derives the mime type based on the file extension.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): A path or name of a file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The mime type as ``&quot;type/subtype&quot;``, or ``None`` if the mime type cannot be determined.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                fs   = FileSystem(&quot;/tmp&quot;)</span>
+
+<span class="sd">                type = fs.GuessMimeType(&quot;test.txt&quot;)</span>
+<span class="sd">                print(&quot;MIME type is: \&quot;%s\&quot;&quot;%(type))    # in this example: &quot;text/plain&quot;</span>
+
+<span class="sd">                type = fs.GuessMimeType(&quot;README&quot;)</span>
+<span class="sd">                print(&quot;MIME type is: \&quot;%s\&quot;&quot;%(type))    # in this example: &quot;None&quot;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="n">mimetype</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">mimetype</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.GetFileName"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetFileName">[docs]</a>    <span class="k">def</span> <span class="nf">GetFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">incldir</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns the file name of the file addressed by *xpath*.</span>
+<span class="sd">        It is not required and not checked that the file exist.</span>
+<span class="sd">        The name of a file does not include the file extension.</span>
+
+<span class="sd">        If ``incldir`` is ``True`` (default), the full path including the directories is returd.</span>
+<span class="sd">        So the returned path is the argument without any suffix.</span>
+<span class="sd">        When ``xpath`` addresses a directory and ``inclddir`` is ``True``, the behavior is not defined!</span>
+
+<span class="sd">        If ``incldir`` is ``False`` only the file name is returned without suffix and without directories.</span>
+
+<span class="sd">        The return type is a string.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): A path or name of a file that name shall be returned</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The name of the file including directories if ``incldir==True``.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                name = fs.GetFileName(&quot;this/is/a/test.txt&quot;)</span>
+<span class="sd">                print(name) # &quot;this/is/a/test&quot;</span>
+
+<span class="sd">                name = fs.GetFileName(&quot;this/is/a/test.txt&quot;, incldir=False)</span>
+<span class="sd">                print(name) # &quot;test&quot;</span>
+
+<span class="sd">                name = fs.GetFileName(&quot;this/is/a&quot;, incldir=False)</span>
+<span class="sd">                print(name) # &quot;a&quot;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">xpath</span>
+
+        <span class="k">if</span> <span class="n">incldir</span><span class="p">:</span>
+            <span class="n">suffix</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span>
+            <span class="n">name</span>   <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)[:</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">suffix</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># Get full file name from path</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">stem</span>        <span class="c1"># Get only the name without suffix</span>
+
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Filesystem.GetDirectoryName"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetDirectoryName">[docs]</a>    <span class="k">def</span> <span class="nf">GetDirectoryName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See :meth:`~GetFileName`, but ``incldir`` is always ``False``.</span>
+<span class="sd">        So this method returns the last directory of a path.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFileName</span><span class="p">(</span><span class="n">xpath</span><span class="p">,</span> <span class="n">incldir</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.GetDirectory"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetDirectory">[docs]</a>    <span class="k">def</span> <span class="nf">GetDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns the directory a file or folder is stored in.</span>
+<span class="sd">        If is not required and not checked if the path exists.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): A path to a file or directory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The directory of that file</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                directory = fs.GetDirectory(&quot;this/is/a/test.txt&quot;)</span>
+<span class="sd">                print(str(directory)) # &quot;this/is/a&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">xpath</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.GetOwner"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetOwner">[docs]</a>    <span class="k">def</span> <span class="nf">GetOwner</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns the owner of a file or directory.</span>
+<span class="sd">        The owner is a tuple of a UNIX user and group as string</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): Path to the file or directory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A tuple (user, group) to which the file belongs to</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                fs = Filesystem(&quot;/tmp&quot;)</span>
+<span class="sd">                user,group = fs.GetOwner(&quot;testfile.txt&quot;)</span>
+<span class="sd">                print(&quot;User: &quot; + user)      # &quot;User: root&quot;</span>
+<span class="sd">                print(&quot;Group: &quot; + group)    # &quot;Group: root&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="n">user</span>    <span class="o">=</span> <span class="n">abspath</span><span class="o">.</span><span class="n">owner</span><span class="p">()</span>
+        <span class="n">group</span>   <span class="o">=</span> <span class="n">abspath</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">group</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.SetOwner"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.SetOwner">[docs]</a>    <span class="k">def</span> <span class="nf">SetOwner</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">user</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method changes the ownership of a file or directory.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): Path to the file or directory</span>
+<span class="sd">            user (str): Name of a valid UNIX user</span>
+<span class="sd">            group (str): Name of a valid UNIX group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, otherwise ``False``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">chown</span><span class="p">(</span><span class="n">abspath</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">group</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">PermissionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Setting ownership of </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2"> failed with error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.GetMode"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetMode">[docs]</a>    <span class="k">def</span> <span class="nf">GetMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns the mode of a file.</span>
+<span class="sd">        The mode consists of the ``stat`` attributes as listed in :meth:`~SetAttributes`.</span>
+
+<span class="sd">        Only the first four octal digits will be returned.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): Path to the file or directory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An integer with ``st_mode &amp; 0o7777`` of the addressed file or directory.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                fs = Filesystem(&quot;/tmp&quot;)</span>
+<span class="sd">                mode = fs.GetMode(&quot;testfile.txt&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Filesystem.GetMode is DEPRECATED. Better use Filesystem.GetAccessPermissions&quot;</span><span class="p">)</span>
+        <span class="n">abspath</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="n">mode</span>     <span class="o">=</span> <span class="n">abspath</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">mode</span><span class="o">.</span><span class="n">st_mode</span> <span class="o">&amp;</span> <span class="mo">0o7777</span></div>
+
+<div class="viewcode-block" id="Filesystem.GetAccessPermissions"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetAccessPermissions">[docs]</a>    <span class="k">def</span> <span class="nf">GetAccessPermissions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns the access mode (access permissions) of a file or a directory.</span>
+<span class="sd">        The mode is represented as string as it is used to be when calling ``ls -l``.</span>
+
+<span class="sd">        The returned string is defined as follows:</span>
+
+<span class="sd">        * It consists of exact 9 characters.</span>
+<span class="sd">        * 0…2: User access permissions (2: Set UID when ``&quot;s&quot;``)</span>
+<span class="sd">        * 3…5: Group access permissions (5: Set GID when ``&quot;s&quot;``)</span>
+<span class="sd">        * 6…8: Access permissions for others (8: Sticky when ``&quot;t&quot;``)</span>
+<span class="sd">        * It uses the following set of characters: ``&quot;rwxst-&quot;``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): Path to the file or directory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A string representing the files/directories access mode</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+<span class="sd">                </span>
+<span class="sd">                fs = Filesystem(&quot;/tmp&quot;)</span>
+<span class="sd">                </span>
+<span class="sd">                # Files at /tmp:</span>
+<span class="sd">                # rw-rw-r-- test1.txt</span>
+<span class="sd">                # rwxr-xr-x directory1</span>
+<span class="sd">                # rwsr-x--t directory2</span>
+<span class="sd">                fs.GetAccessPermissions(&quot;test1.txt&quot;)    # &quot;rw-rw-r--&quot;</span>
+<span class="sd">                fs.GetAccessPermissions(&quot;directory1&quot;)   # &quot;rwxr-xr-x&quot;</span>
+<span class="sd">                fs.GetAccessPermissions(&quot;directory2&quot;)   # &quot;rwsr-x--t&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abspath</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="n">perm</span>     <span class="o">=</span> <span class="n">abspath</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span>
+        <span class="n">mode</span>     <span class="o">=</span> <span class="n">perm</span><span class="o">.</span><span class="n">st_mode</span>
+        <span class="n">string</span>   <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="c1"># user</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRUSR</span><span class="p">):</span>    <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;r&quot;</span>
+        <span class="k">else</span><span class="p">:</span>                       <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;-&quot;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWUSR</span><span class="p">):</span>    <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;w&quot;</span>
+        <span class="k">else</span><span class="p">:</span>                       <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;-&quot;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_ISUID</span><span class="p">):</span>    <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;s&quot;</span>
+        <span class="k">elif</span><span class="p">(</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IXUSR</span><span class="p">):</span>  <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;x&quot;</span>
+        <span class="k">else</span><span class="p">:</span>                       <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;-&quot;</span>
+        <span class="c1"># group</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRGRP</span><span class="p">):</span>    <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;r&quot;</span>
+        <span class="k">else</span><span class="p">:</span>                       <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;-&quot;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWGRP</span><span class="p">):</span>    <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;w&quot;</span>
+        <span class="k">else</span><span class="p">:</span>                       <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;-&quot;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_ISGID</span><span class="p">):</span>    <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;s&quot;</span>
+        <span class="k">elif</span><span class="p">(</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IXGRP</span><span class="p">):</span>  <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;x&quot;</span>
+        <span class="k">else</span><span class="p">:</span>                       <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;-&quot;</span>
+        <span class="c1"># other</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IROTH</span><span class="p">):</span>    <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;r&quot;</span>
+        <span class="k">else</span><span class="p">:</span>                       <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;-&quot;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWOTH</span><span class="p">):</span>    <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;w&quot;</span>
+        <span class="k">else</span><span class="p">:</span>                       <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;-&quot;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_ISVTX</span><span class="p">):</span>    <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;t&quot;</span>
+        <span class="k">elif</span><span class="p">(</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IXOTH</span><span class="p">):</span>  <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;x&quot;</span>
+        <span class="k">else</span><span class="p">:</span>                       <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;-&quot;</span>
+
+        <span class="k">return</span> <span class="n">string</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.SetAccessPermissions"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.SetAccessPermissions">[docs]</a>    <span class="k">def</span> <span class="nf">SetAccessPermissions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method sets the access mode (access permissions) of a file or directory.</span>
+<span class="sd">        The mode is represented as string as it is used to be when calling ``ls -l``.</span>
+
+<span class="sd">        The access mode string must fulfill the following specification:</span>
+
+<span class="sd">        * It consists of exact 9 characters.</span>
+<span class="sd">        * 0…2: User access permissions (2: Set UID when ``&quot;s&quot;``)</span>
+<span class="sd">        * 3…5: Group access permissions (5: Set GID when ``&quot;s&quot;``)</span>
+<span class="sd">        * 6…8: Access permissions for others (8: Sticky when ``&quot;t&quot;``)</span>
+<span class="sd">        * It uses the following set of characters: ``&quot;rwxst-&quot;``.</span>
+
+<span class="sd">        Unknown characters will be ignored as well as characters at unexpected positions.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): The file or directory that mode shall be changed</span>
+<span class="sd">            mode (str): The new permissions to set</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, otherwise ``False``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: When *mode* does not have exact 9 characters.</span>
+<span class="sd">            PermissionError: When setting mode is not allowed</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                fs.SetAccessPermissions(&quot;test.txt&quot;, &quot;rwxr-x---&quot;)</span>
+<span class="sd">                fs.SetAccessPermissions(&quot;test&quot;,     &quot;rwxr-s--t&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;File access mode needs to have exact 9 characters (for example </span><span class="se">\&quot;</span><span class="s2">rwxrwxrwx</span><span class="se">\&quot;</span><span class="s2">)&quot;</span><span class="p">);</span>
+
+        <span class="n">permissions</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># user</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">):</span> <span class="n">permissions</span> <span class="o">|=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRUSR</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;w&quot;</span><span class="p">):</span> <span class="n">permissions</span> <span class="o">|=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWUSR</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">):</span> <span class="n">permissions</span> <span class="o">|=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IXUSR</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;s&quot;</span><span class="p">):</span> <span class="n">permissions</span> <span class="o">|=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_ISUID</span>
+        <span class="c1"># group</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">):</span> <span class="n">permissions</span> <span class="o">|=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRGRP</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;w&quot;</span><span class="p">):</span> <span class="n">permissions</span> <span class="o">|=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWGRP</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">):</span> <span class="n">permissions</span> <span class="o">|=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IXGRP</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;s&quot;</span><span class="p">):</span> <span class="n">permissions</span> <span class="o">|=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_ISGID</span>
+        <span class="c1"># other</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">):</span> <span class="n">permissions</span> <span class="o">|=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IROTH</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;w&quot;</span><span class="p">):</span> <span class="n">permissions</span> <span class="o">|=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWOTH</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">):</span> <span class="n">permissions</span> <span class="o">|=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IXOTH</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mode</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;t&quot;</span><span class="p">):</span> <span class="n">permissions</span> <span class="o">|=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_ISVTX</span>
+
+        <span class="n">abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Changing access permissions of </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="nb">oct</span><span class="p">(</span><span class="n">permissions</span><span class="p">))</span>
+            <span class="n">abspath</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">permissions</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">PermissionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting mode of </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2"> failed with error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">abspath</span><span class="p">,</span> <span class="nb">oct</span><span class="p">(</span><span class="n">permissions</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">e</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.CheckAccessPermissions"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.CheckAccessPermissions">[docs]</a>    <span class="k">def</span> <span class="nf">CheckAccessPermissions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method can be used to check if a file or directory can be accessed.</span>
+<span class="sd">        It returns a string with 3 characters that represent the read, write and execute flags.</span>
+<span class="sd">        The returned string is specified as follows:</span>
+
+<span class="sd">        * 3 Characters wide string</span>
+<span class="sd">        * ``[0]``: ``&quot;r&quot;`` when read access is possible, otherwise ``&quot;-&quot;``</span>
+<span class="sd">        * ``[1]``: ``&quot;w&quot;`` when write access is possible, otherwise ``&quot;-&quot;``</span>
+<span class="sd">        * ``[2]``: ``&quot;r&quot;`` when the file can be executed or the directory can be entered. Otherwise ``&quot;-&quot;``</span>
+
+<span class="sd">        The access is checked for the user ID and group ID of the process that calls this method.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): The file or directory that mode shall be changed. (Optional, default is ``&quot;.&quot;``)</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A 3 character string representing the ``&quot;rwx&quot;`` access permissions.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block::</span>
+
+<span class="sd">                fs.CheckAccessPermissions(&quot;test.txt&quot;) # &quot;rw-&quot;</span>
+<span class="sd">                fs.CheckAccessPermissions(&quot;dir&quot;)      # &quot;r-x&quot;</span>
+<span class="sd">                fs.CheckAccessPermissions(&quot;mydir&quot;)    # &quot;rwx&quot;</span>
+<span class="sd">                fs.CheckAccessPermissions()           # &quot;rwx&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get user, group</span>
+        <span class="n">owneruser</span><span class="p">,</span> <span class="n">ownergroup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetOwner</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+
+        <span class="n">userid</span>    <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">geteuid</span><span class="p">()</span>
+        <span class="n">thisuser</span>  <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwuid</span><span class="p">(</span><span class="n">userid</span><span class="p">)</span><span class="o">.</span><span class="n">pw_name</span>
+        <span class="n">gid</span>       <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getegid</span><span class="p">()</span>
+        <span class="n">thisgroup</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrgid</span><span class="p">(</span><span class="n">gid</span><span class="p">)</span><span class="o">.</span><span class="n">gr_name</span>
+
+        <span class="c1"># Get permissions</span>
+        <span class="n">perm</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetAccessPermissions</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">thisuser</span> <span class="o">==</span> <span class="n">owneruser</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mode</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>  <span class="n">perm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span>
+            <span class="k">if</span> <span class="n">mode</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;w&quot;</span><span class="p">:</span>  <span class="n">perm</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;w&quot;</span>
+            <span class="k">if</span> <span class="n">mode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>  <span class="n">perm</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span>
+
+        <span class="k">if</span> <span class="n">thisgroup</span> <span class="o">==</span> <span class="n">ownergroup</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mode</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>  <span class="n">perm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span>
+            <span class="k">if</span> <span class="n">mode</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;w&quot;</span><span class="p">:</span>  <span class="n">perm</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;w&quot;</span>
+            <span class="k">if</span> <span class="n">mode</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>  <span class="n">perm</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span>
+
+        <span class="k">if</span> <span class="n">mode</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>  <span class="n">perm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span>
+        <span class="k">if</span> <span class="n">mode</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;w&quot;</span><span class="p">:</span>  <span class="n">perm</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;w&quot;</span>
+        <span class="k">if</span> <span class="n">mode</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>  <span class="n">perm</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span>
+
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">perm</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.SetAttributes"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.SetAttributes">[docs]</a>    <span class="k">def</span> <span class="nf">SetAttributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">owner</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method sets attributes for a file or directory.</span>
+<span class="sd">        The *mode* is the access permissions as defined in the *stats* module.</span>
+
+<span class="sd">        When *mode* is ``None``, the permissions will not be changed.</span>
+<span class="sd">        When *owner* **or** *group* are ``None``, the ownership will not be changed.</span>
+
+<span class="sd">        Mode-attributes can be an bitwise-OR combination of the following flags:</span>
+
+<span class="sd">            * ``stat.S_ISUID``</span>
+<span class="sd">            * ``stat.S_ISGID``</span>
+<span class="sd">            * ``stat.S_ENFMT``</span>
+<span class="sd">            * ``stat.S_ISVTX``</span>
+<span class="sd">            * ``stat.S_IREAD``</span>
+<span class="sd">            * ``stat.S_IWRITE``</span>
+<span class="sd">            * ``stat.S_IEXEC``</span>
+<span class="sd">            * ``stat.S_IRWXU``</span>
+<span class="sd">            * ``stat.S_IRUSR``</span>
+<span class="sd">            * ``stat.S_IWUSR``</span>
+<span class="sd">            * ``stat.S_IXUSR``</span>
+<span class="sd">            * ``stat.S_IRWXG``</span>
+<span class="sd">            * ``stat.S_IRGRP``</span>
+<span class="sd">            * ``stat.S_IWGRP``</span>
+<span class="sd">            * ``stat.S_IXGRP``</span>
+<span class="sd">            * ``stat.S_IRWXO``</span>
+<span class="sd">            * ``stat.S_IROTH``</span>
+<span class="sd">            * ``stat.S_IWOTH``</span>
+<span class="sd">            * ``stat.S_IXOTH``</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): Path to the file or directory</span>
+<span class="sd">            owner (str): Name of the owner of the file or directory</span>
+<span class="sd">            group (str): Name of the group</span>
+<span class="sd">            mode: Access permissions</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``False`` when updating the mode or ownership fails</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+<span class="sd">                </span>
+<span class="sd">                import stat</span>
+<span class="sd">                fs = Filesystem(&quot;/tmp&quot;)</span>
+<span class="sd">                </span>
+<span class="sd">                # -rw-rw-r--</span>
+<span class="sd">                permissions = stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH</span>
+<span class="sd">                fs.SetAttributes(&quot;test.txt&quot;, &quot;user&quot;, &quot;group&quot;, permissions)</span>
+
+<span class="sd">                # drwxrwxr-x</span>
+<span class="sd">                mode = stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH</span>
+<span class="sd">                fs.SetAttributes(&quot;testdirectory&quot;, None, None, mode) # make directory writeable for group members</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Filesystem.SetAttributes is DEPRECATED. Better use Filesystem.SetAccessPermissions&quot;</span><span class="p">)</span>
+        <span class="n">abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">abspath</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">PermissionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Setting mode of </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2"> failed with error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">abspath</span><span class="p">,</span> <span class="nb">oct</span><span class="p">(</span><span class="n">mode</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">owner</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">group</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">chown</span><span class="p">(</span><span class="n">abspath</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span> <span class="n">group</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">PermissionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Setting ownership of </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2"> failed with error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.GetModificationDate"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetModificationDate">[docs]</a>    <span class="k">def</span> <span class="nf">GetModificationDate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns the date when a file or directory was modified the last time.</span>
+<span class="sd">        (See `os.path.getmtime &lt;https://docs.python.org/3/library/os.path.html#os.path.getmtime&gt;`_)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): Path to the file or directory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The modification date of the file or directory as UNIX time value in seconds (integer)</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            </span>
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                fs = Filesystem(&quot;/data/music/&quot;)</span>
+<span class="sd">                cdate = fs.GetModificationDate(&quot;Rammstein&quot;) # Possible creation date of /data/music/Rammstein directory</span>
+<span class="sd">                print(cdate)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="n">mtime</span>   <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">abspath</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">mtime</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.ListDirectory"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.ListDirectory">[docs]</a>    <span class="k">def</span> <span class="nf">ListDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a list of entries in the directory addressed by *xpath*.</span>
+<span class="sd">        The list can contain files and directories.</span>
+<span class="sd">        If *xpath* is not a directory, an empty list will be returned.</span>
+<span class="sd">        If *xpath* is ``None``, the root directory will be used.</span>
+
+<span class="sd">        The list contains only the names (relative to root directory) including hidden files that starts with a ``&quot;.&quot;``.</span>
+<span class="sd">        The special directories ``&quot;.&quot;`` and ``&quot;..&quot;`` are not included.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xpath (str/Path): Path to a directory. If ``None`` the root directory will be used</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of entries (files and directories) in the directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">xpath</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">abspath</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">abspath</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()]</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">TryRemoveRoot</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">paths</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.GetSubdirectories"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetSubdirectories">[docs]</a>    <span class="k">def</span> <span class="nf">GetSubdirectories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xparents</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">Path</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a filtered list with sub-directories for one or more parent directories.</span>
+<span class="sd">        If *xparents* is ``None``, the root directory will be used.</span>
+
+<span class="sd">        This method returns relative ``Path`` objects.</span>
+<span class="sd">        If a path is not relative to the root path, then an absolute path is returned.</span>
+
+<span class="sd">        The *ignore* parameter is a list of names that will be ignored and won&#39;t appear in the returned list of subdirectories.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xparents: A parent directory or a list of parent directories</span>
+<span class="sd">            ignore: A list of entries to ignore</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of paths being the parent directory plus the child directory</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            Get the subdirectories of the following file structure:</span>
+
+<span class="sd">            .. code-block:: bash</span>
+
+<span class="sd">                dir1/subdir/*</span>
+<span class="sd">                dir1/testdir/*</span>
+<span class="sd">                dir1/files</span>
+<span class="sd">                dir2/test/*</span>
+<span class="sd">                dir2/tmp/*</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                fs = Filesystem(&quot;/tmp&quot;)</span>
+
+<span class="sd">                subdirs = fs.GetSubdirectories([&quot;dir1&quot;, &quot;dir2&quot;], [&quot;tmp&quot;])</span>
+
+<span class="sd">                print(subdirs)  # &gt; [&#39;dir1/subdir&#39;, &#39;dir1/testdir&#39;, &#39;dir2/test&#39;]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">xparents</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parents</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_root</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">xparents</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">parents</span> <span class="o">=</span> <span class="p">[</span><span class="n">xparents</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parents</span> <span class="o">=</span> <span class="n">xparents</span>
+
+        <span class="c1"># Make sure all paths are of type Path and relative</span>
+        <span class="n">parents</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span> <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">parents</span><span class="p">]</span>
+        <span class="n">parents</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">TryRemoveRoot</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span> <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">parents</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ignore</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">ignore</span> <span class="o">=</span> <span class="p">[</span><span class="n">ignore</span><span class="p">]</span>
+        
+        <span class="n">pathlist</span>  <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">parents</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">AssertDirectory</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+            <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="n">entries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ListDirectory</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">:</span>
+                <span class="c1"># check if entry shall be ignored</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetDirectoryName</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">ignore</span> <span class="ow">and</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">ignore</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># check if this is a valid sub-directory</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># append valid path to the pathlist</span>
+                <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+
+            <span class="n">pathlist</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pathlist</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.GetFiles"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetFiles">[docs]</a>    <span class="k">def</span> <span class="nf">GetFiles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xparents</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">Path</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">Path</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a filtered list with files for one or more parent directories.</span>
+<span class="sd">        If *xparents* is ``None``, the root directory will be used.</span>
+<span class="sd">        If a parent path does not exist, an exception gets raised.</span>
+
+<span class="sd">        The *ignore* parameter is a list of names that will be ignored and won&#39;t appear in the returned list of subdirectories.</span>
+
+<span class="sd">        All paths returned are relative to the root directory if possible.</span>
+<span class="sd">        If not, the they are absolute.</span>
+
+<span class="sd">        This method works like :meth:`~GetSubdirectories` but with files</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xparents: A parent directory or a list of parent directories</span>
+<span class="sd">            ignore: A list of entries to ignore</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of paths relative to the root directory, including the parent directory (&quot;parent/filename&quot;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">xparents</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parents</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_root</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">xparents</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">parents</span> <span class="o">=</span> <span class="p">[</span><span class="n">xparents</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parents</span> <span class="o">=</span> <span class="n">xparents</span>
+
+        <span class="c1"># Make sure all paths are of type Path and relative</span>
+        <span class="n">parents</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span> <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">parents</span><span class="p">]</span>
+        <span class="c1">#parents = [self.TryRemoveRoot(parent) for parent in parents] # Removed for speed optimization reasons</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ignore</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">ignore</span> <span class="o">=</span> <span class="p">[</span><span class="n">ignore</span><span class="p">]</span>
+
+        <span class="n">pathlist</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">parents</span><span class="p">:</span>
+            <span class="n">paths</span>   <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">entries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ListDirectory</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">:</span>
+                <span class="c1"># check if entry shall be ignored</span>
+                <span class="k">if</span> <span class="n">ignore</span> <span class="ow">and</span> <span class="n">entry</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">ignore</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># if it&#39;s a file, add it to the paths list, otherwise ignore it</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">IsFile</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># append valid path to the path list</span>
+                <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+
+            <span class="n">pathlist</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pathlist</span></div>
+
+
+
+<div class="viewcode-block" id="Filesystem.Execute"><a class="viewcode-back" href="../../../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.Execute">[docs]</a>    <span class="k">def</span> <span class="nf">Execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commandline</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes an external program.</span>
+<span class="sd">        The command line is a list of arguments with the executable name as first element.</span>
+<span class="sd">        So ``commandline[0]`` is the program name like ``&quot;ls&quot;`` and the next elements are a list of arguments to this program (like ``&quot;-l&quot;, &quot;-h&quot;``).</span>
+<span class="sd">        All entries in this list must be representable as string.</span>
+
+<span class="sd">        The I/O interfaces *stderr*, *stdout* and *stdin* are piped to ``/dev/null``</span>
+
+<span class="sd">        After executing the command line, a ``sync`` command gets executed.</span>
+<span class="sd">        In the past there were lots of problems because a second process wanted to process data preprocessed from the first one,</span>
+<span class="sd">        but those data were not completely written to the disk.        </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            commandline (list): command line split into the executable name and individual arguments</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: When one entry of the commandline list can not be converted to string</span>
+<span class="sd">            ChildProcessError: If the return value of the executed program is not 0</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            The following python code results in the following command line</span>
+
+<span class="sd">            .. code-block:: python</span>
+<span class="sd">                </span>
+<span class="sd">                try:</span>
+<span class="sd">                    fs.Execute([&quot;ls&quot;, &quot;-l&quot;, &quot;-h&quot;])</span>
+<span class="sd">                except ChildProcessError as e:</span>
+<span class="sd">                    print(e)</span>
+
+<span class="sd">            .. code-block:: bash</span>
+
+<span class="sd">                ls -l -h 2&gt; /dev/null &gt; /dev/null &lt; /dev/null</span>
+<span class="sd">                sync</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">commandline</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">commandline</span><span class="p">]</span>
+
+        <span class="n">devnull</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">commandline</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">devnull</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">devnull</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">devnull</span><span class="p">)</span><span class="o">.</span><span class="n">returncode</span>
+        <span class="k">if</span> <span class="n">retval</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ChildProcessError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> returned </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">commandline</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">retval</span><span class="p">))</span>
+        <span class="c1"># Make sure the data processed by the commandline is global available</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span></div></div>
+
+
+
+<span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
+
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 - 2022 Ralf Stemmer.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'8.0.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../_static/tabs.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

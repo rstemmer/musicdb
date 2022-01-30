@@ -1,6 +1,0 @@
-mutagenx
-python-Levenshtein
-fuzzywuzzy
-autobahn
-tqdm
-pillow

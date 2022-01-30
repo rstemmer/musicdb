@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,28 +21,28 @@ class QueueControlView extends Element
     constructor()
     {
         super("div", ["QueueControlView", "flex-row", "hlcolor", "hovpacity"]);
-        this.label   = document.createElement("label");
+        this.label   = new Element("label");
         this.buttons = new ButtonBox_QueueControls();
-        this.element.appendChild(this.label);
-        this.element.appendChild(this.buttons.GetHTMLElement());
+        this.AppendChild(this.label);
+        this.AppendChild(this.buttons);
     }
 
 
 
     Update()
     {
-        let musictype = mdbmodemanager.GetCurrentMode();
-        let label     = null;
-        if(musictype == "audio")
+        let mode  = WebUI.GetManager("MusicMode").GetCurrentMode();
+        let label = null;
+        if(mode == "audio")
         {
             label = "Add Random Song:";
         }
-        else if(musictype == "video")
+        else if(mode == "video")
         {
             label = "Add Random Video:";
         }
 
-        this.label.innerText = label;
+        this.label.SetInnerText(label);
         this.buttons.UpdateTooltips();
         return;
     }

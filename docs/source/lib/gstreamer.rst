@@ -2,11 +2,11 @@
 GStreamer Interface
 ===================
 
-.. automodule:: lib.stream.gstreamer
+.. automodule:: musicdb.lib.stream.gstreamer
 
 GStreamerInterface Class
 ------------------------
 
-.. autoclass:: lib.stream.gstreamer.GStreamerInterface
+.. autoclass:: musicdb.lib.stream.gstreamer.GStreamerInterface
    :members:
 

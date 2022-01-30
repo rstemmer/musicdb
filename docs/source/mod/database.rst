@@ -2,5 +2,5 @@
 database - Music DB Management
 ==============================
 
-.. automodule:: mod.database
+.. automodule:: musicdb.mod.database
 

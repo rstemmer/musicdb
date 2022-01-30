@@ -24,7 +24,7 @@ class MusicDBControls extends Element
 {
     constructor()
     {
-        super("div", ["MusicDBControlsBox", "frame", "hovpacity", "hlcolor"]);
+        super("div", ["MusicDBControlsBox", "flex", "flex-column", "frame", "hovpacity", "hlcolor"]);
 
         this.controls = new Object();
         this.controls["audio"] = this._CreateControls("audio");
@@ -72,7 +72,7 @@ class MusicDBControls extends Element
         }
         else if(state == "stopped")
         {
-            this.UpdateButton(playbutton, "Play Audio Stream", "Continue audio streaming on server side for all clients", "play");
+            this.UpdateButton(playbutton, "Start Audio Stream", "Continue audio streaming on server side for all clients", "play");
         }
     }
     SetVideoStatus(state) // "playing"/"stopped"
@@ -170,7 +170,7 @@ class MusicDBControls extends Element
         // Create Next Button
         let nextbutton = new Element("div", ["nextbutton"]);
         this.UpdateButton(nextbutton, `Next ${musicname}`, `Play Next ${musicname} from the Queue`, "unknwon");
-        nextbutton.element.onclick = (event) => {queueview.FakeEntrySkipping(); MusicDB_Call(`PlayNext${musicname}`);};
+        nextbutton.element.onclick = (event) => {WebUI.GetView("Queue").FakeEntrySkipping(); MusicDB_Call(`PlayNext${musicname}`);};
 
         // Put all Buttons Together
         let element = new Element("div", ["musicdbcontrols"]);

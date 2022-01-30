@@ -1,6 +1,6 @@
 /*
  * MusicDB,  a music manager with web-bases UI that focus on music.
- * Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,27 +21,23 @@
 {
 }
 
-.UploadTable > tr:first-child
+
+.UploadTableRow td:nth-child(2)
 {
-    color:              var(--bgcolor);
-    background-color:   var(--hlcolor);
-    font-weight:        bold;
-    letter-spacing:     0.05rem;
+    width:              50%;
 }
 
 
-
-.UploadTableRow:nth-child(1) > td
+.UploadTableRow td:nth-child(3)
 {
-    margin:             auto;
-    text-align:         center;
-}
-.UploadTableRow td:nth-child(4) > div
-{
-    margin-left:        auto;
-    justify-content:    flex-end;
+    width:              20%;
 }
 
+
+.UploadTableRow td:not(:nth-child(2))
+{
+    white-space:        nowrap;
+}
 
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 

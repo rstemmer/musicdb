@@ -2,11 +2,11 @@
 Fileprocessing Methods
 ======================
 
-.. automodule:: lib.fileprocessing
+.. automodule:: musicdb.lib.fileprocessing
 
 Fileprocessing Class
 --------------------
 
-.. autoclass:: lib.fileprocessing.Fileprocessing
+.. autoclass:: musicdb.lib.fileprocessing.Fileprocessing
    :members:
 

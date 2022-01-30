@@ -1,6 +1,6 @@
 
-MusicDB Commandline Modules
-===========================
+Creating new CLI Modules
+========================
 
 Modules are the interface to the MusicDB API for the command line tool ``musicdb``.
 The following sections explain how to build a module.
@@ -25,11 +25,11 @@ The process can be seen as the following (simplified):
    module     = imp.load_module(modulename, modfp, modpath, moddesc)
    modclass   = getattr(module, modulename)
 
-   # Extend musicdb arument paser set
+   # Extend MusicDB argument parser set
    parserset  = argparser.add_subparsers(title="Modules", metavar="module", help="module help")
    modclass.MDBM_CreateArgumentParser(parserset, modulename)
 
-   # Initialize musicdb
+   # Initialize MusicDB
    args     = argparser.parse_args()
    config   = MusicDBConfig(args.configpath)
    database = MusicDatabase(args.databasepath)
@@ -73,6 +73,6 @@ The following example shows a template of a module:
 
 Its base class is as simple as the following:
 
-.. literalinclude:: ../../../lib/modapi.py
+.. literalinclude:: ../../../musicdb/lib/modapi.py
 
 

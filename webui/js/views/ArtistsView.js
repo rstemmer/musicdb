@@ -46,6 +46,16 @@ class ArtistsView extends LeftView
         this.RemoveChilds();
         this.AppendChild(new Marker("↑_mark"));
 
+        // No artist available?
+        // Inform the user and give hints.
+        if(MDBArtistList.length === 0)
+        {
+            let noartistswarning = new MessageBarWarning("No artists found.<br>Select different genre or add new music.");
+            noartistswarning.Show();
+            this.AppendChild(noartistswarning);
+            return;
+        }
+
         for(let entry of MDBArtistList)
         {
             // Create artists entry
@@ -176,7 +186,7 @@ class ArtistsView extends LeftView
     {
         let musicid      = MDBMusic.id;
         let tile         = this.tiles[musicid];
-        let activegenres = tagmanager.GetActiveGenres();
+        let activegenres = WebUI.GetManager("Tags").GetActiveGenres();
 
         for(let genre of MDBGenres)
         {
@@ -198,7 +208,7 @@ class ArtistsView extends LeftView
 
     RequestUpdate()
     {
-        let mode = mdbmodemanager.GetCurrentMode();
+        let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
         if(mode == "audio")
             MusicDB_Broadcast("GetFilteredArtistsWithAlbums", "ShowArtists");
         else if(mode == "video")
@@ -232,10 +242,17 @@ class ArtistsView extends LeftView
         }
         else if(fnc == "HideAlbum" && sig == "UpdateArtists")
         {
-            if(mdbmodemanager.GetCurrentMode() == "audio")
+            let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
+            if(mode == "audio")
                 MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
             else
                 MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+        }
+        else if(fnc == "GetAlbum" && sig == "AlbumRenamed")
+        {
+            let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
+            if(mode == "audio")
+                MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
         }
         return;
     }

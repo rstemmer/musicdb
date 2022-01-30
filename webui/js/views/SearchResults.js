@@ -133,6 +133,7 @@ class SearchResultsPopup extends BaseSearchResults
     {
         super();
         this.element.classList.add("frame");
+        this.element.classList.add("opaque");
         this.element.classList.add("SearchResultsPopup");
 
         if(onhide == null)

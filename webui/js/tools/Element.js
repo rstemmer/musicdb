@@ -55,6 +55,13 @@ class Element
         else
             this.element.appendChild(child);
     }
+    RemoveChild(child)
+    {
+        if(typeof child.GetHTMLElement === "function")
+            this.element.removeChild(child.GetHTMLElement());
+        else
+            this.element.removeChild(child);
+    }
     RemoveChilds()
     {
         this.element.innerHTML = "";
@@ -142,8 +149,51 @@ class Element
     }
     Hide()
     {
-        this.displaystyle = this.element.style.display;
+        let currentdisplaystyle = window.getComputedStyle(this.element, null).display;
+        if(currentdisplaystyle === "none")
+            return; // If hidden, nothing to do here.
+        this.displaystyle = currentdisplaystyle;
+
         this.element.style.display = "none";
+    }
+
+
+
+    ScrollIntoView()
+    {
+        this.element.scrollIntoView({behavior: "smooth", block: "nearest"});
+    }
+
+
+
+    SetColor(htmlcolor)
+    {
+        this.element.style.color = htmlcolor;
+    }
+
+
+
+    SetClickEventCallback(callback)
+    {
+        this.element.onclick = callback;
+    }
+    SetRightClickEventCallback(callback)
+    {
+        this.element.oncontextmenu = callback;
+    }
+
+
+
+    ReplaceWith(newelement)
+    {
+        let newnode;
+        if(typeof newelement.GetHTMLElement === "function")
+            newnode = newelement.GetHTMLElement();
+        else
+            newnode = newelement;
+
+        this.element.replaceWith(newnode);
+        this.displaystyle = this.element.style.display;
     }
 }
 

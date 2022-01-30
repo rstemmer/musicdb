@@ -3,10 +3,14 @@ MusicDB Configuration
 =====================
 
 The following sections represent the sections of the MusicDB Configuration file.
+The data structure for that some basic settings are mentioned here is documented at :doc:`/basics/data`.
+
 The sections have the following structure:
 
 option (type):
    description
+
+
 
 meta
 ----
@@ -17,23 +21,33 @@ version (integer):
    When new sections or keys are added (or old ones removed), the version number gets incremented.
    After updating MusicDB compare your configuration with the new one and update the file by yourself (including the version number)
 
-server
-------
 
-pidfile (path to file):
-   This is the place where the PID file gets placed
+musicdb
+-------
 
-statedir (path to a directory):
-   In this directory the current global state of MusicDB is stored.
-   More details can be found in the documentation for the state-file: :mod:`~lib.cfg.mdbstate`
+username (string with UNIX user name):
+   This is the user configured to run the MusicDB websocket server.
+   This must match the systemd unit file settings.
 
-fifofile (path to file):
-   This file will be used to communicate with the WebSocket servers internals.
-   Read :doc:`/mod/server` for details.
+groupname (string with UNIX group name):
+   This is the group configured under which the MusicDB websocket server runs.
+   This must match the systemd unit file settings.
 
-webuiconfig (path to file):
-   Configuration file for the WebUI.
-   Here, settings done inside the WebUI are stored.
+
+
+directories
+-----------
+
+For details see :doc:`/basics/data`.
+
+music (directory path):
+   This is the place where the music files are expected.
+
+data (directory path):
+   This is the directory used by MusicDB to store internal data.
+   The databases, artworks and states of MusicDB and the WebUI are stored at this place.
+
+
 
 websocket
 ---------
@@ -42,20 +56,17 @@ Please keep in mind that websockets are secured.
 TLS is always enabled.
 So, the protocol is ``wss``.
 
-address (URL / IP address):
+bind (IP address):
    The address the server is listening to.
    For example, ``0.0.0.0`` for global listening.
+   After installation, this address is set to ``127.0.0.1`` so that the server cannot be addressed from the internet accidentally 
 
 port (socket port):
    The number of the port, the server is listening on.
+   Because MusicDB is executed as non-root user, the port number must be above ``1024``.
 
-   Here are some lists with restricted ports:
-
-      * `FireFox <https://www-archive.mozilla.org/projects/netlib/PortBanning.html#portlist>`
-      * `Chrome <https://src.chromium.org/viewvc/chrome/trunk/src/net/base/net_util.cc?view=markup>`
-
-url (URL):
-   **TODO**
+   After changing the port number, you also have to update the ``config.js`` file in the ``webdata`` directory.
+   The default path is ``/var/lib/musicdb/webdata/config.js``, so that the MusicDB WebUI knows which number to use.
 
 opentimeout (time in seconds):
    Time until the connection to the websocket server raises a timeout exception
@@ -63,11 +74,8 @@ opentimeout (time in seconds):
 closetimeout (time in seconds):
    Time until the disconnection process of the websocket server raises a timeout exception
 
-key (base64 encoded key):
+apikey (base64 encoded key):
    A key that is used to identify clients that are allowed to use the websocket interface.
-
-TLS
----
 
 cert (path to SSL Certificate file):
    File to the certificate used for the TLS secured websockets
@@ -75,24 +83,10 @@ cert (path to SSL Certificate file):
 key (path to SSL Key file):
    File of the key for the certificate
 
-database
---------
 
-path (path to file):
-   Path to the MusicDB Database file
 
 music
 -----
-
-path (path to directory):
-   Path to the music collection.
-   In this directory, the Artist-directories are stored.
-
-owner (UNIX user name):
-   Name of the user that shall be the owner of the music files
-
-group (UNIX group name):
-   Name of the group that shall be the owner of the music files
 
 ignoreartists (/ separated list of directory names):
    Ignore these directory names when looking for artists
@@ -102,28 +96,20 @@ ignorealbums (/ separated list of directory names):
 
 ignoresongs (/ separated list of file names):
    Ignore these files names when looking for songs
-   
-artwork
--------
 
-path (path to directory):
-   Path to the artwork root directory where all artworks are stored at
+
+
+albumcover
+----------
 
 scales (list of numbers ∈ ℕ):
    A list of scales that will be used to create thumbnails. 
    At least ``"50, 150, 500"`` should appear in the list because those are used by the MusicDB WebUI
 
-manifesttemplate (path to file):
-   Name of the template for the manifest file to tell the browser to cache the artwork
-
-manifest (path to file):
-   Name where the manifest file to tell the browser to cache the artwork will be generated at
+   
 
 videoframes
 -----------
-
-path (path to directory):
-   Path to the video frames root directory where all artworks are stored at
 
 frames (numbers ∈ ℕ):
    Amount of frames used for a preview animation
@@ -135,20 +121,29 @@ scales (list of numbers ∈ ℕ):
 previewlength (seconds ∈ ℕ):
    Length of the preview in seconds.
 
+
+
 uploads
 -------
 
-allow (boolean):
-   If ``True`` users are allowed to upload artworks.
+allow (list of strings):
+   If not empty users are allowed to upload files of certain categories.
+   The categories are defined in that list.
+   The default is ``allow=artwork, songs``.
+
+   The following categories exist:
+
+   -  artwork: Album artwork
+   -  songs: Song files
 
    .. warning::
 
-      The WebUI does not know about this settings an assumes that uploads are possible.
+      The WebUI does not know about this settings and assumes that uploads are possible.
       So when setting this to ``False``, the WebUI still provided the UI elements.
       The server just rejects all attempts to upload files.
+      This of course will be reflected by a meaningful error message in the WebUI.
 
-path (path to directory):
-   Path to the directory for temporary uploads and meta data
+
 
 extern
 ------
@@ -166,23 +161,21 @@ songmap (filename):
    Name of the map-file of the stored music
 
 
+
 tracker
 -------
-
-dbpath (path to file):
-   Path to the tracker database
 
 cuttime (integer, time in minutes):
    Time until a relation gets cut.
    If there is a time gap of *cuttime* minutes or more between the current played song and the previous one,
    the relationship gets ignored.
 
+trackrandom (boolean ∈ {True, False}):
+   If set to ``True``, the tracker tracks also random song.
+   Otherwise the song gets ignored.
 
-lycra
------
-
-dbpath (path to file):
-   Path to the database the lyrics will be cached at
+   A detailed description of the behavior can be found in the documentation of the tracking algorithm:
+   :meth:`musicdb.mdbapi.tracker.Tracker.Track`.
 
 
 Icecast
@@ -208,7 +201,8 @@ mountname (string starting with ``/``):
    This is the name of the mount MusicDB uses.
 
 
-Randy
+
+randy
 -----
 
 nodisabled (boolean):
@@ -216,6 +210,15 @@ nodisabled (boolean):
 
 nohated (boolean):
    If ``true`` no hated songs will be chosen
+
+nohidden (boolean):
+   If ``True`` no hidden albums will be considered
+
+nobadfile (boolean):
+   If ``True`` no songs marked as "bad file" will be selected
+
+nolivemusic (boolean):
+   If ``True`` no songs marked as "live recording" will be selected
 
 minsonglen (number ∈ ℕ):
    Determines the minimum length of a song in seconds to be in the set of possible songs
@@ -243,11 +246,12 @@ maxtries (number ∈ ℕ):
    This prevents spending infinite amount of time getting a song even if the data base does not provide enough songs.
 
 
+
 log
 ---
 
 logfile (path to file):
-   Output for the logs. Can also be ``stdout`` or ``stderr``
+   Output for the logs. Can also be ``stdout``, ``stderr`` or ``journal``
 
 loglevel (Loglevel name):
    Log level to run the logger at. Can be one of the following: ``INFO``, ``WARNING``, ``ERROR``
@@ -261,30 +265,31 @@ ignore (list of python module names):
    At least ``requests, urllib3, PIL`` is recommended
 
 
+
 debug
 -----
 These flags can be used to prevent damage or messing up data while debugging or testing.
 Furthermore, it can be used to disable some features that do not work.
 
-disablestats (number ∈ {0,1}):
+disablestats (number ∈ {True, False}):
    Ignore statistic changes for songs (Like, Dislike…).
    They will not be written to the database.
 
-disabletracker (number ∈ {0,1}):
+disabletracker (number ∈ {True, False}):
    Do not track the songs that were played
 
-disableai (number ∈ {0,1}):
+disableai (number ∈ {True, False}):
    Do not use AI related things.
-   On weak computers this should be ``1``.
+   On weak computers this should be ``True``.
 
-disabletagging (number ∈ {0,1}):
+disabletagging (number ∈ {True, False}):
    Do not set or remove any tags for songs or albums
 
-disableicecast (number ∈ {0,1}):
+disableicecast (number ∈ {True, False}):
    Do not try to connect to an IceCast server
 
-disablevideos (number ∈ {0,1}):
+disablevideos (number ∈ {True, False}):
    Disable the support for music videos.
-   This is ``1`` (disabled) by default.
+   This is ``True`` (disabled) by default.
    Currently, the Music Video feature is in beta state.
 

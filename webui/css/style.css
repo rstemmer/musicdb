@@ -85,6 +85,11 @@
     border-color:   var(--fmcolor);
 }
 
+.opaque
+{
+    background-color:   var(--bgcolor);
+    background-image:   url(../img/Noise10.png);
+}
 
 /***********************/
 /* default font  style */
@@ -188,13 +193,17 @@ input[type="color"]
     border-bottom:      none;
 }
 
-input[data-valid="true"]:focus
+input[data-valid="true"]
 {
     border-bottom:      0.2rem solid #105810;
 }
 input[data-valid="false"]
 {
     border-bottom:      0.2rem solid #5d1410;
+}
+input:disabled
+{
+    opacity:            0.5;
 }
 
 .inputbox > input

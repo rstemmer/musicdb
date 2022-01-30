@@ -6,12 +6,12 @@ This module manages the blacklists used by :mod:`~mdbapi.randy`.
 Blacklist Module
 ----------------
 
-.. automodule:: mdbapi.blacklist
+.. automodule:: musicdb.mdbapi.blacklist
 
 
 Blacklist Interface Class
 -------------------------
 
-.. autoclass:: mdbapi.blacklist.BlacklistInterface
+.. autoclass:: musicdb.mdbapi.blacklist.BlacklistInterface
    :members:
 

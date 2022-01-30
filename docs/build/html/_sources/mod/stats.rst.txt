@@ -2,5 +2,5 @@
 stats - MusicDB Song Statistic
 ==============================
 
-.. automodule:: mod.stats
+.. automodule:: musicdb.mod.stats
 

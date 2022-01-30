@@ -1,0 +1,35 @@
+Source: musicdb
+Section: contrib/web
+Priority: optional
+Maintainer: Ralf Stemmer <ralf.stemmer@gmx.net>
+Build-Depends: debhelper (>=11~), dh-exec, dh-python, python3-all
+Standards-Version: 4.1.4
+Homepage: https://github.com/rstemmer/muiscdb/
+X-Python3-Version: >= 3.9
+
+Package: musicdb
+Architecture: all
+Multi-Arch: foreign
+Depends: ffmpeg,
+         gstreamer1.0-plugins-bad,
+         gstreamer1.0-plugins-base,
+         gstreamer1.0-plugins-good,
+         libshout3,
+         openssl,
+         python3-autobahn,
+         python3-fuzzywuzzy,
+         python3-gi,
+         python3-levenshtein,
+         python3-mutagen,
+         python3-systemd,
+         python3-tqdm,
+         python3-willow,
+         sqlite3,
+         ${misc:Depends},
+         ${python3:Depends}
+Recommends: logrotate, apache2, icecast2
+Description: Music manager with web-bases UI that focus on music
+ MusicDB is a music manager with focus on remote access to your music
+ collection using a web-based user interface.  It allows you to manage
+ an audio stream based on a song-queue.  The WebUI is focusing on
+ being a presentation of your music rather than being a database front-end.

@@ -30,7 +30,7 @@ class ArtistsPopup extends PopupElement
 
     ShowArtistsList(searchstring)
     {
-        let artistslist = artistscache.FindArtist(searchstring);
+        let artistslist = WebUI.GetManager("Artists").FindArtist(searchstring);
         if(artistslist.length <= 0)
         {
             this.Hide();
@@ -110,7 +110,7 @@ class ArtistInput extends Element
         let valid      = true;
 
         // Check if name exists
-        let artistslist = artistscache.FindArtist(artistname, "strcmp");
+        let artistslist = WebUI.GetManager("Artists").FindArtist(artistname, "strcmp");
         if(artistslist.length == 1)
             artistid = artistslist[0].id;
 

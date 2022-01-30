@@ -28,14 +28,26 @@ class SettingsMenu extends LeftView
         this.views.push(null);
         this.AddMenuEntry(
             new SVGIcon("Back"),
-            "Back to Artists", 
+            "Back to Music", 
             ()=>{
                 this.UnlockView();
                 leftviewmanager.ShowArtistsView();
+                let modemanager = WebUI.GetManager("MusicMode");
+                let musicmode   = modemanager.GetCurrentMode();
+                if(musicmode == "audio")
+                {
+                    let albumid = modemanager.GetCurrentAlbumID();
+                    MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: albumid});
+                }
+                else
+                {
+                    let videoid = modemanager.GetCurrentVideoID();
+                    MusicDB_Request("GetVideo", "ShowVideo", {videoid: videoid});
+                }
                 },
-            "Hide Management menu and show Artists");
+            "Hide Management menu and go back to the Music Views");
 
-        this.views.push(webuisettings);
+        this.views.push(WebUI.GetView("WebUISettings"));
         this.AddMenuEntry(
             new SVGIcon("Settings"),
             "WebUI Settings",
@@ -44,7 +56,16 @@ class SettingsMenu extends LeftView
                 },
             "Show WebUI Settings");
 
-        this.views.push(genresettings);
+        this.views.push(WebUI.GetView("StreamSettings"));
+        this.AddMenuEntry(
+            new SVGIcon("Song"),
+            "Stream Settings",
+            ()=>{
+                MusicDB_Request("LoadWebUIConfiguration", "ShowStreamSettings");
+                },
+            "Show Stream Settings");
+
+        this.views.push(WebUI.GetView("GenreSettings"));
         this.AddMenuEntry(
             new SVGIcon("Tags"),
             "Genre Manager",
@@ -54,7 +75,7 @@ class SettingsMenu extends LeftView
                 },
             "Manage, Add and Remove Genres and Subgenres");
 
-        this.views.push(moodmanager);
+        this.views.push(WebUI.GetView("MoodSettings"));
         this.AddMenuEntry(
             new SVGIcon("Tags"),
             "Mood Manager",
@@ -64,7 +85,7 @@ class SettingsMenu extends LeftView
                 },
             "Manage, Add and Remove Mood Flags");
 
-        this.views.push(hiddenalbums);
+        this.views.push(WebUI.GetView("HiddenAlbums"));
         this.AddMenuEntry(
             new SVGIcon("Hide"),
             "Hidden Albums",
@@ -73,15 +94,41 @@ class SettingsMenu extends LeftView
                 },
             "Show list of hidden albums that can be made visible again");
 
-        this.views.push(videoimport);
+        this.views.push(WebUI.GetView("AlbumImport"));
+        this.AddMenuEntry(
+            new SVGIcon("Import"),
+            "Import Album",
+            ()=>{
+                MusicDB_Request("FindNewContent", "ShowAlbumImport");
+                },
+            "Import Music Album");
+
+        this.views.push(WebUI.GetView("VideoImport"));
         this.AddMenuEntry(
             new SVGIcon("Import"),
             "Import Video",
             ()=>{
                 MusicDB_Request("FindNewContent", "ShowVideoImport");
-                MusicDB_Request("GetUploads",     "ShowUploads");
                 },
             "Upload and/or Import Music Videos");
+
+        this.views.push(WebUI.GetView("Repair"));
+        this.AddMenuEntry(
+            new SVGIcon("Repair"),
+            "Repair Database",
+            ()=>{
+                MusicDB_Request("InitiateFilesystemScan", "ShowRepairView");
+                },
+            "Show Invalid Database Enties");
+
+        this.views.push(WebUI.GetView("TaskList"));
+        this.AddMenuEntry(
+            new SVGIcon("TaskList"),
+            "Task List",
+            ()=>{
+                MusicDB_Request("GetCurrentTasks", "ShowCurrentTasks");
+                },
+            "Show open and running MusicDB tasks");
     }
 
 
@@ -119,16 +166,15 @@ class SettingsMenu extends LeftView
 
     ShowVideoEntry()
     {
-        let index = this.views.indexOf(videoimport);
+        let index = this.views.indexOf(WebUI.GetView("VideoImport"));
         if(typeof index === "number")
             this.entries[index].style.display= "flex";
     }
     HideVideoEntry()
     {
-        let index = this.views.indexOf(videoimport);
+        let index = this.views.indexOf(WebUI.GetView("VideoImport"));
         if(typeof index === "number")
             this.entries[index].style.display= "none";
-        window.console && console.log(`Video entry (${index}) hidden`);
     }
 
 

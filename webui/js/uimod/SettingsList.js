@@ -19,7 +19,7 @@
 
 class SettingsList extends Element
 {
-    constructor(MDBTag)
+    constructor()
     {
         super("div", ["SettingsList", "flex-columns"]);
         this.settingslist = new Array();
@@ -30,7 +30,7 @@ class SettingsList extends Element
     // entry: SettingsEntry object
     AddEntry(entry)
     {
-        this.element.appendChild(entry.GetHTMLElement());
+        this.AppendChild(entry);
     }
 }
 

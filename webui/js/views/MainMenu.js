@@ -22,7 +22,7 @@ class MainMenu extends Menu
 {
     constructor(curtain=null)
     {
-        super(["frame"], "MainMenu");
+        super(["frame", "opaque"], "MainMenu");
 
         this.curtain     = curtain;
         if(this.curtain)
@@ -64,7 +64,7 @@ class MainMenu extends Menu
             "Enter Fullscreen",
             ()=>
             {
-                fullscreenmanager.EnterFullscreen();
+                WebUI.GetManager("Fullscreen").EnterFullscreen();
             },
             "Switch browser into fullscreen mode",
 
@@ -72,7 +72,7 @@ class MainMenu extends Menu
             "Leave Fullscreen",
             ()=>
             {
-                fullscreenmanager.LeaveFullscreen();
+                WebUI.GetManager("Fullscreen").LeaveFullscreen();
             },
             "Switch browser into window mode");
     }
@@ -84,7 +84,7 @@ class MainMenu extends Menu
             "Switch to Video Mode",
             ()=>
             {
-                mdbmodemanager.SetVideoMode();
+                WebUI.GetManager("MusicMode").SetVideoMode();
             },
             "Switch MusicDB WebUI to Video Mode",
 
@@ -92,7 +92,7 @@ class MainMenu extends Menu
             "Switch to Audio Mode",
             ()=>
             {
-                mdbmodemanager.SetAudioMode();
+                WebUI.GetManager("MusicMode").SetAudioMode();
             },
             "Switch MusicDB WebUI to Audio Mode");
     }
@@ -104,7 +104,8 @@ class MainMenu extends Menu
             "Reload Artists",
             ()=>
             {
-                if(mdbmodemanager.GetCurrentMode() == "audio")
+                let musicmode = WebUI.GetManager("MusicMode").GetCurrentMode();
+                if(musicmode == "audio")
                     MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
                 else
                     MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
@@ -199,6 +200,16 @@ class MainMenu extends Menu
                 this.ShowEntry("modeswitch");
             else
                 this.HideEntry("modeswitch");
+
+            if(args.MainMenu.showstreamplayer == true)
+                this.ShowSection("Audio Stream");
+            else
+                this.HideSection("Audio Stream");
+
+            if(args.MainMenu.showsystemstatus == true)
+                this.ShowSection("System Status");
+            else
+                this.HideSection("System Status");
         }
 
         return;

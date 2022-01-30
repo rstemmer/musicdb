@@ -1,6 +1,6 @@
 
-Configuration
-=============
+Configuration Access
+====================
 
 The following class diagram shows the implementation of MusicDBs configuration and state management.
 Only the more important methods are shown in the diagram.
@@ -26,65 +26,71 @@ For a list of all methods see the related documentation of the class.
       }
 
 
-Base Classes
-------------
+Base Configuration Classes
+--------------------------
 
-Config
-^^^^^^
+ini Files
+^^^^^^^^^
 
-.. automodule:: lib.cfg.config
+.. automodule:: musicdb.lib.cfg.config
 
-.. autoclass:: lib.cfg.config.Config
+.. autoclass:: musicdb.lib.cfg.config.Config
    :members:
 
 
-CSVFile
-^^^^^^^
+csv Files
+^^^^^^^^^
 
-.. automodule:: lib.cfg.csv
+.. automodule:: musicdb.lib.cfg.csv
 
-.. autoclass:: lib.cfg.csv.CSVFile
+.. autoclass:: musicdb.lib.cfg.csv.CSVFile
    :members:
 
 
-MusicDB Configuration
----------------------
+MusicDB Configuration File
+--------------------------
 
 Detail of the MusicDB Configuration can be found under :doc:`/basics/config`.
 
-.. automodule:: lib.cfg.musicdb
+.. automodule:: musicdb.lib.cfg.musicdb
 
-.. autoclass:: lib.cfg.musicdb.MusicDBConfig
+.. autoclass:: musicdb.lib.cfg.musicdb.MusicDBConfig
    :members:
 
 
-WebUI Configuration
+WebUI Configuration File
+------------------------
+
+.. automodule:: musicdb.lib.cfg.webui
+
+.. autoclass:: musicdb.lib.cfg.webui.WebUIConfig
+   :members:
+
+
+External Storage Configuration File
+-----------------------------------
+
+.. automodule:: musicdb.lib.cfg.extern
+
+.. autoclass:: musicdb.lib.cfg.extern.ExternConfig
+   :members:
+
+
+MusicDB State Files
 -------------------
 
-.. automodule:: lib.cfg.webui
+.. automodule:: musicdb.lib.cfg.mdbstate
 
-.. autoclass:: lib.cfg.webui.WebUIConfig
+.. autoclass:: musicdb.lib.cfg.mdbstate.MDBState
    :members:
 
 
-External Storage Configuration
--------------------------------
+WebSocket API Key File
+----------------------
 
-.. automodule:: lib.cfg.extern
+.. automodule:: musicdb.lib.cfg.wsapikey
 
-.. autoclass:: lib.cfg.extern.ExternConfig
+.. autoclass:: musicdb.lib.cfg.wsapikey.WebSocketAPIKey
    :members:
-
-
-MusicDB State
--------------
-
-.. automodule:: lib.cfg.mdbstate
-
-.. autoclass:: lib.cfg.mdbstate.MDBState
-   :members:
-
-
-
 
 

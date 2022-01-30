@@ -166,7 +166,7 @@ class TagSelection extends Element
     {
         // Create array of Valid Genres
         let taglist = new Array();
-        let genres  = tagmanager.GetGenres();
+        let genres  = WebUI.GetManager("Tags").GetGenres();
 
         for(let genre of genres)
         {
@@ -198,7 +198,7 @@ class TagSelection extends Element
     // exclude: MDBTag array with tags that shall not appear in the list
     _CreateSubgenreList(genres, exclude)
     {
-        let subgenres   = tagmanager.GetSubgenres();
+        let subgenres   = WebUI.GetManager("Tags").GetSubgenres();
         let genrematrix = document.createElement("div");
         genrematrix.classList.add("flex-column");
 

@@ -71,6 +71,7 @@ class MDBModeManager
         // Show/Hide video panel
         let videopanel  = document.getElementById("VideoPanel");
         let panels      = document.getElementById("Panels");
+        let mainmenu    = WebUI.GetLayer("MainMenu");
 
         if(this.mode == "audio")
         {
@@ -105,9 +106,8 @@ class MDBModeManager
                 MusicDB_Request("GetVideo",                 "ShowVideo", {videoid: MDBMusic.id});
         }
 
-
         // Update other elements
-        queuecontrolview.Update();
+        WebUI.GetView("QueueControl").Update();
     }
 
 
@@ -132,7 +132,12 @@ class MDBModeManager
         }
         else if(fnc == "GetAudioStreamState")
         {
+            // In rare cases the Queue can get empty.
+            if(typeof args.song === "undefined" && typeof args.album === "undefined")
+                return;
+
             this.currentsongid  = args.song.id;
+
             // New song playing. Update whole album if from different album. Otherwise update just the song.
             if(args.album.id != this.currentalbumid)
                 MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: args.album.id});

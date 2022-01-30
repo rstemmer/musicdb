@@ -103,9 +103,10 @@ notification:
    Notifications can result of internal state changes of the server.
    *This method should only be used by the server!*
 
-There is a special *broadcast* triggered whenever the server gets triggered to update its caches by system signal *USR1*.
+There is a special *broadcast* triggered whenever the server gets triggered to update its caches by system signal *USR1*
+(:meth:`.mdbapi.server.UpdateCaches`).
 This broadcast should be used to update the caches on client side.
-It has the following signature: ``{method:"broadcast", fncname:"SIGUSR1", fncsig:"UpdateCaches", arguments:null, pass:null}``
+It has the following signature: ``{method:"broadcast", fncname:"sys:refresh", fncsig:"UpdateCaches", arguments:null, pass:null}``
 
 Client side interface
 ---------------------
@@ -225,10 +226,10 @@ The package has the following information:
       * **fncname:** ``"MusicDB:VideoQueue"``
       * **fncsig:** ``"onVideoQueueChanged"`` or ``"onVideoChanged"``
       * **argument:** ``None``
-   * Event triggered by :doc:`/mdbapi/uploadmanager`
-      * **fncname:** ``"MusicDB:Upload"``
+   * Event triggered by :doc:`/taskmanagement/taskmanager`
+      * **fncname:** ``"MusicDB:Task"``
       * **fncsig:** ``"ChunkRequest"``, ``"StateUpdate"`` or ``"InternalError"``
-      * **argument:** See :meth:`.mdbapi.uploadmanager.UploadManager.NotifyClient`
+      * **argument:** See :meth:`.taskmanagement.taskmanager.TaskManager.NotifyClient`
 
 See the related documentation of the event sources for more details
 
@@ -236,33 +237,46 @@ See the related documentation of the event sources for more details
 Server side API
 ---------------
 
-.. automodule:: lib.ws.mdbwsi
+.. automodule:: musicdb.lib.ws.mdbwsi
+
+Special Functions
+^^^^^^^^^^^^^^^^^
+
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
+   :members: Bounce
 
 
 Artists
 ^^^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members: GetArtists,
       GetArtistsWithAlbums,
-      GetFilteredArtistsWithVideos
+      GetFilteredArtistsWithVideos,
+      CreateArtistEntry,
+      UpdateArtistEntry,
+      RemoveArtistEntry
 
 Albums
 ^^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members:   GetAlbums,
       GetHiddenAlbums,
       GetSortedAlbumCDs,
       GetAlbum,
       HideAlbum,
+      SetAlbumOrigin,
+      SetAlbumImportTime,
       SetAlbumColor,
-      AddAlbumToQueue
+      AddAlbumToQueue,
+      UpdateAlbumEntry,
+      RemoveAlbumEntry
 
 Songs
 ^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members:   GetSong,
       AddSongToQueue,
       AddRandomSongToQueue,
@@ -271,12 +285,15 @@ Songs
       GetSongRelationship,
       UpdateSongStatistic,
       CutSongRelationship,
-      PlayNextSong
+      PlayNextSong,
+      CreateSongEntry,
+      UpdateSongEntry,
+      RemoveSongEntry
 
 Videos
 ^^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members:   GetVideos,
       GetVideo,
       AddVideoToQueue,
@@ -295,7 +312,7 @@ Videos
 Queue
 ^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members:   GetSongQueue,
       GetVideoQueue,
       AddSongToQueue,
@@ -310,7 +327,7 @@ Queue
 Tag related
 ^^^^^^^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members:   GetTags,
       GetTagsStatistics,
       GetSongTags,
@@ -331,28 +348,41 @@ Tag related
 Lyrics
 ^^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
-  :members:    GetSongLyrics,
-      GetLyricsCrawlerCache,
-      RunLyricsCrawler,
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
+   :members:   GetSongLyrics,
       SetSongLyrics
 
 Uploading
 ^^^^^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
-  :members:    InitiateUpload,
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
+   :members:   InitiateUpload,
       UploadChunk,
-      GetUploads,
+      GetCurrentTasks,
       AnnotateUpload,
-      IntegrateUpload,
+      InitiateContentIntegration,
+      InitiateMusicImport,
+      InitiateArtworkImport,
       RemoveUpload
+
+File Handling
+^^^^^^^^^^^^^
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
+   :members:   SaveWebUIConfiguration,
+      LoadWebUIConfiguration,
+      FindNewContent,
+      FindAlbumSongFiles,
+      RenameMusicFile,
+      RenameAlbumDirectory,
+      RenameArtistDirectory,
+      ChangeArtistDirectory,
+      InitiateFilesystemScan
 
 Other
 ^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
-  :members:    Find,
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
+   :members:   Find,
       GetAudioStreamState,
       GetVideoStreamState,
       SetAudioStreamState,
@@ -361,9 +391,6 @@ Other
       PlayNextVideo,
       SetMDBState,
       GetMDBState,
-      GetTables,
-      SaveWebUIConfiguration,
-      LoadWebUIConfiguration,
-      FindNewContent
+      GetTables
 
 

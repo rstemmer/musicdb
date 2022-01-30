@@ -24,12 +24,12 @@ class MusicProperties
         this.musicid    = null;
         this.propgrid   = new Grid(4, 2);
         this.properties = new Object();
-        this.properties["like"         ] = this._CreatePropertyButton("Like",          "like",          "Like");
-        this.properties["dislike"      ] = this._CreatePropertyButton("Dislike",       "dislike",       "Dislike");
+        this.properties["like"         ] = this._CreatePropertyButton("Like2",         "like",          "Like");
+        this.properties["dislike"      ] = this._CreatePropertyButton("Dislike2",      "dislike",       "Dislike");
         this.properties["liverecording"] = this._CreatePropertyButton("LiveRecording", "liverecording", "Live Recording");
-        this.properties["love"         ] = this._CreatePropertyButton("Favorite",      "love",          "Loved Song");
-        this.properties["hate"         ] = this._CreatePropertyButton("Hate",          "hate",          "Hated Song");
-        this.properties["badaudio"     ] = this._CreatePropertyButton("BadAudio",      "badaudio",      "Bad Audio");
+        this.properties["love"         ] = this._CreatePropertyButton("Favorite2",     "love",          "Loved Song");
+        this.properties["hate"         ] = this._CreatePropertyButton("Hate2",         "hate",          "Hated Song");
+        this.properties["badaudio"     ] = this._CreatePropertyButton("BadFile",       "badaudio",      "Bad Audio");
         this.properties["disable"      ] = this._CreatePropertyButton("Disable",       "disable",       "Disable Song");
 
         this.propgrid.InsertElement(0, 0, this.properties["like"         ].GetHTMLElement());
@@ -73,7 +73,6 @@ class MusicProperties
 
     onPropertyClicked(propertyname, newstate)
     {
-        window.console && console.log("Setting " + propertyname + " to " + newstate);
         let key   = null;
         let value = null;
 
@@ -115,12 +114,10 @@ class MusicProperties
              || propertyname == "lyricsvideo"
                )
         {
-            window.console && console.log("Setting " + propertyname + " to " + newstate);
             if(newstate === true)
                 value = "yes";
             else if(newstate === false)
                 value = "no";
-            window.console && console.log("Setting " + propertyname + " to " + value);
 
             key = propertyname;
         }

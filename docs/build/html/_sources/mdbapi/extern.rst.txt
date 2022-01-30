@@ -2,11 +2,11 @@
 MusicDBExtern
 ==========================
 
-.. automodule:: mdbapi.extern
+.. automodule:: musicdb.mdbapi.extern
 
 MusicDBExtern Class
 -------------------
 
-.. autoclass:: mdbapi.extern.MusicDBExtern
+.. autoclass:: musicdb.mdbapi.extern.MusicDBExtern
    :members:
 

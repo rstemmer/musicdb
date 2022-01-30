@@ -33,14 +33,14 @@ class UploadManager
     constructor()
     {
         this.uploads = new Object;
-        this.videouploadstable = new UploadTable();
+        this.videouploads      = new UploadTable();
     }
 
 
 
     GetVideoUploadsTable()
     {
-        return this.videouploadstable;
+        return this.videouploads;
     }
 
 
@@ -60,6 +60,7 @@ class UploadManager
 
 
 
+    // This method returns the generated task ID (task.id)
     async StartUpload(contenttype, filedescription, rawdata, initialannotations=null)
     {
         
@@ -78,67 +79,90 @@ class UploadManager
         task.filename = filedescription.name
         this.uploads[task.id] = task;
         
-        MusicDB_Call("InitiateUpload", 
+        MusicDB_Request("InitiateUpload",
+            "UploadingContent",
             {
-                uploadid: task.id,
+                taskid:   task.id,
                 mimetype: task.mimetype,
                 contenttype: task.contenttype,
                 filesize: task.filesize,
                 checksum: task.checksum,
                 filename: task.filename
-            });
+            },
+            {contenttype: task.contenttype});
 
-        if(typeof initialannotations === "object")
-            MusicDB_Call("AnnotateUpload", {uploadid: task.id, ...initialannotations});
+        if(typeof initialannotations === "object" && initialannotations !== null)
+            MusicDB_Call("AnnotateUpload", {taskid: task.id, ...initialannotations});
 
-        window.console && console.log(task);
+        return task.id;
     }
 
 
     UploadNextChunk(state)
     {
         window.console && console.log("UploadNextChunk");
-        let uploadid  = state.uploadid;
-        let task      = this.uploads[uploadid]
+        let taskid    = state.taskid;
+        let task      = this.uploads[taskid]
         let rawdata   = task.data.subarray(task["offset"], task["offset"] + state.chunksize)
         //let chunkdata = btoa(rawdata); // FIXME: Does not work. rawdata will be implicit converted to string
         let chunkdata = BufferToHexString(rawdata)
         task.offset  += rawdata.length;
 
-        window.console && console.log(task);
-        MusicDB_Call("UploadChunk", {uploadid: uploadid, chunkdata: chunkdata});
+        MusicDB_Call("UploadChunk", {taskid: taskid, chunkdata: chunkdata});
     }
 
 
 
     onMusicDBNotification(fnc, sig, data)
     {
-        if(fnc == "MusicDB:Upload")
+        if(fnc == "MusicDB:Task")
         {
-            window.console && console.info(data);
-            let uploadid    = data.uploadid;
-            let uploadtask  = data.uploadtask;
-            let state       = data.state;
-            let contenttype = uploadtask.contenttype;
+            let state = data.state;
+            if(state === "notexisting")
+            {
+                window.console?.warn(`MusicDB:Task notification for task in "notexisting" state`);
+                if(sig == "InternalError")
+                    window.console?.warn(`The same task came with the message: "${data.message}"`);
+                return;
+            }
+
+            // Get information of the task that caused this notification
+            let taskid      = data.taskid;
+            let task        = data.task;
+            let contenttype = task.contenttype;
+
+            // Only process task, if this client is the owner of the task
+            if(typeof this.uploads[taskid] === "undefined")
+                return;
 
             if(sig == "ChunkRequest")
             {
-                this.videouploadstable.TryUpdateRow(uploadtask);
+                if(contenttype == "video")
+                    this.videouploads.UpdateRow(task);
                 this.UploadNextChunk(data)
             }
             else // "StateUpdate", "InternalError"
             {
-                this.videouploadstable.Update(data.uploadslist.videos);
+                //this.videouploads.Update(data.uploadslist.videos);
             }
 
             if(sig == "StateUpdate")
             {
-                window.console && console.info(`Stateupdate for ${contenttype} to ${state}`);
-                // Artwork will be automatically imported
+                window.console?.info(`Stateupdate for ${contenttype} to ${state}`);
+                // Import artwork
                 if(contenttype == "artwork")
                 {
-                    if(state == "preprocessed")
-                        MusicDB_Call("IntegrateUpload", {uploadid: uploadid, triggerimport: true});
+                    if(state == "readyforintegration")
+                    {
+                        let musicpath = task.annotations.musicpath;
+                        MusicDB_Call("InitiateContentIntegration", {taskid: taskid, musicpath: musicpath});
+                    }
+                }
+
+                // Remove tasks of this client from the list of active tasks when they are done
+                if(state === "remove")
+                {
+                    delete this.uploads[taskid];
                 }
             }
         }
@@ -148,13 +172,6 @@ class UploadManager
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "GetUploads" && sig == "ShowUploads")
-        {
-            window.console && console.log(args);
-            window.console && console.log(pass);
-            this.videouploadstable.Update(args.videos);
-        }
-
         return;
     }
 }

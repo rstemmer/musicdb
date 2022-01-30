@@ -31,8 +31,8 @@ class Tile extends Draggable
         super.onDragStart(event);
 
         // When dragged from a search preview, hide everything to clear the drop zones
-        curtain.Hide();
-        searchinput.HidePreview();
+        WebUI.GetLayer("MenuCurtain").Hide();
+        WebUI.GetView("SearchInput").HidePreview();
     }
 
 
@@ -77,8 +77,8 @@ class Tile extends Draggable
 
     CreateSongTitle(MDBSong)
     {
-        let songname      = MDBSong.name.replace(" - ", " – ");
-            songname      = songname.replace(    " ∕ ", " / ");
+        let songname      = MDBSong.name.replaceAll(" - ", " – ");
+            songname      = songname.replaceAll(    " ∕ ", " / ");
         let title         = document.createElement("span");
         title.classList.add("Title");
         title.textContent = songname;
@@ -91,8 +91,8 @@ class Tile extends Draggable
 
     CreateVideoTitle(MDBVideo)
     {
-        let videoname     = MDBVideo.name.replace(" - ", " – ");
-            videoname     = videoname.replace(    " ∕ ", " / ");
+        let videoname     = MDBVideo.name.replaceAll(" - ", " – ");
+            videoname     = videoname.replaceAll(    " ∕ ", " / ");
         let title         = document.createElement("span");
         title.classList.add("Title");
         title.textContent = videoname;
@@ -107,8 +107,8 @@ class Tile extends Draggable
     CreateSongSubtitle(MDBAlbum, MDBArtist)
     {
         let artistname = MDBArtist.name;
-        let albumname  = MDBAlbum.name.replace(" - ", " – ");
-            albumname  = albumname.replace(    " ∕ ", " / ");
+        let albumname  = MDBAlbum.name.replaceAll(" - ", " – ");
+            albumname  = albumname.replaceAll(    " ∕ ", " / ");
         let songinfos  = document.createElement("div");
         songinfos.classList.add("Subtitle");
         songinfos.classList.add("hlcolor");
@@ -125,7 +125,7 @@ class Tile extends Draggable
         spacer.innerText = " – ";
         album.innerText  = albumname;
 
-        artist.onclick   = ()=>{artistsview.ScrollToArtist(MDBArtist.id);};
+        artist.onclick   = ()=>{WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);};
         album.onclick    = ()=>{MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});};
 
         songinfos.appendChild(artist);
@@ -147,7 +147,7 @@ class Tile extends Draggable
 
         let artist = document.createElement("span");
         artist.innerText = artistname;
-        artist.onclick   = ()=>{artistsview.ScrollToArtist(MDBArtist.id);};
+        artist.onclick   = ()=>{WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);};
 
         songinfos.appendChild(artist);
         return songinfos;

@@ -19,35 +19,50 @@
 
 class ArtworkUploader extends Element
 {
-    constructor(artistname, albumname, albumid)
+    // musictype: "album", "video"
+    constructor(musictype, musicpath, musicid)
     {
         super("div", ["ArtworkUploader", "flex-column", "flex-grow"]);
+        this.musicid = musicid;
 
         let annotations = new Object();
-        annotations["artistname"] = artistname;
-        annotations["albumname" ] = albumname;
-        annotations["albumid"   ] = albumid;
+        annotations["musictype"] = musictype;
+        annotations["musicpath"] = musicpath;
+        annotations["musicid"  ] = musicid;
 
-        this.fileselect = new ArtworkFileSelect("Select Artwork File", "Select an artwork file (.jpg) form your local computer.", annotations);
+        this.listenontaskid = null;
+
+        this.fileselect = new ArtworkFileSelect("Select Artwork File", "Select an artwork file (.jpg) from your local computer.", annotations);
         let  statustext = new StatusText(); // Empty UploadStatusText as place holder
-        this.element.appendChild(this.fileselect.GetHTMLElement());
-        this.element.appendChild(statustext.GetHTMLElement());
+
+        this.AppendChild(this.fileselect);
+        this.AppendChild(statustext);
     }
 
 
 
     UpdateUploadStatus(uploadstatus)
     {
-        this.element.innerHTML = "";
-        this.element.appendChild(this.fileselect.GetHTMLElement());
+        // it is not important that the uploaded temporary file got removed
+        if(uploadstatus == "remove")
+            return;
+
         let  statustext = new UploadStatusText(uploadstatus);
-        this.element.appendChild(statustext.GetHTMLElement());
+        this.RemoveChilds();
+        this.AppendChild(this.fileselect);
+        this.AppendChild(statustext);
 
         if(uploadstatus == "importcomplete")
         {
             let messagebar = new MessageBarInfo(`Artwork successfully replaced. You may have to reload the WebUI to update the Browser\'s cache.`);
             messagebar.Show();
-            this.element.appendChild(messagebar.GetHTMLElement());
+            this.AppendChild(messagebar);
+        }
+        else if (uploadstatus == "importfailed")
+        {
+            let messagebar = new MessageBarError(`Importing Artwork failed!`);
+            messagebar.Show();
+            this.AppendChild(messagebar);
         }
     }
 
@@ -63,7 +78,43 @@ class ArtworkUploader extends Element
         messagebar.Show();
 
         this.UpdateUploadStatus(state);
-        this.element.appendChild(messagebar.GetHTMLElement());
+        this.AppendChild(messagebar);
+    }
+
+
+
+    onMusicDBNotification(fnc, sig, rawdata)
+    {
+        if(fnc == "MusicDB:Task")
+        {
+            let task  = rawdata.task;
+            let state = rawdata.state;
+
+            if(state == "notexisting")
+                return;
+            if(this.listenontaskid !== task.id)
+                return;
+
+            if(sig == "StateUpdate")
+                this.UpdateUploadStatus(state);
+            else if(sig == "InternalError")
+                this.ShowErrorStatus(rawdata);
+        }
+    }
+
+
+
+    onMusicDBMessage(fnc, sig, args, pass)
+    {
+        if(fnc == "InitiateUpload" && sig == "UploadingContent")
+        {
+            let contenttype = pass.contenttype;
+            if(contenttype != "artwork")
+                return;
+
+            this.listenontaskid = args; // InitiateUpload returns the task ID
+        }
+        return;
     }
 }
 

@@ -27,7 +27,7 @@ class SongSettings extends TabSelect
         this.songproperties = new SongProperties();
         this.genreedit      = new TagListEdit("genre");
         this.subgenreedit   = new TagListEdit("subgenre");
-        this.audioplayer    = new AudioPlayer(MDBSong.path);
+        this.audioplayer    = new SongPlayer(MDBSong.path);
         this.instrumental   = new SettingsCheckbox(
             "Instrumental",
             "You can use this checkbox to toggle the lyrics state between <i>Not Set</i> and <i>Instrumental</i>.<br> This option is only available if there is no other lyrics state set.");

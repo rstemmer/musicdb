@@ -1,0 +1,5 @@
+#!/usr/bin/dh-exec
+
+share/musicdb.ini    => /etc/musicdb.ini
+share/logrotate.conf => /etc/logrotate.d/musicdb
+share/apache.conf    => /etc/apache2/conf-available

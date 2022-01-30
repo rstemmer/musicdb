@@ -17,11 +17,11 @@ All databases have a table ''meta'' with the following scheme:
 One important key is ''version' that allows to identify old schemes and allows an easy update of the database.
 There may be other keys depending on the databases. In that case they are described in the documentations of the related modules.
 
-.. automodule:: lib.db.database
+.. automodule:: musicdb.lib.db.database
 
 Database Class
 --------------
 
-.. autoclass:: lib.db.database.Database
+.. autoclass:: musicdb.lib.db.database.Database
    :members:
 
