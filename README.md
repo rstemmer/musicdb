@@ -72,6 +72,11 @@ I started this project on 4th January 2014.
 Since I finished a first prototype within one weekend, I use MusicDB almost every day.
 Time to share it with the world. :smiley:
 
+### New in Version 8.0.0
+
+* Upload and Import of Music via Web Front-End
+* Integrated audio player in the Web Front-End 
+* Better integrating into the Linux system using default system paths and systemd
 
 ### Features
 
