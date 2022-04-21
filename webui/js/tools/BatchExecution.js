@@ -171,6 +171,8 @@ class BatchExecution extends StatusList
 
         this.connected = true;
         this.UpdateState("warn", true /*Force next task*/);
+        // The next task needs to be forced because the notification of the task being finished
+        // may be lost due to the connection issue.
         window.console?.info("Connection to MusicDB WebSocket Server established. Batch execution continued.");
     }
 
