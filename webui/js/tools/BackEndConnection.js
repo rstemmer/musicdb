@@ -174,7 +174,7 @@ class BackEndConnection
     {
         let packet = this.CreatePacket(method, fncname, fncsig, args, pass);
 
-        window.console?.log("%c << fnc:"+fncname+"; sig: "+fncsig, "color:#9cc87a");
+        window.console?.log("%c << method: "+method+"; fnc: "+fncname+"; sig: "+fncsig, "color:#9cc87a");
         try
         {
             this.socket.send(packet);
@@ -207,22 +207,27 @@ class BackEndConnection
 
     onConnect()
     {
-        window.console?.log("WebSocket connection opened");
+        window.console?.info("WebSocket connection opened");
         this.watchdog.Start();
         this.callbacks.connect?.();
     }
 
     onDisconnect(e)
     {
-        window.console?.log("WebSocket connection closed");
+        window.console?.info("WebSocket connection closed");
         window.console?.log(e);
         this.watchdog.Stop();
-        this.callbacks.disconnect?.(e);
+
+        let wasClean = e.wasClean;
+        if(wasClean === true)
+            this.callbacks.disconnect?.(e);
+        else
+            this.callbacks.error?.(e);
     }
 
     onError(e)
     {
-        window.console?.log("WebSocket connection failed");
+        window.console?.error("WebSocket connection failed");
         window.console?.log(e);
         this.watchdog.Stop();
         this.callbacks.error?.(e);
@@ -247,7 +252,7 @@ class BackEndConnection
 
     onWatchdog()
     {
-        window.console?.log("WebSocket watchdog timeout");
+        window.console?.warn("WebSocket watchdog timeout");
         this.callbacks.watchdog?.();
         this.Connect(); // Try to reconnect
     }
