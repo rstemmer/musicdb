@@ -153,7 +153,7 @@ class BackEndConnection
 
     Call(fncname, args=null)
     {
-        return this.SendPacket("call", fncname);
+        return this.SendPacket("call", fncname, null, args);
     }
 
     Request(fncname, fncsig, args=null, pass=null)
