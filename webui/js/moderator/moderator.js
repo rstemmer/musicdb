@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,7 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Create WebUI Application
-let WebUI = new Application();
+let MusicDB = new BackEndConnection(WEBSOCKET_URL);
+let WebUI   = new Application();
 
 // Create Basic MusicDB Logic Components
 WebUI.AddManager("Tags",        new TagManager());
@@ -85,6 +86,19 @@ mainmenu.AddSection("Audio Stream",  audiostreamplayer);
 mainmenu.AddSection("System Status", musicdbstatus);
 
 
+// Configure Communication
+MusicDB.ConfigureWatchdog(WATCHDOG_RUN, WATCHDOG_INTERVAL);
+MusicDB.ConfigureReconnects(3);
+MusicDB.ConfigureAPIKey(WEBSOCKET_APIKEY);
+
+// Map Back-End <-> Front-End interfaces
+MusicDB.SetCallbackForEvent("connect",      onMusicDBConnectionOpen);
+MusicDB.SetCallbackForEvent("disconnect",   onMusicDBConnectionClosed);
+MusicDB.SetCallbackForEvent("error",        onMusicDBConnectionError);
+MusicDB.SetCallbackForEvent("watchdog",     onMusicDBWatchdogBarks);
+MusicDB.SetCallbackForEvent("message",      onMusicDBMessage);
+MusicDB.SetCallbackForEvent("notification", onMusicDBNotification
+
 
 window.onload = function ()
 {
@@ -97,7 +111,7 @@ window.onload = function ()
     streamview.ShowInVideoPanel();
 
     // Connect to MusicDB
-    ConnectToMusicDB();
+    MusicDB.Connect();
 }
 
 function onMusicDBConnectionOpen()
