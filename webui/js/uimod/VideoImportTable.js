@@ -99,7 +99,7 @@ class VideoImportTableRow extends VideoImportTableRowBase
 
     onImport()
     {
-        //MusicDB_Request("DeleteTag", "UpdateTags", {tagid: MDBMood.id}, {origin: "MoodSettings"});
+        //MusicDB.Request("DeleteTag", "UpdateTags", {tagid: MDBMood.id}, {origin: "MoodSettings"});
         window.console && console.log("Import Video");
     }
 }

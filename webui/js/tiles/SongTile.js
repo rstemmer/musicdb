@@ -117,14 +117,14 @@ class SongEntryTile extends Draggable
 
     AddSongToQueue(position)
     {
-        MusicDB_Call("AddSongToQueue", {songid: this.songid, position: position});
+        MusicDB.Call("AddSongToQueue", {songid: this.songid, position: position});
     }
 
 
 
     ShowLyrics()
     {
-        MusicDB_Request("GetSongLyrics", "ShowLyrics", {songid: this.songid});
+        MusicDB.Request("GetSongLyrics", "ShowLyrics", {songid: this.songid});
     }
 
 

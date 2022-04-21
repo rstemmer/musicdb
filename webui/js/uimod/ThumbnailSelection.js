@@ -123,7 +123,7 @@ class ThumbnailSelection
 
         this.SetSaveState("saved");
 
-        MusicDB_Call("SetVideoThumbnail", 
+        MusicDB.Call("SetVideoThumbnail", 
             {
                 videoid:   this.videoid,
                 timestamp: timestamp

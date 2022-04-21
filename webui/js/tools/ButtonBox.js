@@ -63,9 +63,9 @@ class ButtonBox_AddMusicToQueue extends ButtonBox
         // The onClick event must be propagated to the Search Result Preview
         // so that the preview recognizes an action an can close itself.
         if(this.musictype == "song")
-            MusicDB_Call("AddSongToQueue", {songid: this.musicid, position: position});
+            MusicDB.Call("AddSongToQueue", {songid: this.musicid, position: position});
         else
-            MusicDB_Call("AddVideoToQueue", {videoid: this.videoid, position: position});
+            MusicDB.Call("AddVideoToQueue", {videoid: this.videoid, position: position});
     }
 }
 
@@ -113,7 +113,7 @@ class ButtonBox_QueueControls extends ButtonBox_AddMusicToQueue
             command = "AddRandomVideoToQueue";
         }
 
-        MusicDB_Call(command, {position: position});
+        MusicDB.Call(command, {position: position});
         return;
     }
 
@@ -154,7 +154,7 @@ class ButtonBox_RelationControl extends ButtonBox
 
     CutSongRelationship()
     {
-        MusicDB_Request("CutSongRelationship", "ShowSongRelationship",
+        MusicDB.Request("CutSongRelationship", "ShowSongRelationship",
             {songid:this.songid, relatedsongid:this.relatedsongid});
         return;
     }
@@ -189,19 +189,19 @@ class ButtonBox_QueueEntryControls extends ButtonBox
 
     GetSongRelationship(musicid)
     {
-        MusicDB_Request("GetSongRelationship", "ShowSongRelationship", {songid: musicid});
+        MusicDB.Request("GetSongRelationship", "ShowSongRelationship", {songid: musicid});
     }
     RemoveSongFromQueue(entryid)
     {
         if(typeof this.onremove === "function")
             this.onremove();
-        MusicDB_Call("RemoveSongFromQueue", {entryid: entryid});
+        MusicDB.Call("RemoveSongFromQueue", {entryid: entryid});
     }
     RemoveVideoFromQueue(entryid)
     {
         if(typeof this.onremove === "function")
             this.onremove();
-        MusicDB_Call("RemoveVideoFromQueue", {entryid: entryid});
+        MusicDB.Call("RemoveVideoFromQueue", {entryid: entryid});
     }
 
 }

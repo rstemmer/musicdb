@@ -119,7 +119,7 @@ class TaskTableRow extends TaskTableRowBase
     onRemoveTask(task)
     {
         this.Hide(); // be responsive and already hide even if the task got not yet removed.
-        MusicDB_Call("RemoveUpload", {taskid: task.id});
+        MusicDB.Call("RemoveUpload", {taskid: task.id});
     }
 
     onIntegrateAlbumFile(task)

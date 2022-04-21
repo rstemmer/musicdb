@@ -37,12 +37,12 @@ class SettingsMenu extends LeftView
                 if(musicmode == "audio")
                 {
                     let albumid = modemanager.GetCurrentAlbumID();
-                    MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: albumid});
+                    MusicDB.Request("GetAlbum", "ShowAlbum", {albumid: albumid});
                 }
                 else
                 {
                     let videoid = modemanager.GetCurrentVideoID();
-                    MusicDB_Request("GetVideo", "ShowVideo", {videoid: videoid});
+                    MusicDB.Request("GetVideo", "ShowVideo", {videoid: videoid});
                 }
                 },
             "Hide Management menu and go back to the Music Views");
@@ -52,7 +52,7 @@ class SettingsMenu extends LeftView
             new SVGIcon("Settings"),
             "WebUI Settings",
             ()=>{
-                MusicDB_Request("LoadWebUIConfiguration", "ShowWebUISettings");
+                MusicDB.Request("LoadWebUIConfiguration", "ShowWebUISettings");
                 },
             "Show WebUI Settings");
 
@@ -61,7 +61,7 @@ class SettingsMenu extends LeftView
             new SVGIcon("Song"),
             "Stream Settings",
             ()=>{
-                MusicDB_Request("LoadWebUIConfiguration", "ShowStreamSettings");
+                MusicDB.Request("LoadWebUIConfiguration", "ShowStreamSettings");
                 },
             "Show Stream Settings");
 
@@ -70,8 +70,8 @@ class SettingsMenu extends LeftView
             new SVGIcon("Tags"),
             "Genre Manager",
             ()=>{
-                MusicDB_Request("GetTags", "ShowGenreSettings");
-                MusicDB_Request("GetTagsStatistics", "UpdateTagsStatistics");
+                MusicDB.Request("GetTags", "ShowGenreSettings");
+                MusicDB.Request("GetTagsStatistics", "UpdateTagsStatistics");
                 },
             "Manage, Add and Remove Genres and Subgenres");
 
@@ -80,8 +80,8 @@ class SettingsMenu extends LeftView
             new SVGIcon("Tags"),
             "Mood Manager",
             ()=>{
-                MusicDB_Request("GetTags", "ShowMoodManager");
-                MusicDB_Request("GetTagsStatistics", "UpdateTagsStatistics");
+                MusicDB.Request("GetTags", "ShowMoodManager");
+                MusicDB.Request("GetTagsStatistics", "UpdateTagsStatistics");
                 },
             "Manage, Add and Remove Mood Flags");
 
@@ -90,7 +90,7 @@ class SettingsMenu extends LeftView
             new SVGIcon("Hide"),
             "Hidden Albums",
             ()=>{
-                MusicDB_Request("GetHiddenAlbums", "ShowHiddenAlbums");
+                MusicDB.Request("GetHiddenAlbums", "ShowHiddenAlbums");
                 },
             "Show list of hidden albums that can be made visible again");
 
@@ -99,7 +99,7 @@ class SettingsMenu extends LeftView
             new SVGIcon("Import"),
             "Import Album",
             ()=>{
-                MusicDB_Request("FindNewContent", "ShowAlbumImport");
+                MusicDB.Request("FindNewContent", "ShowAlbumImport");
                 },
             "Import Music Album");
 
@@ -108,7 +108,7 @@ class SettingsMenu extends LeftView
             new SVGIcon("Import"),
             "Import Video",
             ()=>{
-                MusicDB_Request("FindNewContent", "ShowVideoImport");
+                MusicDB.Request("FindNewContent", "ShowVideoImport");
                 },
             "Upload and/or Import Music Videos");
 
@@ -117,7 +117,7 @@ class SettingsMenu extends LeftView
             new SVGIcon("Repair"),
             "Repair Database",
             ()=>{
-                MusicDB_Request("InitiateFilesystemScan", "ShowRepairView");
+                MusicDB.Request("InitiateFilesystemScan", "ShowRepairView");
                 },
             "Show Invalid Database Enties");
 
@@ -126,7 +126,7 @@ class SettingsMenu extends LeftView
             new SVGIcon("TaskList"),
             "Task List",
             ()=>{
-                MusicDB_Request("GetCurrentTasks", "ShowCurrentTasks");
+                MusicDB.Request("GetCurrentTasks", "ShowCurrentTasks");
                 },
             "Show open and running MusicDB tasks");
     }

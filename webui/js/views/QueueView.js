@@ -200,7 +200,7 @@ class QueueView extends Element
             {
                 let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
                 if(mode == "audio")
-                    MusicDB_Request("GetSongQueue", "ShowSongQueue");
+                    MusicDB.Request("GetSongQueue", "ShowSongQueue");
             }
         }
     }
@@ -238,9 +238,9 @@ class QueueDropZone extends DropTarget
                     break;
 
                 if(musictype == "song")
-                    MusicDB_Call("MoveSongInQueue", {entryid:entryid, afterid:this.entryid});
+                    MusicDB.Call("MoveSongInQueue", {entryid:entryid, afterid:this.entryid});
                 else if(musictype == "video")
-                    MusicDB_Call("MoveVideoInQueue", {entryid:entryid, afterid:this.entryid});
+                    MusicDB.Call("MoveVideoInQueue", {entryid:entryid, afterid:this.entryid});
 
                 // For a responsive user experience, the Move-Action needs to be faked
                 // until the response from the back-end comes.
@@ -271,25 +271,25 @@ class QueueDropZone extends DropTarget
                 if(musictype == "song")
                 {
                     let songid = parseInt(musicid);
-                    MusicDB_Call("AddSongToQueue", {songid: songid, position: this.entryid});
+                    MusicDB.Call("AddSongToQueue", {songid: songid, position: this.entryid});
                     WebUI.GetView("Queue").AddFakeEntry(musictype, this.entryid)
                 }
                 else if(musictype == "video")
                 {
                     let videoid = parseInt(musicid);
-                    MusicDB_Call("AddVideoToQueue", {videoid: videoid, position: this.entryid});
+                    MusicDB.Call("AddVideoToQueue", {videoid: videoid, position: this.entryid});
                 }
                 else if(musictype == "album")
                 {
                     let albumid = parseInt(musicid);
-                    MusicDB_Call("AddAlbumToQueue", {albumid: albumid, position: this.entryid});
+                    MusicDB.Call("AddAlbumToQueue", {albumid: albumid, position: this.entryid});
                 }
                 else if(musictype == "CD")
                 {
                     let [albumid, cdnum] = musicid.split('.');
                     albumid = parseInt(albumid);
                     cdnum   = parseInt(cdnum);
-                    MusicDB_Call("AddAlbumToQueue", {albumid: albumid, position: this.entryid, cd: cdnum});
+                    MusicDB.Call("AddAlbumToQueue", {albumid: albumid, position: this.entryid, cd: cdnum});
                 }
                 break;
 

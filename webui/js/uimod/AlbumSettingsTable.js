@@ -575,7 +575,7 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
             this.tasks.AddTask(`Rename Album Directory to "${newdirectory}"`,
                 (webuitaskid)=>
                 {
-                    MusicDB_Request("RenameAlbumDirectory", "ConfirmAlbumSettingsTask",
+                    MusicDB.Request("RenameAlbumDirectory", "ConfirmAlbumSettingsTask",
                         {oldpath: oldpath, newpath: newpath},
                         {webuitaskid: webuitaskid});
                     return "active";
@@ -592,7 +592,7 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
             this.tasks.AddTask(`Update Origin to ${origin}`,
                 (webuitaskid)=>
                 {
-                    MusicDB_Request("SetAlbumOrigin", "ConfirmAlbumSettingsTask",
+                    MusicDB.Request("SetAlbumOrigin", "ConfirmAlbumSettingsTask",
                         {albumid: this.albumid, origin: origin},
                         {webuitaskid: webuitaskid});
                 },
@@ -607,7 +607,7 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
             this.tasks.AddTask("Update Import Date",
                 (webuitaskid)=>
                 {
-                    MusicDB_Request("SetAlbumImportTime", "ConfirmAlbumSettingsTask",
+                    MusicDB.Request("SetAlbumImportTime", "ConfirmAlbumSettingsTask",
                         {albumid: this.albumid, importtime: importdate},
                         {webuitaskid: webuitaskid});
                 },
@@ -623,10 +623,10 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
                 (webuitaskid)=>
                 {
                     // This needs to be a broadcast to all clients to make them update
-                    MusicDB_Broadcast("HideAlbum", "UpdateArtists",
+                    MusicDB.Broadcast("HideAlbum", "UpdateArtists",
                         {albumid: this.albumid, hide: hidealbum});
                     // Dummy call to trigger batch execution
-                    MusicDB_Request("Bounce", "ConfirmAlbumSettingsTask",
+                    MusicDB.Request("Bounce", "ConfirmAlbumSettingsTask",
                         {},
                         {webuitaskid: webuitaskid});
                 },
@@ -645,10 +645,10 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
                 (webuitaskid)=>
                 {
                     // Propagate album renaming to all clients
-                    MusicDB_Broadcast("GetAlbum", "AlbumRenamed",
+                    MusicDB.Broadcast("GetAlbum", "AlbumRenamed",
                         {albumid: this.albumid});
                     // Dummy call to trigger batch execution
-                    MusicDB_Request("Bounce", "ConfirmAlbumSettingsTask",
+                    MusicDB.Request("Bounce", "ConfirmAlbumSettingsTask",
                         {},
                         {webuitaskid: webuitaskid});
                 },
@@ -724,7 +724,7 @@ class AlbumEntrySettingsTable extends AlbumSettingsTable
             // Refresh whole view
             this.changesmessage.Hide();
             this.tasks.Clear();
-            MusicDB_Request("GetAlbum", "ShowAlbumSettingsLayer", {albumid: this.albumid});
+            MusicDB.Request("GetAlbum", "ShowAlbumSettingsLayer", {albumid: this.albumid});
         }
         else
         {

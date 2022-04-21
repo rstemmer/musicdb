@@ -50,16 +50,16 @@ class MDBModeManager
 
     SetAudioMode()
     {
-        MusicDB_Call("SetVideoStreamState", {state:"pause"});
-        MusicDB_Request("SetMDBState", "UpdateMDBState",
+        MusicDB.Call("SetVideoStreamState", {state:"pause"});
+        MusicDB.Request("SetMDBState", "UpdateMDBState",
             {category:"MusicDB", name:"uimode", value:"audio"});
         return;
     }
 
     SetVideoMode()
     {
-        MusicDB_Call("SetAudioStreamState", {state:"pause"});
-        MusicDB_Request("SetMDBState", "UpdateMDBState",
+        MusicDB.Call("SetAudioStreamState", {state:"pause"});
+        MusicDB.Request("SetMDBState", "UpdateMDBState",
             {category:"MusicDB", name:"uimode", value:"video"});
         return;
     }
@@ -82,12 +82,12 @@ class MDBModeManager
                 mainmenu.SwitchEntry("modeswitch", "a");
 
             // Request update from server
-            MusicDB_Request("GetAudioStreamState",          "UpdateHUD")
-            MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
-            MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+            MusicDB.Request("GetAudioStreamState",          "UpdateHUD")
+            MusicDB.Request("GetSongQueue",                 "ShowSongQueue");
+            MusicDB.Request("GetFilteredArtistsWithAlbums", "ShowArtists");
             // A fresh installed MusicDB may have no queue!
             if(MDBMusic !== null)
-                MusicDB_Request("GetAlbum",                 "ShowAlbum", {albumid: MDBMusic.albumid});
+                MusicDB.Request("GetAlbum",                 "ShowAlbum", {albumid: MDBMusic.albumid});
         }
         else
         {
@@ -98,12 +98,12 @@ class MDBModeManager
                 mainmenu.SwitchEntry("modeswitch", "b");
 
             // Request update from server
-            MusicDB_Request("GetVideoStreamState",          "UpdateHUD");
-            MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
-            MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+            MusicDB.Request("GetVideoStreamState",          "UpdateHUD");
+            MusicDB.Request("GetVideoQueue",                "ShowVideoQueue");
+            MusicDB.Request("GetFilteredArtistsWithVideos", "ShowArtists");
             // A fresh installed MusicDB may have no queue!
             if(MDBMusic !== null)
-                MusicDB_Request("GetVideo",                 "ShowVideo", {videoid: MDBMusic.id});
+                MusicDB.Request("GetVideo",                 "ShowVideo", {videoid: MDBMusic.id});
         }
 
         // Update other elements
@@ -140,9 +140,9 @@ class MDBModeManager
 
             // New song playing. Update whole album if from different album. Otherwise update just the song.
             if(args.album.id != this.currentalbumid)
-                MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: args.album.id});
+                MusicDB.Request("GetAlbum", "ShowAlbum", {albumid: args.album.id});
             else
-                MusicDB_Request("GetSong", "UpdateSong", {songid: args.song.id});
+                MusicDB.Request("GetSong", "UpdateSong", {songid: args.song.id});
         }
         else if(fnc == "GetVideoStreamState")
         {

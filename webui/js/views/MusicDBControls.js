@@ -116,12 +116,12 @@ class MusicDBControls extends Element
         if(mode == "audio")
         {
             this.SetAudioStatus(newstate);
-            MusicDB_Call("SetAudioStreamState", {state:"playpause"});
+            MusicDB.Call("SetAudioStreamState", {state:"playpause"});
         }
         else if(mode == "video")
         {
             this.SetVideoStatus(newstate);
-            MusicDB_Call("SetVideoStreamState", {state:"playpause"});
+            MusicDB.Call("SetVideoStreamState", {state:"playpause"});
         }
 
         // In case the server does not response, accept that the prediction failed.
@@ -170,7 +170,7 @@ class MusicDBControls extends Element
         // Create Next Button
         let nextbutton = new Element("div", ["nextbutton"]);
         this.UpdateButton(nextbutton, `Next ${musicname}`, `Play Next ${musicname} from the Queue`, "unknwon");
-        nextbutton.element.onclick = (event) => {WebUI.GetView("Queue").FakeEntrySkipping(); MusicDB_Call(`PlayNext${musicname}`);};
+        nextbutton.element.onclick = (event) => {WebUI.GetView("Queue").FakeEntrySkipping(); MusicDB.Call(`PlayNext${musicname}`);};
 
         // Put all Buttons Together
         let element = new Element("div", ["musicdbcontrols"]);

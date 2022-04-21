@@ -236,7 +236,7 @@ class VideoTimeFrameSelection
         this.vend   = endtime;
         this.SetSaveState("saved");
 
-        MusicDB_Call("SetVideoTimeFrame", 
+        MusicDB.Call("SetVideoTimeFrame", 
             {
                 videoid: this.videoid,
                 begin:   begintime,

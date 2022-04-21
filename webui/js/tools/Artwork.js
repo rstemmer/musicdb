@@ -102,7 +102,7 @@ class AlbumArtwork extends Artwork
         // so that the preview recognizes an action an can close itself.
 
         if(this.albumid != null)
-            MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: this.albumid});
+            MusicDB.Request("GetAlbum", "ShowAlbum", {albumid: this.albumid});
     }
 }
 
@@ -132,7 +132,7 @@ class VideoArtwork extends Artwork
     {
         event.preventDefault();
         event.stopPropagation();
-        MusicDB_Request("GetVideo", "ShowVideo", {videoid: this.videoid});
+        MusicDB.Request("GetVideo", "ShowVideo", {videoid: this.videoid});
     }
 }
 

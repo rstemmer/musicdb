@@ -6,6 +6,13 @@
 └────────────────────────────────────────┘
 
 Run  git log --oneline  for more details
+┍━━━━┫ 2022-??-?? ┣━━━━┫ 8.1.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│
+┝━ MINOR CHANGES
+│ * [WebUI] MusicDB WebSocket connection interface refactored (now object oriented)
+└───────────────────────────────────────╌╌
+
 
 ┍━━━━┫ 2022-01-30 ┣━━━━┫ 8.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES

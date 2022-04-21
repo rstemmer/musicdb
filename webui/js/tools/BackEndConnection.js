@@ -53,12 +53,16 @@ class Watchdog
 
     Stop()
     {
-        if(this.timer !== null)
-            clearTimeout(this.timer);
+        if(this.timer === null)
+            return;
+
+        clearTimeout(this.timer);
+        this.timer = null;
     }
 
     Reset()
     {
+        this.Stop();
         this.Start();
     }
 
@@ -170,7 +174,7 @@ class BackEndConnection
     {
         let packet = this.CreatePacket(method, fncname, fncsig, args, pass);
 
-        window.console?.log("%c << fnc:"+packet.fncname+"; sig: "+packet.fncsig, "color:#9cc87a");
+        window.console?.log("%c << fnc:"+fncname+"; sig: "+fncsig, "color:#9cc87a");
         try
         {
             this.socket.send(packet);
@@ -226,7 +230,6 @@ class BackEndConnection
 
     onMessage(e)
     {
-        window.console?.log(e);
         this.watchdog.Reset();
 
         let packet  = JSON.parse(e.data);

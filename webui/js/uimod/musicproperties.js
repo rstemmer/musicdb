@@ -145,7 +145,7 @@ class MusicProperties
         else
             return
 
-        MusicDB_Request(requestfunction, requestsignature, parameters);
+        MusicDB.Request(requestfunction, requestsignature, parameters);
         return;
     }
 
