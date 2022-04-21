@@ -88,10 +88,10 @@ class SongsSettingsLayer extends Layer
         {
             let oldpath  = albumpath + "/" + request.oldname;
             let newpath  = albumpath + "/" + request.newname;
-            MusicDB_Request("RenameMusicFile", "ConfirmSongRenaming", {oldpath: oldpath, newpath: newpath});
+            MusicDB.Request("RenameMusicFile", "ConfirmSongRenaming", {oldpath: oldpath, newpath: newpath});
         }
 
-        MusicDB_Broadcast("GetAlbum", "SongRenamed", {albumid: albumid}); // Tell all clients that the songs of an album got renamed
+        MusicDB.Broadcast("GetAlbum", "SongRenamed", {albumid: albumid}); // Tell all clients that the songs of an album got renamed
     }
 
     onSongFilesValidation(isvalid)

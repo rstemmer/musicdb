@@ -85,7 +85,7 @@ class GenreSelectionView extends Element
         // The Call will trigger a broadcast of GetMDBState
         // By making a Request and giving a function signature the broadcast
         // gets handled exactly like a GetMDBState request
-        MusicDB_Request("SetMDBState", "UpdateMDBState",
+        MusicDB.Request("SetMDBState", "UpdateMDBState",
             {category:"albumfilter", name:mdbtag.name, value:active});
 
         // To avoid flickering when switching multiple genres,
@@ -96,9 +96,9 @@ class GenreSelectionView extends Element
             {
                 let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
                 if(mode == "audio")
-                    MusicDB_Broadcast("GetFilteredArtistsWithAlbums", "ShowArtists");
+                    MusicDB.Broadcast("GetFilteredArtistsWithAlbums", "ShowArtists");
                 else if(mode == "video")
-                    MusicDB_Broadcast("GetFilteredArtistsWithVideos", "ShowArtists");
+                    MusicDB.Broadcast("GetFilteredArtistsWithVideos", "ShowArtists");
 
             }, RELOAD_INTERVAL);
         

@@ -66,7 +66,7 @@ class Welcome extends MainView2
         this.importbutton = new TextButton("Import", "Upload and/or Import",
             ()=>
             {
-                MusicDB_Request("FindNewContent", "ShowAlbumImport");
+                MusicDB.Request("FindNewContent", "ShowAlbumImport");
             },
             "Show the settings view to upload new albums and/or import existing albums.");
 

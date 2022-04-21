@@ -95,7 +95,7 @@ class AlbumView extends MainView2
     AddRandomSongToQueue(position)
     {
         let currentalbumid = WebUI.GetManager("MusicMode").GetCurrentAlbumID();
-        MusicDB_Call("AddRandomSongToQueue", {albumid: currentalbumid, position: position});
+        MusicDB.Call("AddRandomSongToQueue", {albumid: currentalbumid, position: position});
     }
 
 
@@ -128,17 +128,17 @@ class AlbumView extends MainView2
         this.hidealbum.SetState(MDBAlbum.hidden);
         this.hidealbum.SetHandler((state)=>
             {
-                MusicDB_Broadcast("HideAlbum", "UpdateArtists", {albumid: MDBAlbum.id, hide: state});
+                MusicDB.Broadcast("HideAlbum", "UpdateArtists", {albumid: MDBAlbum.id, hide: state});
             }
         );
         this.albumsettings = new TextButton("Settings", "Show Advanced Album Settings", ()=>
             {
-                MusicDB_Request("GetAlbum", "ShowAlbumSettingsLayer", {albumid: MDBAlbum.id});
+                MusicDB.Request("GetAlbum", "ShowAlbumSettingsLayer", {albumid: MDBAlbum.id});
             },
             "Open album settings layer to review and change all details of this album stored in the database.");
         this.songssettings = new TextButton("Settings", "Show Songs Settings", ()=>
             {
-                MusicDB_Request("GetAlbum", "ShowSongsSettingsLayer", {albumid: MDBAlbum.id});
+                MusicDB.Request("GetAlbum", "ShowSongsSettingsLayer", {albumid: MDBAlbum.id});
             },
             "Open songs settings layer to review and change all details of the songs of this album.");
 
@@ -193,7 +193,7 @@ class AlbumView extends MainView2
                     if(approval <= 0)
                         continue;   // Not user approved. Only tag songs if the user is sure.
 
-                    MusicDB_Request("SetSongTag", "UpdateTags", 
+                    MusicDB.Request("SetSongTag", "UpdateTags", 
                         {songid:songid, tagid:tagid, approval:0, confidence:1.0});
                 }
             }
@@ -419,7 +419,7 @@ class AlbumView extends MainView2
         {
             // In case there are changes with the tags, refresh the album view
             if(sig == "UpdateTags")
-                MusicDB_Request("GetAlbum", "UpdateTags", {albumid: currentalbumid});
+                MusicDB.Request("GetAlbum", "UpdateTags", {albumid: currentalbumid});
         }
         else if(fnc == "GetSong")
         {
@@ -429,7 +429,7 @@ class AlbumView extends MainView2
 
                 // When a song got new tags, there may be new suggestions for the album as well
                 if(sig == "UpdateTags")
-                    MusicDB_Request("GetAlbum", "UpdateTags", {albumid: args.album.id});
+                    MusicDB.Request("GetAlbum", "UpdateTags", {albumid: args.album.id});
             }
         }
 

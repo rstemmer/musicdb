@@ -97,7 +97,7 @@ MusicDB.SetCallbackForEvent("disconnect",   onMusicDBConnectionClosed);
 MusicDB.SetCallbackForEvent("error",        onMusicDBConnectionError);
 MusicDB.SetCallbackForEvent("watchdog",     onMusicDBWatchdogBarks);
 MusicDB.SetCallbackForEvent("message",      onMusicDBMessage);
-MusicDB.SetCallbackForEvent("notification", onMusicDBNotification
+MusicDB.SetCallbackForEvent("notification", onMusicDBNotification);
 
 
 window.onload = function ()
@@ -119,7 +119,7 @@ function onMusicDBConnectionOpen()
     WebUI.onWebSocketOpen();
 
     musicdbstatus.onMusicDBConnectionOpen();
-    MusicDB_Request("LoadWebUIConfiguration", "SetupWebUI");
+    MusicDB.Request("LoadWebUIConfiguration", "SetupWebUI");
 }
 function onMusicDBConnectionError()
 {
@@ -151,40 +151,40 @@ function onMusicDBNotification(fnc, sig, rawdata)
         // Handle notifications
         if(sig == "onStatusChanged")
         {
-            MusicDB_Request("GetAudioStreamState", "UpdateStreamState");
+            MusicDB.Request("GetAudioStreamState", "UpdateStreamState");
         }
     }
     else if(fnc == "MusicDB:VideoStream")
     {
         if(sig == "onStatusChanged")
         {
-            MusicDB_Request("GetVideoStreamState", "UpdateStreamState");
+            MusicDB.Request("GetVideoStreamState", "UpdateStreamState");
         }
         else if(sig == "onStreamNextVideo")
         {
-            MusicDB_Request("GetVideoStreamState", "UpdateHUD");
+            MusicDB.Request("GetVideoStreamState", "UpdateHUD");
         }
     }
     else if(fnc == "MusicDB:SongQueue")
     {
         if(sig == "onSongChanged")
         {
-            MusicDB_Request("GetAudioStreamState", "UpdateStreamState");
+            MusicDB.Request("GetAudioStreamState", "UpdateStreamState");
         }
         else if(sig == "onSongQueueChanged")
         {
-            MusicDB_Request("GetSongQueue", "ShowSongQueue");
+            MusicDB.Request("GetSongQueue", "ShowSongQueue");
         }
     }
     else if (fnc == "MusicDB:VideoQueue")
     {
         if(sig == "onVideoChanged")
         {
-            MusicDB_Request("GetAudioStreamState", "UpdateStreamState");
+            MusicDB.Request("GetAudioStreamState", "UpdateStreamState");
         }
         else if(sig == "onVideoQueueChanged")
         {
-            MusicDB_Request("GetVideoQueue", "ShowVideoQueue");
+            MusicDB.Request("GetVideoQueue", "ShowVideoQueue");
         }
     }
 }
@@ -204,7 +204,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
         if(configuration.debug.blurartwork == true)
             document.documentElement.style.setProperty("--artworkfilter", "blur(5px)");
 
-        MusicDB_Request("GetMDBState", "InitializeWebUI");
+        MusicDB.Request("GetMDBState", "InitializeWebUI");
     }
     else if(sig == "UpdateConfig")
     {
@@ -219,25 +219,25 @@ function onMusicDBMessage(fnc, sig, args, pass)
         }
 
         let uimode = args.MusicDB.uimode;
-        MusicDB_Request("GetArtists",  "UpdateArtistsCache");
-        MusicDB_Request("GetTags",     "UpdateTagsCache");
-        MusicDB_Request("GetMDBState", "UpdateMDBState");
+        MusicDB.Request("GetArtists",  "UpdateArtistsCache");
+        MusicDB.Request("GetTags",     "UpdateTagsCache");
+        MusicDB.Request("GetMDBState", "UpdateMDBState");
         if(uimode == "audio")
         {
-            MusicDB_Request("GetAudioStreamState",   "UpdateStreamState");
-            MusicDB_Request("GetSongQueue",          "ShowSongQueue"); // Force Queue Update
+            MusicDB.Request("GetAudioStreamState",   "UpdateStreamState");
+            MusicDB.Request("GetSongQueue",          "ShowSongQueue"); // Force Queue Update
         }
         else if(uimode == "video")
         {
-            MusicDB_Request("GetVideoStreamState",   "UpdateStreamState");
-            MusicDB_Request("GetVideoQueue",         "ShowVideoQueue"); // Force Queue Update
+            MusicDB.Request("GetVideoStreamState",   "UpdateStreamState");
+            MusicDB.Request("GetVideoQueue",         "ShowVideoQueue"); // Force Queue Update
         }
     }
     else if(fnc=="sys:refresh" && sig == "UpdateCaches")    // TODO: Update (make uimode conform)
     {
-        MusicDB_Request("GetTags",    "UpdateTagsCache");
-        MusicDB_Request("GetArtists", "UpdateArtistsCache");
-        MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists"); // Update artist view
+        MusicDB.Request("GetTags",    "UpdateTagsCache");
+        MusicDB.Request("GetArtists", "UpdateArtistsCache");
+        MusicDB.Request("GetFilteredArtistsWithAlbums", "ShowArtists"); // Update artist view
     }
 
     return;

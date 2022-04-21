@@ -212,7 +212,7 @@ class MoodsTableRow extends MoodsTableRowBase
         }
 
         // Delete
-        MusicDB_Request("DeleteTag", "UpdateTags", {tagid: MDBMood.id}, {origin: "MoodSettings"});
+        MusicDB.Request("DeleteTag", "UpdateTags", {tagid: MDBMood.id}, {origin: "MoodSettings"});
         return;
     }
 
@@ -387,19 +387,19 @@ class MoodsTableEditRow extends MoodsTableRowBase
         // Otherwise just updated changes
         if(this.mood == null)
         {
-            MusicDB_Request("AddMoodFlag", "UpdateTags", {name: name, icon: icon, color: color, posx: posx, posy: posy}, {origin: "MoodSettings"});
+            MusicDB.Request("AddMoodFlag", "UpdateTags", {name: name, icon: icon, color: color, posx: posx, posy: posy}, {origin: "MoodSettings"});
         }
         else
         {
             let tagid = this.mood.id;
 
             if(name != this.mood.name)
-                MusicDB_Call("ModifyTag", {tagid: tagid, attribute: "name", value: name});
+                MusicDB.Call("ModifyTag", {tagid: tagid, attribute: "name", value: name});
             if(icon != this.mood.icon)
-                MusicDB_Call("ModifyTag", {tagid: tagid, attribute: "icon", value: icon});
+                MusicDB.Call("ModifyTag", {tagid: tagid, attribute: "icon", value: icon});
             if(color != this.mood.color)
-                MusicDB_Call("ModifyTag", {tagid: tagid, attribute: "color", value: color});
-            MusicDB_Request("GetTags", "UpdateTags", {}, {origin: "MoodSettings"});
+                MusicDB.Call("ModifyTag", {tagid: tagid, attribute: "color", value: color});
+            MusicDB.Request("GetTags", "UpdateTags", {}, {origin: "MoodSettings"});
         }
 
         // Clear inputs for new data
@@ -482,18 +482,18 @@ class MoodsTable extends Table
 
         if(direction == "left" || direction == "right") // update posx
         {
-            MusicDB_Call("ModifyTag", {tagid: MDBMood.id, attribute: "posx", value: MDBMood.posx});
+            MusicDB.Call("ModifyTag", {tagid: MDBMood.id, attribute: "posx", value: MDBMood.posx});
             if(neighbour != null)
-                MusicDB_Call("ModifyTag", {tagid: neighbour.id, attribute: "posx", value: neighbour.posx});
+                MusicDB.Call("ModifyTag", {tagid: neighbour.id, attribute: "posx", value: neighbour.posx});
         }
         else if(direction == "up" || direction == "down") // update posy
         {
-            MusicDB_Call("ModifyTag", {tagid: MDBMood.id, attribute: "posy", value: MDBMood.posy});
+            MusicDB.Call("ModifyTag", {tagid: MDBMood.id, attribute: "posy", value: MDBMood.posy});
             if(neighbour != null)
-                MusicDB_Call("ModifyTag", {tagid: neighbour.id, attribute: "posy", value: neighbour.posy});
+                MusicDB.Call("ModifyTag", {tagid: neighbour.id, attribute: "posy", value: neighbour.posy});
         }
 
-        MusicDB_Request("GetTags", "UpdateTags", {}, {origin: "MoodSettings"});
+        MusicDB.Request("GetTags", "UpdateTags", {}, {origin: "MoodSettings"});
         return;
     }
 

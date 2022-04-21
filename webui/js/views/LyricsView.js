@@ -42,7 +42,7 @@ class LyricsView extends MainView2
     BackToAlbum()
     {
         this.UnlockView();
-        MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: this.currentalbumid});
+        MusicDB.Request("GetAlbum", "ShowAlbum", {albumid: this.currentalbumid});
         this.lyricsedit.SetViewMode();
     }
 

@@ -106,7 +106,7 @@ class ArtistsView extends LeftView
                 musicid = entry.album.id;
                 tile = new AlbumTile(entry.album, ()=>
                     {
-                        MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: musicid});
+                        MusicDB.Request("GetAlbum", "ShowAlbum", {albumid: musicid});
                     });
             }
             else
@@ -114,7 +114,7 @@ class ArtistsView extends LeftView
                 musicid = entry.video.id;
                 tile = new VideoTile(entry.video, ()=>
                     {
-                        MusicDB_Request("GetVideo", "ShowVideo", {videoid: musicid});
+                        MusicDB.Request("GetVideo", "ShowVideo", {videoid: musicid});
                     },
                     new FlagBar(entry.video, entry.tags.moods, "left" /*icons are left aligned*/)
                     );
@@ -210,9 +210,9 @@ class ArtistsView extends LeftView
     {
         let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
         if(mode == "audio")
-            MusicDB_Broadcast("GetFilteredArtistsWithAlbums", "ShowArtists");
+            MusicDB.Broadcast("GetFilteredArtistsWithAlbums", "ShowArtists");
         else if(mode == "video")
-            MusicDB_Broadcast("GetFilteredArtistsWithVideos", "ShowArtists");
+            MusicDB.Broadcast("GetFilteredArtistsWithVideos", "ShowArtists");
     }
 
 
@@ -244,15 +244,15 @@ class ArtistsView extends LeftView
         {
             let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
             if(mode == "audio")
-                MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+                MusicDB.Request("GetFilteredArtistsWithAlbums", "ShowArtists");
             else
-                MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+                MusicDB.Request("GetFilteredArtistsWithVideos", "ShowArtists");
         }
         else if(fnc == "GetAlbum" && sig == "AlbumRenamed")
         {
             let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
             if(mode == "audio")
-                MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+                MusicDB.Request("GetFilteredArtistsWithAlbums", "ShowArtists");
         }
         return;
     }

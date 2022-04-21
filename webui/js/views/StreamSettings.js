@@ -334,14 +334,14 @@ class StreamSettings extends MainSettingsView
 
     Reload()
     {
-        MusicDB_Request("LoadWebUIConfiguration", "ReloadStreamSettings");
+        MusicDB.Request("LoadWebUIConfiguration", "ReloadStreamSettings");
     }
     Save()
     {
         this.settings["Stream"]["url"]      = this.table.addressinput.GetValue();
         this.settings["Stream"]["username"] = this.table.usernameinput.GetValue();
         this.settings["Stream"]["password"] = this.table.passwordinput.GetValue();
-        MusicDB_Broadcast("SaveWebUIConfiguration", "UpdateConfig", {config: this.settings});
+        MusicDB.Broadcast("SaveWebUIConfiguration", "UpdateConfig", {config: this.settings});
     }
 
 

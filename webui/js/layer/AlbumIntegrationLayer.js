@@ -96,7 +96,7 @@ class AlbumIntegrationLayer extends Layer
         for(let albumfile of this.albumfiles)
         {
             let taskid = albumfile.id;
-            MusicDB_Call("RemoveUpload", {taskid: taskid});
+            MusicDB.Call("RemoveUpload", {taskid: taskid});
         }
         this.ResetUI();
     }
@@ -148,7 +148,7 @@ class AlbumIntegrationLayer extends Layer
 
             this.tasks.AddTask(`New File: ${musicpath}`,
                 (webuitaskid)=>{
-                    MusicDB_Request("InitiateContentIntegration", "ConfirmAlbumIntegrationTask",
+                    MusicDB.Request("InitiateContentIntegration", "ConfirmAlbumIntegrationTask",
                         {taskid: albumfileid, musicpath: musicpath},
                         {webuitaskid: webuitaskid});
                     return "active";

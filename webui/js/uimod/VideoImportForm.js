@@ -161,7 +161,7 @@ class VideoImportForm extends ImportForm
         let release = this.table.GetRelease();
         let origin  = this.table.GetOrigin();
 
-        MusicDB_Call("AnnotateUpload", {taskid: taskid, name: name, artistname: artist, release: release, origin: origin});
+        MusicDB.Call("AnnotateUpload", {taskid: taskid, name: name, artistname: artist, release: release, origin: origin});
     }
 
 
@@ -169,7 +169,7 @@ class VideoImportForm extends ImportForm
     onImport(taskid)
     {
         this.onSave(taskid);  // Make sure all changes of the annotations are saved
-        MusicDB_Call("IntegrateUpload", {taskid: taskid, triggerimport: true});
+        MusicDB.Call("IntegrateUpload", {taskid: taskid, triggerimport: true});
     }
 
 
@@ -177,7 +177,7 @@ class VideoImportForm extends ImportForm
     onRemove(taskid)
     {
         window.console && console.log("Remove Video");
-        MusicDB_Call("RemoveUpload", {taskid: taskid});
+        MusicDB.Call("RemoveUpload", {taskid: taskid});
     }
 }
 

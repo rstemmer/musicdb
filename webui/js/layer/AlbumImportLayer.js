@@ -146,7 +146,7 @@ class AlbumImportLayer extends Layer
 
             this.tasks.AddTask(`Rename Song:&nbsp;${htmldiff}`,
                 (webuitaskid)=>{
-                    MusicDB_Request("RenameMusicFile", "ConfirmAlbumImportTask",
+                    MusicDB.Request("RenameMusicFile", "ConfirmAlbumImportTask",
                         {oldpath: oldpath, newpath: newpath},
                         {webuitaskid: webuitaskid});
                     return "active";},
@@ -166,7 +166,7 @@ class AlbumImportLayer extends Layer
             let htmldiff     = albumrenamerequest.htmldiff;
             this.tasks.AddTask(`Rename Album:&nbsp;${htmldiff}`,
                 (webuitaskid)=>{
-                    MusicDB_Request("RenameAlbumDirectory", "ConfirmAlbumImportTask",
+                    MusicDB.Request("RenameAlbumDirectory", "ConfirmAlbumImportTask",
                         {oldpath: oldalbumpath, newpath: newalbumpath},
                         {webuitaskid: webuitaskid});
                     return "active";},
@@ -190,7 +190,7 @@ class AlbumImportLayer extends Layer
             let htmldiff      = artistrenamerequest.htmldiff;
             this.tasks.AddTask(`Change Artist:&nbsp;${htmldiff}`,
                 (webuitaskid)=>{
-                    MusicDB_Request("ChangeArtistDirectory", "ConfirmAlbumImportTask",
+                    MusicDB.Request("ChangeArtistDirectory", "ConfirmAlbumImportTask",
                         {oldalbumpath: oldalbumpath, newartistdirectory: newartistpath},
                         {webuitaskid: webuitaskid});
                     return "active";},
@@ -209,7 +209,7 @@ class AlbumImportLayer extends Layer
         {
             this.tasks.AddTask(`Create Artist: ${artistdirectoryname}`,
                 (webuitaskid)=>{
-                    MusicDB_Request("CreateArtistEntry", "ConfirmAlbumImportTask",
+                    MusicDB.Request("CreateArtistEntry", "ConfirmAlbumImportTask",
                         {name: artistdirectoryname},
                         {webuitaskid: webuitaskid});
                     return "active";},
@@ -226,7 +226,7 @@ class AlbumImportLayer extends Layer
         let newalbumpath = artistdirectoryname + "/" + albumdirectoryname;
         this.tasks.AddTask("Import Album",
             (webuitaskid)=>{
-                MusicDB_Request("InitiateMusicImport", "ConfirmAlbumImportTask",
+                MusicDB.Request("InitiateMusicImport", "ConfirmAlbumImportTask",
                     {contenttype: "album", contentpath: newalbumpath},
                     {webuitaskid: webuitaskid});
                 return "active";
@@ -267,7 +267,7 @@ class AlbumImportLayer extends Layer
         let artworkpath   = newalbumpath + "/" + firstsongfile; // Get Artwork that is embedded in the first song of the album
         this.tasks.AddTask("Trying to Import Artwork from Song Files",
             (webuitaskid)=>{
-                MusicDB_Request("InitiateArtworkImport", "ConfirmAlbumImportTask",
+                MusicDB.Request("InitiateArtworkImport", "ConfirmAlbumImportTask",
                     {sourcepath: artworkpath, targetpath: newalbumpath},
                     {webuitaskid: webuitaskid});
                 return "active";
@@ -305,7 +305,7 @@ class AlbumImportLayer extends Layer
         this.tasks.AddTask("Identify new Album ID",
             (webuitaskid)=>
             {
-                MusicDB_Request("GetArtistsWithAlbums", "ConfirmAlbumImportTask",
+                MusicDB.Request("GetArtistsWithAlbums", "ConfirmAlbumImportTask",
                     {},
                     {webuitaskid: webuitaskid});
                 return "active";
@@ -323,7 +323,7 @@ class AlbumImportLayer extends Layer
                         window.console?.log(`${newalbumpath} == ${MDBAlbum.path}`);
                         if(MDBAlbum.path == newalbumpath)
                         {
-                            MusicDB_Request("Bounce", "InformAlbumImportProgressLayer",
+                            MusicDB.Request("Bounce", "InformAlbumImportProgressLayer",
                                 {albumid: MDBAlbum.id});
                             return "good";
                         }

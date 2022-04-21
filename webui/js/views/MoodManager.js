@@ -44,7 +44,7 @@ class MoodManager extends MainSettingsView
         {
             // When tags were added, update the view
             if(pass != null && pass.origin == "MoodsSettings")
-                MusicDB_Request("GetTagsStatistics", "UpdateTagsStatistics");
+                MusicDB.Request("GetTagsStatistics", "UpdateTagsStatistics");
 
             //&& sig == "ShowMoodManager")
             this.moods = args.moods;

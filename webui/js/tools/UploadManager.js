@@ -79,7 +79,7 @@ class UploadManager
         task.filename = filedescription.name
         this.uploads[task.id] = task;
         
-        MusicDB_Request("InitiateUpload",
+        MusicDB.Request("InitiateUpload",
             "UploadingContent",
             {
                 taskid:   task.id,
@@ -92,7 +92,7 @@ class UploadManager
             {contenttype: task.contenttype});
 
         if(typeof initialannotations === "object" && initialannotations !== null)
-            MusicDB_Call("AnnotateUpload", {taskid: task.id, ...initialannotations});
+            MusicDB.Call("AnnotateUpload", {taskid: task.id, ...initialannotations});
 
         return task.id;
     }
@@ -108,7 +108,7 @@ class UploadManager
         let chunkdata = BufferToHexString(rawdata)
         task.offset  += rawdata.length;
 
-        MusicDB_Call("UploadChunk", {taskid: taskid, chunkdata: chunkdata});
+        MusicDB.Call("UploadChunk", {taskid: taskid, chunkdata: chunkdata});
     }
 
 
@@ -155,7 +155,7 @@ class UploadManager
                     if(state == "readyforintegration")
                     {
                         let musicpath = task.annotations.musicpath;
-                        MusicDB_Call("InitiateContentIntegration", {taskid: taskid, musicpath: musicpath});
+                        MusicDB.Call("InitiateContentIntegration", {taskid: taskid, musicpath: musicpath});
                     }
                 }
 

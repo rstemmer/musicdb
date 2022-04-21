@@ -69,7 +69,7 @@ class BaseSearchResults
             {
                 let tile = new SmallAlbumTile(MDBAlbum, ()=>
                     {
-                        MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});
+                        MusicDB.Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});
                     });
                 albumspreview.appendChild(tile.GetHTMLElement());
             }
@@ -98,7 +98,7 @@ class BaseSearchResults
             let MDBArtist = result.artist;
             let tile      = new SmallAlbumTile(MDBAlbum, ()=>
                 {
-                    MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});
+                    MusicDB.Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});
                 });
             albumspreview.appendChild(tile.GetHTMLElement());
         }

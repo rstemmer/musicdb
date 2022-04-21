@@ -75,7 +75,7 @@ class VideoView extends MainView
 
     AddVideoToQueue(position)
     {
-        MusicDB_Call("AddVideoToQueue", {videoid: this.currentvideoid, position: position});
+        MusicDB.Call("AddVideoToQueue", {videoid: this.currentvideoid, position: position});
     }
 
 

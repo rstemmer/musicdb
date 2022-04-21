@@ -104,16 +104,16 @@ class GenreSettings extends MainSettingsView
 
     onAddGenre(tagname)
     {
-        MusicDB_Request("AddGenre", "UpdateTags", {name: tagname}, {origin: "GenreSettings"});
+        MusicDB.Request("AddGenre", "UpdateTags", {name: tagname}, {origin: "GenreSettings"});
     }
     onAddSubgenre(tagname)
     {
-        MusicDB_Request("AddSubgenre", "UpdateTags", {name: tagname, parentname: this.selectedgenre.name}, {origin: "GenreSettings"});
+        MusicDB.Request("AddSubgenre", "UpdateTags", {name: tagname, parentname: this.selectedgenre.name}, {origin: "GenreSettings"});
     }
 
     onRemoveGenre(tagid)
     {
-        MusicDB_Request("DeleteTag", "UpdateTags", {tagid: tagid}, {origin: "GenreSettings"});
+        MusicDB.Request("DeleteTag", "UpdateTags", {tagid: tagid}, {origin: "GenreSettings"});
 
         if(tagid == this.selectedgenre.id)
         {
@@ -123,16 +123,16 @@ class GenreSettings extends MainSettingsView
     }
     onRemoveSubgenre(tagid)
     {
-        MusicDB_Request("DeleteTag", "UpdateTags", {tagid: tagid}, {origin: "GenreSettings"});
+        MusicDB.Request("DeleteTag", "UpdateTags", {tagid: tagid}, {origin: "GenreSettings"});
     }
 
     onRenameGenre(tagid, newname)
     {
-        MusicDB_Request("ModifyTag", "UpdateTags", {tagid: tagid, attribute: "name", value: newname}, {origin: "GenreSettings"});
+        MusicDB.Request("ModifyTag", "UpdateTags", {tagid: tagid, attribute: "name", value: newname}, {origin: "GenreSettings"});
     }
     onRenameSubgenre(tagid, newname)
     {
-        MusicDB_Request("ModifyTag", "UpdateTags", {tagid: tagid, attribute: "name", value: newname}, {origin: "GenreSettings"});
+        MusicDB.Request("ModifyTag", "UpdateTags", {tagid: tagid, attribute: "name", value: newname}, {origin: "GenreSettings"});
     }
 
 
@@ -143,7 +143,7 @@ class GenreSettings extends MainSettingsView
         {
             // When tags were added, update the view
             if(pass != null && pass.origin == "GenreSettings")
-                MusicDB_Request("GetTagsStatistics", "UpdateTagsStatistics");
+                MusicDB.Request("GetTagsStatistics", "UpdateTagsStatistics");
 
             this.genres    = args.genres;
             this.subgenres = args.subgenres;

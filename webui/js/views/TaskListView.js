@@ -87,7 +87,7 @@ class TaskListView extends MainSettingsView
     {
         let taskids = this.taskgroups[groupid].GetTaskIDs();
         for(let taskid of taskids)
-            MusicDB_Call("RemoveUpload", {taskid: taskid});
+            MusicDB.Call("RemoveUpload", {taskid: taskid});
     }
 
     onIntegrateGroup(groupid)

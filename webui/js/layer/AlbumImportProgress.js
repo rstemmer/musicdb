@@ -55,14 +55,14 @@ class AlbumImportProgress extends Layer
 
     onClick_Close()
     {
-        MusicDB_Request("FindNewContent", "ShowAlbumImport");   // Reload Album Import Settings View
+        MusicDB.Request("FindNewContent", "ShowAlbumImport");   // Reload Album Import Settings View
         this.Hide();
     }
 
     onClick_Settings()
     {
-        MusicDB_Request("FindNewContent", "ShowAlbumImport");   // Reload Album Import Settings View
-        MusicDB_Request("GetAlbum", "ShowAlbumSettingsLayer", {albumid: this.albumid});
+        MusicDB.Request("FindNewContent", "ShowAlbumImport");   // Reload Album Import Settings View
+        MusicDB.Request("GetAlbum", "ShowAlbumSettingsLayer", {albumid: this.albumid});
         this.Hide();
     }
 

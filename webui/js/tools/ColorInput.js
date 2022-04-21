@@ -182,9 +182,9 @@ class ColorSchemeSelection extends Element
         this.ApplyColorScheme();
 
         if(this.musictype == "video")
-            MusicDB_Call("SetVideoColor", {videoid: this.musicid, colorname: colorname, color: colorvalue});
+            MusicDB.Call("SetVideoColor", {videoid: this.musicid, colorname: colorname, color: colorvalue});
         else if(this.musictype == "audio")
-            MusicDB_Call("SetAlbumColor", {albumid: this.musicid, colorname: colorname, color: colorvalue});
+            MusicDB.Call("SetAlbumColor", {albumid: this.musicid, colorname: colorname, color: colorvalue});
     }
 
 

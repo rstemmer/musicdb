@@ -96,7 +96,7 @@ class Tile extends Draggable
         let title         = document.createElement("span");
         title.classList.add("Title");
         title.textContent = videoname;
-        title.onclick     = ()=>{MusicDB_Request("GetVideo", "ShowVideo", {videoid: this.videoid});};
+        title.onclick     = ()=>{MusicDB.Request("GetVideo", "ShowVideo", {videoid: this.videoid});};
         title.classList.add("fgcolor");
         title.classList.add("flex-grow");
         return title;
@@ -126,7 +126,7 @@ class Tile extends Draggable
         album.innerText  = albumname;
 
         artist.onclick   = ()=>{WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);};
-        album.onclick    = ()=>{MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});};
+        album.onclick    = ()=>{MusicDB.Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});};
 
         songinfos.appendChild(artist);
         songinfos.appendChild(spacer);

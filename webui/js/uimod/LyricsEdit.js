@@ -239,7 +239,7 @@ class LyricsEdit extends Element
 
     Reload()
     {
-        MusicDB_Request("GetSongLyrics", "ReloadLyrics", {songid: this.songid});
+        MusicDB.Request("GetSongLyrics", "ReloadLyrics", {songid: this.songid});
         return;
     }
 
@@ -249,7 +249,7 @@ class LyricsEdit extends Element
     {
         this.lyrics      = this.editbox.GetValue();
         this.lyricsstate = this.stateselect.GetSelectionIndex();
-        MusicDB_Call("SetSongLyrics", {songid: this.songid, lyrics: this.lyrics, lyricsstate: this.lyricsstate});
+        MusicDB.Call("SetSongLyrics", {songid: this.songid, lyrics: this.lyrics, lyricsstate: this.lyricsstate});
 
         this.origlyrics  = this.lyrics || ""; // \_ Save copy to identify changes during editing
         this.origstate   = this.lyricsstate;  // /

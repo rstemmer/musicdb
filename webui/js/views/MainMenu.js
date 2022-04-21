@@ -106,9 +106,9 @@ class MainMenu extends Menu
             {
                 let musicmode = WebUI.GetManager("MusicMode").GetCurrentMode();
                 if(musicmode == "audio")
-                    MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+                    MusicDB.Request("GetFilteredArtistsWithAlbums", "ShowArtists");
                 else
-                    MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+                    MusicDB.Request("GetFilteredArtistsWithVideos", "ShowArtists");
             },
             "Reload list with artists and their albums/videos");
     }

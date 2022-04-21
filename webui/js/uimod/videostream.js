@@ -145,7 +145,7 @@ class VideoStreamPlayer
 
     onVideoEnded()
     {
-        MusicDB_Call("VideoEnded", {entryid: this.currententryid});
+        MusicDB.Call("VideoEnded", {entryid: this.currententryid});
         return;
     }
 

@@ -38,7 +38,7 @@ class SongRelationsView extends MainView
         this.headline.UpdateRawInformation(MDBSong.name, MDBArtist.name, MDBAlbum.name, MDBSong.name);
         this.headline.SetSubtitleClickAction(
             ()=>{WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);},
-            ()=>{MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});}
+            ()=>{MusicDB.Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});}
         );
 
         let activegenres    = WebUI.GetManager("Tags").GetActiveGenres();

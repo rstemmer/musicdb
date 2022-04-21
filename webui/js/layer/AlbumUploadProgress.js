@@ -85,7 +85,7 @@ class AlbumUploadProgress extends Layer
         // Trigger removing partially uploaded files and cancel upload tasks
         let taskids = this.uploadstable.GetAllUploadIDs();
         for(let taskid of taskids)
-            MusicDB_Call("RemoveUpload", {taskid: taskid});
+            MusicDB.Call("RemoveUpload", {taskid: taskid});
         this.uploadstable.Clear();
     }
 

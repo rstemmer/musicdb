@@ -374,11 +374,11 @@ class RepairBox extends Element
 
             case "RemoveEntry":
                 if(this.contenttype == "song")
-                    MusicDB_Call("RemoveSongEntry", {songid: dbentry.id});
+                    MusicDB.Call("RemoveSongEntry", {songid: dbentry.id});
                 else if(this.contenttype == "album")
-                    MusicDB_Call("RemoveAlbumEntry", {albumid: dbentry.id});
+                    MusicDB.Call("RemoveAlbumEntry", {albumid: dbentry.id});
                 else if(this.contenttype == "artist")
-                    MusicDB_Call("RemoveArtistEntry", {artistid: dbentry.id});
+                    MusicDB.Call("RemoveArtistEntry", {artistid: dbentry.id});
                 else
                     window.console?.warn(`${this.databaseelement} ${this.filesystemelement} cannot be removed from database.`);
 
@@ -392,11 +392,11 @@ class RepairBox extends Element
                 let newpath = pathentry.path;
 
                 if(this.contenttype == "song")
-                    MusicDB_Call("RenameMusicFile", {oldpath: newpath, newpath: oldpath});
+                    MusicDB.Call("RenameMusicFile", {oldpath: newpath, newpath: oldpath});
                 else if(this.contenttype == "album")
-                    MusicDB_Call("RenameAlbumDirectory", {oldpath: newpath, newpath: oldpath});
+                    MusicDB.Call("RenameAlbumDirectory", {oldpath: newpath, newpath: oldpath});
                 else if(this.contenttype == "artist")
-                    MusicDB_Call("RenameArtistDirectory", {oldpath: newpath, newpath: oldpath});
+                    MusicDB.Call("RenameArtistDirectory", {oldpath: newpath, newpath: oldpath});
                 else
                     window.console?.warn(`${this.databaseelement} ${this.filesystemelement} cannot be moved.`);
 
@@ -406,11 +406,11 @@ class RepairBox extends Element
 
             case "ImportFile":
                 if(this.contenttype == "song")
-                    MusicDB_Call("CreateSongEntry", {newpath: pathentry.path});
+                    MusicDB.Call("CreateSongEntry", {newpath: pathentry.path});
                 else if(this.contenttype == "album")
                 {
                     WebUI.ShowLayer("AlbumImport"); // Hand over to the overlay
-                    MusicDB_Request("FindAlbumSongFiles", "ShowAlbumImportLayer", {albumpath:pathentry.path});
+                    MusicDB.Request("FindAlbumSongFiles", "ShowAlbumImportLayer", {albumpath:pathentry.path});
                 }
                 else
                     window.console?.warn(`${this.databaseelement} ${this.filesystemelement} cannot be impored.`);
@@ -420,11 +420,11 @@ class RepairBox extends Element
 
             case "UpdateEntry":
                 if(this.contenttype == "song")
-                    MusicDB_Call("UpdateSongEntry", {songid: dbentry.id, newpath: pathentry.path});
+                    MusicDB.Call("UpdateSongEntry", {songid: dbentry.id, newpath: pathentry.path});
                 else if(this.contenttype == "album")
-                    MusicDB_Call("UpdateAlbumEntry", {albumid: dbentry.id, newpath: pathentry.path});
+                    MusicDB.Call("UpdateAlbumEntry", {albumid: dbentry.id, newpath: pathentry.path});
                 else if(this.contenttype == "artist")
-                    MusicDB_Call("UpdateArtistEntry", {artistid: dbentry.id, newpath: pathentry.path});
+                    MusicDB.Call("UpdateArtistEntry", {artistid: dbentry.id, newpath: pathentry.path});
                 else
                     window.console?.warn(`${this.databaseelement} ${this.filesystemelement} cannot be updated.`);
 
@@ -436,7 +436,7 @@ class RepairBox extends Element
                 if(this.contenttype == "album")
                 {
                     let newartistdir = pathentry.path.split("/")[0];
-                    MusicDB_Call("ChangeArtistDirectory", {oldalbumpath: dbentry.path, newartistdirectory: newartistdir});
+                    MusicDB.Call("ChangeArtistDirectory", {oldalbumpath: dbentry.path, newartistdirectory: newartistdir});
                 }
                 else
                     window.console?.warn(`${this.databaseelement} ${this.filesystemelement} cannot be updated.`);

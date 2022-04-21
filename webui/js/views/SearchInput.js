@@ -67,11 +67,11 @@ class SearchInput extends Element
     {
         if(target == "preview")
         {
-            MusicDB_Request("Find", "ShowPreview", {searchstring:searchstring, limit:5});
+            MusicDB.Request("Find", "ShowPreview", {searchstring:searchstring, limit:5});
         }
         else if(target == "results")
         {
-            MusicDB_Request("Find", "ShowResults", {searchstring:searchstring, limit:20});
+            MusicDB.Request("Find", "ShowResults", {searchstring:searchstring, limit:20});
         }
         return;
     }

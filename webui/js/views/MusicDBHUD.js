@@ -140,7 +140,7 @@ class MusicDBHUD extends Element
         this.albuminfobox.appendChild(this._CreateInfoElement(this.albumicon, MDBAlbum.name));
         this.albuminfobox.onclick       = ()=>
             {
-                MusicDB_Request("GetAlbum", "ShowAlbum", {albumid:MDBAlbum.id});
+                MusicDB.Request("GetAlbum", "ShowAlbum", {albumid:MDBAlbum.id});
             }
 
         this.artistinfobox.innerHTML = "";
@@ -159,7 +159,7 @@ class MusicDBHUD extends Element
         this.musicinfobox.appendChild(this._CreateInfoElement(this.videoicon, MDBVideo.name));
         this.musicinfobox.onclick       = ()=>
             {
-                MusicDB_Request("GetVideo", "ShowVideo", {videoid:MDBVideo.id});
+                MusicDB.Request("GetVideo", "ShowVideo", {videoid:MDBVideo.id});
             }
 
         this.albuminfobox.style.display = "none";

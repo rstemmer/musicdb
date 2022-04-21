@@ -110,7 +110,7 @@ class WebUISettings extends MainSettingsView
     ChangeSetting(section, key, value)
     {
         this.settings[section][key] = value;
-        MusicDB_Broadcast("SaveWebUIConfiguration", "UpdateConfig", {config: this.settings});
+        MusicDB.Broadcast("SaveWebUIConfiguration", "UpdateConfig", {config: this.settings});
     }
 
 

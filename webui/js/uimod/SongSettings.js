@@ -79,7 +79,7 @@ class SongSettings extends TabSelect
                     lyricsstate = 4;    // instrumental
                 else
                     lyricsstate = 0;    // lyrics state not configured
-                MusicDB_Broadcast("SetSongLyrics", "UpdateLyricsState", {songid: MDBSong.id, lyrics: null, lyricsstate: lyricsstate});
+                MusicDB.Broadcast("SetSongLyrics", "UpdateLyricsState", {songid: MDBSong.id, lyrics: null, lyricsstate: lyricsstate});
             }
         );
 

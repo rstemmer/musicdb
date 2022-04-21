@@ -72,7 +72,7 @@ class AlbumIntegrationProgress extends Layer
 
     onClick_Close()
     {
-        MusicDB_Request("FindNewContent", "ShowAlbumImport");   // Reload Album Import Settings View
+        MusicDB.Request("FindNewContent", "ShowAlbumImport");   // Reload Album Import Settings View
         this.Hide();
     }
 
@@ -88,7 +88,7 @@ class AlbumIntegrationProgress extends Layer
         WebUI.ShowLayer("AlbumImport"); // Hand over to the overlay
         this.Hide();
 
-        MusicDB_Request("FindAlbumSongFiles", "ShowAlbumImportLayer", {albumpath:this.albumpath});
+        MusicDB.Request("FindAlbumSongFiles", "ShowAlbumImportLayer", {albumpath:this.albumpath});
     }
 
 
