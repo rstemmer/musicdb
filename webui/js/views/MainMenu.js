@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -145,7 +145,7 @@ class MainMenu extends Menu
             "Disconnect",
             ()=>
             {
-                DisconnectFromMusicDB();
+                MusicDB.Disconnect();
             },
             "Close connection to the MusicDB WebSocket Server",
 
@@ -153,7 +153,7 @@ class MainMenu extends Menu
             "Reconnect",
             ()=>
             {
-                ConnectToMusicDB();
+                MusicDB.Connect();
             },
             "Reconnect to the MusicDB WebSocket Server");
     }
