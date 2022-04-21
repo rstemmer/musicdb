@@ -21,7 +21,6 @@ class WebSocketError extends Layer
     constructor(background)
     {
         super(background, "WebSocketError");
-        //this.element.classList.add("Welcome");
 
         this.headline = new SettingsHeadline("Web Socket Error", "This view is shown because there occured an error while trying to connect to the MusicDB server via Web Sockets.");
 
@@ -80,9 +79,34 @@ class WebSocketError extends Layer
         let messagebox = new Element("div", ["Welcome"]);
         messagebox.SetInnerHTML(message);
 
+        // Tool Bar
+        this.toolbar   = new ToolBar();
+        this.reconnect = new TextButton("Reconnect", "Try Reconnect",
+            ()=>{MusicDB.Connect();},
+            "Try to reconnect to the MusicDB WebSocket Server.");
+
+        this.toolbar.AddSpacer(true); // grow
+        this.toolbar.AddButton(this.reconnect);
+        this.toolbar.AddSpacer(true); // grow
+
         //this.AppendChild(this.headline);
         this.AppendChild(this.errormessage);
         this.AppendChild(messagebox);
+        this.AppendChild(this.toolbar);
+    }
+
+
+
+    onMusicDBNotification(fnc, sig, data)
+    {
+        this.Hide();
+    }
+
+
+
+    onMusicDBMessage(fnc, sig, args, pass)
+    {
+        this.Hide();
     }
 
 }
