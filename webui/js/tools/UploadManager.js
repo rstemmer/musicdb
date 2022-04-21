@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -72,7 +72,6 @@ class UploadManager
         task.id       = checksum;
         task.data     = rawdata;
         task.filesize = rawdata.length;
-        task.offset   = 0;
         task.contenttype = contenttype;
         task.mimetype = filedescription.type;
         task.checksum = checksum;
@@ -103,12 +102,26 @@ class UploadManager
         window.console && console.log("UploadNextChunk");
         let taskid    = state.taskid;
         let task      = this.uploads[taskid]
-        let rawdata   = task.data.subarray(task["offset"], task["offset"] + state.chunksize)
+        let offset    = state.offset;
+        let chunksize = state.chunksize;
+        let rawdata   = task.data.subarray(offset, offset + chunksize)
         //let chunkdata = btoa(rawdata); // FIXME: Does not work. rawdata will be implicit converted to string
         let chunkdata = BufferToHexString(rawdata)
-        task.offset  += rawdata.length;
 
         MusicDB.Call("UploadChunk", {taskid: taskid, chunkdata: chunkdata});
+    }
+
+
+
+    onWebSocketOpen()
+    {
+        window.console?.info("Continuing uploads in case some have been stalled");
+        // In case there are incomplete uploads, try to retrigger the process
+        for(let taskid in this.uploads) // Object key is the task ID
+        {
+            window.console?.log(this.uploads[taskid]);
+            MusicDB.Call("UploadChunk", {taskid: taskid, chunkdata: ""}); // Empty packet
+        }
     }
 
 

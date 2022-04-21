@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -184,6 +184,16 @@ class AlbumIntegrationLayer extends Layer
 
     Integrate(mdbtask)
     {
+        // Check if task is already in the list
+        let taskid = mdbtask.id;
+        for(let albumfile of this.albumfiles)
+        {
+            let albumfileid = albumfile.id;
+            if(taskid == albumfileid)
+                return; // This is a double. Can happen if there was a connection issue before
+        }
+
+        // Add task
         this.albumfiles.push(mdbtask);
         let artistname  = mdbtask.annotations.artist;
         let albumname   = mdbtask.annotations.album;
@@ -203,8 +213,12 @@ class AlbumIntegrationLayer extends Layer
         {
             let task  = rawdata.task;
             let state = rawdata.state;
+            let contenttype = task.contenttype;
 
             if(state == "notexisting")
+                return;
+
+            if(contenttype != "albumfile")
                 return;
 
             // Only consider tasks of a certain group
@@ -214,7 +228,6 @@ class AlbumIntegrationLayer extends Layer
                     return;
             }
 
-            // FIXME: May be a different file than a song file
             // FIXME: Check if this belongs to the expected album
             if(state == "readyforintegration")
             {
