@@ -261,5 +261,24 @@ class Config(configparser.ConfigParser, object):
 
 
 
+    def RemoveSection(self, sectionname):
+        """
+        This method removes a section from the configuration file
+
+        After setting the option, the :meth:`~musicdb.lib.cfg.config.Config.Save` method gets called to store the changes.
+        This is necessary because there is no reliable destructor in python to.
+
+        Args:
+            section (str): Section to remove
+
+        Returns:
+            *Nothing*
+        """
+        self.remove_section(sectionname)
+        self.Save()
+        return
+
+
+
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
