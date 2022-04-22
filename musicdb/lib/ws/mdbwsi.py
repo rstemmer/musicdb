@@ -1485,13 +1485,12 @@ class MusicDBWebSocketInterface(object):
 
     def GetMDBState(self):
         """
-        This method returns the current global state of the MusicDB WebUIs
-
-        Currently, the only state existing is the list of selected genres.
+        This method returns the current global state of MusicDB and the WebUIs
 
         The state is a dictionary with the following information:
 
-            * **albumfilter:** a list of tag-names of class Genre
+            * **albumfilter:** a list of tag-names of class Genre that are selected as genre filter
+            * **SubgenreFilter:** a dictionary with each existing genre as key. Its values are a list of tag-names representing the selected sub genres
             * **MusicDB:**
                 * *uimode*: Defines if UI is in ``"audio"`` or ``"video"`` mode
             * **audiostream**
@@ -1519,14 +1518,21 @@ class MusicDBWebSocketInterface(object):
                     {
                         console.log(args.MusicDB.uimode);
 
-                        let activetags;
-                        activetags = args.albumfilter;
+                        let activetags = args.albumfilter;
                         for(let genrename of activetags)
                             console.log(genrename);
+
+                        let subgenrefilter = args.SubgenreFilter;
+                        for(let genre in subgenrefilter)
+                            console.log(subgenrefilter[genre]) // a list of selected sub genres
                     }
                 }
         """
+        # Get all selected genres
         albumfilter = self.mdbstate.GetGenreFilterList()
+
+        # Get all selected sub genres
+        subgenrefilter = self.mdbstate.GetAllSubgenreFilterLists()
 
         # Set some information about the audio stream state
         audiostreamstate = self.audiostream.GetStreamState()
@@ -1548,7 +1554,8 @@ class MusicDBWebSocketInterface(object):
 
         # put everything together
         state = {}
-        state["albumfilter"] = albumfilter
+        state["albumfilter"]    = albumfilter
+        state["SubgenreFilter"] = subgenrefilter
         state["MusicDB"] = {}
         state["MusicDB"]["uimode"] = self.mdbstate.GetUIMode()
         state["audiostream"] = {};
