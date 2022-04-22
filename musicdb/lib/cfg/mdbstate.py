@@ -68,7 +68,7 @@ class MDBState(Config, object):
     The value for this key is a string and can be ``"audio"`` or ``"video"``.
     The value represents if the user interface is in audio-mode to manage an audio stream or video-mode to present music videos.
 
-    The method :meth:`~GetFilterList` accesses a section ``albumfiler``.
+    The method :meth:`~GetGenreFilterList` accesses a section ``albumfiler``.
     Each key in this section represents a main genre (all characters lower case) tag and can have the value ``True`` or ``False``.
     If a genre is not listed in this section, it is assumed to have the value ``False``.
     As soon as the genre gets activated via the WebUIs genre selection interface, it appears in the albumfiler-list.
@@ -366,12 +366,12 @@ class MDBState(Config, object):
         return
 
 
-    def UpdateFilterList(self, genre, enable):
+    def UpdateGenreFilterList(self, genre, enable):
         """
         Sets the enable-state of a genre to the value of the parameter ``enable``.
 
         The value is stored in the state.ini file under the category ``"albumfilter"``.
-        See :meth:`~GetFilterList` for reading out the information.
+        See :meth:`~GetGenreFilterList` for reading out the information.
 
         Args:
             genre (str): Name of a genre to enable or disable
@@ -385,11 +385,11 @@ class MDBState(Config, object):
 
         self.Reload()
         self.Set("albumfilter", genre, enable)
-        logging.debug("Filter list updated for genre %s -> %s. New list: %s", genre, str(enable), str(self.GetFilterList()))
+        logging.debug("Filter list updated for genre %s -> %s. New list: %s", genre, str(enable), str(self.GetGenreFilterList()))
         return
 
 
-    def GetFilterList(self):
+    def GetGenreFilterList(self):
         """
         This method returns a list of the activated genre
         The list consists of the names of the genres as configured by the user.
@@ -399,13 +399,13 @@ class MDBState(Config, object):
         If a genre is not defined in the configuration file, its default value is ``False`` and so it is not active.
         Before the comparison, the state file gets reloaded so that external changes get applied directly.
 
-        See :meth:`~UpdateFilterList` for changing the state of the genres.
+        See :meth:`~UpdateGenreFilterList` for changing the state of the genres.
 
         Example:
 
             .. code-block:: python
 
-                filter = mdbstate.GetFilterList()
+                filter = mdbstate.GetGenreFilterList()
                 print(filter) # ['Metal','NDH']
                 # Metal and NDH are active, other available genres are not enabled.
 
