@@ -1,5 +1,5 @@
 Name:       musicdb
-Version:    8.0.0
+Version:    8.1.0
 Release:    1%{?dist}
 Summary:    A music manager with web-bases UI that focus on music
 Vendor:     Ralf Stemmer <ralf.stemmer@gmx.net>

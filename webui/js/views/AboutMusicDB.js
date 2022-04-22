@@ -17,8 +17,8 @@
 "use strict";
 
 // The following two constants should be automatically generated during the installation process! TODO
-const MUSICDB_VERSION = "8.0.0";
-const WEBUI_VERSION = "3.2.0";
+const MUSICDB_VERSION = "8.1.0";
+const WEBUI_VERSION = "3.2.1";
 
 class AboutMusicDB
 {
