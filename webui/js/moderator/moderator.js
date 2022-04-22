@@ -89,12 +89,14 @@ MusicDB.ConfigureReconnects(3);
 MusicDB.ConfigureAPIKey(WEBSOCKET_APIKEY);
 
 // Map Back-End <-> Front-End interfaces
-MusicDB.SetCallbackForEvent("connect",      ()=>{WebUI.onWebSocketOpen();});
+MusicDB.SetCallbackForEvent("connect",      ()=>{WebUI.onWebSocketOpen();  });
 MusicDB.SetCallbackForEvent("disconnect",   ()=>{WebUI.onWebSocketClosed();});
-MusicDB.SetCallbackForEvent("error",        ()=>{WebUI.onWebSocketError();});
-MusicDB.SetCallbackForEvent("watchdog",     ()=>{WebUI.onWatchdogBarks();});
-MusicDB.SetCallbackForEvent("message",      onMusicDBMessage);
-MusicDB.SetCallbackForEvent("notification", onMusicDBNotification);
+MusicDB.SetCallbackForEvent("error",        ()=>{WebUI.onWebSocketError(); });
+MusicDB.SetCallbackForEvent("watchdog",     ()=>{WebUI.onWatchdogBarks();  });
+MusicDB.SetCallbackForEvent("message",
+    (fnc, sig, args, pass)=>{WebUI.onMusicDBMessage(fnc, sig, args, pass);});
+MusicDB.SetCallbackForEvent("notification",
+    (fnc, sig, rawdata)=>{WebUI.onMusicDBNotification(fnc, sig, rawdata);});
 
 
 window.onload = function ()
@@ -102,6 +104,7 @@ window.onload = function ()
     // Do some last DOM changes
     WebUI.onWindowLoad();
 
+    // Add some parts that require an existing DOM
     WebUI.AddManager("LeftView", new LeftViewManager());
     WebUI.AddManager("MainView", new MainViewManager());
     WebUI.AddManager("VideoPanel", new VideoPanelManager());
@@ -112,15 +115,6 @@ window.onload = function ()
 }
 
 
-function onMusicDBNotification(fnc, sig, rawdata)
-{
-    WebUI.onMusicDBNotification(fnc, sig, rawdata);
-}
-function onMusicDBMessage(fnc, sig, args, pass)
-{
-    WebUI.onMusicDBMessage(fnc, sig, args, pass);
-    return;
-}
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
