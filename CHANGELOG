@@ -11,6 +11,7 @@ Run  git log --oneline  for more details
 │ * [state.ini] A bug has been fixed that makes wrongly case insensitively behavior case sensitive.
 │               This leads to the situation that the selected genres stored in state.ini are no longer recognized.
 │               I used this "opportunity" to rename the section "albumfilter" to "GenreFilter"
+│ + [state.ini] Albums can now be filtered by sub genres
 │
 ┝━ MINOR CHANGES
 │ * [WebUI] MusicDB WebSocket connection interface refactored (now object oriented)
