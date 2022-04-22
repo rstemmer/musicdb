@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ class Config(configparser.ConfigParser, object):
         If a file name is given, the file gets read.
         """
         super(Config, self).__init__()
+        self.optionxform = str
 
         self.__filename       = None
         self.__allownonevalue = False
