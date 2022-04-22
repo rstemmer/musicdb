@@ -76,10 +76,6 @@ WebUI.AddView("TaskList",       new TaskListView());
 WebUI.AddView("Repair",         new RepairView());
 WebUI.AddView("SettingsMenu",   new SettingsMenu()); // Accesses references to settings views
 
-let leftviewmanager     = null; // \_
-let mainviewmanager     = null; // / Can only be created when the document is created
-let videopanelmanager   = null;
-
 let configuration       = null; // Needs to be loaded from the Server
 
 // Extend Main Menu
@@ -106,9 +102,9 @@ window.onload = function ()
     // Do some last DOM changes
     WebUI.onWindowLoad();
 
-    leftviewmanager     = new LeftViewManager();
-    mainviewmanager     = new MainViewManager();
-    videopanelmanager   = new VideoPanelManager();
+    WebUI.AddManager("LeftView", new LeftViewManager());
+    WebUI.AddManager("MainView", new MainViewManager());
+    WebUI.AddManager("VideoPanel", new VideoPanelManager());
     streamview.ShowInVideoPanel();
 
     // Connect to MusicDB
@@ -123,10 +119,6 @@ function onMusicDBNotification(fnc, sig, rawdata)
 function onMusicDBMessage(fnc, sig, args, pass)
 {
     WebUI.onMusicDBMessage(fnc, sig, args, pass);
-
-    // Views
-    leftviewmanager.onMusicDBMessage(fnc, sig, args, pass);
-    mainviewmanager.onMusicDBMessage(fnc, sig, args, pass);
     return;
 }
 

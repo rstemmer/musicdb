@@ -124,7 +124,7 @@ class WebUIManager
             if(args.audiostream.currentsong == null && args.videostream.currentvideo == null)
             {
                 // All queues empty -> fresh install
-                mainviewmanager.ShowWelcome();
+                WebUI.GetManager("MainView").ShowWelcome();
             }
 
             let uimode = args.MusicDB.uimode;
