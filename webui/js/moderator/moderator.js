@@ -19,6 +19,7 @@ let MusicDB = new BackEndConnection(WEBSOCKET_URL);
 let WebUI   = new Application();
 
 // Create Basic MusicDB Logic Components
+WebUI.AddManager("WebUI",       new WebUIManager());
 WebUI.AddManager("Tags",        new TagManager());
 WebUI.AddManager("Artists",     new ArtistsCache());
 WebUI.AddManager("Color",       new ColorManager());
@@ -92,10 +93,10 @@ MusicDB.ConfigureReconnects(3);
 MusicDB.ConfigureAPIKey(WEBSOCKET_APIKEY);
 
 // Map Back-End <-> Front-End interfaces
-MusicDB.SetCallbackForEvent("connect",      onMusicDBConnectionOpen);
-MusicDB.SetCallbackForEvent("disconnect",   onMusicDBConnectionClosed);
-MusicDB.SetCallbackForEvent("error",        onMusicDBConnectionError);
-MusicDB.SetCallbackForEvent("watchdog",     onMusicDBWatchdogBarks);
+MusicDB.SetCallbackForEvent("connect",      ()=>{WebUI.onWebSocketOpen();});
+MusicDB.SetCallbackForEvent("disconnect",   ()=>{WebUI.onWebSocketClosed();});
+MusicDB.SetCallbackForEvent("error",        ()=>{WebUI.onWebSocketError();});
+MusicDB.SetCallbackForEvent("watchdog",     ()=>{WebUI.onWatchdogBarks();});
 MusicDB.SetCallbackForEvent("message",      onMusicDBMessage);
 MusicDB.SetCallbackForEvent("notification", onMusicDBNotification);
 
@@ -114,71 +115,10 @@ window.onload = function ()
     MusicDB.Connect();
 }
 
-function onMusicDBConnectionOpen()
-{
-    WebUI.onWebSocketOpen();
-    MusicDB.Request("LoadWebUIConfiguration", "SetupWebUI");
-}
-function onMusicDBConnectionError()
-{
-    WebUI.onWebSocketError();
-    WebUI.GetLayer("WebSocketError").Show();
-}
-function onMusicDBWatchdogBarks()
-{
-    WebUI.onWatchdogBarks();
-}
-function onMusicDBConnectionClosed()
-{
-    WebUI.onWebSocketClosed();
-    WebUI.GetLayer("WebSocketClosed").Show();
-}
 
 function onMusicDBNotification(fnc, sig, rawdata)
 {
     WebUI.onMusicDBNotification(fnc, sig, rawdata);
-
-    if(fnc == "MusicDB:AudioStream")
-    {
-        // Handle notifications
-        if(sig == "onStatusChanged")
-        {
-            MusicDB.Request("GetAudioStreamState", "UpdateStreamState");
-        }
-    }
-    else if(fnc == "MusicDB:VideoStream")
-    {
-        if(sig == "onStatusChanged")
-        {
-            MusicDB.Request("GetVideoStreamState", "UpdateStreamState");
-        }
-        else if(sig == "onStreamNextVideo")
-        {
-            MusicDB.Request("GetVideoStreamState", "UpdateHUD");
-        }
-    }
-    else if(fnc == "MusicDB:SongQueue")
-    {
-        if(sig == "onSongChanged")
-        {
-            MusicDB.Request("GetAudioStreamState", "UpdateStreamState");
-        }
-        else if(sig == "onSongQueueChanged")
-        {
-            MusicDB.Request("GetSongQueue", "ShowSongQueue");
-        }
-    }
-    else if (fnc == "MusicDB:VideoQueue")
-    {
-        if(sig == "onVideoChanged")
-        {
-            MusicDB.Request("GetAudioStreamState", "UpdateStreamState");
-        }
-        else if(sig == "onVideoQueueChanged")
-        {
-            MusicDB.Request("GetVideoQueue", "ShowVideoQueue");
-        }
-    }
 }
 function onMusicDBMessage(fnc, sig, args, pass)
 {
@@ -187,51 +127,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
     // Views
     leftviewmanager.onMusicDBMessage(fnc, sig, args, pass);
     mainviewmanager.onMusicDBMessage(fnc, sig, args, pass);
-
-    // Handle Messages form the server
-    if(fnc == "LoadWebUIConfiguration" && sig == "SetupWebUI")
-    {
-        configuration = args;
-
-        if(configuration.debug.blurartwork == true)
-            document.documentElement.style.setProperty("--artworkfilter", "blur(5px)");
-
-        MusicDB.Request("GetMDBState", "InitializeWebUI");
-    }
-    else if(sig == "UpdateConfig")
-    {
-        configuration = args;
-    }
-    else if(fnc == "GetMDBState" && sig == "InitializeWebUI")
-    {
-        if(args.audiostream.currentsong == null && args.videostream.currentvideo == null)
-        {
-            // All queues empty -> fresh install
-            mainviewmanager.ShowWelcome();
-        }
-
-        let uimode = args.MusicDB.uimode;
-        MusicDB.Request("GetArtists",  "UpdateArtistsCache");
-        MusicDB.Request("GetTags",     "UpdateTagsCache");
-        MusicDB.Request("GetMDBState", "UpdateMDBState");
-        if(uimode == "audio")
-        {
-            MusicDB.Request("GetAudioStreamState",   "UpdateStreamState");
-            MusicDB.Request("GetSongQueue",          "ShowSongQueue"); // Force Queue Update
-        }
-        else if(uimode == "video")
-        {
-            MusicDB.Request("GetVideoStreamState",   "UpdateStreamState");
-            MusicDB.Request("GetVideoQueue",         "ShowVideoQueue"); // Force Queue Update
-        }
-    }
-    else if(fnc=="sys:refresh" && sig == "UpdateCaches")    // TODO: Update (make uimode conform)
-    {
-        MusicDB.Request("GetTags",    "UpdateTagsCache");
-        MusicDB.Request("GetArtists", "UpdateArtistsCache");
-        MusicDB.Request("GetFilteredArtistsWithAlbums", "ShowArtists"); // Update artist view
-    }
-
     return;
 }
 
