@@ -865,7 +865,7 @@ class MusicDBWebSocketInterface(object):
         albums = sorted(albums, key = lambda k: k["release"] if type(k["release"]) is int else 0)
 
         if applyfilter:
-            filterset = set(self.mdbstate.GetFilterList())
+            filterset = set(self.mdbstate.GetGenreFilterList())
 
         # assign tags to albums
         albumlist = []
@@ -938,7 +938,7 @@ class MusicDBWebSocketInterface(object):
         videos = sorted(videos, key = lambda k: k["release"])
 
         if applyfilter:
-            filterset = set(self.mdbstate.GetFilterList())
+            filterset = set(self.mdbstate.GetGenreFilterList())
 
         # assign tags to videos
         videolist = []
@@ -1470,7 +1470,7 @@ class MusicDBWebSocketInterface(object):
         """
         if category == "albumfilter":
             try:
-                self.mdbstate.UpdateFilterList(name, value)
+                self.mdbstate.UpdateGenreFilterList(name, value)
             except Exception as e:
                 logging.warning("Setting Album Filter failed with errror \"%s\"", str(e))
 
@@ -1526,7 +1526,7 @@ class MusicDBWebSocketInterface(object):
                     }
                 }
         """
-        albumfilter = self.mdbstate.GetFilterList()
+        albumfilter = self.mdbstate.GetGenreFilterList()
 
         # Set some information about the audio stream state
         audiostreamstate = self.audiostream.GetStreamState()

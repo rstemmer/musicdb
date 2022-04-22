@@ -141,7 +141,7 @@ class Randy(object):
         logging.debug("Randy starts looking for a random song …")
         t_start = datetime.datetime.now()
 
-        filterlist = self.mdbstate.GetFilterList()
+        filterlist = self.mdbstate.GetGenreFilterList()
         if not filterlist:
             logging.warning("No Genre selected! \033[1;30m(Selecting random song from the whole collection)")
         else:
@@ -302,7 +302,7 @@ class Randy(object):
         trackback.print_stack()
         t_start = datetime.datetime.now()
 
-        filterlist = self.mdbstate.GetFilterList()
+        filterlist = self.mdbstate.GetGenreFilterList()
         if not filterlist:
             logging.warning("No Genre selected! \033[1;30m(Selecting random video from the whole collection)")
         else:
