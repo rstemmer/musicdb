@@ -73,6 +73,11 @@ class MDBState(Config, object):
     If a genre is not listed in this section, it is assumed to have the value ``False``.
     As soon as the genre gets activated via the WebUIs genre selection interface, it appears in the albumfiler-list.
 
+    The method :meth:`~GetSubgenreFilterList` returns a list of selected sub genres for a certain genre,
+    similar to the :meth:`~GetGenreFilterList`.
+    It accesses a section ``SubgenreFilter:$genre`` where ``$genre`` is the main genre name.
+    The sections are created and updated via :meth:`~UpdateSubgenreFilterList`.
+
     Args:
         path: Absolute path to the MusicDB state directory
         musicdb: Instance of the MusicDB Database (can be None)
@@ -424,6 +429,83 @@ class MDBState(Config, object):
                 filterlist.append(tag["name"])
 
         return filterlist
+
+
+
+    def UpdateSubgenreFilterList(self, genre, subgenre, enable):
+        """
+        Sets the enable-state of a genre to the value of the parameter ``enable``.
+
+        The value is stored in the state.ini file under the category ``SubgenreFilter:$genre``.
+        See :meth:`~GetSubgenreFilterList` for reading out the information.
+
+        Args:
+            genre (str): Name of a main genre
+            subgenre (str): Name of a sub genre to enable or disable
+            enable (bool): Enable or disable sub genre
+
+        Returns:
+            *Nothing*
+        """
+        if type(enable) != bool:
+            raise ValueError("Value of the genre %s must be a boolean. Given was a %s."%(name, type(value)))
+
+        self.Reload()
+        self.Set("SubgenreFilter:" + genre, subgenre, enable)
+        logging.debug("Filter list updated for sub genre %s:%s -> %s. New list: %s",
+                genre, subgenre, str(enable), str(self.GetSubgenreFilterList(genre)))
+        return
+
+
+
+    def GetSubgenreFilterList(self, genre):
+        """
+        This method returns a list of the activated sub genre for a certain genre.
+        The list consists of the names of the genres as configured by the user.
+        That are the names returned by :meth:`musicdb.lib.db.musicdb.MusicDatabase.GetAllTags`.
+
+        The available sub genres get compared to the ones set in the state.ini file inside the MusicDB State directory.
+        If a sub genre is not defined in the configuration file, its default value is ``False`` and so it is not active.
+        Before the comparison, the state file gets reloaded so that external changes get applied directly.
+
+        The output is independent from the state of the main genre.
+
+        See :meth:`~UpdateSubgenreFilterList` for changing the state of the sub genres.
+
+        Example:
+
+            .. code-block:: python
+
+                filter = mdbstate.GetSubgenreFilterList("Metal")
+                print(filter) # ['Death Metal','Black Metal']
+
+        Args:
+            genre (str): Name of a genre for that the sub genres will be checked
+
+        Returns:
+            A list of sub genre names that are activated
+        """
+        if not self.musicdb:
+            raise ValueError("Music Database object required but it is None.")
+        filterlist = []
+
+        genretag     = self.musicdb.GetTagByName(genre)
+        genreid      = genretag["id"]
+        genrename    = genretag["name"]
+        sectionname  = "SubgenreFilter:" + genrename
+        subgenretags = self.musicdb.GetAllTags(MusicDatabase.TAG_CLASS_SUBGENRE)
+
+        self.Reload()
+        for tag in subgenretags:
+            # Only consider sub genres of the given genre
+            if tag["parentid"] != genreid:
+                continue
+
+            state = self.Get(bool, sectionname, tag["name"], False)
+            if state:
+                filterlist.append(tag["name"])
+        return filterlist
+
 
 
     def GetUIMode(self):
