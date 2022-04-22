@@ -1,6 +1,6 @@
 # Maintainer: Ralf Stemmer <ralf.stemmer@gmx.net>
 pkgname=musicdb
-pkgver=8.0.0
+pkgver=8.1.0
 pkgrel=1
 epoch=
 pkgdesc="A music manager with web-bases UI that focus on music"
