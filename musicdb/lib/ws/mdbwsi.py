@@ -867,7 +867,6 @@ class MusicDBWebSocketInterface(object):
         # Prepare the filter set
         if applyfilter:
             filterset = set(self.mdbstate.GetActiveTagIDs())
-            logging.debug("filterset: %s", str(filterset))
 
         # assign tags to albums
         albumlist = []
@@ -876,7 +875,6 @@ class MusicDBWebSocketInterface(object):
             tags = self.database.GetTargetTags("album", album["id"]) # Returns all tags set for the album
             if applyfilter and tags:
                 tagsset = { tag["id"] for tag in tags }
-                logging.debug("tagsset: %s", str(tagsset))
 
                 # do not continue with this album,
                 # if there is no unionset of genres
