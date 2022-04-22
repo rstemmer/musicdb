@@ -823,13 +823,13 @@ class MusicDBWebSocketInterface(object):
         Each entry in the list has the following two elements:
 
             * **album:** An album entry from the database.
-            * **tags:** The returned tag entry by :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags`
+            * **tags:** The returned tag entry by :meth:`~GetAlbumTags`
 
-        The filter gets applied to only the *genre* tags.
+        The filter gets applied to the *genre* and *sub genre* tags.
 
         Args:
             artistid (int): ID of the artist whose albums shall be returned
-            applyfilter (bool): Default value is ``False``
+            applyfilter (bool): Default value is ``False``. Only return albums of active genres and sub genres
 
         Returns:
             A list of albums and their tags
@@ -864,27 +864,28 @@ class MusicDBWebSocketInterface(object):
         # In case of an invalid import, the release my become None. So assume a release date of 0 in case it is not a valid integer
         albums = sorted(albums, key = lambda k: k["release"] if type(k["release"]) is int else 0)
 
+        # Prepare the filter set
         if applyfilter:
-            filterset = set(self.mdbstate.GetGenreFilterList())
+            filterset = set(self.mdbstate.GetActiveTagIDs())
+            logging.debug("filterset: %s", str(filterset))
 
         # assign tags to albums
         albumlist = []
         for album in albums:
-            tags   = self.GetAlbumTags(album["id"])
-            genres = tags["genres"]
-
             # if no tags are available, show the album!
-            if applyfilter and genres:
-                genreset = { genre["name"] for genre in genres }
+            tags = self.database.GetTargetTags("album", album["id"]) # Returns all tags set for the album
+            if applyfilter and tags:
+                tagsset = { tag["id"] for tag in tags }
+                logging.debug("tagsset: %s", str(tagsset))
 
                 # do not continue with this album,
                 # if there is no unionset of genres
-                if not filterset & genreset:
+                if not filterset & tagsset:
                     continue
 
             entry = {}
-            entry["album"]   = album
-            entry["tags"]    = tags
+            entry["album"] = album
+            entry["tags"]  = self.GetAlbumTags(album["id"]) # returns a categorized dict of tags
             albumlist.append(entry)
 
         return albumlist

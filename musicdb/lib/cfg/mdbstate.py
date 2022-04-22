@@ -98,6 +98,10 @@ class MDBState(Config, object):
             logging.info("Updating %s/state.ini to version 3", path)
             self.Set("meta", "version", 3)
             self.Set("MusicDB", "uimode", "audio")
+        if self.meta.version < 4:
+            logging.info("Updating %s/state.ini to version 4", path)
+            self.Set("meta", "version", 4)
+            self.RemoveSection("albumfilter")
 
 
     def ReadList(self, listname):
@@ -375,7 +379,7 @@ class MDBState(Config, object):
         """
         Sets the enable-state of a genre to the value of the parameter ``enable``.
 
-        The value is stored in the state.ini file under the category ``"albumfilter"``.
+        The value is stored in the state.ini file under the category ``"GenreFilter"``.
         See :meth:`~GetGenreFilterList` for reading out the information.
 
         Args:
@@ -389,7 +393,7 @@ class MDBState(Config, object):
             raise ValueError("Value of the genre %s must be a boolean. Given was a %s."%(name, type(value)))
 
         self.Reload()
-        self.Set("albumfilter", genre, enable)
+        self.Set("GenreFilter", genre, enable)
         logging.debug("Filter list updated for genre %s -> %s. New list: %s", genre, str(enable), str(self.GetGenreFilterList()))
         return
 
@@ -424,7 +428,7 @@ class MDBState(Config, object):
         
         self.Reload()
         for tag in genretags:
-            state = self.Get(bool, "albumfilter", tag["name"], False)
+            state = self.Get(bool, "GenreFilter", tag["name"], False)
             if state:
                 filterlist.append(tag["name"])
 
@@ -535,6 +539,45 @@ class MDBState(Config, object):
             subgenrefilter[genrename] = subgenres
 
         return subgenrefilter
+
+
+
+    def GetActiveTagIDs(self):
+        """
+        Returns a list of tag IDs of active genres and their active sub genres.
+        Only sub genres of active genres are considered.
+        If no sub genre is active, but the main genre is, then the main genre ID is included.
+        This can be the case when there is no sub genre existing for a main genre.
+        Then the main genre ID is included.
+        In all other cases, only the sub genre IDs are included.
+
+        Example:
+
+            .. code-block:: python
+
+                filter = mdbstate.GetActiveTagIDs()
+                print(filter) # [1, 13, 42]
+
+        Returns:
+            A list of genre and sub genre tag IDs
+        """
+        genrenames = self.GetGenreFilterList()
+
+        tagids = []
+        for genrename in genrenames:
+            genre = self.musicdb.GetTagByName(genrename, MusicDatabase.TAG_CLASS_GENRE)
+
+            subgenrenames = self.GetSubgenreFilterList(genrename)
+
+            if subgenrenames:
+                for subgenrename in subgenrenames:
+                    subgenre = self.musicdb.GetTagByName(subgenrename, MusicDatabase.TAG_CLASS_SUBGENRE)
+                    tagids.append(subgenre["id"])
+            else:
+                # Only include genre ID when there is no sub genre active or existing
+                tagids.append(genre["id"])
+
+        return tagids
 
 
 
