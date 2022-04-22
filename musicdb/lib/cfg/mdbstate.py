@@ -465,7 +465,7 @@ class MDBState(Config, object):
         That are the names returned by :meth:`musicdb.lib.db.musicdb.MusicDatabase.GetAllTags`.
 
         The available sub genres get compared to the ones set in the state.ini file inside the MusicDB State directory.
-        If a sub genre is not defined in the configuration file, its default value is ``False`` and so it is not active.
+        If a sub genre is not defined in the configuration file, its default value is ``True`` and so it is active.
         Before the comparison, the state file gets reloaded so that external changes get applied directly.
 
         The output is independent from the state of the main genre.
@@ -501,10 +501,40 @@ class MDBState(Config, object):
             if tag["parentid"] != genreid:
                 continue
 
-            state = self.Get(bool, sectionname, tag["name"], False)
+            state = self.Get(bool, sectionname, tag["name"], True)
             if state:
                 filterlist.append(tag["name"])
         return filterlist
+
+
+    def GetAllSubgenreFilterLists(self):
+        """
+        Returns a dictionary with lists of selected sub genres.
+        Each key in the dictionary is a main genre name as returned by :meth:`musicdb.lib.db.MusicDatabase.GetAllTags`.
+        Behind each key, a list of selected sub genres is stored.
+        If no sub genre is selected, the list is empty.
+        The lists come from :meth:`~GetSubgenreFilterList`.
+
+        Each main genre is considered, not only the selected ones that would have been returned by :meth:`~GetGenreFilterList`.
+
+        Example:
+
+            .. code-block:: python
+
+                filter = mdbstate.GetAllSubgenreFilterLists()
+                print(filter["Metal"]) # ['Death Metal','Black Metal']
+
+        Returns:
+            A dict with lists of selected sub genres for each main genre
+        """
+        genretags = self.musicdb.GetAllTags(MusicDatabase.TAG_CLASS_GENRE)
+        subgenrefilter = {}
+        for genre in genretags:
+            genrename = genre["name"]
+            subgenres = self.GetSubgenreFilterList(genrename)
+            subgenrefilter[genrename] = subgenres
+
+        return subgenrefilter
 
 
 
