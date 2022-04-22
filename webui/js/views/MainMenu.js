@@ -120,8 +120,8 @@ class MainMenu extends Menu
             "MusicDB Manager",
             ()=>
             {
-                leftviewmanager.ShowSettingsMenu();
-                mainviewmanager.ShowAboutMusicDB(); // TODO: Show a different view
+                WebUI.GetManager("LeftView").ShowSettingsMenu();
+                WebUI.GetManager("MainView").ShowAboutMusicDB(); // TODO: Show a different view
             },
             "Show Settings and Management Tools for the WebUI and Music Content");
     }
@@ -133,7 +133,7 @@ class MainMenu extends Menu
             "About MusicDB",
             ()=>
             {
-                mainviewmanager.ShowAboutMusicDB();
+                WebUI.GetManager("MainView").ShowAboutMusicDB(); // TODO: Show a different view
             },
             "Show information about MusicDB including version numbers");
     }

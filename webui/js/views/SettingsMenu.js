@@ -31,7 +31,7 @@ class SettingsMenu extends LeftView
             "Back to Music", 
             ()=>{
                 this.UnlockView();
-                leftviewmanager.ShowArtistsView();
+                WebUI.GetManager("LeftView").ShowArtistsView();
                 let modemanager = WebUI.GetManager("MusicMode");
                 let musicmode   = modemanager.GetCurrentMode();
                 if(musicmode == "audio")
