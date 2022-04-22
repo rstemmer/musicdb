@@ -117,28 +117,20 @@ window.onload = function ()
 function onMusicDBConnectionOpen()
 {
     WebUI.onWebSocketOpen();
-
-    musicdbstatus.onMusicDBConnectionOpen();
     MusicDB.Request("LoadWebUIConfiguration", "SetupWebUI");
 }
 function onMusicDBConnectionError()
 {
     WebUI.onWebSocketError();
-
-    musicdbstatus.onMusicDBConnectionError();
     WebUI.GetLayer("WebSocketError").Show();
 }
 function onMusicDBWatchdogBarks()
 {
     WebUI.onWatchdogBarks();
-
-    musicdbstatus.onMusicDBWatchdogBarks();
 }
 function onMusicDBConnectionClosed()
 {
     WebUI.onWebSocketClosed();
-
-    musicdbstatus.onMusicDBConnectionClosed();
     WebUI.GetLayer("WebSocketClosed").Show();
 }
 
