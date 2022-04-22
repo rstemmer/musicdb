@@ -1452,9 +1452,11 @@ class MusicDBWebSocketInterface(object):
         After executing this method, the MusicDB server broadcasts the result of :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState`. (``method = "broadcast", fncname = "GetMDBState"``)
         So each client gets informed about the new state.
 
-        The category must be ``"albumfilter"`` or ``"MusicDB"`` with name ``"uimode"``!
-        To set the album filter, :meth:`~musicdb.lib.cfg.config.Config.Set` is used.
-        For setting the UI mode, :meth:`~musicdb.lib.cfg.mdbstate.MDBState.SetUIMode` is called. Details of valid modes are listed there as well.
+        The following categories are valid:
+        
+            * ``"albumfilter"`` - To set the genre filter, :meth:`~musicdb.lib.cfg.mdbstate.MDBState.UpdateGenreFilterList` is used.
+            * ``"MusicDB"`` with name ``"uimode"`` - For setting the UI mode, :meth:`~musicdb.lib.cfg.mdbstate.MDBState.SetUIMode` is called. Details of valid modes are listed there as well.
+            * ``"SubgenreFilter:"+GenreName`` - To set the sub genre filter, :meth:`~musicdb.lib.cfg.mdbstate.MDBState.UpdateSubgenreFilterList` is used.
 
         Args:
             category (str): Category of the state
@@ -1467,19 +1469,26 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB_Call("SetMDBState", {category:"albumfilter", name:"Metal", value:true});
+                MusicDB.Call("SetMDBState", {category:"albumfilter", name:"Metal", value:true});
+                MusicDB.Call("SetMDBState", {category:"SubgenreFilter:Metal", name:"Dark Metal", value:false});
         """
         if category == "albumfilter":
             try:
                 self.mdbstate.UpdateGenreFilterList(name, value)
             except Exception as e:
-                logging.warning("Setting Album Filter failed with errror \"%s\"", str(e))
+                logging.warning("Setting Genre Filter failed with error \"%s\"", str(e))
+
+        elif category.split(":")[0] == "SubgenreFilter":
+            try:
+                self.mdbstate.UpdateSubgenreFilterList(category.split(":")[1], name, value)
+            except Exception as e:
+                logging.warning("Setting Sub Genre Filter failed with error \"%s\"", str(e))
 
         elif category == "MusicDB" and name == "uimode":
             try:
                 self.mdbstate.SetUIMode(value)
             except Exception as e:
-                logging.warning("Setting MusicDB UI Mode failed with errror \"%s\"", str(e))
+                logging.warning("Setting MusicDB UI Mode failed with error \"%s\"", str(e))
 
         return None
 
