@@ -138,25 +138,25 @@ class MusicDBStatus extends StatusList
     }
 
 
-    onMusicDBConnectionOpen()
+    onWebSocketOpen()
     {
         this.SetMusicDBStatus("musicdb",     "connected");
     }
-    onMusicDBConnectionError()
+    onWebSocketError()
     {
         this.SetMusicDBStatus("musicdb",     "disconnected");
         this.SetMusicDBStatus("icecast",     "unknown");
         this.SetMusicDBStatus("audiostream", "unknown");
         this.SetMusicDBStatus("videostream", "unknown");
     }
-    onMusicDBWatchdogBarks()
+    onWatchdogBarks()
     {
         this.SetMusicDBStatus("musicdb",     "disconnected");
         this.SetMusicDBStatus("icecast",     "unknown");
         this.SetMusicDBStatus("audiostream", "unknown");
         this.SetMusicDBStatus("videostream", "unknown");
     }
-    onMusicDBConnectionClosed()
+    onWebSocketClosed()
     {
         this.SetMusicDBStatus("musicdb",     "disconnected");
         this.SetMusicDBStatus("icecast",     "unknown");
