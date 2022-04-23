@@ -1443,7 +1443,7 @@ class MusicDBWebSocketInterface(object):
 
         If the state is not available in the global state settings, it will be created.
 
-        When the *category* is ``"albumfilter"``,
+        When the *category* is ``"GenreFilter"``,
         then *name* must be a Genre-Name and *value* is ``True`` or ``False``.
         If a genre gets set to true, all albums for that genre are included in the list of returned albums by methods that use the filter.
 
@@ -1452,7 +1452,7 @@ class MusicDBWebSocketInterface(object):
 
         The following categories are valid:
         
-            * ``"albumfilter"`` - To set the genre filter, :meth:`~musicdb.lib.cfg.mdbstate.MDBState.UpdateGenreFilterList` is used.
+            * ``"GenreFilter"`` - To set the genre filter, :meth:`~musicdb.lib.cfg.mdbstate.MDBState.UpdateGenreFilterList` is used.
             * ``"MusicDB"`` with name ``"uimode"`` - For setting the UI mode, :meth:`~musicdb.lib.cfg.mdbstate.MDBState.SetUIMode` is called. Details of valid modes are listed there as well.
             * ``"SubgenreFilter:"+GenreName`` - To set the sub genre filter, :meth:`~musicdb.lib.cfg.mdbstate.MDBState.UpdateSubgenreFilterList` is used.
 
@@ -1467,10 +1467,10 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB.Call("SetMDBState", {category:"albumfilter", name:"Metal", value:true});
+                MusicDB.Call("SetMDBState", {category:"GenreFilter", name:"Metal", value:true});
                 MusicDB.Call("SetMDBState", {category:"SubgenreFilter:Metal", name:"Dark Metal", value:false});
         """
-        if category == "albumfilter":
+        if category == "GenreFilter":
             try:
                 self.mdbstate.UpdateGenreFilterList(name, value)
             except Exception as e:
@@ -1497,7 +1497,7 @@ class MusicDBWebSocketInterface(object):
 
         The state is a dictionary with the following information:
 
-            * **albumfilter:** a list of tag-names of class Genre that are selected as genre filter
+            * **GenreFilter:** a list of tag-names of class Genre that are selected as genre filter
             * **SubgenreFilter:** a dictionary with each existing genre as key. Its values are a list of tag-names representing the selected sub genres
             * **MusicDB:**
                 * *uimode*: Defines if UI is in ``"audio"`` or ``"video"`` mode
@@ -1526,7 +1526,7 @@ class MusicDBWebSocketInterface(object):
                     {
                         console.log(args.MusicDB.uimode);
 
-                        let activetags = args.albumfilter;
+                        let activetags = args.GenreFilter;
                         for(let genrename of activetags)
                             console.log(genrename);
 
@@ -1537,7 +1537,7 @@ class MusicDBWebSocketInterface(object):
                 }
         """
         # Get all selected genres
-        albumfilter = self.mdbstate.GetGenreFilterList()
+        genrefilter = self.mdbstate.GetGenreFilterList()
 
         # Get all selected sub genres
         subgenrefilter = self.mdbstate.GetAllSubgenreFilterLists()
@@ -1562,7 +1562,7 @@ class MusicDBWebSocketInterface(object):
 
         # put everything together
         state = {}
-        state["albumfilter"]    = albumfilter
+        state["GenreFilter"]    = genrefilter
         state["SubgenreFilter"] = subgenrefilter
         state["MusicDB"] = {}
         state["MusicDB"]["uimode"] = self.mdbstate.GetUIMode()
