@@ -20,8 +20,10 @@ class TagManager
 {
     constructor()
     {
-        this.tagcache     = null;
-        this.activegenres = null;
+        this.tagcache        = null;
+        this.activegenres    = null;
+        this.activesubgenres = null;
+        this.activesubgenrestree = null;
     }
 
 
@@ -66,6 +68,33 @@ class TagManager
         return;
     }
 
+    UpdateActiveSubgenres(subgenrefilter)
+    {
+        if(this.tagcache == null)
+            return;
+
+        this.activesubgenres     = new Array();
+        this.activesubgenrestree = new Object();
+
+        let genres    = this.GetGenres();
+        let subgenres = this.GetSubgenres();
+
+        for(let genre of genres)
+        {
+            let genrename = genre.name;
+            this.activesubgenrestree[genrename] = new Array();
+            for(let subgenrename of subgenrefilter[genrename])
+            {
+                let activesubgenre = subgenres.find(subgenre => subgenre.name == subgenrename);
+                this.activesubgenrestree[genrename].push(activesubgenre);
+                this.activesubgenres.push(activesubgenre);
+            }
+
+        }
+
+        return;
+    }
+
 
 
     GetTags()
@@ -92,6 +121,11 @@ class TagManager
     GetActiveGenreIDs()
     {
         return this.activegenres.map(x => x.id);
+    }
+
+    GetActiveSubgenreIDs()
+    {
+        return this.activesubgenres.map(x => x.id);
     }
 
 
@@ -133,6 +167,7 @@ class TagManager
         else if(fnc == "GetMDBState" && sig == "UpdateMDBState")
         {
             this.UpdateActiveGenres(args.albumfilter);
+            this.UpdateActiveSubgenres(args.SubgenreFilter);
         }
     }
 }

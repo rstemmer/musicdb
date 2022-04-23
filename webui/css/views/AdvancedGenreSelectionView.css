@@ -36,6 +36,13 @@
     padding-left:       2rem;
 }
 
+
+
+#AdvancedGenreSelectionView .SettingsEntry
+{
+    padding:            0.5rem;
+}
+
 /*
 .GenreSelectionView > .Tag[data-active=true]
 {
