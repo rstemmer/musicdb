@@ -30,6 +30,12 @@
     overflow:           auto;
 }
 
+#AdvancedGenreSelectionView ul
+{
+    list-style-type:    none;
+    padding-left:       2rem;
+}
+
 /*
 .GenreSelectionView > .Tag[data-active=true]
 {

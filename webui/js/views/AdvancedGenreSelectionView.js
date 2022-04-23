@@ -52,6 +52,72 @@ class AdvancedGenreSelectionView extends LeftView
 
 
 
+    Update()
+    {
+        let tagmanager = WebUI.GetManager("Tags");
+        let genretree  = tagmanager.GetGenreTree();
+        window.console?.log(genretree);
+
+        // Render the tree
+        let genrelist = new Element("ul");
+        for(let genreid in genretree)
+        {
+            let entry     = genretree[genreid];
+            let genre     = entry.genre;
+            let subgenres = entry.subgenres;
+
+            let genreitem = new Element("li");
+            let genrecheckbox = this.CreateGenreCheckbox(genre);
+            let subgenrelist  = this.CreateSubgenreList(subgenres);
+            genreitem.AppendChild(genrecheckbox);
+            genreitem.AppendChild(subgenrelist);
+            genrelist.AppendChild(genreitem);
+
+        }
+
+        this.RemoveChilds();
+        this.AppendChild(this.toolbar);
+        this.AppendChild(genrelist);
+    }
+
+
+    CreateGenreCheckbox(genre) // TODO
+    {
+        let checkbox = new SettingsCheckbox(genre.name, null, ()=>{});
+        return checkbox;
+    }
+
+
+    
+    CreateSubgenreList(subgenres)
+    {
+        let list = new Element("ul");
+        for(let subgenreid in subgenres)
+        {
+            let subgenre = subgenres[subgenreid];
+            let item     = new Element("li");
+            let checkbox = this.CreateSubgenreCheckbox(subgenre);
+            item.AppendChild(checkbox);
+            list.AppendChild(item);
+        }
+        return list;
+    }
+
+    CreateSubgenreCheckbox(subgenre) // TODO
+    {
+        let checkbox = new SettingsCheckbox(subgenre.name, null, ()=>{});
+        return checkbox;
+    }
+
+
+
+    onViewMounted()
+    {
+        this.Update();
+    }
+
+
+
     onMusicDBMessage(fnc, sig, args, pass)
     {
         return;
