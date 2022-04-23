@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@ class SettingsEntry extends Element
 
 class SettingsCheckbox extends SettingsEntry
 {
-    constructor(name, infos, onclick=null)
+    constructor(name, infos, onclick=null, ischecked=true)
     {
         let iconchecked   = new SVGIcon("Checked");
         let iconunchecked = new SVGIcon("Unchecked");
@@ -97,9 +97,10 @@ class SettingsCheckbox extends SettingsEntry
 
         this.iconchecked   = iconchecked;
         this.iconunchecked = iconunchecked;
-        this.ischecked     = true;
         this.clickhandler  = onclick;
         this.element.onclick = ()=>{this.onClick()};
+
+        this.SetState(ischecked);
     }
 
 
