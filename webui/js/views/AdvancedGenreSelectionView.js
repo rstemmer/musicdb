@@ -58,6 +58,10 @@ class AdvancedGenreSelectionView extends LeftView
         let genretree  = tagmanager.GetGenreTree();
         window.console?.log(genretree);
 
+        let activegenreids    = tagmanager.GetActiveGenreIDs();
+        let activesubgenreids = tagmanager.GetActiveSubgenreIDs();
+        window.console?.log(activegenreids);
+
         // Render the tree
         let genrelist = new Element("ul");
         for(let genreid in genretree)
@@ -65,14 +69,22 @@ class AdvancedGenreSelectionView extends LeftView
             let entry     = genretree[genreid];
             let genre     = entry.genre;
             let subgenres = entry.subgenres;
+            let isactive;
+            if(activegenreids.indexOf(genre.id) >= 0)
+                isactive = true;
+            else
+                isactive = false;
 
+            // Create genre activation control
+            let genrecheckbox = this.CreateGenreCheckbox(genre, isactive);
+            let subgenrelist  = this.CreateSubgenreList(subgenres, activesubgenreids);
+
+            // Create list item
             let genreitem = new Element("li");
-            let genrecheckbox = this.CreateGenreCheckbox(genre);
-            let subgenrelist  = this.CreateSubgenreList(subgenres);
             genreitem.AppendChild(genrecheckbox);
-            genreitem.AppendChild(subgenrelist);
+            if(isactive) // Only show sub genres when genre is active
+                genreitem.AppendChild(subgenrelist);
             genrelist.AppendChild(genreitem);
-
         }
 
         this.RemoveChilds();
@@ -81,31 +93,37 @@ class AdvancedGenreSelectionView extends LeftView
     }
 
 
-    CreateGenreCheckbox(genre) // TODO
+    CreateGenreCheckbox(genre, isactive) // TODO
     {
-        let checkbox = new SettingsCheckbox(genre.name, null, ()=>{});
+        let checkbox = new SettingsCheckbox(genre.name, null, ()=>{}, isactive);
         return checkbox;
     }
 
 
     
-    CreateSubgenreList(subgenres)
+    CreateSubgenreList(subgenres, activesubgenreids)
     {
         let list = new Element("ul");
         for(let subgenreid in subgenres)
         {
             let subgenre = subgenres[subgenreid];
             let item     = new Element("li");
-            let checkbox = this.CreateSubgenreCheckbox(subgenre);
+            let isactive;
+            if(activesubgenreids.indexOf(subgenre.id) >= 0)
+                isactive = true;
+            else
+                isactive = false;
+
+            let checkbox = this.CreateSubgenreCheckbox(subgenre, isactive);
             item.AppendChild(checkbox);
             list.AppendChild(item);
         }
         return list;
     }
 
-    CreateSubgenreCheckbox(subgenre) // TODO
+    CreateSubgenreCheckbox(subgenre, isactive) // TODO
     {
-        let checkbox = new SettingsCheckbox(subgenre.name, null, ()=>{});
+        let checkbox = new SettingsCheckbox(subgenre.name, null, ()=>{}, isactive);
         return checkbox;
     }
 
