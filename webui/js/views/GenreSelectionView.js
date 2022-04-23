@@ -40,7 +40,7 @@ class GenreSelectionView extends Element
     Update(MDBState)
     {
         if(MDBState !== undefined)
-            this.activegenres = MDBState.albumfilter;
+            this.activegenres = MDBState.GenreFilter;
 
         // Create all buttons
         super.RemoveChilds();
@@ -92,7 +92,7 @@ class GenreSelectionView extends Element
         // By making a Request and giving a function signature the broadcast
         // gets handled exactly like a GetMDBState request
         MusicDB.Request("SetMDBState", "UpdateMDBState",
-            {category:"albumfilter", name:mdbtag.name, value:active});
+            {category:"GenreFilter", name:mdbtag.name, value:active});
 
         // To avoid flickering when switching multiple genres,
         // use a timeout until the artist lists shall be refreshed

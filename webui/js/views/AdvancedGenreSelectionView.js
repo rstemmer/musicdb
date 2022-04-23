@@ -136,7 +136,7 @@ class AdvancedGenreSelectionView extends LeftView
     onGenreClicked(genre, isactive)
     {
         MusicDB.Request("SetMDBState", "UpdateMDBState",
-            {category:"albumfilter", name:genre.name, value:isactive});
+            {category:"GenreFilter", name:genre.name, value:isactive});
         return;
     }
 

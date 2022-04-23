@@ -52,14 +52,14 @@ class TagManager
                 return 0;
             });
     }
-    UpdateActiveGenres(albumfilter)
+    UpdateActiveGenres(genrefilter)
     {
         if(this.tagcache == null)
             return;
 
         this.activegenres = new Array();
         let  genres       = this.GetGenres();
-        for(let genrename of albumfilter)
+        for(let genrename of genrefilter)
         {
             let activegenre = genres.find(genre => genre.name == genrename);
             this.activegenres.push(activegenre);
@@ -166,7 +166,7 @@ class TagManager
         }
         else if(fnc == "GetMDBState" && sig == "UpdateMDBState")
         {
-            this.UpdateActiveGenres(args.albumfilter);
+            this.UpdateActiveGenres(args.GenreFilter);
             this.UpdateActiveSubgenres(args.SubgenreFilter);
         }
     }
