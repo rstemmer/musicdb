@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -88,6 +88,34 @@ class TagManager
     GetActiveGenres()
     {
         return this.activegenres;
+    }
+
+
+
+    GetGenreTree()
+    {
+        let genres     = this.GetGenres();
+        let subgenres  = this.GetSubgenres();
+
+        // Create Tree of genres and their sub genres
+        let genretree = new Object();
+        for(let genre of genres)
+        {
+            let genreid = genre.id;
+            genretree[genreid] = new Object();
+            genretree[genreid]["genre"]     = genre;
+            genretree[genreid]["subgenres"] = new Object();
+        }
+
+        // Add sub genre to the tree
+        for(let subgenre of subgenres)
+        {
+            let genreid    = subgenre.parentid;
+            let subgenreid = subgenre.id;
+            genretree[genreid]["subgenres"][subgenreid] = subgenre;
+        }
+
+        return genretree;
     }
 
 
