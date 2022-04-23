@@ -50,6 +50,9 @@ class Element
 
     AppendChild(child)
     {
+        if(child === null)
+            return;
+
         if(typeof child.GetHTMLElement === "function")
             this.element.appendChild(child.GetHTMLElement());
         else
@@ -57,6 +60,9 @@ class Element
     }
     RemoveChild(child)
     {
+        if(child === null)
+            return;
+
         if(typeof child.GetHTMLElement === "function")
             this.element.removeChild(child.GetHTMLElement());
         else
