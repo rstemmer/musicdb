@@ -43,17 +43,17 @@ class AdvancedGenreSelectionView extends LeftView
         this.toolbar.AddSpacer(true); // grow
 
         this.AppendChild(this.toolbar);
+        this.tagmanager = WebUI.GetManager("Tags");
     }
 
 
 
     Update()
     {
-        let tagmanager = WebUI.GetManager("Tags");
-        let genretree  = tagmanager.GetGenreTree();
+        let genretree  = this.tagmanager.GetGenreTree();
 
-        let activegenreids    = tagmanager.GetActiveGenreIDs();
-        let activesubgenreids = tagmanager.GetActiveSubgenreIDs();
+        let activegenreids    = this.tagmanager.GetActiveGenreIDs();
+        let activesubgenreids = this.tagmanager.GetActiveSubgenreIDs();
 
         // Render the tree
         let genrelist = new Element("ul");
@@ -142,6 +142,32 @@ class AdvancedGenreSelectionView extends LeftView
 
     onSubgenreClicked(genre, subgenre, isactive)
     {
+        // It can happen that all sub genres are deactivated and this sub genre
+        // is the last active one which has be deactivated now. (in isactive = false).
+        // In this case, the main genre needs to be deactivated as well.
+        if(isactive == false)
+        {
+            let existingsubgenres = this.tagmanager.GetSubgenresOfGenre(genre.id);
+            let activesubgenreids = this.tagmanager.GetActiveSubgenreIDs();
+
+            // Remove the newly removed sub genre from the list of active sub genres
+            activesubgenreids.find((id, index)=>{if(id == subgenre.id) delete activesubgenreids[index];});
+
+            let deactivategenre = true;
+            for(let existingsubgenre of existingsubgenres)
+            {
+                // Do not deactivate the main genre when at least one of its sub genres is still active
+                if(activesubgenreids.indexOf(existingsubgenre.id) >= 0)
+                    deactivategenre = false;
+            }
+
+            if(deactivategenre)
+            {
+                MusicDB.Request("SetMDBState", "UpdateMDBState",
+                    {category:"GenreFilter", name:genre.name, value:false});
+            }
+        }
+
         let category = `SubgenreFilter:${genre.name}`;
         MusicDB.Request("SetMDBState", "UpdateMDBState",
             {category:category, name:subgenre.name, value:isactive});
