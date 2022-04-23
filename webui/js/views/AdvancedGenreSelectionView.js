@@ -28,20 +28,15 @@ class AdvancedGenreSelectionView extends LeftView
             ()=>{
                 this.UnlockView();
                 WebUI.GetManager("LeftView").ShowArtistsView();
+
                 let modemanager = WebUI.GetManager("MusicMode");
                 let musicmode   = modemanager.GetCurrentMode();
                 if(musicmode == "audio")
-                {
-                    let albumid = modemanager.GetCurrentAlbumID();
-                    MusicDB.Request("GetAlbum", "ShowAlbum", {albumid: albumid});
-                }
+                    MusicDB.Broadcast("GetFilteredArtistsWithAlbums", "ShowArtists");
                 else
-                {
-                    let videoid = modemanager.GetCurrentVideoID();
-                    MusicDB.Request("GetVideo", "ShowVideo", {videoid: videoid});
-                }
+                    MusicDB.Broadcast("GetFilteredArtistsWithVideos", "ShowArtists");
             },
-            "Hide advanced genre selection menu and go back to the Music list");
+            "Hide advanced genre selection menu and go back to the artists list");
 
         this.toolbar.AddSpacer(true); // grow
         this.toolbar.AddButton(this.closebutton);
@@ -56,11 +51,9 @@ class AdvancedGenreSelectionView extends LeftView
     {
         let tagmanager = WebUI.GetManager("Tags");
         let genretree  = tagmanager.GetGenreTree();
-        window.console?.log(genretree);
 
         let activegenreids    = tagmanager.GetActiveGenreIDs();
         let activesubgenreids = tagmanager.GetActiveSubgenreIDs();
-        window.console?.log(activegenreids);
 
         // Render the tree
         let genrelist = new Element("ul");
@@ -77,7 +70,7 @@ class AdvancedGenreSelectionView extends LeftView
 
             // Create genre activation control
             let genrecheckbox = this.CreateGenreCheckbox(genre, isactive);
-            let subgenrelist  = this.CreateSubgenreList(subgenres, activesubgenreids);
+            let subgenrelist  = this.CreateSubgenreList(genre, subgenres, activesubgenreids);
 
             // Create list item
             let genreitem = new Element("li");
@@ -92,16 +85,21 @@ class AdvancedGenreSelectionView extends LeftView
         this.AppendChild(genrelist);
     }
 
-
-    CreateGenreCheckbox(genre, isactive) // TODO
+    CreateGenreCheckbox(genre, isactive)
     {
-        let checkbox = new SettingsCheckbox(genre.name, null, ()=>{}, isactive);
+        let checkbox = new SettingsCheckbox(genre.name, null,
+            (state)=>
+            {
+                this.onGenreClicked(genre, state);
+            }
+            , isactive);
+        checkbox.SetTooltip("Activate or Deactivate Genre for Album selection");
         return checkbox;
     }
 
 
     
-    CreateSubgenreList(subgenres, activesubgenreids)
+    CreateSubgenreList(genre, subgenres, activesubgenreids)
     {
         let list = new Element("ul");
         for(let subgenreid in subgenres)
@@ -114,17 +112,40 @@ class AdvancedGenreSelectionView extends LeftView
             else
                 isactive = false;
 
-            let checkbox = this.CreateSubgenreCheckbox(subgenre, isactive);
+            let checkbox = this.CreateSubgenreCheckbox(genre, subgenre, isactive);
             item.AppendChild(checkbox);
             list.AppendChild(item);
         }
         return list;
     }
 
-    CreateSubgenreCheckbox(subgenre, isactive) // TODO
+    CreateSubgenreCheckbox(genre, subgenre, isactive)
     {
-        let checkbox = new SettingsCheckbox(subgenre.name, null, ()=>{}, isactive);
+        let checkbox = new SettingsCheckbox(subgenre.name, null,
+            (state)=>
+            {
+                this.onSubgenreClicked(genre, subgenre, state);
+            }
+            , isactive);
+        checkbox.SetTooltip("Activate or Deactivate Genre for Album selection");
         return checkbox;
+    }
+
+
+
+    onGenreClicked(genre, isactive)
+    {
+        MusicDB.Request("SetMDBState", "UpdateMDBState",
+            {category:"albumfilter", name:genre.name, value:isactive});
+        return;
+    }
+
+    onSubgenreClicked(genre, subgenre, isactive)
+    {
+        let category = `SubgenreFilter:${genre.name}`;
+        MusicDB.Request("SetMDBState", "UpdateMDBState",
+            {category:category, name:subgenre.name, value:isactive});
+        return;
     }
 
 
@@ -132,12 +153,21 @@ class AdvancedGenreSelectionView extends LeftView
     onViewMounted()
     {
         this.Update();
+        return;
     }
 
 
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
+        if(fnc == "GetMDBState" && sig == "UpdateMDBState")
+        {
+            this.Update();
+        }
+        else if(fnc == "GetTags" && sig == "UpdateTags")
+        {
+            this.Update();
+        }
         return;
     }
 }
