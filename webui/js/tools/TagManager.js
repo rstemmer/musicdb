@@ -109,6 +109,11 @@ class TagManager
     {
         return this.tagcache.subgenres;
     }
+    // genre: name or id
+    GetSubgenresOfGenre(genre)
+    {
+        return this.tagcache.subgenres.filter(x => x.name===genre || x.parentid===genre)
+    }
     GetMoods()
     {
         return this.tagcache.moods;
