@@ -89,6 +89,10 @@ class TagManager
     {
         return this.activegenres;
     }
+    GetActiveGenreIDs()
+    {
+        return this.activegenres.map(x => x.id);
+    }
 
 
 
