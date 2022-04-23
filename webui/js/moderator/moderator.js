@@ -75,6 +75,7 @@ WebUI.AddView("VideoImport",    new VideoImport());
 WebUI.AddView("TaskList",       new TaskListView());
 WebUI.AddView("Repair",         new RepairView());
 WebUI.AddView("SettingsMenu",   new SettingsMenu()); // Accesses references to settings views
+WebUI.AddView("AdvancedGenreSelection",new AdvancedGenreSelectionView());
 
 let configuration       = null; // Needs to be loaded from the Server
 
