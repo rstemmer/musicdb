@@ -80,6 +80,12 @@ class LeftViewManager extends ViewManager
         WebUI.GetView("SettingsMenu").LockView()
         this.MountView(WebUI.GetView("SettingsMenu"));
     }
+    ShowAdvancedGenreSelection()
+    {
+        let view = WebUI.GetView("AdvancedGenreSelection");
+        view.LockView();
+        this.MountView(view);
+    }
 
 
 
