@@ -416,13 +416,13 @@ Tag Mapping Table
 
 The mapping-tables have all the same layout
 
-    +----------+----------+----------+------------+----------+
-    | 0        | 1        | 2        | 3          | 4        |
-    +----------+----------+----------+------------+----------+
-    | EntryID  | SongID   | TagID    | Confidence | Approval |
-    +----------+----------+----------+------------+----------+
-    | EntryID  | AlbumID  | TagID    | Confidence | Approval |
-    +----------+----------+----------+------------+----------+
+    +------------+----------+----------+----------+------------+----------+
+    | Table Name | 0        | 1        | 2        | 3          | 4        |
+    +------------+----------+----------+----------+------------+----------+
+    | songtags   | EntryID  | SongID   | TagID    | Confidence | Approval |
+    +------------+----------+----------+----------+------------+----------+
+    | albumtags  | EntryID  | AlbumID  | TagID    | Confidence | Approval |
+    +------------+----------+----------+----------+------------+----------+
 
 EntryID (Integer)
    ID of the entry in the mapping-table
@@ -1665,6 +1665,125 @@ class MusicDatabase(Database):
             songs.append(song)
 
         return songs
+
+
+
+    def GetFilteredAlbumIds(self, tagfilterlist):
+        """
+        Returns a list of album IDs of albums of a certain genre.
+        The genre (or sub genre) is defined by the tag IDs in the ``tagfilterlist`` list.
+        If ``tagfilterlist`` is empty, an empty list gets returned.
+
+        Hidden albums are not included.
+
+        Args:
+            tagfilterlist (list): A list of integers representing tag IDs.
+
+        Returns:
+            A list of album IDs
+
+        Raises:
+            TypeError: When ``tagfilterlist`` is not of type ``list``
+        """
+        if type(tagfilterlist) != list:
+            raise TypeError("Type of tagfilterlist must be list.")
+
+        if len(tagfilterlist) == 0:
+            return []
+
+        sql = "SELECT albumid FROM albums WHERE albumid IN (SELECT albumid FROM albumtags WHERE tagid IN ({places})) AND hidden=FALSE".format(
+                places = ",".join["?"]*len(tagfilterlist))
+
+        with MusicDatabaseLock:
+            albumids = self.GetFromDatabase(sql, tagfilterlist)
+    
+        return albumids
+
+
+
+    def GetRandomSong(self, tagfilterlist, features, albumid=None):
+        """
+        This method returns a random song that fulfills several constraints.
+
+        The ``tagfilterlist`` can be either a set of genre and sub genre tag IDs or ``None``.
+        When ``tagfilterlist`` is ``None`` no filter gets applied.
+        Otherwise only albums of the genres and sub genres in the list will be considered.
+
+
+        Selection Algorithm:
+        ^^^^^^^^^^^^^^^^^^^^
+
+        If ``albumid`` is not given, a random album gets selected first.
+        Then a random song gets selected from the random album or given album.
+        This gives each album the same chance to provide a song,
+        independent from how many songs are included in an album.
+        Hidden albums and their songs are excluded.
+
+        It must be assumed that only the album is properly tagged.
+        When it comes to selecting a certain song, all songs are considered
+        independent from their genre or sub genre tags as long as they
+        do not conflict when given.
+        So a song of a different genre or sub genre gets rejected.
+        A song that has no genre or sub genre is considered as candidate.
+
+        When looking at tags, the confidence and approval value gets ignored for albums.
+        For songs, only approved tags lead to rejection.
+
+
+        .. graphviz::
+
+            digraph hierarchy {
+                size="5,8"
+                start               [label="Start"];
+                albumidgiven        [shape=diamond, label="Is an Album ID given?"]
+                hasfilterlist       [shape=diamond, label="len(tagfilterlist) > 0"];
+                getfilteredalbumids [shape=box,     label="Get filtered Album IDs"];
+                getallalbumids      [shape=box,     label="Get all Album IDs"];
+                selectalbumid       [shape=box,     label="Select random Album"];
+                getallsongs         [shape=box,     label="Get all Songs from Album"];
+
+                start               -> albumidgiven;
+                albumidgiven        -> hasfilterlist        [label="No"];
+                hasfilterlist       -> getfilteredalbumids  [label="Yes"];
+                hasfilterlist       -> getallalbumids       [label="No"];
+
+                getfilteredalbumids -> selectalbumid
+                getallalbumids      -> selectalbumid
+
+                albumidgiven        -> getallsongs          [label="Yes"];
+                selectalbumid       -> getallsongs
+                }
+
+        Args:
+            tagfilterlist (list): A list of integers representing tag IDs for genres and sub genres.
+            features (dict):
+            albumid (int): When not ``None``, a random song from that specific album (addressed by its ID) gets chosen.
+
+        Returns:
+            A random Song ID fulfilling all requirements given by the parameters of this function.
+        """
+        # If filter list is of invalid type, assume an empty filter list
+        if type(tagfilterlist) != list:
+            logging.warning("Filter list is not an actual list! \033[1;30m(Continuing assuming an empty list)")
+            tagfilterlist = []
+
+        # Step 1: Get an Album
+        if type(albumid) != int:
+            #  If there is a filter, only get filtered album IDs, otherwise get all.
+            #  Hidden albums are excluded.
+            if len(tagfilterlist) > 0:
+                albumids = self.GetFilteredAlbumIds(tagfilterlist)
+            else:
+                albumids = self.GetAllAlbumIds()
+            # Select a random ID
+            albumid = albumids[random.randrange(0, len(albumids))]
+
+        # Step 2: Get all Songs of the chosen album ans shuffle them
+        songs = self.GetSongsByAlbumId(albumid)
+        # TODO: Continue
+
+        return
+
 
 
     def GetRandomSong(self, filterlist=None, nodisabled=True, nohated=False, nohidden=True, nobadfile=True, nolivemusic=False, minlen=None, maxlen=None, albumid=None):
