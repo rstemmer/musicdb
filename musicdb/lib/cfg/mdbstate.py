@@ -548,8 +548,6 @@ class MDBState(Config, object):
         Only sub genres of active genres are considered.
         If no sub genre is active, but the main genre is, then the main genre ID is included.
         This can be the case when there is no sub genre existing for a main genre.
-        Then the main genre ID is included.
-        In all other cases, only the sub genre IDs are included.
 
         Example:
 
@@ -573,9 +571,8 @@ class MDBState(Config, object):
                 for subgenrename in subgenrenames:
                     subgenre = self.musicdb.GetTagByName(subgenrename, MusicDatabase.TAG_CLASS_SUBGENRE)
                     tagids.append(subgenre["id"])
-            else:
-                # Only include genre ID when there is no sub genre active or existing
-                tagids.append(genre["id"])
+
+            tagids.append(genre["id"])
 
         return tagids
 
