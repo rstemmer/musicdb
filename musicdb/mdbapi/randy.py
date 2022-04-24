@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,11 +36,10 @@ Database Stage
 ^^^^^^^^^^^^^^
 
 In the first stage, a song gets chosen by the database via :meth:`musicdb.lib.db.musicdb.MusicDatabase.GetRandomSong`.
-There are 4 parameters that define the constraints applied on set of possible songs:
+There are 3 sets of parameters that define the constraints applied on set of possible songs:
 
-    - The activated genres as maintained by the :mod:`musicdb.lib.cfg.mdbstate` module.
-    - The flag if *disabled* songs shall be excluded
-    - The flag if *hated* songs shall be excluded
+    - The activated genres and sub genres as maintained by the :mod:`musicdb.lib.cfg.mdbstate` module.
+    - A set of song flags
     - Minimum and maximum length of a song in seconds
 
 Some of them can be configured in the MusicDB configuration file:
@@ -54,7 +53,8 @@ Some of them can be configured in the MusicDB configuration file:
 
 Because the database only takes album tags into account, the song tags gets checked afterwards.
 If the song has a confirmed genre tag, and if this tag does not match the filter, the song gets rejected.
-Song genres that are automatically set by an algorithm (and not confirmed by the user) will be ignored because the algorithm may be wrong.
+Song genres that are automatically set by an algorithm (and not confirmed by the user) will be ignored
+because the algorithm that set the genre may be wrong.
 
 
 Blacklist Stage
