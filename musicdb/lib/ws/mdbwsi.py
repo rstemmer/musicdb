@@ -871,14 +871,25 @@ class MusicDBWebSocketInterface(object):
         # assign tags to albums
         albumlist = []
         for album in albums:
-            # if no tags are available, show the album!
-            tags = self.database.GetTargetTags("album", album["id"]) # Returns all tags set for the album
-            if applyfilter and tags:
-                tagsset = { tag["id"] for tag in tags }
+            genres    = self.database.GetTargetTags("album", album["id"], MusicDatabase.TAG_CLASS_GENRE)
+            subgenres = self.database.GetTargetTags("album", album["id"], MusicDatabase.TAG_CLASS_SUBGENRE)
+
+            # if no genres are available, show the album!
+            if applyfilter and genres:
+                tagsset = { genre["id"] for genre in genres }
 
                 # do not continue with this album,
-                # if there is no unionset of genres
+                # if there is no union set of genres
                 if not filterset & tagsset:
+                    continue
+
+                # Now check for sub genres
+                tagsset = { subgenre["id"] for subgenre in subgenres }
+
+                # do not continue with this album,
+                # if there is no union set of sub genres
+                # It is fine when no sub genres are set
+                if tagsset and not filterset & tagsset:
                     continue
 
             entry = {}
