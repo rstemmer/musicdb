@@ -120,6 +120,18 @@ class Randy(object):
         self.maxlen      = self.cfg.randy.maxsonglen
         self.maxtries    = self.cfg.randy.maxtries
 
+        self.constraints = {}
+        if self.nodisabled:
+            self.constraints["disabled"] = False
+        if self.nohated:
+            self.constraints["hated"] = False
+        if self.nobadfile:
+            self.constraints["badfile"] = False
+        if self.nolivemusic:
+            self.constraints["livemusic"] = False
+        self.constraints["minlen"] = self.minlen
+        self.constraints["maxlen"] = self.maxlen
+
 
 
     def GetSong(self):
@@ -141,65 +153,31 @@ class Randy(object):
         logging.debug("Randy starts looking for a random song …")
         t_start = datetime.datetime.now()
 
-        filterlist = self.mdbstate.GetGenreFilterList()
-        if not filterlist:
+        tagfilterlist = self.mdbstate.GetActiveTagIDs()
+        if not tagfilterlist:
             logging.warning("No Genre selected! \033[1;30m(Selecting random song from the whole collection)")
-        else:
-            logging.debug("Genre filter: %s", str(filterlist))
 
         # Get Random Song - this may take several tries 
-        song    = None
-        tries    = 0
+        song  = None
+        tries = 0
         while not song:
             tries += 1
             if tries > self.maxtries:
                 logging.error("There was no valid song found within %i tries! \033[1;30m(Check the constraints)", self.maxtries)
                 return None
+
             # STAGE 1: Get Mathematical random song (under certain constraints)
             try:
-                song = self.db.GetRandomSong(filterlist,
-                        self.nodisabled,
-                        self.nohated,
-                        self.nohidden,
-                        self.nobadfile,
-                        self.nolivemusic,
-                        self.minlen, self.maxlen)
+                song = self.db.GetRandomSong(tagfilterlist, self.constraints)
             except Exception as e:
-                logging.error("Getting random song failed with error: \"%s\"!", str(e))
+                logging.exception("Getting random song failed with error: \"%s\"!", str(e))
                 return None
 
             if not song:
-                logging.error("There is no song fulfilling the constraints! \033[1;30m(Check the stage 1 constraints)")
-                return None
+                logging.debug("No song found that fulfills the constraints! \033[1;30m(Trying again)")
+                continue
 
             logging.debug("Candidate for next song: \033[0;35m" + song["path"])
-
-            # The MusicDatabase method GetRandomSong only looks for album genres.
-            # The song genre may be different and not in the set of the filterlist.
-            try:
-
-                songgenres = self.db.GetTargetTags("song", song["id"], MusicDatabase.TAG_CLASS_GENRE)
-                # Create a set of tagnames if there are tags for this song.
-                # Ignore AI set tags because they may be wrong
-                if songgenres:
-                    tagnames = { songgenre["name"] for songgenre in songgenres if songgenre["approval"] >= 1 }
-                else:
-                    tagnames = { }
-
-                # If the tag name set was successfully created, compare it with the selected genres
-                if tagnames:
-                    logging.debug("Checking for intersection of song-genre and active-genre: %s ∩ %s", str(tagnames), str(filterlist))
-                    if not tagnames & set(filterlist):
-                        logging.debug("song is of different genre than album and not in activated genres. (Song genres: %s)", str(tagnames))
-                        song = None
-                        continue
-                else:
-                    logging.debug("The song candidate has no genre tags. Assuming it matches the album genre.")
-
-            except Exception as e:
-                logging.error("Song tag check failed with exception: \"%s\"!", str(e))
-                return None
-
 
             # STAGE 2: Make randomness feeling random by checking if the song/album/artist was recently played
             if self.blacklist.CheckAllListsForSong(song):
@@ -244,31 +222,29 @@ class Randy(object):
         global Blacklist
 
         # Get parameters
-        song       = None
-        tries      = 0  # there is just a very limited set of possible songs. Avoid infinite loop when all songs are on the blacklist
+        song  = None
+        tries = 0  # there is just a very limited set of possible songs. Avoid infinite loop when all songs are on the blacklist
 
         while not song and tries <= self.maxtries:
             tries += 1
             # STAGE 1: Get Mathematical random song (under certain constraints)
             try:
-                song = self.db.GetRandomSong(None,
-                        self.nodisabled,
-                        self.nohated,
-                        self.nohidden,
-                        self.nobadfile,
-                        self.nolivemusic,
-                        self.minlen, self.maxlen,
-                        albumid)
+                song = self.db.GetRandomSong(None, self.constraints, albumid)
             except Exception as e:
                 logging.error("Getting random song failed with error: \"%s\"!", str(e))
                 return None
+
+            if not song:
+                logging.debug("No song found that fulfills the constraints! \033[1;30m(Trying again)")
+                continue
+
             logging.debug("Candidate for next song: \033[0;35m" + song["path"])
             
             # STAGE 2: Make randomness feeling random by checking if the song was recently played
             # only check, if that song is in the blacklist. Artist and album is forced by the user
             if self.blacklist.CheckSongList(song):
-                    song = None
-                    continue 
+                song = None
+                continue 
 
         if not song:
             logging.warning("The loop that should find a new random song did not deliver a song! \033[1;30m(This happens when there are too many songs of the given album are already on the blacklist)")
