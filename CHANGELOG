@@ -12,6 +12,7 @@ Run  git log --oneline  for more details
 │               This leads to the situation that the selected genres stored in state.ini are no longer recognized.
 │               I used this "opportunity" to rename the section "albumfilter" to "GenreFilter"
 │ + [state.ini] Albums can now be filtered by sub genres
+│ - [musicdb.ini] The entry [randy]->nohidden got removed. This constraint is and should always be true
 │ * [Randy] The random song selection algorithm now considers sub genres
 │
 │

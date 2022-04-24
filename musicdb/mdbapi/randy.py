@@ -113,7 +113,6 @@ class Randy(object):
         # Load most important keys
         self.nodisabled  = self.cfg.randy.nodisabled
         self.nohated     = self.cfg.randy.nohated
-        self.nohidden    = self.cfg.randy.nohidden
         self.nobadfile   = self.cfg.randy.nobadfile
         self.nolivemusic = self.cfg.randy.nolivemusic
         self.minlen      = self.cfg.randy.minsonglen

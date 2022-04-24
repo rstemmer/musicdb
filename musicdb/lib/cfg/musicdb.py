@@ -111,8 +111,9 @@ class MusicDBConfig(Config):
         # [meta]
         self.meta = META()
         self.meta.version           = self.Get(int, "meta",     "version",      1)
-        if self.meta.version < 6:
+        if self.meta.version < 7:
             logging.warning("Version of \"%s\" is too old. Please update the MusicDB Configuration!", path)
+
 
 
         # [musicdb]
@@ -207,7 +208,6 @@ class MusicDBConfig(Config):
         self.randy = SECTION()
         self.randy.nodisabled       = self.Get(bool, "randy",   "nodisabled",   True)
         self.randy.nohated          = self.Get(bool, "randy",   "nohated",      True)
-        self.randy.nohidden         = self.Get(bool, "randy",   "nohidden",     True)
         self.randy.nobadfile        = self.Get(bool, "randy",   "nobadfile",    True)
         self.randy.nolivemusic      = self.Get(bool, "randy",   "nolivemusic",  True)
         self.randy.minsonglen       = self.Get(int,  "randy",   "minsonglen",   120)
