@@ -22,6 +22,18 @@ RestartSec=10
 
 ProtectSystem=full
 
+CapabilityBoundingSet=~CAP_SYS_TIME CAP_WAKE_ALARM CAP_SYS_BOOT CAP_MKNOD CAP_SYS_RAWIO CAP_SYS_ADMIN CAP_SYS_PTRACE CAP_IPC_OWNER CAP_SYS_CHROOT CAP_SYS_PACCT CAP_KILL
+NoNewPrivileges=true
+ProtectClock=true
+ProtectHostname=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectHome=true
+MemoryDenyWriteExecute=true
+PrivateTmp=true
+RestrictRealtime=true
+SystemCallFilter=~@mount @clock @cpu-emulation @reboot @swap @obsolete
+
 [Install]
 WantedBy=multi-user.target
 
