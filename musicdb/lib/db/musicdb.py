@@ -135,6 +135,7 @@ The following methods exist to handle song entries in the database:
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetSongs`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetRandomSong`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds`
+    * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetFilteredSongIds`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.UpdateSongStatistic`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.RemoveSong`
 
@@ -260,6 +261,7 @@ Album Related Methods
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetAlbums`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetAllAlbumIds`
+    * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetFilteredAlbumIds`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.RemoveAlbum`
 
 Artwork Related Methods
@@ -1692,17 +1694,19 @@ class MusicDatabase(Database):
             return []
 
         sql = "SELECT albumid FROM albums WHERE albumid IN (SELECT albumid FROM albumtags WHERE tagid IN ({places})) AND hidden=FALSE".format(
-                places = ",".join["?"]*len(tagfilterlist))
+                places = ",".join("?"*len(tagfilterlist))
+                )
 
         with MusicDatabaseLock:
-            albumids = self.GetFromDatabase(sql, tagfilterlist)
-    
+            results = self.GetFromDatabase(sql, tagfilterlist)
+
+        albumids = [result[0] for result in results]
         return albumids
 
 
 
-    def GetRandomSong(self, tagfilterlist, features, albumid=None):
-        """
+    def GetRandomSong(self, tagfilterlist, constraints, albumid=None):
+        r"""
         This method returns a random song that fulfills several constraints.
 
         The ``tagfilterlist`` can be either a set of genre and sub genre tag IDs or ``None``.
@@ -1729,6 +1733,11 @@ class MusicDatabase(Database):
         When looking at tags, the confidence and approval value gets ignored for albums.
         For songs, only approved tags lead to rejection.
 
+        Each song gets checked if it fulfills the genre constraints.
+        Whe a song has no genre IDs, it is fine.
+        When there are genre IDs, they have to match the tagfilterlist.
+        The same for sub genre IDs.
+
 
         .. graphviz::
 
@@ -1740,7 +1749,8 @@ class MusicDatabase(Database):
                 getfilteredalbumids [shape=box,     label="Get filtered Album IDs"];
                 getallalbumids      [shape=box,     label="Get all Album IDs"];
                 selectalbumid       [shape=box,     label="Select random Album"];
-                getallsongs         [shape=box,     label="Get all Songs from Album"];
+                getallsongs         [shape=box,     label="Get Songs from Album"];
+                selectsong          [shape=box,     label="Select Song"];
 
                 start               -> albumidgiven;
                 albumidgiven        -> hasfilterlist        [label="No"];
@@ -1752,16 +1762,28 @@ class MusicDatabase(Database):
 
                 albumidgiven        -> getallsongs          [label="Yes"];
                 selectalbumid       -> getallsongs
+
+                getallsongs         -> selectsong
                 }
+
+        Constraints
+        ^^^^^^^^^^^
+
+        The selected song must fulfill certain constraints given as dictionary in the ``constraint`` parameter.
+        Possible constraints are listed in the related method :meth:`~GetFilteredSongIds`.
 
         Args:
             tagfilterlist (list): A list of integers representing tag IDs for genres and sub genres.
-            features (dict):
+            constraints (dict):
             albumid (int): When not ``None``, a random song from that specific album (addressed by its ID) gets chosen.
 
         Returns:
-            A random Song ID fulfilling all requirements given by the parameters of this function.
+            A random Song fulfilling all requirements given by the parameters of this function.
         """
+        # None is valid and is handled as empty list
+        if tagfilterlist == None:
+            tagfilterlist = []
+
         # If filter list is of invalid type, assume an empty filter list
         if type(tagfilterlist) != list:
             logging.warning("Filter list is not an actual list! \033[1;30m(Continuing assuming an empty list)")
@@ -1778,255 +1800,131 @@ class MusicDatabase(Database):
             # Select a random ID
             albumid = albumids[random.randrange(0, len(albumids))]
 
-        # Step 2: Get all Songs of the chosen album ans shuffle them
-        songs = self.GetSongsByAlbumId(albumid)
-        # TODO: Continue
+        # Step 2: Get all Songs of the chosen album and shuffle them
+        songids = self.GetFilteredSongIds(constraints, albumid)
+        random.shuffle(songids)
 
-        return
+        # Step 3: Check songs genres and sub genres
+        for songid in songids:
+            # Get genre and sub genre
+            genres    = self.GetTargetTags("song", songid, MusicDatabase.TAG_CLASS_GENRE)
+            subgenres = self.GetTargetTags("song", songid, MusicDatabase.TAG_CLASS_SUBGENRE)
 
+            # Only consider approved tags
+            genreids    = { genre["id"] for genre in genres if genre["approval"] >= 1 }
+            subgenreids = { subgenre["id"] for subgenre in subgenres if subgenre["approval"] >= 1 }
 
-
-    def GetRandomSong(self, filterlist=None, nodisabled=True, nohated=False, nohidden=True, nobadfile=True, nolivemusic=False, minlen=None, maxlen=None, albumid=None):
-        r"""
-        This method returns a random song that fulfills several constraints.
-
-        The ``filterlist`` can be either a set of genre tag IDs or a set of genre names.
-        When ``filterlist`` is ``None`` no filter gets applied.
-        Otherwise only albums of the genres in the list will be considered.
-
-        When ``albumid`` is not ``None``, then the process of getting valid albums will be skipped.
-        Instead the predefined album will be used.
-        In that case ``filterlist`` gets ignored.
-
-        Getting a random song is done by the following steps, visualized in the flow chart below:
-
-            #. Get album IDs of all albums in the database
-            #. Translate *filterlist* into a list of tag IDs
-            #. For each album, get its tags and compare that with the set of tag IDs from the filter. (If there is no filter list set, all album IDs are selected)
-            #. Get all song IDs that are related to the filtered album IDs by calling :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds`
-            #. Select a random song ID and get its song entry from the database
-
-        .. graphviz::
-
-            digraph hierarchy {
-                size="5,8"
-                start           [label="Start"];
-                hasalbumid      [shape=diamond, label="albumid == None"];
-                getallalbums    [shape=box,     label="Get all Album IDs"]
-                getalltags      [shape=box,     label="Get list of Tag IDs\nfrom filterlist"]
-                hasfilterlist   [shape=diamond, label="Is there a filter list"];
-                removealbums    [shape=box,     label="Remove albums without\ntags of filter"]
-                getallsongs     [shape=box,     label="Get all songs of selected albums"]
-                selectsong      [shape=box,     label="Select random song"]
-
-
-                start           -> hasalbumid;
-
-                hasalbumid      -> getallsongs      [label="No"];
-                hasalbumid      -> getallalbums     [label="Yes"];
-                getallalbums    -> getalltags
-
-                getalltags      -> hasfilterlist
-                hasfilterlist   -> removealbums     [label="Yes"];
-                hasfilterlist   -> getallsongs      [label="No"];
-
-                removealbums    -> removealbums     [label="For each album"]
-                removealbums    -> getallsongs
-
-                getallsongs     -> selectsong
-            }
-
-        Args:
-            filterlist: Optional, default value is ``[]``. A list of genre names or genre tag IDs that limits the search set. The tags have *OR* relations.
-            nodisabled (bool): If ``True`` no disables songs will be selected
-            nohated (bool): If ``True`` no hated songs will be selected
-            nohidden (bool): If ``True`` no hidden albums will be considered (albumid can override this parameter)
-            nobadfile (bool): If ``True`` no songs marked as "bad file" will be selected
-            nolivemusic (bool): If ``True`` no songs marked as "live recording" will be selected
-            minlen (int): If set, no songs with less than *minlen* seconds will be selected
-            maxlen (int): If set, no songs with more than *maxlen* seconds will be selected
-            albumid (int): Use album with ID ``albumid`` instead of a random album
-
-        Returns:
-            A random MusicDB Song dictionary that fulfills the constraints,
-            or ``None`` when there is no song fulfilling the constraints
-
-        Raises:
-            TypeError: When *nodisabled*, *nohated*, *nohidden*, *nolivemusic* or *nobadfile* are not of type ``bool``
-            TypeError: When *minlen* or *maxlen* is not ``None`` and not of type integer
-            TypeError: When *filterlist* is not a list and not ``None``
-        """
-        if type(nodisabled) != bool:
-            raise TypeError("nodisabled must be of type bool")
-
-        if type(nohated) != bool:
-            raise TypeError("nohated must be of type bool")
-
-        if type(nohidden) != bool:
-            raise TypeError("nohidden must be of type bool")
-
-        if type(nobadfile) != bool:
-            raise TypeError("nobadfile must be of type bool")
-
-        if type(nolivemusic) != bool:
-            raise TypeError("nolivemusic must be of type bool")
-
-        if minlen != None and type(minlen) != int:
-            raise TypeError("minlen must be None or of type integer")
-        if maxlen != None and type(maxlen) != int:
-            raise TypeError("maxlen must be None or of type integer")
-
-        if filterlist == None:
-            filterlist = []
-        if type(filterlist) != list:
-            raise TypeError("filterlist must be of type list")
-
-        if albumid and filterlist:
-            logging.warning("Ignoring tag filter because there was an Album ID given. \033[1;30m(This may be a symptom of a bug!)")
-
-
-        # Create a list of tagids that limits the set of albums
-        if albumid == None:
-            with MusicDatabaseLock:
-                tagids = []
-                if len(filterlist) > 0:
-                    for filterentry in filterlist:
-                        if type(filterentry) == str:
-                            tag   = self.GetTagByName(filterentry, self.TAG_CLASS_GENRE)
-                            tagid = tag["id"]
-                        else:
-                            tagid = filterentry
-
-                        tagids.append(tagid)
-
-                # create a set from the list to compare it with a set of albumtags
-                tagids = set(tagids)
-
-                # Get IDs of all albums existing in the database
-                sql      = "SELECT albumid FROM albums"
-                if nohidden:
-                    sql += " WHERE hidden = FALSE"
-                retval   = self.GetFromDatabase(sql, None)
-                albumids = [entry[self.ALBUM_ID] for entry in retval]
-
-                # Only select albums that have a tag listed in the tagids list
-                selectedalbumids = []
-                if len(tagids) > 0:
-                    for albumid in albumids:
-                        # Get tags of the album
-                        albumtags = self.GetTargetTags("album", albumid, self.TAG_CLASS_GENRE)
-                        if not albumtags:
-                            continue
-
-                        # Check if one tag matches the filter
-                        albumtagids = { albumtag["id"] for albumtag in albumtags }
-                        if not tagids & albumtagids:
-                            continue
-
-                        selectedalbumids.append(albumid)
-                else:
-                    selectedalbumids = albumids
-
-        else:
-            # use the predefined album ID
-            selectedalbumids = [albumid]
-
-        # Get all Songs that may be candidate
-        with MusicDatabaseLock:
-            songids = self.GetSongIdsByAlbumIds(
-                    selectedalbumids,
-                    nodisabled,
-                    nohated,
-                    nobadfile,
-                    nolivemusic,
-                    minlen, maxlen)
-
-        if len(songids) == 0:
-            return None
-
-        # Choose a random one
-        songid   = songids[random.randrange(0, len(songids))]
-        song     = self.GetSongById(songid)
-        return song
-
-
-    def GetSongIdsByAlbumIds(self, albumids, nodisabled=True, nohated=False, nobadfile=True, nolivemusic=False, minlen=None, maxlen=None):
-        """
-        This method returns a list of songs that belong to the albums addressed by their IDs in the *albumids* list.
-        The songs of the returned IDs also fulfill the constraints given by the other parameters.
-
-        Args:
-            albumids: A list of album IDs that songs are considered to get
-            nodisabled (bool): If ``True`` no disables songs will be selected
-            nohated (bool): If ``True`` no hated songs will be selected
-            nobadfile (bool): If ``True`` no songs marked as "bad file" will be selected
-            nolivemusic (bool): If ``True`` no songs marked as "live recording" will be selected
-            minlen (int): If set, no songs with less than *minlen* seconds will be selected
-            maxlen (int): If set, no songs with more than *maxlen* seconds will be selected
-
-        Returns:
-            A list of song IDs
-
-        Raises:
-            TypeError: When *nodisabled*, *nohated*, *nolivemusic* or *nobadfile* are not of type ``bool``
-            TypeError: When *minlen* or *maxlen* is not ``None`` and not of type integer
-            ValueError: When minlen is less than ``0``
-            ValueError: When maxlen is less than ``0``
-            TypeError: When *albumuids* is ``None``
-        """
-        if type(nodisabled) != bool:
-            raise TypeError("nodisabled must be of type bool")
-
-        if type(nohated) != bool:
-            raise TypeError("nohated must be of type bool")
-
-        if type(nobadfile) != bool:
-            raise TypeError("nobadfile must be of type bool")
-
-        if type(nolivemusic) != bool:
-            raise TypeError("nolivemusic must be of type bool")
-
-        if minlen != None and type(minlen) != int:
-            raise TypeError("minlen must be None or of type integer")
-        if maxlen != None and type(maxlen) != int:
-            raise TypeError("maxlen must be None or of type integer")
-
-        if albumids == None:
-            raise TypeError("albumids must have a value!")
-        if not type(albumids) == list:
-            albumids = [albumids]
-
-        sql = "SELECT songid FROM songs WHERE albumid = ?"
-        if nodisabled:
-            sql += " AND disabled != 1"
-        if nohated:
-            sql += " AND favorite >= 0"
-        if nobadfile:
-            sql += " AND badaudio = FALSE"
-        if nolivemusic:
-            sql += " AND liverecording = FALSE"
-        if minlen:
-            # make sure the argument does not mess up the query-string
-            if minlen < 0:
-                raise ValueError("minlen must be >= 0")
-            sql += " AND playtime >= " + str(minlen)
-        if maxlen:
-            # make sure the argument does not mess up the query-string
-            if maxlen < 0:
-                raise ValueError("maxlen must be >= 0")
-            sql += " AND playtime <= " + str(maxlen)
-
-        with MusicDatabaseLock:
-            songids = []
-            for albumid in albumids:
-                # returns a list of tuples with one element: [(id1,), .., (idn,)]
-                result = self.GetFromDatabase(sql, albumid)
-                if not result:
+            # Check if song is of unwanted genre
+            if tagfilterlist:
+                if genreids and not genreids & set(tagfilterlist):
+                    continue
+                if subgenreids and not subgenreids & set(tagfilterlist):
                     continue
 
-                for entry in result:
-                    songids.append(entry[0])
+            # Perfect. A match. Return that song.
+            song = self.GetSongById(songid)
+            return song
 
+        return None
+
+
+    def GetFilteredSongIds(self, constraints, albumid=None):
+        """
+        This method returns a list of song IDs of songs that fulfill certain constraints.
+        The following constraints are possible.
+        They must be given as dictionary.
+        The key represents the constrain, the value behind the key represents the corresponding value of the constraint.
+        If an album ID is given, only songs of this particular album are considered.
+
+            * disabled (bool): If ``False`` no disables songs will be selected
+            * hated (bool): If ``False`` no hated songs will be selected
+            * badfile (bool): If ``False`` no songs marked as "bad file" will be selected
+            * livemusic (bool): If ``False`` no songs marked as "live recording" will be selected
+            * minlen (int): If set, no songs with less than *minlen* seconds will be selected
+            * maxlen (int): If set, no songs with more than *maxlen* seconds will be selected
+
+        Args:
+            constraints (dict): A set of constraints
+            albumid (int): Optional album ID. If given, only songs of this album are considered.
+
+        Returns:
+            A list of song IDs that fulfill the given constraints
+        """
+
+        def CheckValue(name, value, exptype):
+            if type(value) == exptype:
+                return True
+            logging.warning("\"%s\" constraint must be of type %s. Given type was %s. \033[1;30m(Constraint will be ignored)", name, str(exptype), type(value))
+            return False
+
+        sql = "SELECT songid FROM songs WHERE"
+        condition = []
+
+        if type(albumid) == int:
+            condition.append("albumid = " + str(albumid))
+
+        for constraint, value in constraints.items():
+            if constraint == "disabled":
+                if not CheckValue("disabled", value, bool):
+                    continue
+                if value == True:
+                    condition.append("disabled = 1")
+                else:
+                    condition.append("disabled = 0")
+
+            elif constraint == "hated":
+                if not CheckValue("hated", value, bool):
+                    continue
+                if value == True:
+                    condition.append("favorite < 0")
+                else:
+                    condition.append("favorite >= 0")
+
+            elif constraint == "badfile":
+                if not CheckValue("badfile", value, bool):
+                    continue
+                if value == True:
+                    condition.append("badaudio = TRUE")
+                else:
+                    condition.append("badaudio = FALSE")
+
+            elif constraint == "liverecording":
+                if not CheckValue("liverecording", value, bool):
+                    continue
+                if value == True:
+                    condition.append("liverecording = TRUE")
+                else:
+                    condition.append("liverecording = FALSE")
+
+            elif constraint == "minlen":
+                if not CheckValue("minlen", value, int):
+                    continue
+                if value >= 0:
+                    condition.append("playtime >= " + str(value))
+                else:
+                    logging.waring("minlen constraint has a value less than zero! \033[1;30m(Will be ignored)")
+
+            elif constraint == "maxlen":
+                if not CheckValue("maxlen", value, int):
+                    continue
+                if value >= 0:
+                    condition.append("playtime <= " + str(value))
+                else:
+                    logging.waring("maxlen constraint has a value less than zero! \033[1;30m(Will be ignored)")
+
+            else:
+                logging.waring("Unknown constraint %s! \033[1;30m(Will be ignored)", str(constraint))
+
+        sql = sql + " " + " AND ".join(condition)
+
+        with MusicDatabaseLock:
+            try:
+                results = self.GetFromDatabase(sql)
+            except Exception as e:
+                logging.exception("Executing \"%s\" failed with exception %s", str(sql), str(e))
+                raise e
+
+        songids = [result[0] for result in results]
         return songids
 
 

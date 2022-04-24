@@ -12,11 +12,14 @@ Run  git log --oneline  for more details
 │               This leads to the situation that the selected genres stored in state.ini are no longer recognized.
 │               I used this "opportunity" to rename the section "albumfilter" to "GenreFilter"
 │ + [state.ini] Albums can now be filtered by sub genres
+│ * [Randy] The random song selection algorithm now considers sub genres
+│
 │
 ┝━ MINOR CHANGES
 │ * [WebUI] MusicDB WebSocket connection interface refactored (now object oriented)
 │ * [WebUI] It is now possible to continue an upload when the connection gets lost in between
 │ + [WebUI] Reconnect button to connection error layer added
+│ * [Randy] Song selection algorithm changed: Album selection is now uniform distributed, not by their amount of songs.
 └───────────────────────────────────────╌╌
 
 
