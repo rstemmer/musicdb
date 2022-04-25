@@ -135,6 +135,31 @@ class AdvancedGenreSelectionView extends LeftView
 
     onGenreClicked(genre, isactive)
     {
+        // On shift click, if isactive is true,
+        // deactivate all other genres. Shift+Click = Exclusive select
+        if(isactive)
+        {
+            if(event.shiftKey)
+            {
+                let genres         = this.tagmanager.GetGenres();
+                let activegenreids = this.tagmanager.GetActiveGenreIDs();
+
+                // Deactivate all active genres.
+                // A call is enough, there will be a request later on for synchronization
+                for(let entry of genres)
+                {
+                    if(activegenreids.indexOf(entry.id) >= 0)
+                        MusicDB.Call("SetMDBState", {category:"GenreFilter", name:entry.name, value:false});
+                }
+            }
+
+            // Enable all sub genres
+            let subgenres = this.tagmanager.GetSubgenresOfGenre(genre.id);
+            let category  = `SubgenreFilter:${genre.name}`;
+            for(let subgenre of subgenres)
+                MusicDB.Call("SetMDBState", {category:category, name:subgenre.name, value:true});
+        }
+
         MusicDB.Request("SetMDBState", "UpdateMDBState",
             {category:"GenreFilter", name:genre.name, value:isactive});
         return;
@@ -142,6 +167,24 @@ class AdvancedGenreSelectionView extends LeftView
 
     onSubgenreClicked(genre, subgenre, isactive)
     {
+        let category = `SubgenreFilter:${genre.name}`;
+
+        // On shift click, if isactive is true,
+        // deactivate all other genres. Shift+Click = Exclusive select
+        if(isactive && event.shiftKey)
+        {
+            let subgenres         = this.tagmanager.GetSubgenresOfGenre(genre.id);
+            let activesubgenreids = this.tagmanager.GetActiveSubgenreIDs();
+
+            // Deactivate all active genres.
+            // A call is enough, there will be a request later on for synchronization
+            for(let entry of subgenres)
+            {
+                if(activesubgenreids.indexOf(entry.id) >= 0)
+                    MusicDB.Call("SetMDBState", {category:category, name:entry.name, value:false});
+            }
+        }
+
         // It can happen that all sub genres are deactivated and this sub genre
         // is the last active one which has be deactivated now. (in isactive = false).
         // In this case, the main genre needs to be deactivated as well.
@@ -168,7 +211,6 @@ class AdvancedGenreSelectionView extends LeftView
             }
         }
 
-        let category = `SubgenreFilter:${genre.name}`;
         MusicDB.Request("SetMDBState", "UpdateMDBState",
             {category:category, name:subgenre.name, value:isactive});
         return;
