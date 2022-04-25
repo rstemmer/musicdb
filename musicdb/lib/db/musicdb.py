@@ -1738,6 +1738,11 @@ class MusicDatabase(Database):
         When there are genre IDs, they have to match the tagfilterlist.
         The same for sub genre IDs.
 
+        When there is an album of a main genre that is in the tagfilterlist, but not of one of the sub genres,
+        it is still considered for the song selection phase.
+        When then, there is a song of this album that does not have a sub genre set, this song is returned as valid match.
+        It might be of one of the wished sub genres.
+
 
         .. graphviz::
 
