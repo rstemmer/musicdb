@@ -58,7 +58,8 @@ It contains the following sub directories:
 
 state/:
    This directory is used to provide and maintain a consistent state for the MusicDB WebSocket Server.
-   It is mainly maintained by :mod:`musicdb.lib.cfg.mdbstate`
+   It is mainly maintained by :mod:`musicdb.lib.cfg.mdbstate`.
+   The configuration for the random song selection algorithm (Randy) is also stored there. (See :mod:`musicdb.lib.cfg.randy`)
 
 uploads/:
    The uploads directory contains temporary uploaded data.

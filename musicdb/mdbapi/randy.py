@@ -42,14 +42,7 @@ There are 3 sets of parameters that define the constraints applied on set of pos
     - A set of song flags
     - Minimum and maximum length of a song in seconds
 
-Some of them can be configured in the MusicDB configuration file:
-
-    .. code-block:: ini
-
-        [Randy]
-        nodisabled=True
-        nohated=True
-        minsonglen=120
+Some of them can be configured in the Randy configuration file (See: :class:`~musicdb.lib.cfg.randy.RandyConfiguration`):
 
 Because the database only takes album tags into account, the song tags gets checked afterwards.
 If the song has a confirmed genre tag, and if this tag does not match the filter, the song gets rejected.
@@ -83,6 +76,7 @@ import datetime
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.cfg.mdbstate   import MDBState
+from musicdb.lib.cfg.randy      import RandyConfiguration
 from musicdb.mdbapi.blacklist   import BlacklistInterface
 
 
@@ -109,15 +103,16 @@ class Randy(object):
         self.cfg        = config
         self.mdbstate   = MDBState(self.cfg.directories.state, self.db)
         self.blacklist  = BlacklistInterface(self.cfg, self.db)
+        self.randyconfig= RandyConfiguration(self.cfg.files.randyconfig)
 
         # Load most important keys
-        self.nodisabled  = self.cfg.randy.nodisabled
-        self.nohated     = self.cfg.randy.nohated
-        self.nobadfile   = self.cfg.randy.nobadfile
-        self.nolivemusic = self.cfg.randy.nolivemusic
-        self.minlen      = self.cfg.randy.minsonglen
-        self.maxlen      = self.cfg.randy.maxsonglen
-        self.maxtries    = self.cfg.randy.maxtries
+        self.nodisabled  = self.randyconfig.constraints.nodisabled
+        self.nohated     = self.randyconfig.constraints.nohated
+        self.nobadfile   = self.randyconfig.constraints.nobadfile
+        self.nolivemusic = self.randyconfig.constraints.nolivemusic
+        self.minlen      = self.randyconfig.constraints.minsonglength
+        self.maxlen      = self.randyconfig.constraints.maxsonglength
+        self.maxtries    = self.randyconfig.limits.maxtries
 
         self.constraints = {}
         if self.nodisabled:
