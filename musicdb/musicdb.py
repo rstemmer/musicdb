@@ -29,9 +29,9 @@ from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.logging        import MusicDBLogger
 
-from musicdb.maintain.datadirectory   import DataDirectoryMaintainer
-
-from musicdb.maintain.selftest  import AssertDatabases, AssertMusicDirectory, AssertCertificate, AssertUserID, AssertGroupID
+from musicdb.maintain.datadirectory import DataDirectoryMaintainer
+from musicdb.maintain.artwork       import ArtworkMaintainer
+from musicdb.maintain.selftest      import AssertDatabases, AssertMusicDirectory, AssertCertificate, AssertUserID, AssertGroupID
 
 VERSION = "8.1.0"
 
@@ -183,6 +183,11 @@ def main():
     except Exception as e:
         logging.exception("Opening database (%s) failed!", databasepath)
         exit(1)
+
+
+    # Check artwork caches
+    artworkmaintainer = ArtworkMaintainer(config, database)
+    artworkmaintainer.Validate()
 
 
     # execute module

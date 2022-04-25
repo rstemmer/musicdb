@@ -81,12 +81,26 @@ class AlbumArtwork extends Artwork
             this.artworkpath = "default.jpg";
         }
 
-        if(size == "small" || size == "medium")
-            this.dimension = "150x150";
-        else if(size == "large")
-            this.dimension = "500x500";
-        else
-            this.dimension = "500x500"; // default to high resolution
+        if(document.body?.clientWidth < 2500)
+        {
+            if(size == "small" || size == "medium")
+                this.dimension = "150x150";
+            else if(size == "large")
+                this.dimension = "500x500";
+            else
+                this.dimension = "500x500"; // default to high resolution
+        }
+        else // 4K
+        {
+            if(size == "small")
+                this.dimension = "150x150";
+            else if(size == "medium")
+                this.dimension = "200x200";
+            else if(size == "large")
+                this.dimension = "1000x1000";
+            else
+                this.dimension = "1000x1000"; // default to high resolution
+        }
 
         this.imgpath          = EncodeArtworkPath(this.artworkpath, this.dimension);
         this.imageelement.src = this.imgpath;

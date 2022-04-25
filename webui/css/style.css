@@ -61,7 +61,9 @@
 {
     :root
     {
-        --artworkwidth-medium:  4vw;
+        --artworkwidth-large:   25vw;
+        --artworkwidth-medium:  4.5vw;
+        --artworkwidth-small:   2vw;
         --normalfontsize:       16pt;
         --smallfontsize:        12pt;
     }

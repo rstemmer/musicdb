@@ -237,7 +237,7 @@ class MusicDBConfig(Config):
 
         # [albumcover]
         self.albumcover = SECTION()
-        self.albumcover.scales          = self.Get(int, "albumcover",   "scales",   "50, 150, 500", islist=True)
+        self.albumcover.scales          = self.Get(int, "albumcover",   "scales",   "150, 200, 500, 1000", islist=True)
 
 
         # [videoframes]
