@@ -258,6 +258,14 @@ class AdvancedGenreSelectionView extends LeftView
 
 
 
+    onWebSocketOpen()
+    {
+        // Initialize tags statistics cache
+        MusicDB.Request("GetTagsStatistics", "UpdateGenreSelection");
+    }
+
+
+
     onMusicDBMessage(fnc, sig, args, pass)
     {
         if(fnc == "GetMDBState" && sig == "UpdateMDBState")
