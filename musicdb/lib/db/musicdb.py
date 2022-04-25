@@ -1677,6 +1677,8 @@ class MusicDatabase(Database):
         If ``tagfilterlist`` is empty, an empty list gets returned.
 
         Hidden albums are not included.
+        Albums without sub genre tags are included as well.
+        Albums that match a main genre but not a sub genre are rejected.
 
         Args:
             tagfilterlist (list): A list of integers representing tag IDs.
@@ -1700,7 +1702,19 @@ class MusicDatabase(Database):
         with MusicDatabaseLock:
             results = self.GetFromDatabase(sql, tagfilterlist)
 
-        albumids = [result[0] for result in results]
+        albumids = []
+        for result in results:
+            albumid = result[0]
+
+            # Check if sub genre matches, or if it was only the main genre
+            subgenres   = self.GetTargetTags("album", albumid, MusicDatabase.TAG_CLASS_SUBGENRE)
+            subgenreids = { subgenre["id"] for subgenre in subgenres }
+
+            # Check if song is of unwanted genre
+            if subgenreids and not subgenreids & set(tagfilterlist):
+                continue
+            albumids.append(albumid)
+
         return albumids
 
 
@@ -1734,11 +1748,11 @@ class MusicDatabase(Database):
         For songs, only approved tags lead to rejection.
 
         Each song gets checked if it fulfills the genre constraints.
-        Whe a song has no genre IDs, it is fine.
+        When a song has no genre IDs, it is fine.
         When there are genre IDs, they have to match the tagfilterlist.
         The same for sub genre IDs.
 
-        When there is an album of a main genre that is in the tagfilterlist, but not of one of the sub genres,
+        When there is an album of a main genre that is in the tagfilterlist, but has no sub genres,
         it is still considered for the song selection phase.
         When then, there is a song of this album that does not have a sub genre set, this song is returned as valid match.
         It might be of one of the wished sub genres.
