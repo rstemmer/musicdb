@@ -31,15 +31,15 @@ This must also be done if the song or video got selected by :class:`~musicdb.mdb
 
 Once music got added to the blacklist, it remains even if the song or video got removed from the queue.
 
-The length of those blacklist can be configured in the MusicDB Configuration:
+The length of those blacklist can be configured in the Randy Configuration (See :class:`~musicdb.lib.cfg.randy.RandyConfiguration`):
 
     .. code-block:: ini
 
-            [Randy]
-            songbllen=50
-            albumbllen=20
-            artistbllen=10
-            videobllen=10
+            [BlackLists]
+            SongListLength=50
+            AlbumListLength=20
+            ArtistListLength=10
+            VideoListLength=10
 
 For small music collections, the lengths should not exceed the possibility to provide individual data.
 For medium collections and above, the default values as shown in the example are good.
@@ -67,6 +67,7 @@ import time
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.cfg.mdbstate   import MDBState
+from musicdb.lib.cfg.randy      import RandyConfiguration
 
 BlacklistLock = threading.RLock()
 Blacklist     = None
@@ -92,14 +93,16 @@ class BlacklistInterface(object):
             raise TypeError("database argument not of type MusicDatabase")
 
         self.db         = database
-        self.cfg        = config
-        self.mdbstate   = MDBState(self.cfg.directories.state, self.db)
+        self.mdbstate   = MDBState(config.directories.state, self.db)
+
+        randyconfig     = RandyConfiguration(config.files.randyconfig)
 
         # Load most important keys
-        self.songbllen   = self.cfg.randy.songbllen
-        self.albumbllen  = self.cfg.randy.albumbllen
-        self.artistbllen = self.cfg.randy.artistbllen
-        self.videobllen  = self.cfg.randy.videobllen
+        self.songbllen   = randyconfig.blacklists.songlistlength
+        self.albumbllen  = randyconfig.blacklists.albumlistlength
+        self.artistbllen = randyconfig.blacklists.artistlistlength
+        self.videobllen  = randyconfig.blacklists.videolistlength
+        self.maxage      = randyconfig.blacklists.maxage
 
         # Check blacklist and create new one if there is none yet
         global Blacklist
@@ -130,7 +133,7 @@ class BlacklistInterface(object):
         if blacklistname not in ["songs", "albums", "artists", "videos"]:
             raise ValueError("blacklistname must be \"videos\", \"songs\", \"albums\" or \"artists\"!")
 
-        timelimit = time.time() - self.cfg.randy.maxblage*60*60;
+        timelimit = time.time() - self.maxage*60*60;
 
         global BlacklistLock
         global Blacklist

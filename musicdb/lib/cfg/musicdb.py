@@ -150,6 +150,7 @@ class MusicDBConfig(Config):
         self.files.trackerdatabase  = self.directories.data    + "/tracker.db"
         self.files.defaultalbumcover= self.directories.artwork + "/default.jpg"
         self.files.webuijsconfig    = self.directories.webdata + "/config.js"
+        self.files.randyconfig      = self.directories.state   + "/randy.ini"
 
 
         # [log]
@@ -202,22 +203,6 @@ class MusicDBConfig(Config):
         self.icecast.user           = self.Get(str, "Icecast",  "user",         "source")
         self.icecast.password       = self.Get(str, "Icecast",  "password",     None)
         self.icecast.mountname      = self.Get(str, "Icecast",  "mountname",    "/stream")
-
-
-        # [randy]
-        self.randy = SECTION()
-        self.randy.nodisabled       = self.Get(bool, "randy",   "nodisabled",   True)
-        self.randy.nohated          = self.Get(bool, "randy",   "nohated",      True)
-        self.randy.nobadfile        = self.Get(bool, "randy",   "nobadfile",    True)
-        self.randy.nolivemusic      = self.Get(bool, "randy",   "nolivemusic",  True)
-        self.randy.minsonglen       = self.Get(int,  "randy",   "minsonglen",   120)
-        self.randy.maxsonglen       = self.Get(int,  "randy",   "maxsonglen",   600)
-        self.randy.songbllen        = self.Get(int,  "randy",   "songbllen",    50)
-        self.randy.albumbllen       = self.Get(int,  "randy",   "albumbllen",   20)
-        self.randy.artistbllen      = self.Get(int,  "randy",   "artistbllen",  10)
-        self.randy.videobllen       = self.Get(int,  "randy",   "videobllen",   10)
-        self.randy.maxblage         = self.Get(int,  "randy",   "maxblage",     24)
-        self.randy.maxtries         = self.Get(int,  "randy",   "maxtries",     10)
 
 
         # [music]

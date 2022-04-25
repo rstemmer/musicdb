@@ -17,6 +17,9 @@ Run  git log --oneline  for more details
 │ * [Artwork] The WebUI now needs higher resolution artwork caches for better 4K support.
 │             In /etc/muiscdb.ini: [albumcover]->scales=150, 200, 500, 1000
 │             Restart the server to cache the albums artworks for the new resolutions
+│ * [Randy] Configuration of Randy moved from /etc/musicdb.ini to state/randy.ini
+│           File will be created on first run of MusicDB
+│
 │ * Solved Issues: #76
 │
 ┝━ MINOR CHANGES
