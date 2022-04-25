@@ -278,7 +278,6 @@ class AdvancedGenreSelectionView extends LeftView
         }
         else if(fnc == "GetTagsStatistics" && sig == "UpdateGenreSelection")
         {
-            window.console?.log(args);
             this.genrestatistics = args;
             this.Update();
         }

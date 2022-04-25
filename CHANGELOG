@@ -14,7 +14,10 @@ Run  git log --oneline  for more details
 │ + [state.ini] Albums can now be filtered by sub genres
 │ - [musicdb.ini] The entry [randy]->nohidden got removed. This constraint is and should always be true
 │ * [Randy] The random song selection algorithm now considers sub genres
-│
+│ * [Artwork] The WebUI now needs higher resolution artwork caches for better 4K support.
+│             In /etc/muiscdb.ini: [albumcover]->scales=150, 200, 500, 1000
+│             Restart the server to cache the albums artworks for the new resolutions
+│ * Solved Issues: #76
 │
 ┝━ MINOR CHANGES
 │ * [WebUI] MusicDB WebSocket connection interface refactored (now object oriented)
