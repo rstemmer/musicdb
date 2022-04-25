@@ -1888,8 +1888,8 @@ class MusicDatabase(Database):
                 else:
                     condition.append("badaudio = FALSE")
 
-            elif constraint == "liverecording":
-                if not CheckValue("liverecording", value, bool):
+            elif constraint == "livemusic":
+                if not CheckValue("livemusic", value, bool):
                     continue
                 if value == True:
                     condition.append("liverecording = TRUE")
@@ -1902,7 +1902,7 @@ class MusicDatabase(Database):
                 if value >= 0:
                     condition.append("playtime >= " + str(value))
                 else:
-                    logging.waring("minlen constraint has a value less than zero! \033[1;30m(Will be ignored)")
+                    logging.warning("minlen constraint has a value less than zero! \033[1;30m(Will be ignored)")
 
             elif constraint == "maxlen":
                 if not CheckValue("maxlen", value, int):
@@ -1910,10 +1910,10 @@ class MusicDatabase(Database):
                 if value >= 0:
                     condition.append("playtime <= " + str(value))
                 else:
-                    logging.waring("maxlen constraint has a value less than zero! \033[1;30m(Will be ignored)")
+                    logging.warning("maxlen constraint has a value less than zero! \033[1;30m(Will be ignored)")
 
             else:
-                logging.waring("Unknown constraint %s! \033[1;30m(Will be ignored)", str(constraint))
+                logging.warning("Unknown constraint %s! \033[1;30m(Will be ignored)", str(constraint))
 
         sql = sql + " " + " AND ".join(condition)
 
