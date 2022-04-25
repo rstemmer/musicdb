@@ -43,7 +43,33 @@ class AdvancedGenreSelectionView extends LeftView
         this.toolbar.AddSpacer(true); // grow
 
         this.AppendChild(this.toolbar);
-        this.tagmanager = WebUI.GetManager("Tags");
+
+        this.tagmanager      = WebUI.GetManager("Tags");
+        this.genrestatistics = null;
+    }
+
+
+
+    // For genres and sub genres
+    CreateInfoText(genreid)
+    {
+        if(this.genrestatistics == null)
+            return "<span>Loading ...</span>"
+
+        let stats       = this.genrestatistics[genreid];
+        let numsongs    = stats["songs"];
+        let numalbums   = stats["albums"];
+        let numvideos   = stats["videos"];
+        let numchildren = stats["children"];
+
+        let infotext    = "";
+        if(typeof numsongs    === "number" && numsongs    > 0) infotext += `<span>${numsongs   }&nbsp;Songs</span>`;
+        if(typeof numalbums   === "number" && numalbums   > 0) infotext += `<span>${numalbums  }&nbsp;Albums</span>`;
+        if(typeof numvideos   === "number" && numvideos   > 0) infotext += `<span>${numvideos  }&nbsp;Videos</span>`;
+        if(typeof numchildren === "number" && numchildren > 0) infotext += `<br><span>${numchildren}&nbsp;Sub-Genres</span>`;
+        if(infotext == "") infotext = "<span>This tag is not used yet</span>"
+
+        return infotext;
     }
 
 
@@ -87,7 +113,8 @@ class AdvancedGenreSelectionView extends LeftView
 
     CreateGenreCheckbox(genre, isactive)
     {
-        let checkbox = new SettingsCheckbox(genre.name, null,
+        let infotext = this.CreateInfoText(genre.id);
+        let checkbox = new SettingsCheckbox(genre.name, infotext,
             (state)=>
             {
                 this.onGenreClicked(genre, state);
@@ -121,7 +148,8 @@ class AdvancedGenreSelectionView extends LeftView
 
     CreateSubgenreCheckbox(genre, subgenre, isactive)
     {
-        let checkbox = new SettingsCheckbox(subgenre.name, null,
+        let infotext = this.CreateInfoText(subgenre.id);
+        let checkbox = new SettingsCheckbox(subgenre.name, infotext,
             (state)=>
             {
                 this.onSubgenreClicked(genre, subgenre, state);
@@ -220,7 +248,11 @@ class AdvancedGenreSelectionView extends LeftView
 
     onViewMounted()
     {
+        // Show UI as soon as possible, based on cached data
         this.Update();
+
+        // Update cached statistics
+        MusicDB.Request("GetTagsStatistics", "UpdateGenreSelection");
         return;
     }
 
@@ -234,6 +266,12 @@ class AdvancedGenreSelectionView extends LeftView
         }
         else if(fnc == "GetTags" && sig == "UpdateTags")
         {
+            this.Update();
+        }
+        else if(fnc == "GetTagsStatistics" && sig == "UpdateGenreSelection")
+        {
+            window.console?.log(args);
+            this.genrestatistics = args;
             this.Update();
         }
         return;
