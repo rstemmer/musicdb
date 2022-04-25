@@ -42,6 +42,10 @@
 {
     padding:            0.5rem;
 }
+#AdvancedGenreSelectionView .SettingsEntry span+span
+{
+    margin-left:        1.5ch;
+}
 
 /*
 .GenreSelectionView > .Tag[data-active=true]
