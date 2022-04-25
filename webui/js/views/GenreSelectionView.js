@@ -86,6 +86,16 @@ class GenreSelectionView extends Element
 
         tag.SetData("active", active);
 
+        // Activate all sub genres as well
+        if(active)
+        {
+            // Enable all sub genres
+            let tagmanager = WebUI.GetManager("Tags");
+            let subgenres  = tagmanager.GetSubgenresOfGenre(mdbtag.id);
+            let category   = `SubgenreFilter:${mdbtag.name}`;
+            for(let subgenre of subgenres)
+                MusicDB.Call("SetMDBState", {category:category, name:subgenre.name, value:true});
+        }
 
         // Send update to server
         // The Call will trigger a broadcast of GetMDBState
