@@ -66,8 +66,13 @@ class TrackerDatabaseMaintainer(DatabaseMaintainer):
         dbtool.Backup()
 
         actualversion = dbtool.GetActualVersion()
-        if actualversion == 2:
-            dbtool.UpgradeTo3()
+        if actualversion < 2:
+            logging.error("Database version too old!")
+            return
+        if actualversion < 3:
+            self.UpgradeTo3()
+        if actualversion < 4:
+            self.UpgradeTo4()
         return
 
 
@@ -76,12 +81,31 @@ class TrackerDatabaseMaintainer(DatabaseMaintainer):
         """
         Creates a new table *videorelations* uses since MusicDB 7.0.0
         """
+        dbtool = self.GetDatabaseTool()
         dbtool.CreateTable("videorelations", "id")
         dbtool.AddColumn("videorelations", "videoida", "INTEGER");
         dbtool.AddColumn("videorelations", "videoidb", "INTEGER");
         dbtool.AddColumn("videorelations", "weight  ", "INTEGER", "1");
 
         dbtool.SetDatabaseVersion(3)
+        return
+
+    def UpgradeTo4(self):
+        """
+        Creates a new tables *playedsongs* and *playedvideos* uses since MusicDB 8.1.0
+        """
+        dbtool = self.GetDatabaseTool()
+        dbtool.CreateTable("playedsongs", "id")
+        dbtool.AddColumn("playedsongs", "songid",    "INTEGER");
+        dbtool.AddColumn("playedsongs", "timestamp", "INTEGER", "0");
+        dbtool.AddColumn("playedsongs", "random",    "INTEGER", "0");
+
+        dbtool.CreateTable("playedvideos", "id")
+        dbtool.AddColumn("playedvideos", "videoid",    "INTEGER");
+        dbtool.AddColumn("playedvideos", "timestamp", "INTEGER", "0");
+        dbtool.AddColumn("playedvideos", "random",    "INTEGER", "0");
+
+        dbtool.SetDatabaseVersion(4)
         return
 
 

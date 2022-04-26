@@ -66,13 +66,16 @@ class MusicDatabaseMaintainer(DatabaseMaintainer):
         dbtool.Backup()
 
         actualversion = dbtool.GetActualVersion()
-        if actualversion == 4:
-            dbtool.UpgradeTo5()
+        if actualversion < 4:
+            logging.error("Database version too old!")
+            return
+        if actualversion < 5:
+            self.UpgradeTo5()
         return
 
 
 
-    def UpgradeTo5(self, dbtools):
+    def UpgradeTo5(self):
         """
         Creates the *videos* and *videotags* table uses since MusicDB 7.0.0.
         It adds a *hidden* column to *albums*.

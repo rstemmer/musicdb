@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -95,8 +95,14 @@ class Tracker(object):
     def Track(self, targetid, israndom=False):
         """
         This method tracks the relation to the given target with the last added target.
+        It also tracks when music was played.
         A target can be a song or a video.
         This new target should be a target that was recently and completely played.
+
+        The played music will always be tracked via :meth:`musicdb.lib.db.trackerdb.TrackerDatabase.AddMusic`.
+
+        Additional, under certain conditions, the chain of consecutive played music gets tracked.
+        This process is described in the following paragraphs.
 
         If the time between this target, and the previous one exceeds *N* minutes, it gets ignored and the internal state gets reset.
         So the chain of targets get cut if the time between playing them is too long.
@@ -135,11 +141,6 @@ class Tracker(object):
             logging.warning(self.target+" ID of new "+self.target+" is not an integer! The type was %s. \033[0;33m(Ignoring the Track-Call and clearing tracking list)", str(type(targetid)))
             return False
 
-        # Track random songs?
-        if israndom == True and self.config.tracker.trackrandom == False:
-            logging.debug("The new "+self.target+" to track (%i) was added by Randy. Tracking randoms songs is disabled. - so it gets ignored", targetid)
-            return True
-
         # If there is a *cuttime* Minute gap, do not associate this target with the previous -> clear list
         timestamp = time.time()
         timediff  = int(timestamp - self.lastaction)
@@ -150,12 +151,26 @@ class Tracker(object):
         
         self.lastaction = timestamp
 
-        if self.lastid == targetid:
-            logging.debug("The new "+self.target+" to track (%i) is the same as the previous one - so it gets ignored", targetid)
-            return True
 
         # Adding new target to the history
         logging.debug("Tracking new "+self.target+" with ID %i", targetid)
+        try:
+            self.trackerdb.AddMusic(self.target, targetid, int(timestamp), israndom)
+        except Exception as e:
+            logging.exception("trackerdb.AddMusic failed with error \"%s\"! \033[1;30m(%s with ID %s will not be tracked)", str(e), self.target, str(targetid))
+            # Continue. Maybe tracking the connection works fine
+
+
+        # Adding new connection?
+        # Track random songs?
+        if israndom == True and self.config.tracker.trackrandom == False:
+            logging.debug("The new "+self.target+" to track (%i) was added by Randy. Tracking randoms songs is disabled. - so it gets ignored", targetid)
+            return True
+
+        # Was the previous song the same one?
+        if self.lastid == targetid:
+            logging.debug("The new "+self.target+" to track (%i) is the same as the previous one - so it gets ignored in the chain", targetid)
+            return True
 
         # If there was no previous target, initialize the tracker.
         if not self.lastid:
@@ -173,7 +188,7 @@ class Tracker(object):
         try:
             self.trackerdb.AddRelation(self.target, self.lastid, targetid)
         except Exception as e:
-            logging.error("trackerdb.AddRelation failed with error \"%s\"!", str(e))
+            logging.exception("trackerdb.AddRelation failed with error \"%s\"! \033[1;30m(%s connection between ID %s and ID %s will not be tracked)", str(e), self.target, str(self.lastid), str(targetid))
             return False
 
         logging.debug("New "+self.target+" relation added: \033[0;35m%i → %i", self.lastid, targetid)

@@ -19,6 +19,7 @@ Run  git log --oneline  for more details
 │             Restart the server to cache the albums artworks for the new resolutions
 │ * [Randy] Configuration of Randy moved from /etc/musicdb.ini to state/randy.ini
 │           File will be created on first run of MusicDB
+│ + [tracker] Tracks when a song was played. This builds up a history that will be used in later versions of MusicDB.
 │
 │ * Solved Issues: #76
 │
