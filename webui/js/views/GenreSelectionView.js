@@ -58,12 +58,12 @@ class GenreSelectionView extends Element
             if(this.activegenres.indexOf(genre.name) >= 0)
             {
                 tag.SetData("active", true);
-                tag.SetTooltip("Deactivate genre for album selection");
+                tag.SetTooltip("Deactivate genre for album selection.");
             }
             else
             {
                 tag.SetData("active", false);
-                tag.SetTooltip("Activate genre for album selection");
+                tag.SetTooltip("Activate genre and all its sub genres for album selection.\nHold shift key for exclusive selection.");
             }
 
             // append button
@@ -95,6 +95,21 @@ class GenreSelectionView extends Element
             let category   = `SubgenreFilter:${mdbtag.name}`;
             for(let subgenre of subgenres)
                 MusicDB.Call("SetMDBState", {category:category, name:subgenre.name, value:true});
+
+            // If shift click -> deactivate all other genres (exclusive select)
+            if(event.shiftKey)
+            {
+                let genres         = tagmanager.GetGenres();
+                let activegenreids = tagmanager.GetActiveGenreIDs();
+
+                // Deactivate all active genres.
+                // A call is enough, there will be a request later on for synchronization
+                for(let entry of genres)
+                {
+                    if(activegenreids.indexOf(entry.id) >= 0)
+                        MusicDB.Call("SetMDBState", {category:"GenreFilter", name:entry.name, value:false});
+                }
+            }
         }
 
         // Send update to server
