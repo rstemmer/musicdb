@@ -26,6 +26,7 @@ Run  git log --oneline  for more details
 │ * [WebUI] MusicDB WebSocket connection interface refactored (now object oriented)
 │ * [WebUI] It is now possible to continue an upload when the connection gets lost in between
 │ + [WebUI] Reconnect button to connection error layer added
+│ * [WebUI] Flickering background during Drag'n'Drop fixed
 │ * [Randy] Song selection algorithm changed: Album selection is now uniform distributed, not by their amount of songs.
 └───────────────────────────────────────╌╌
 

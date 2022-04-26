@@ -31,7 +31,7 @@ class Tile extends Draggable
         super.onDragStart(event);
 
         // When dragged from a search preview, hide everything to clear the drop zones
-        WebUI.GetLayer("MenuCurtain").Hide();
+        WebUI.GetLayer("MenuBackground").Hide();
         WebUI.GetView("SearchInput").HidePreview();
     }
 
