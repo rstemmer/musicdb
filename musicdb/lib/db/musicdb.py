@@ -1883,36 +1883,28 @@ class MusicDatabase(Database):
             condition.append("albumid = " + str(albumid))
 
         for constraint, value in constraints.items():
-            if constraint == "disabled":
-                if not CheckValue("disabled", value, bool):
+            if constraint == "nodisabled":
+                if not CheckValue("nodisabled", value, bool):
                     continue
                 if value == True:
-                    condition.append("disabled = 1")
-                else:
                     condition.append("disabled = 0")
 
-            elif constraint == "hated":
-                if not CheckValue("hated", value, bool):
+            elif constraint == "nohated":
+                if not CheckValue("nohated", value, bool):
                     continue
                 if value == True:
-                    condition.append("favorite < 0")
-                else:
                     condition.append("favorite >= 0")
 
-            elif constraint == "badfile":
-                if not CheckValue("badfile", value, bool):
+            elif constraint == "nobadfile":
+                if not CheckValue("nobadfile", value, bool):
                     continue
                 if value == True:
-                    condition.append("badaudio = TRUE")
-                else:
                     condition.append("badaudio = FALSE")
 
-            elif constraint == "livemusic":
-                if not CheckValue("livemusic", value, bool):
+            elif constraint == "nolivemusic":
+                if not CheckValue("nolivemusic", value, bool):
                     continue
                 if value == True:
-                    condition.append("liverecording = TRUE")
-                else:
                     condition.append("liverecording = FALSE")
 
             elif constraint == "minlen":
