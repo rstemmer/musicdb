@@ -220,6 +220,8 @@ class DatabaseTools(Database):
 
         sql = "UPDATE meta SET value = ? WHERE key = 'version'"
         self.Execute(sql, (version,))
+
+        logging.info("Upgraded database %s to version %s", str(self.databasepath), str(version))
         return
 
 

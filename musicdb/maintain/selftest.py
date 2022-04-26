@@ -30,7 +30,7 @@ def AssertDatabases(musicdbpath, trackerdbpath, validate=False):
     logging.info("Checking \033[0;36mDatabases")
     # 2nd argument is the expected version number
     musicdbmaintainer   = MusicDatabaseMaintainer(  musicdbpath,   5)
-    trackerdbmaintainer = TrackerDatabaseMaintainer(trackerdbpath, 3)
+    trackerdbmaintainer = TrackerDatabaseMaintainer(trackerdbpath, 4)
 
     # Validate Databases - Create them if they do not exist
     if validate:
@@ -67,7 +67,7 @@ def AssertDatabases(musicdbpath, trackerdbpath, validate=False):
         try:
             musicdbmaintainer.Upgrade()
         except Exception as e:
-            logging.exception("Upgrading %s to its latest version failed with error: %s \033[1;30m(Luckily the database has been updated before)", musicdbpath, str(e))
+            logging.exception("Upgrading %s to its latest version failed with error: %s \033[1;30m(Luckily the database has been backed up before)", musicdbpath, str(e))
             exit(1)
 
     logging.info("Checking database version of \033[0;36m%s", trackerdbpath)
@@ -76,7 +76,7 @@ def AssertDatabases(musicdbpath, trackerdbpath, validate=False):
         try:
             trackerdbmaintainer.Upgrade()
         except Exception as e:
-            logging.exception("Upgrading %s to its latest version failed with error: %s \033[1;30m(Luckily the database has been updated before)", musicdbpath, str(e))
+            logging.exception("Upgrading %s to its latest version failed with error: %s \033[1;30m(Luckily the database has been backed up before)", musicdbpath, str(e))
             exit(1)
     return True
 

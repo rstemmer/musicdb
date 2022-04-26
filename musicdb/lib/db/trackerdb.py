@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,16 +16,21 @@
 """
 This module is used to manage the Tracker Database.
 
-The database stores the relation between two songs or videos.
-That means, whenever two songs or videos were played after each other, this relation gets created
-or its weight incremented.
-
-There are two tables, one for song relations and one for video relations.
+There are two tables of each kind, one for song relations and one for video relations.
 
 Because the tables contain similar information, their data and algorithms are similar. 
 All methods are made to work on all tables.
 The parameter *target* is either ``"song"`` or ``"video"`` and distinguish the tables.
 If the documentation mentions *targetid* it either is the term *songid* or *videoid* depending on the argument of the method.
+
+This classes uses a global lock (using Python ``threading.RLock``) to avoid that relations change during complex operation.
+
+Music Relation Chain
+--------------------
+
+The database stores the relation between two songs or videos.
+That means, whenever two songs or videos were played after each other, this relation gets created
+or its weight incremented.
 
 The tables layout is the following:
 
@@ -46,7 +51,28 @@ targetida / targetidb:
 weight:
     Gets incremented whenever the targetida/targetidb relation already occurred in the past.
 
-This classes uses a global lock (using Python ``threading.RLock``) to avoid that relations change during complex operation.
+
+Music Played History
+--------------------
+
+The tracker database also stores when a song or video was played.
+
+    +----+----------+-----------+--------+
+    | id | targetid | timestamp | random |
+    +----+----------+-----------+--------+
+
+id:
+    ID of the row
+
+targetid:
+    Actually *songid* or *videoid* stores the ID of the song or video that gets tracked.
+
+timestamp:
+    When the song or video got played as unix time stamp
+
+random:
+    ``True`` when the song got added by the random song selection algorithm, otherwise ``False``
+
 """
 
 import logging
@@ -76,9 +102,10 @@ class TrackerDatabase(Database):
         except Exception as e:
             raise ValueError("Unable to read version number from Tracker Database")
 
-        if version != 3:
-            raise ValueError("Unexpected version number of Tracker Database. Got %i, expected %i", version, 3)
-        
+        if version != 4:
+            logging.error("Unexpected version number of Tracker Database. Got %i, expected %i", version, 4)
+            raise ValueError("Unexpected version number of Tracker Database. Got %i, expected %i", version, 4)
+
 
     def AddRelation(self, target, ida, idb):
         """
@@ -185,7 +212,8 @@ class TrackerDatabase(Database):
     def RemoveSong(self, songid):
         """
         This method removes all relations to a song.
-        This is usefull in case a song gets removed from the database.
+        It also removed the song from the played songs table.
+        This is useful in case a song gets removed from the database.
 
         If the song relation does not exist, nothing will be done.
 
@@ -204,6 +232,8 @@ class TrackerDatabase(Database):
         with TrackerDatabaseLock:
             sql = "DELETE FROM songrelations WHERE songida = ? OR songidb = ?"
             self.Execute(sql, (songid, songid))
+            sql = "DELETE FROM playedsongs WHERE songid = ?"
+            self.Execute(sql, (songid))
 
         return None
 
@@ -212,6 +242,7 @@ class TrackerDatabase(Database):
     def RemoveVideo(self, videoid):
         """
         This method removes all relations to a video.
+        It also removed the video from the played videos table.
         This is useful in case a video gets removed from the database.
 
         If the video relation does not exist, nothing will be done.
@@ -231,6 +262,8 @@ class TrackerDatabase(Database):
         with TrackerDatabaseLock:
             sql = "DELETE FROM videorelations WHERE videoida = ? OR videoidb = ?"
             self.Execute(sql, (videoid, videoid))
+            sql = "DELETE FROM playedvideos WHERE videoid = ?"
+            self.Execute(sql, (videoid))
 
         return None
 
@@ -294,6 +327,45 @@ class TrackerDatabase(Database):
             results.append(result)
 
         return results
+
+
+
+
+    def AddMusic(self, target, targetid, timestamp, random):
+        """
+        This method adds music to the played history.
+        A target can be a song or a video.
+
+        Args:
+            target (str): ``"song"`` or ``"video"``
+            targetid (int): Song ID or Video ID, depending on the target string
+            timestamp (int): Unix time when the song or video was played
+            random (boolean): ``True`` when the music was added by the random song selection algorithm
+
+        Returns:
+            ``None``
+
+        Raises:
+            ValueError: If *target* not ``"song"`` or ``"video"``
+            TypeError: If *targetid* or *timestamp* is not of type ``int``
+            TypeError: If *random* is not of type ``bool``
+        """
+        if target not in ["song", "video"]:
+            raise ValueError("Unknown target \"%s\"! Only \"song\" and \"video\" allowed.", target)
+
+        if type(targetid) != int:
+            raise TypeError("IDs must be of type int but was of type %s!"%(str(type(targetid))))
+        if type(timestamp) != int:
+            raise TypeError("Time stamp must be of type int but was of type %s!"%(str(type(timestamp))))
+
+        if type(random) != bool:
+            raise TypeError("random must be of type bool!")
+
+        with TrackerDatabaseLock:
+            sql = "INSERT INTO played"+target+"s ("+target+"id, timestamp, random) VALUES (?, ?, ?)"
+            self.Execute(sql, (targetid, timestamp, random))
+
+        return None
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
