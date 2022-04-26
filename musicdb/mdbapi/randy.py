@@ -115,16 +115,12 @@ class Randy(object):
         self.maxtries    = self.randyconfig.limits.maxtries
 
         self.constraints = {}
-        if self.nodisabled:
-            self.constraints["disabled"] = False
-        if self.nohated:
-            self.constraints["hated"] = False
-        if self.nobadfile:
-            self.constraints["badfile"] = False
-        if self.nolivemusic:
-            self.constraints["livemusic"] = False
-        self.constraints["minlen"] = self.minlen
-        self.constraints["maxlen"] = self.maxlen
+        self.constraints["nodisabled"]  = self.nodisabled
+        self.constraints["nohated"]     = self.nohated
+        self.constraints["nobadfile"]   = self.nobadfile
+        self.constraints["nolivemusic"] = self.nolivemusic
+        self.constraints["minlen"]      = self.minlen
+        self.constraints["maxlen"]      = self.maxlen
 
 
 
