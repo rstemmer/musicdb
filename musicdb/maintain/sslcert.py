@@ -43,8 +43,8 @@ class CertificateTools(object):
 
     """
     def __init__(self, keypath: str, certpath: str):
-        self.keymode    = stat.S_IRUSR
-        self.certmode   = stat.S_IRUSR | stat.S_IRGRP# | stat.S_IROTH
+        self.keymode    = "r--------"
+        self.certmode   = "r--r-----"
         self.user       = "musicdb"
         self.group      = "musicdb"
         self.keypath    = keypath
@@ -119,7 +119,7 @@ class CertificateTools(object):
         success = True
 
         user, group = self.filesystem.GetOwner(self.keypath)
-        mode        = self.filesystem.GetMode(self.keypath)
+        mode        = self.filesystem.GetAccessPermissions(self.keypath)
 
         if user != self.user:
             logging.warning("User of %s is %s but should be %s!", self.keypath, user, self.user)
@@ -132,7 +132,7 @@ class CertificateTools(object):
             success = False
 
         user, group = self.filesystem.GetOwner(self.certpath)
-        mode        = self.filesystem.GetMode(self.certpath)
+        mode        = self.filesystem.GetAccessPermissions(self.certpath)
 
         if user != self.user:
             logging.warning("User of %s is %s but should be %s!", self.certpath, user, self.user)
@@ -161,8 +161,10 @@ class CertificateTools(object):
         Returns:
             The return value of :meth:`~CheckPermissions` after updating the access rights.
         """
-        self.filesystem.SetAttributes(self.keypath,  self.user, self.group, self.keymode)
-        self.filesystem.SetAttributes(self.certpath, self.user, self.group, self.certmode)
+        self.filesystem.SetOwner(self.keypath,  self.user, self.group)
+        self.filesystem.SetOwner(self.certpath, self.user, self.group)
+        self.filesystem.SetAccessPermissions(self.keypath,  self.keymode)
+        self.filesystem.SetAccessPermissions(self.certpath, self.certmode)
         return self.CheckPermissions()
 
 
