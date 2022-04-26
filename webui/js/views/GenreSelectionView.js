@@ -26,6 +26,7 @@ class GenreSelectionView extends Element
         this.reloadtimeouthandler = null;
         this.activegenres         = null;
 
+        this.SetTooltip("Right click for advanced genre and sub genre selection.");
         this.SetRightClickEventCallback(()=>
             {
                 event.preventDefault();
