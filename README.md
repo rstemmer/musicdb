@@ -36,19 +36,27 @@
 
 | Distribution | Download | Quick Installation |
 | --- | --- | --- |
-| **Arch Linux**   | [📦 musicdb-8.0.0-1-any.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-1-any.pkg.tar.zst) | `pacman -U ./musicdb-8.0.0-1-any.pkg.tar.zst` |
-| **Fedora** 35    | [📦 musicdb-8.0.0-1.fc35.noarch.rpm](https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-1.fc35.noarch.rpm) | `dnf install ./musicdb-8.0.0-1.fc35.noarch.rpm` |
-| **Ubuntu** 21.10 | [📦 musicdb_8.0.0-1_all.deb](        https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb_8.0.0-1_all.deb        ) | `apt install ./musicdb_8.0.0-1_all.deb` |
-| Source Code      | [📦 musicdb-8.0.0-src.tar.zst](      https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-src.tar.zst      ) | [⚙️ Install from Source Code](https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html) |
-| Documentation    | [📦 musicdb-8.0.0-doc.tar.zst](      https://github.com/rstemmer/musicdb/releases/download/v8.0.0/musicdb-8.0.0-doc.tar.zst      ) | [⚙️ Install Documentation](https://rstemmer.github.io/musicdb/build/html/usage/installdocs.html) |
+| **Arch Linux**   | [📦 musicdb-8.1.0-1-any.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-1-any.pkg.tar.zst) | `pacman -U ./musicdb-8.0.0-1-any.pkg.tar.zst` |
+| **Fedora** 36    | [📦 musicdb-8.1.0-1.fc36.noarch.rpm](https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-1.fc36.noarch.rpm) | `dnf install ./musicdb-8.0.0-1.fc36.noarch.rpm` |
+| **Ubuntu** 22.04 | [📦 musicdb-8.1.0-1_all.deb](        https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-1_all.deb        ) | `apt install ./musicdb-8.0.0-1_all.deb` |
+| Source Code      | [📦 musicdb-8.1.0-src.tar.zst](      https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-src.tar.zst      ) | [⚙️ Install from Source Code](https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html) |
+| Documentation    | [📦 musicdb-8.1.0-doc.tar.zst](      https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-doc.tar.zst      ) | [⚙️ Install Documentation](https://rstemmer.github.io/musicdb/build/html/usage/installdocs.html) |
 
 [⚙️ Install, Setup and Run MusicDB with Apache and Icecast](https://rstemmer.github.io/musicdb/build/html/usage/install.html)
 
-MusicDB requires Python 3.9 or later.
-The WebUI requires an up-to-date Firefox.
+MusicDB requires Python 3 version 3.9.0 or later.
+The WebUI requires Firefox.
+
+## 💡 Information
+
+MusicDB is hardware independent. It works with any Linux distribution installed on PC, ARM (like [Raspberry Pi](https://www.raspberrypi.com/)) or Mac.
 
 **Important:** See [Transition from 7.2.0 to 8.0.0](https://rstemmer.github.io/musicdb/build/html/basics/data.html#transition-from-7-2-0-to-8-0-0) in case you already have MusicDB 7.2.0 installed.
 
+**Important:** After updating MusicDB from 8.0.0 to 8.1.0 check if configuration file (/etc/musicdb.ini) has been updated as well.
+Some new album cover scales (200 and 1000) need to be configured.
+Then restart musicdb (`systemctl restart musicdb`).
+Otherwise artworks are missing in the web front-end on high resolution screens.
 
 ---
 
@@ -72,11 +80,18 @@ I started this project on 4th January 2014.
 Since I finished a first prototype within one weekend, I use MusicDB almost every day.
 Time to share it with the world. :smiley:
 
+<<<<<<< HEAD
 ### New in Version 8.0.0
 
 * Upload and Import of Music via Web Front-End
 * Integrated audio player in the Web Front-End 
 * Better integrating into the Linux system using default system paths and systemd
+=======
+### New in Version 8.1.0
+
+* Improved album filter for genres and sub genres
+* Some annoying bugs fixed (Most important: Uploading albums can be continued after connection error)
+>>>>>>> b43d903 (Updated for 8.1.0)
 
 ### Features
 
