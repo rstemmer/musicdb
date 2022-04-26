@@ -45,7 +45,9 @@ class GenreSelectionView extends Element
 
         // Create all buttons
         super.RemoveChilds();
-        let genres = WebUI.GetManager("Tags").GetGenres();
+        let tagmanager = WebUI.GetManager("Tags");
+        let genres     = tagmanager.GetGenres();
+
         for(let genre of genres)
         {
             // If Other-Genre shall be hidden, skip adding it to the View :)
@@ -58,8 +60,19 @@ class GenreSelectionView extends Element
             // Check if genre is active
             if(this.activegenres.indexOf(genre.name) >= 0)
             {
-                tag.SetData("active", true);
-                tag.SetTooltip("Deactivate genre for album selection.");
+                // Check if also all sub genres are active
+                let activesubgenres = MDBState.SubgenreFilter[genre.name]
+                let subgenres       = tagmanager.GetSubgenresOfGenre(genre.id);
+                if(activesubgenres.length < subgenres.length)
+                {
+                    tag.SetData("active", "partially");
+                    tag.SetTooltip("Some sub genres are deactivated!\nClick to activate all sub genres for album selection.");
+                }
+                else
+                {
+                    tag.SetData("active", true);
+                    tag.SetTooltip("Deactivate genre for album selection.");
+                }
             }
             else
             {
@@ -82,7 +95,7 @@ class GenreSelectionView extends Element
         let active;
         if(tag.GetData("active") === "true")
             active = false;
-        else
+        else // "false" or "partially" -> Activate the genre and all its sub genres
             active = true;
 
         tag.SetData("active", active);
