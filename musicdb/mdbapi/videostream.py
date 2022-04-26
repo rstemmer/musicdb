@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2020 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2020 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -267,12 +267,6 @@ def VideoStreamingThread():
 
     State["isplaying"]    = False
     State["isstreaming"]  = True
-    queueentry = queue.CurrentVideo()
-    if queueentry == None or queueentry["entryid"] == None:
-        logging.info("Video Queue is empty, waiting for new video.")
-    else:
-        State["currententry"] = queueentry["entryid"]
-
 
     # Do nothing if video streaming is disabled
     if Config.debug.disablevideos:
@@ -286,6 +280,13 @@ def VideoStreamingThread():
             time.sleep(1)
 
         return
+
+    # Initialize starting state -> Get current video
+    queueentry = queue.CurrentVideo()
+    if queueentry == None or queueentry["entryid"] == None:
+        logging.info("Video Queue is empty, waiting for new video.")
+    else:
+        State["currententry"] = queueentry["entryid"]
 
 
     while RunThread:
