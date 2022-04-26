@@ -45,7 +45,6 @@
 [⚙️ Install, Setup and Run MusicDB with Apache and Icecast](https://rstemmer.github.io/musicdb/build/html/usage/install.html)
 
 MusicDB requires Python 3 version 3.9.0 or later.
-The WebUI requires Firefox.
 
 ## 💡 Information
 
