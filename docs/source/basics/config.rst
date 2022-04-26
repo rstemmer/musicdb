@@ -104,7 +104,7 @@ albumcover
 
 scales (list of numbers ∈ ℕ):
    A list of scales that will be used to create thumbnails. 
-   At least ``"50, 150, 500"`` should appear in the list because those are used by the MusicDB WebUI
+   At least ``"150, 200, 500, 1000"`` should appear in the list because those are used by the MusicDB WebUI
 
    
 
@@ -114,9 +114,9 @@ videoframes
 frames (numbers ∈ ℕ):
    Amount of frames used for a preview animation
 
-scales (list of numbers ∈ ℕ):
+scales (list of in format "XxY" where X,Y ∈ ℕ and "x" the lower case character x):
    A list of scales that will be used to create thumbnails. 
-   At least ``"50, 150, 500"`` should appear in the list because those are used by the MusicDB WebUI
+   At least ``"150x83"`` should appear in the list because those are used by the MusicDB WebUI
 
 previewlength (seconds ∈ ℕ):
    Length of the preview in seconds.
@@ -129,12 +129,12 @@ uploads
 allow (list of strings):
    If not empty users are allowed to upload files of certain categories.
    The categories are defined in that list.
-   The default is ``allow=artwork, songs``.
+   The default is ``allow=artwork, albumfiles``.
 
    The following categories exist:
 
    -  artwork: Album artwork
-   -  songs: Song files
+   -  albumfiles: Song files, booklets and other files that are related to a music album.
 
    .. warning::
 
@@ -199,51 +199,6 @@ password (string):
 
 mountname (string starting with ``/``):
    This is the name of the mount MusicDB uses.
-
-
-
-randy
------
-
-nodisabled (boolean):
-   If ``true`` no disabled songs will be chosen
-
-nohated (boolean):
-   If ``true`` no hated songs will be chosen
-
-nohidden (boolean):
-   If ``True`` no hidden albums will be considered
-
-nobadfile (boolean):
-   If ``True`` no songs marked as "bad file" will be selected
-
-nolivemusic (boolean):
-   If ``True`` no songs marked as "live recording" will be selected
-
-minsonglen (number ∈ ℕ):
-   Determines the minimum length of a song in seconds to be in the set of possible songs
-
-maxsonglen (number ∈ ℕ):
-   Determines the maximum length of a song in seconds to be in the set of possible songs
-
-songbllen (number ∈ ℕ):
-   Blacklist length for songs (``0`` to disable the blacklist)
-
-albumbllen (number ∈ ℕ):
-   Blacklist length for albums (``0`` to disable the blacklist)
-
-artistbllen (number ∈ ℕ):
-   Blacklist length for artists (``0`` to disable the blacklist)
-
-videobllen (number ∈ ℕ):
-   Blacklist length for videos (``0`` to disable the blacklist)
-
-maxblage (time in hours as integer):
-   The highest age an entry in one of the three blacklist can have until it gets automatically removed.
-
-maxtries (number ∈ ℕ):
-   Maximum amount of tries to find a valid random songs.
-   This prevents spending infinite amount of time getting a song even if the data base does not provide enough songs.
 
 
 

@@ -20,6 +20,49 @@ Each read or write process to the files that hold the state will be triggered by
 
 The state is stored in a files ``randy.ini`` in a sub-directory ``state`` inside the MusicDB data directory.
 More details can be found in :doc:`/basics/data`.
+
+Possible configurations
+----------------------
+
+NoDisabled (boolean):
+   If ``true`` no disabled songs will be chosen
+
+NoHated (boolean):
+   If ``true`` no hated songs will be chosen
+
+NoHidden (boolean):
+   If ``True`` no hidden albums will be considered
+
+Nobadfile (boolean):
+   If ``True`` no songs marked as "bad file" will be selected
+
+NoLiveMusic (boolean):
+   If ``True`` no songs marked as "live recording" will be selected
+
+MinSongLength (number ∈ ℕ):
+   Determines the minimum length of a song in seconds to be in the set of possible songs
+
+MaxSongLength (number ∈ ℕ):
+   Determines the maximum length of a song in seconds to be in the set of possible songs
+
+SongListLength (number ∈ ℕ):
+   Blacklist length for songs (``0`` to disable the blacklist)
+
+AlbumListLength (number ∈ ℕ):
+   Blacklist length for albums (``0`` to disable the blacklist)
+
+ArtistListLength (number ∈ ℕ):
+   Blacklist length for artists (``0`` to disable the blacklist)
+
+VideoListLength (number ∈ ℕ):
+   Blacklist length for videos (``0`` to disable the blacklist)
+
+MaxAge (time in hours as integer):
+   The highest age an entry in one of the three blacklist can have until it gets automatically removed.
+
+MaxTries (number ∈ ℕ):
+   Maximum amount of tries to find a valid random songs.
+   This prevents spending infinite amount of time getting a song even if the data base does not provide enough songs.
 """
 
 from musicdb.lib.cfg.config import Config
@@ -31,8 +74,6 @@ class SECTION:
 class RandyConfiguration(Config):
     """
     This class holds the Randy configuration.
-
-    TODO: Explain each setting - for example that MaxAge must be given in hours
 
     Args:
         configpath: Absolute path to the Randy configuration file.
