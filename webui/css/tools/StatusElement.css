@@ -1,6 +1,6 @@
 /*
  * MusicDB,  a music manager with web-bases UI that focus on music.
- * Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,37 +48,44 @@ li.StatusElement
 .StatusElement[data-state=good]::before
 {
     mask:               url("../../img/icons/StatusGood.svg");
+    -webkit-mask:       url("../../img/icons/StatusGood.svg");
     background-color:   var(--color-brightgreen);
 }
 .StatusElement[data-state=warn]::before
 {
     mask:               url("../../img/icons/StatusWarning.svg");
+    -webkit-mask:       url("../../img/icons/StatusWarning.svg");
     background-color:   var(--color-brightyellow);
 }
 .StatusElement[data-state=bad]::before
 {
     mask:               url("../../img/icons/StatusBad.svg");
+    -webkit-mask:       url("../../img/icons/StatusBad.svg");
     background-color:   var(--color-brightred);
 }
 .StatusElement[data-state=unknown]::before
 {
     mask:               url("../../img/icons/StatusUnknown.svg");
+    -webkit-mask:       url("../../img/icons/StatusUnknown.svg");
     background-color:   var(--color-brightyellow);
 }
 .StatusElement[data-state=info]::before
 {
     mask:               url("../../img/icons/StatusInfo.svg");
+    -webkit-mask:       url("../../img/icons/StatusInfo.svg");
     background-color:   var(--color-brightblue);
 }
 .StatusElement[data-state=open]::before
 {
     mask:               url("../../img/icons/StatusOpen.svg");
+    -webkit-mask:       url("../../img/icons/StatusOpen.svg");
     background-color:   var(--hlcolor);
     opacity:            0.5;
 }
 .StatusElement[data-state=active]::before
 {
     mask:               url("../../img/icons/StatusActive.svg");
+    -webkit-mask:       url("../../img/icons/StatusActive.svg");
     background-color:   var(--hlcolor);
 
     animation-name:             spin;
@@ -89,11 +96,13 @@ li.StatusElement
 .StatusElement[data-state=playing]::before
 {
     mask:               url("../../img/icons/StatusPlaying.svg");
+    -webkit-mask:       url("../../img/icons/StatusPlaying.svg");
     background-color:   var(--color-brightgreen);
 }
 .StatusElement[data-state=paused]::before
 {
     mask:               url("../../img/icons/StatusPaused.svg");
+    -webkit-mask:       url("../../img/icons/StatusPaused.svg");
     background-color:   var(--color-brightred);
 }
 

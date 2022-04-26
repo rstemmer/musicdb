@@ -78,6 +78,7 @@
     margin-left:        1ch;
 
     mask:               url("../../img/icons/Link.svg");
+    -webkit-mask:       url("../../img/icons/Link.svg");
     background:         linear-gradient(-30deg, #962020, #c87a80);
     color:              transparent;
 
@@ -88,12 +89,14 @@
 {
     background:         linear-gradient(-30deg, #499620, #9cc87a);
     background-clip:    text;
+    -webkit-background-clip:    text;
     color:              transparent;
 }
 .Welcome a:hover, .AboutMusicDB a:focus
 {
     background:         linear-gradient(-30deg, #499620, #9cc87a);
     background-clip:    text;
+    -webkit-background-clip:    text;
     color:              transparent;
 }
 
