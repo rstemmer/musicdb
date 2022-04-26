@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ class MusicDatabaseMaintainer(DatabaseMaintainer):
         DatabaseMaintainer.__init__(self, databasepath, version)
         self.expuser     = "musicdb"
         self.expgroup    = "musicdb"
-        self.expmode     = 0o664
+        self.expmode     = "rw-rw-r--"
 
 
 

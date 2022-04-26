@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -114,13 +114,13 @@ class DatabaseMaintainer(object):
         Args:
             expuser (str): Expected UNIX user
             expgroup (str): Expected UNIX group
-            expmode (int): Expected access mode (for example ``0x664`` for files)
+            expmode (str): Expected access mode (for example ``rw-rw-r--`` for files)
 
         Returns:
             *Nothing*
         """
         user, group = self.filesystem.GetOwner(self.databasepath)
-        mode        = self.filesystem.GetMode(self.databasepath)
+        mode        = self.filesystem.GetAccessPermissions(self.databasepath)
         success     = True
 
         if user != expuser:
