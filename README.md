@@ -90,6 +90,7 @@ Time to share it with the world. :smiley:
 ### New in Version 8.1.0
 
 * Improved album filter for genres and sub genres
+* Experimental support for the Chromium web browser
 * Some annoying bugs fixed (Most important: Uploading albums can be continued after connection error)
 >>>>>>> b43d903 (Updated for 8.1.0)
 
@@ -226,11 +227,10 @@ The following list shows on which Linux distribution installing and running the 
 The following list shows on which web browser running the MusicDB front-end succeeded:
 
 * 🟢 [Firefox](https://www.mozilla.org/en-US/)
-* 🔴 [Chrome](https://www.google.com/chrome/index.html)<sup>2</sup>
+* 🟢 [Chrome](https://www.google.com/chrome/index.htm)
 * 🟡 [Safari](https://www.apple.com/safari/)
 
 <sup>**1: Python too Old** - Python 3.9+ is required; </sup>
-<sup>**2: Not yet supported** as long as mandatory [CSS features](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) are missing</sup>
 
 
 ---

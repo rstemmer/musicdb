@@ -20,6 +20,7 @@ Run  git log --oneline  for more details
 │ * [Randy] Configuration of Randy moved from /etc/musicdb.ini to state/randy.ini
 │           File will be created on first run of MusicDB
 │ + [tracker] Tracks when a song was played. This builds up a history that will be used in later versions of MusicDB.
+│ * [Chromium] The chromium web browser is now supported (experimental)
 │
 │ * Solved Issues: #76
 │

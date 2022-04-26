@@ -1,6 +1,6 @@
 /*
  * MusicDB,  a music manager with web-bases UI that focus on music.
- * Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,18 +54,22 @@
 .musicdbcontrols .playbutton::before
 {
     mask:               url("../../img/icons/StatusUnknown.svg");
+    -webkit-mask:       url("../../img/icons/StatusUnknown.svg");
 }
 .musicdbcontrols .playbutton[data-state=play]::before
 {
     mask:               url("../../img/icons/Play.svg");
+    -webkit-mask:       url("../../img/icons/Play.svg");
 }
 .musicdbcontrols .playbutton[data-state=stop]::before
 {
     mask:               url("../../img/icons/Pause.svg");
+    -webkit-mask:       url("../../img/icons/Pause.svg");
 }
 .musicdbcontrols .playbutton[data-state=error]::before
 {
     mask:               url("../../img/icons/StatusBad.svg");
+    -webkit-mask:       url("../../img/icons/StatusBad.svg");
     background-color:   var(--color-brightred);
 }
 .musicdbcontrols .playbutton[data-state=error]
@@ -76,6 +80,7 @@
 .musicdbcontrols .nextbutton::before
 {
     mask:               url("../../img/icons/Next.svg");
+    -webkit-mask:       url("../../img/icons/Next.svg");
 }
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
