@@ -17,6 +17,7 @@
 The *randy* module provides a way to select random songs or videos that can be put into the Song/Video Queue.
 The selection of random music follows certain constraints.
 
+Before a new song or video gets searched, the latest configuration gets loaded from the randy.ini file in the MusicDB state directory
 
 Song Selection Algorithm
 ------------------------
@@ -105,6 +106,17 @@ class Randy(object):
         self.blacklist  = BlacklistInterface(self.cfg, self.db)
         self.randyconfig= RandyConfiguration(self.cfg.files.randyconfig)
 
+
+
+    def ReloadConfiguration(self):
+        """
+        Reloads the Randy configuration from the state directory
+
+        Returns:
+            *Nothing*
+        """
+        self.randyconfig.Reload()
+
         # Load most important keys
         self.nodisabled  = self.randyconfig.constraints.nodisabled
         self.nohated     = self.randyconfig.constraints.nohated
@@ -121,6 +133,8 @@ class Randy(object):
         self.constraints["nolivemusic"] = self.nolivemusic
         self.constraints["minlen"]      = self.minlen
         self.constraints["maxlen"]      = self.maxlen
+
+        return
 
 
 
@@ -142,6 +156,8 @@ class Randy(object):
 
         logging.debug("Randy starts looking for a random song …")
         t_start = datetime.datetime.now()
+
+        self.ReloadConfiguration()
 
         tagfilterlist = self.mdbstate.GetActiveTagIDs()
         if not tagfilterlist:
@@ -211,6 +227,8 @@ class Randy(object):
         global BlacklistLock
         global Blacklist
 
+        self.ReloadConfiguration()
+
         # Get parameters
         song  = None
         tries = 0  # there is just a very limited set of possible songs. Avoid infinite loop when all songs are on the blacklist
@@ -267,6 +285,8 @@ class Randy(object):
         import traceback
         trackback.print_stack()
         t_start = datetime.datetime.now()
+
+        self.ReloadConfiguration()
 
         filterlist = self.mdbstate.GetGenreFilterList()
         if not filterlist:
