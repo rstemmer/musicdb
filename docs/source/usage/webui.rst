@@ -192,7 +192,7 @@ Below the Queue View are two buttons to add a random song to the Queue.
 You can append one at the end of the queue or add it right after the current streamed song.
 Of course only songs associated to the activated genres were considered.
 
-Details of how to configure the random song selection algorithm can be found in :doc:`/lib/randy`.
+Details of how to configure the random song selection algorithm can be found in :doc:`/lib/config`.
 
 
 Lyrics View

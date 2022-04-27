@@ -22,7 +22,7 @@ The state is stored in a files ``randy.ini`` in a sub-directory ``state`` inside
 More details can be found in :doc:`/basics/data`.
 
 Possible configurations
-----------------------
+-----------------------
 
 NoDisabled (boolean):
    If ``true`` no disabled songs will be chosen
