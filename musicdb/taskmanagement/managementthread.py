@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -215,12 +215,18 @@ def TaskManagementThread():
 
     # Start processing …
     while RunThread:
+        try:
+            tasks = taskmanager.GetTasks()
+        except Exception as e:
+            logging.exception("Unexpected exception \"%s\" when loading tasks list! \033[1;30m(Continuing by assuming an empty list.)", str(e))
+            tasks = []
+
         # Sleep a bit to reduce the load on the CPU. If nothing to do, sleep a bit longer
-        tasks = taskmanager.GetTasks()
         if len(tasks) > 0:
             time.sleep(0.01)
         else:
             time.sleep(1)
+            continue
 
         deletekeys = []
         # Process all tasks
