@@ -103,33 +103,47 @@ class TagManager
     }
     GetGenres()
     {
+        if(this.tagcache === null)
+            return null;
         return this.tagcache.genres;
     }
     GetSubgenres()
     {
+        if(this.tagcache === null)
+            return null;
         return this.tagcache.subgenres;
     }
     // genre: name or id
     GetSubgenresOfGenre(genre)
     {
+        if(this.tagcache === null)
+            return null;
         return this.tagcache.subgenres.filter(x => x.name===genre || x.parentid===genre)
     }
     GetMoods()
     {
+        if(this.tagcache === null)
+            return null;
         return this.tagcache.moods;
     }
 
     GetActiveGenres()
     {
+        if(this.activegenres === null)
+            return null;
         return this.activegenres;
     }
     GetActiveGenreIDs()
     {
+        if(this.activegenres === null)
+            return null;
         return this.activegenres.map(x => x.id);
     }
 
     GetActiveSubgenreIDs()
     {
+        if(this.activesubgenres === null)
+            return null;
         return this.activesubgenres.map(x => x.id);
     }
 
@@ -139,6 +153,9 @@ class TagManager
     {
         let genres     = this.GetGenres();
         let subgenres  = this.GetSubgenres();
+
+        if(genres === null || subgenres === null)
+            return null;
 
         // Create Tree of genres and their sub genres
         let genretree = new Object();
