@@ -1729,7 +1729,6 @@ class MusicDatabase(Database):
 
 
         Selection Algorithm:
-        ^^^^^^^^^^^^^^^^^^^^
 
         If ``albumid`` is not given, a random album gets selected first.
         Then a random song gets selected from the random album or given album.
@@ -1785,8 +1784,8 @@ class MusicDatabase(Database):
                 getallsongs         -> selectsong
                 }
 
-        Constraints
-        ^^^^^^^^^^^
+
+        Constraints:
 
         The selected song must fulfill certain constraints given as dictionary in the ``constraint`` parameter.
         Possible constraints are listed in the related method :meth:`~GetFilteredSongIds`.
