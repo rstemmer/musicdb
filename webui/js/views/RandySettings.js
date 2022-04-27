@@ -16,7 +16,7 @@
 
 "use strict";
 
-const RANDYSETTINGSHEADLINE = ["Description", "Settings", "Examples"];
+const RANDYSETTINGSHEADLINE = ["Setting", "Value", "Description"];
 const RST_DESCRIPTION_COLUMN = 0;
 const RST_SETTINGS_COLUMN    = 1;
 const RST_EXAMPLE_COLUMN     = 2;
