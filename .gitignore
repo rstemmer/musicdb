@@ -8,3 +8,6 @@ id3edit/id3edit
 docs/build/doctrees
 scripts/WebUI UML Class Diagram.png
 pkg/*
+webui/WebUI.css
+webui/WebUI.js
+
