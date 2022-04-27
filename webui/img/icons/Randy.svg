@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-325,-130)">
+        <g id="ArtworkFile">
+        </g>
+        <g id="VideoFile">
+        </g>
+        <g id="AlbumFile">
+        </g>
+        <g id="SongFile">
+        </g>
+        <g id="File">
+        </g>
+        <g id="BadFile">
+        </g>
+        <g id="Integrate">
+        </g>
+        <g id="RenameFile">
+        </g>
+        <g id="AlbumFolder">
+        </g>
+        <g id="Folder">
+        </g>
+        <g id="RenameFolder">
+        </g>
+        <g id="Save">
+        </g>
+        <g id="Repair">
+        </g>
+        <g id="Randy">
+            <path d="M345,133.602C345,131.614 343.386,130 341.398,130L328.602,130C326.614,130 325,131.614 325,133.602L325,146.398C325,148.386 326.614,150 328.602,150L341.398,150C343.386,150 345,148.386 345,146.398L345,133.602ZM340,142.5C341.38,142.5 342.5,143.62 342.5,145C342.5,146.38 341.38,147.5 340,147.5C338.62,147.5 337.5,146.38 337.5,145C337.5,143.62 338.62,142.5 340,142.5ZM330,142.5C331.38,142.5 332.5,143.62 332.5,145C332.5,146.38 331.38,147.5 330,147.5C328.62,147.5 327.5,146.38 327.5,145C327.5,143.62 328.62,142.5 330,142.5ZM335,137.5C336.38,137.5 337.5,138.62 337.5,140C337.5,141.38 336.38,142.5 335,142.5C333.62,142.5 332.5,141.38 332.5,140C332.5,138.62 333.62,137.5 335,137.5ZM330,132.5C331.38,132.5 332.5,133.62 332.5,135C332.5,136.38 331.38,137.5 330,137.5C328.62,137.5 327.5,136.38 327.5,135C327.5,133.62 328.62,132.5 330,132.5ZM340,132.5C341.38,132.5 342.5,133.62 342.5,135C342.5,136.38 341.38,137.5 340,137.5C338.62,137.5 337.5,136.38 337.5,135C337.5,133.62 338.62,132.5 340,132.5Z"/>
+        </g>
+        <g id="Repair2">
+        </g>
+        <g id="Import">
+        </g>
+        <g id="Import--Alternativ-" serif:id="Import (Alternativ)">
+        </g>
+        <g id="Integrate1" serif:id="Integrate">
+        </g>
+        <g id="TaskList">
+        </g>
+        <g id="StatusGood">
+        </g>
+        <g id="StatusBad">
+        </g>
+        <g id="StatusPaused">
+        </g>
+        <g id="StatusPlaying">
+        </g>
+        <g id="StatusUnknown">
+        </g>
+        <g id="StatusInfo">
+        </g>
+        <g id="StatusWarning">
+        </g>
+        <g id="StatusOpen">
+        </g>
+        <g id="StatusActive">
+        </g>
+        <g id="Load">
+        </g>
+        <g id="vThis">
+        </g>
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g id="vMax">
+        </g>
+        <g id="vEnd">
+        </g>
+        <g id="Reconnect">
+        </g>
+        <g id="NextView">
+        </g>
+        <g id="Back">
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="DropDown">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist">
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Approve">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Append1" serif:id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Disable">
+        </g>
+        <g id="Hate2">
+        </g>
+        <g id="Favorite2">
+        </g>
+        <g id="Dislike2">
+        </g>
+        <g id="Like2">
+        </g>
+        <g id="Hate">
+        </g>
+        <g id="LiveRecording">
+        </g>
+        <g id="LyricsVideo">
+        </g>
+        <g id="BadAudio">
+        </g>
+        <g id="Like">
+        </g>
+        <g id="Dislike">
+        </g>
+        <g id="Favorite">
+        </g>
+        <g id="Tags">
+        </g>
+        <g id="TimeFrame">
+        </g>
+        <g id="Artwork">
+        </g>
+        <g id="Link">
+        </g>
+        <g id="MusicDB">
+        </g>
+        <g id="Ralation">
+        </g>
+        <g id="ToMainView">
+        </g>
+        <g id="MoveLeft">
+        </g>
+        <g id="MoveRight">
+        </g>
+        <g id="MoveToTopRow">
+        </g>
+        <g id="MoveToBottomRow">
+        </g>
+        <g id="Search">
+        </g>
+        <g id="CutRelation">
+        </g>
+        <g id="LyricsTemplate">
+        </g>
+        <g id="LyricsNone">
+        </g>
+        <g id="LyricsFromUser">
+        </g>
+        <g id="LyricsFromNet">
+        </g>
+        <g id="LyricsFromFile">
+        </g>
+        <g id="LyricsEmpty">
+        </g>
+        <g id="Edit">
+        </g>
+        <g id="FMTComment">
+        </g>
+        <g id="FMTBackground">
+        </g>
+        <g id="FMTRefrein">
+        </g>
+        <g id="Checked">
+        </g>
+        <g id="Unchecked">
+        </g>
+        <g id="Settings">
+        </g>
+        <g id="Hide">
+        </g>
+        <g id="Disconnect">
+        </g>
+    </g>
+</svg>
