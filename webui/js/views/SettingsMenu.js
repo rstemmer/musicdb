@@ -65,6 +65,15 @@ class SettingsMenu extends LeftView
                 },
             "Show Stream Settings");
 
+        this.views.push(WebUI.GetView("RandySettings"));
+        this.AddMenuEntry(
+            new SVGIcon("MusicDB"),// TODO Update Icon
+            "Randy Settings",
+            ()=>{
+                MusicDB.Request("LoadRandyConfiguration", "ShowRandySettings");
+                },
+            "Show Randy Settings");
+
         this.views.push(WebUI.GetView("GenreSettings"));
         this.AddMenuEntry(
             new SVGIcon("Tags"),
