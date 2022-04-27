@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -126,6 +126,8 @@ File Handling
 
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SaveWebUIConfiguration`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.LoadWebUIConfiguration`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SaveRandyConfiguration`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.LoadRandyConfiguration`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.FindNewContent`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.FindAlbumSongFiles`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RenameMusicFile`
@@ -155,6 +157,7 @@ from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.cfg.mdbstate   import MDBState
 from musicdb.lib.cfg.webui      import WebUIConfig
+from musicdb.lib.cfg.randy      import RandyConfiguration
 from musicdb.lib.cfg.wsapikey   import WebSocketAPIKey
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.metatags       import MetaTags
@@ -357,6 +360,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetSongLyrics(args["songid"])
         elif fncname == "LoadWebUIConfiguration":
             retval = self.LoadWebUIConfiguration()
+        elif fncname == "LoadRandyConfiguration":
+            retval = self.LoadRandyConfiguration()
         elif fncname == "FindNewContent":
             retval = self.FindNewContent()
         elif fncname == "FindAlbumSongFiles":
@@ -392,6 +397,8 @@ class MusicDBWebSocketInterface(object):
         # Call-Methods (retval will be ignored unless method gets not changed)
         elif fncname == "SaveWebUIConfiguration":
             retval = self.SaveWebUIConfiguration(args["config"])
+        elif fncname == "SaveRandyConfiguration":
+            retval = self.SaveRandyConfiguration(args["config"])
         elif fncname == "SetMDBState":
             retval = self.SetMDBState(args["category"], args["name"], args["value"])
             retval = self.GetMDBState()
@@ -1586,6 +1593,68 @@ class MusicDBWebSocketInterface(object):
         state["videostream"]["isplaying"]   = videostreamstate["isplaying"]
         state["videostream"]["currentvideo"]= currentvideo
         return state
+
+
+    def LoadRandyConfiguration(self):
+        """
+        This method loads the configuration for the Random Song Selection algorithm (Randy) from the MusicDB state directory.
+
+        The configurations are described at :mod:`~musicdb.lib.cfg.randy`
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Request("LoadRandyConfiguration", "ShowConfig");
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "LoadRandyConfiguration" && sig == "ShowConfig")
+                    {
+                        console.log("No Live Music Constraint: [Constraint]->NoLiveMusic=" + args.Constraint.NoLiveMusic); // true or false
+                        console.log("Retry limit: [Limits]->MaxTries=" + args.Limits.MayTries); // 10
+                    }
+                }
+
+        Returns:
+            A dictionary with all configurations
+        """
+        randycfg = RandyConfiguration(self.cfg.files.randyconfig)
+        return randycfg.LoadConfig()
+
+
+    def SaveRandyConfiguration(self, config):
+        """
+        This method saves the whole configuration for Randy back into the MusicDB state directory.
+        The argument to this method must be a dict with the whole configuration as returned by :meth:`~LoadRandyConfiguration`
+
+        The configurations are described at :mod:`~musicdb.lib.cfg.randy`
+
+        When using the request or broadcast communication method the new configuration gets returned similar to :meth:`~LoadRandyConfiguration`.
+
+        Example:
+            .. code-block:: javascript
+
+                config.Constrains.NoLiveMusic = false;
+                MusicDB_Broadcast("SaveRandyConfiguration", "UpdateConfig", {config: config});
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "SaveRandyConfiguration" && sig == "UpdateConfig")
+                    {
+                        console.log("No Live Music: " + args.Constraints.NoLiveMusic); // false
+                    }
+                }
+
+        Returns:
+            A dictionary with all Randy configurations
+        """
+        randycfg = RandyConfiguration(self.cfg.files.randyconfig)
+        randycfg.SaveConfig(config)
+        return randycfg.LoadConfig()
 
 
     def LoadWebUIConfiguration(self):

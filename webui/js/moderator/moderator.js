@@ -67,6 +67,7 @@ let streamview = WebUI.AddView("VideoStream", new StreamView());
 
 WebUI.AddView("WebUISettings",  new WebUISettings());
 WebUI.AddView("StreamSettings", new StreamSettings());
+WebUI.AddView("RandySettings",  new RandySettings());
 WebUI.AddView("GenreSettings",  new GenreSettings());
 WebUI.AddView("MoodSettings",   new MoodManager());
 WebUI.AddView("HiddenAlbums",   new HiddenAlbums());

@@ -104,6 +104,19 @@ class RandyConfiguration(Config):
             self.Set("BlackLists",  "MaxAge",            24)
             self.Set("Limits",      "MaxTries",          10)
 
+        self.Reload()
+
+
+
+    def Reload(self):
+        """
+        This method reloads the current randy configuration from the state directory
+
+        Returns:
+            *Nothing*
+        """
+        self.meta.version = self.Get(int, "meta", "version", 0)
+
         self.constraints.nodisabled    = self.Get(bool, "Constraints",  "NoDisabled",       True)
         self.constraints.nohated       = self.Get(bool, "Constraints",  "NoHated",          True)
         self.constraints.nobadfile     = self.Get(bool, "Constraints",  "NoBadFile",        True)
@@ -120,6 +133,73 @@ class RandyConfiguration(Config):
         self.limits.maxtries = self.Get(int,  "Limits",      "MaxTries",          10)
 
 
+
+
+    def LoadConfig(self):
+        """
+        This method loads the current randy configuration and returns them in a dictionary.
+
+        This method is mainly available to provide the Randy configuration to the WebUI.
+
+        Returns:
+            dict with the whole WebUI configuration
+        """
+        self.Reload()
+
+        cfg = {}
+        cfg["meta"] = {}
+        cfg["meta"]["version"] = self.meta.version
+
+        cfg["Constraints"] = {}
+        cfg["Constraints"]["NoDisabled"]    = self.constraints.nodisabled
+        cfg["Constraints"]["NoHated"]       = self.constraints.nohated
+        cfg["Constraints"]["NoBadFile"]     = self.constraints.nobadfile
+        cfg["Constraints"]["NoLiveMusic"]   = self.constraints.nolivemusic
+        cfg["Constraints"]["MinSongLength"] = self.constraints.minsonglength
+        cfg["Constraints"]["MaxSongLength"] = self.constraints.maxsonglength
+
+        cfg["BlackLists"] = {}
+        cfg["BlackLists"]["SongListLength"]     = self.blacklists.songlistlength
+        cfg["BlackLists"]["AlbumListLength"]    = self.blacklists.albumlistlength
+        cfg["BlackLists"]["ArtistListLength"]   = self.blacklists.artistlistlength
+        cfg["BlackLists"]["VideoListLength"]    = self.blacklists.videolistlength
+        cfg["BlackLists"]["MaxAge"]             = self.blacklists.maxage
+
+        cfg["Limits"] = {}
+        cfg["Limits"]["MaxTries"] = self.limits.maxtries
+
+        return cfg
+    
+
+    def SaveConfig(self, cfg):
+        """
+        This method saves the given Randy configuration.
+        It is important that the whole configuration is included in *cfg*.
+
+        This method is mainly provided as interface to the WebUI configuration View.
+
+        Args:
+            cfg (dict): Dictionary with the whole configuration
+
+        Returns:
+            *Nothing*
+        """
+        self.Set("meta",        "version",          cfg["meta"]["version"])
+        self.Set("Constraints", "NoDisabled",       cfg["Constraints"]["NoDisabled"])
+        self.Set("Constraints", "NoHated",          cfg["Constraints"]["NoHated"])
+        self.Set("Constraints", "NoBadFile",        cfg["Constraints"]["NoBadFile"])
+        self.Set("Constraints", "NoLiveMusic",      cfg["Constraints"]["NoLiveMusic"])
+        self.Set("Constraints", "MinSongLength",    cfg["Constraints"]["MinSongLength"])
+        self.Set("Constraints", "MaxSongLength",    cfg["Constraints"]["MaxSongLength"])
+        self.Set("BlackLists",  "SongListLength",   cfg["BlackLists"]["SongListLength"])
+        self.Set("BlackLists",  "AlbumListLength",  cfg["BlackLists"]["AlbumListLength"])
+        self.Set("BlackLists",  "ArtistListLength", cfg["BlackLists"]["ArtistListLength"])
+        self.Set("BlackLists",  "VideoListLength",  cfg["BlackLists"]["VideoListLength"])
+        self.Set("BlackLists",  "MaxAge",           cfg["BlackLists"]["MaxAge"])
+        self.Set("Limits",      "MaxTries",         cfg["Limits"]["MaxTries"])
+
+        self.Reload()
+        return
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

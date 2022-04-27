@@ -153,6 +153,10 @@ class MainViewManager extends ViewManager
         {
             this.MountView(WebUI.GetView("StreamSettings"));
         }
+        else if(fnc == "LoadRandyConfiguration" && sig == "ShowRandySettings")
+        {
+            this.MountView(WebUI.GetView("RandySettings"));
+        }
         else if(fnc == "GetTags" && sig == "ShowGenreSettings")
         {
             this.MountView(WebUI.GetView("GenreSettings"));
