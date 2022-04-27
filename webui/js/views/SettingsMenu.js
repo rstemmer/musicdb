@@ -67,7 +67,7 @@ class SettingsMenu extends LeftView
 
         this.views.push(WebUI.GetView("RandySettings"));
         this.AddMenuEntry(
-            new SVGIcon("MusicDB"),// TODO Update Icon
+            new SVGIcon("Randy"),
             "Randy Settings",
             ()=>{
                 MusicDB.Request("LoadRandyConfiguration", "ShowRandySettings");
