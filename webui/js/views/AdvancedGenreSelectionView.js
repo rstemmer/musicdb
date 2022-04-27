@@ -77,6 +77,8 @@ class AdvancedGenreSelectionView extends LeftView
     Update()
     {
         let genretree  = this.tagmanager.GetGenreTree();
+        if(genretree === null)
+            return;
 
         let activegenreids    = this.tagmanager.GetActiveGenreIDs();
         let activesubgenreids = this.tagmanager.GetActiveSubgenreIDs();
