@@ -46,7 +46,7 @@ function BuildSource {
     cp    dist/setup.py        $tmp
     cp    dist/pyproject.toml  $tmp
 
-    tar -c --zstd --exclude='*.bak' --exclude="share/musicdb.ini.7.x.x" --exclude="__pycache__" -C "${tmp}/.." -f "pkg/${pkgname}.tar.zst" "$pkgname"
+    tar -c --zstd --exclude='*.bak' --exclude='webui/*.sh' --exclude="share/musicdb.ini.7.x.x" --exclude="__pycache__" -C "${tmp}/.." -f "pkg/${pkgname}.tar.zst" "$pkgname"
 
     rm -r "$tmp"
     echo -e "\e[1;32mdone"
