@@ -460,6 +460,7 @@ Tag Related Methods
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.SetTargetTag`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.RemoveTargetTag`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetTargetTags`
+    * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetSubgenresOfGenre`
     * :meth:`~musicdb.lib.db.musicdb.MusicDatabase.SplitTagsByClass`
 
 The following tag classes exist:
@@ -1711,6 +1712,7 @@ class MusicDatabase(Database):
             subgenreids = { subgenre["id"] for subgenre in subgenres }
 
             # Check if song is of unwanted genre
+            # FIXME: Broken when one of the main genres does not have sub genres
             if subgenreids and not subgenreids & set(tagfilterlist):
                 continue
             albumids.append(albumid)
@@ -2519,7 +2521,7 @@ class MusicDatabase(Database):
                 for videoid in videoids:
                     # Get tags of the video
                     videotags = self.GetTargetTags("video", videoid, self.TAG_CLASS_GENRE)
-                    if not videotags:
+                    if len(videotags) == 0:
                         continue
 
                     # Check if one tag matches the filter
@@ -3126,7 +3128,7 @@ class MusicDatabase(Database):
             tagclass (int): If not ``None`` only tags of a specific class will be returned
 
         Returns:
-            A list of tags or ``None`` if there are no tags
+            A list of tags or an empty list if there are no tags
 
         Raises:
             TypeError: If *targetid* is ``None``
@@ -3170,7 +3172,7 @@ class MusicDatabase(Database):
 
             # returns a list of tuples with one element: [(id1,), .., (idn,)]
             if not result:
-                return None # no tags set
+                return [] # no tags set
 
             # for each tagid
             retval = []
@@ -3194,6 +3196,41 @@ class MusicDatabase(Database):
                 # Add tag-information to mapping
                 mapping.update(tag)
                 retval.append(mapping)
+
+        return retval
+
+
+
+    def GetSubgenresOfGenre(self, genre):
+        """
+        This method returns a list of all sub genres connected to a specific genre with the ID or Name *genre*.
+
+        Args:
+            genreid (int/str): A genre ID or genre Name for that its sub genres shall be returned
+
+        Returns:
+            A list of sub genres. An empty list if no sub genres exist
+
+        Raises:
+            TypeError: If genreid is not of type ``int`` or ``str``
+        """
+        if type(genre) == int:
+            genreid = genre
+        elif type(genre) == str:
+            tag = self.GetTagByName(genre, MusicDatabase.TAG_CLASS_GENRE)
+            genreid = tag["id"]
+        else:
+            raise TypeError("Genre must be an ID of type int or a Name of type str")
+
+
+        sql = "SELECT * FROM tags WHERE parentid = ? AND class = %i"%(MusicDatabase.TAG_CLASS_SUBGENRE)
+        with MusicDatabaseLock:
+            result = self.GetFromDatabase(sql, genreid)
+
+        retval = []
+        for entry in result:
+            subgenre = self.__TagEntryToDict(entry)
+            retval.append(subgenre)
 
         return retval
 

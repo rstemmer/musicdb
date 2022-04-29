@@ -875,6 +875,17 @@ class MusicDBWebSocketInterface(object):
         if applyfilter:
             filterset = set(self.mdbstate.GetActiveTagIDs())
 
+            # FIXME: Improve tag filter mechanism
+            applysubgenrefilter = True
+            # If one of the main genre does not have any genres,
+            # the do not remove the album because of non-matching sub genres
+            genrenames = self.mdbstate.GetGenreFilterList()
+            for genrename in genrenames:
+                subgenres = self.database.GetSubgenresOfGenre(genrename)
+                if len(subgenres) == 0:
+                    logging.debug("Activated genre %s does not have sub genres -> Sub genre filter deactivated", str(genrename))
+                    applysubgenrefilter = False
+
         # assign tags to albums
         albumlist = []
         for album in albums:
@@ -896,7 +907,7 @@ class MusicDBWebSocketInterface(object):
                 # do not continue with this album,
                 # if there is no union set of sub genres
                 # It is fine when no sub genres are set
-                if tagsset and not filterset & tagsset:
+                if applysubgenrefilter and tagsset and not filterset & tagsset:
                     continue
 
             entry = {}
