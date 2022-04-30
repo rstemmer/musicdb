@@ -1147,14 +1147,26 @@ class MusicDatabase(Database):
         """
         return self.GetAlbums(hidden="include")
 
+    def GetFilteredAlbums(self, genretree):
+        """
+        See :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetAlbums` (``GetAlbums(artistid=None, withsongs=False, hidden="include", genretree=genretree)``)
+        """
+        return self.GetAlbums(hidden="include", genretree=genretree)
+
     def GetAlbumsByArtistId(self, artistid):
         """
         See :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetAlbums` (``GetAlbums(artistid, withsongs=False, hidden="no")``)
         """
         return self.GetAlbums(artistid, hidden="no")
 
+    def GetFilteredAlbumsByArtistId(self, artistid, genretree):
+        """
+        See :meth:`~musicdb.lib.db.musicdb.MusicDatabase.GetAlbums` (``GetAlbums(artistid, withsongs=False, hidden="no", genretree=genretree)``)
+        """
+        return self.GetAlbums(artistid, hidden="no", genretree=genretree)
+
     # returns a list with all artists. Each list element is a dictionary with all columns of the database
-    def GetAlbums(self, artistid = None, withsongs = False, hidden = "no"):
+    def GetAlbums(self, artistid = None, withsongs = False, hidden = "no", genretree = None):
         """
         This method returns a list with all albums in the database, or all albums of an artist if *artistid* is not ``None``.
         If the *withsongs* parameter is ``True``, for each album all songs will be included.
@@ -1168,6 +1180,8 @@ class MusicDatabase(Database):
 
         Hidden albums are *not* included!
 
+        When genretree is not ``None``, then the albums filtered by its genres
+
         Example:
 
             The following example prints all songs of the artist with the ID ``1000``
@@ -1180,9 +1194,10 @@ class MusicDatabase(Database):
                         print(song["name"])
 
         Args:
-            artistid: ID for an artist whose albums shall be returned. If ``None`` the albums get not filtered by *artistid*.
-            withsongs (bool): also return all songs of the album.
-            hidden (str): optional modify for handling hidden albums
+            artistid (int): Optional. ID for an artist whose albums shall be returned. If ``None`` the albums get not filtered by *artistid*.
+            withsongs (bool): Optional. Also return all songs of the album.
+            hidden (str): Optional modify for handling hidden albums
+            genretree (dict): A tree of genres and their sub genres to filter the album by genres
 
         Returns:
             A list with all non-hidden albums.
@@ -1208,16 +1223,23 @@ class MusicDatabase(Database):
         elif hidden == "only":
             hiddenmodifier = "hidden = 1"
 
+        sql = "SELECT * FROM albums WHERE 1=1"
+        value = []
+
         if artistid:
-            sql = "SELECT * FROM albums WHERE artistid = ?"
-            if hiddenmodifier:
-                sql += " AND " + hiddenmodifier
-            value = int(artistid)
-        else:
-            sql = "SELECT * FROM albums"
-            if hiddenmodifier:
-                sql += " WHERE " + hiddenmodifier
-            value = None
+            sql += " AND artistid = ?"
+            value = [int(artistid)]
+
+        if hiddenmodifier:
+            sql += " AND " + hiddenmodifier
+
+        if genretree:
+            # Step 1: Only select for certain main genre
+            maingenreids = genretree.keys()
+            sql += " AND albumid IN (SELECT albumid FROM albumtags WHERE tagid IN ({places}))".format(
+                    places = ",".join("?"*len(maingenreids))
+                    )
+            value.extend(maingenreids)
 
         with MusicDatabaseLock:
             result = self.GetFromDatabase(sql, value)
@@ -1225,6 +1247,24 @@ class MusicDatabase(Database):
             albums = []
             for entry in result:
                 album = self.__AlbumEntryToDict(entry)
+
+                keep = False
+                # Step 2: Check sub genres
+                if genretree:
+                    albumtags = self.GetTargetTags("album", album["id"])
+                    albumgenres, albumsubgenres, _ = self.SplitTagsByClass(albumtags)
+                    albumgenreids    = [ genre["id"] for genre in albumgenres ]
+                    albumsubgenreids = [ genre["id"] for genre in albumsubgenres ]
+
+                    for genre in genretree.keys():
+                        if int(genre) in albumgenreids:
+                            if len(genretree[genre]) == 0:
+                                keep = True         # Genre does not have sub genres -> 100% match
+                            elif set(genretree[genre]) & set(albumsubgenreids):
+                                keep = True         # Album tagged with correct sub genre -> match
+
+                if not keep:
+                    continue
 
                 if withsongs:
                     album["songs"] = self.GetSongs(album["id"])
@@ -1671,6 +1711,37 @@ class MusicDatabase(Database):
 
 
 
+    def GenreListToGenreTree(self, genrelist):
+        """
+
+        Args:
+            genrelist (list): A list of tag IDs
+
+        Returns:
+            A dict with a key for each genre in *genrelist* and a list of each included sub genre as value
+        """
+        tree = {}
+        for tagid in genrelist:
+            tag = self.GetTagById(tagid)
+
+            if tag["class"] == MusicDatabase.TAG_CLASS_GENRE:
+                genreid = str(tag["id"])
+                if not genreid in tree:
+                    tree[genreid] = []
+
+            elif tag["class"] == MusicDatabase.TAG_CLASS_SUBGENRE:
+                genreid = str(tag["parentid"])
+                if not genreid in tree:
+                    tree[genreid] = []
+                tree[genreid].append(tag["id"])
+
+            else:
+                logging.warning("Genre list contains a Tag ID %i that is not a Genre or a Sub Genre! \033[1;30m(Tag will be ignored)", tagid)
+
+        return tree
+
+
+
     def GetFilteredAlbumIds(self, tagfilterlist):
         """
         Returns a list of album IDs of albums of a certain genre.
@@ -1696,26 +1767,9 @@ class MusicDatabase(Database):
         if len(tagfilterlist) == 0:
             return []
 
-        sql = "SELECT albumid FROM albums WHERE albumid IN (SELECT albumid FROM albumtags WHERE tagid IN ({places})) AND hidden=FALSE".format(
-                places = ",".join("?"*len(tagfilterlist))
-                )
-
-        with MusicDatabaseLock:
-            results = self.GetFromDatabase(sql, tagfilterlist)
-
-        albumids = []
-        for result in results:
-            albumid = result[0]
-
-            # Check if sub genre matches, or if it was only the main genre
-            subgenres   = self.GetTargetTags("album", albumid, MusicDatabase.TAG_CLASS_SUBGENRE)
-            subgenreids = { subgenre["id"] for subgenre in subgenres }
-
-            # Check if song is of unwanted genre
-            # FIXME: Broken when one of the main genres does not have sub genres
-            if subgenreids and not subgenreids & set(tagfilterlist):
-                continue
-            albumids.append(albumid)
+        genretree = self.GenreListToGenreTree(tagfilterlist)
+        albums    = self.GetFilteredAlbums(genretree)
+        albumids  = [ album["id"] for album in albums ]
 
         return albumids
 
@@ -1814,14 +1868,17 @@ class MusicDatabase(Database):
             #  If there is a filter, only get filtered album IDs, otherwise get all.
             #  Hidden albums are excluded.
             if len(tagfilterlist) > 0:
-                albumids = self.GetFilteredAlbumIds(tagfilterlist)
+                genretree = self.GenreListToGenreTree(tagfilterlist)
+                albums    = self.GetFilteredAlbums(genretree)
+                albumids  = [ album["id"] for album in albums ]
+                #albumids = self.GetFilteredAlbumIds(tagfilterlist)
             else:
                 albumids = self.GetAllAlbumIds()
             # Select a random ID
             albumid = albumids[random.randrange(0, len(albumids))]
 
         # Step 2: Get all Songs of the chosen album and shuffle them
-        songids = self.GetFilteredSongIds(constraints, albumid)
+        songids = self.GetFilteredSongIds(constraints, albumid) # TODO: include genretree
         random.shuffle(songids)
 
         # Step 3: Check songs genres and sub genres
@@ -3306,6 +3363,53 @@ class MusicDatabase(Database):
         sql = "SELECT * FROM tags WHERE name = ? AND class = ?"
         with MusicDatabaseLock:
             result = self.GetFromDatabase(sql, (tagname, tagclass))
+
+        # check result
+        if not result:
+            return None
+        
+        if len(result) > 1:
+            raise AssertionError("Multiple Tag entries for one Tag-Name in the database!")
+
+        entry  = result[0]
+        retval = self.__TagEntryToDict(entry)
+        return retval
+
+    def GetTagById(self, tagid, tagclass=None):
+        """
+        This method returns a tag entry addressed by the tag id and tagclass.
+        The tag class can be ``None`` to consider all classes.
+
+        Args:
+            tagid (int): ID of the tag that shall be returned
+            tagclass (int): ID of the tagclass - Default is the main genre class. If ``None`` all classes are considered.
+
+        Returns:
+            The row of the specified tag, or ``None`` if no tag was found
+
+        Raises:
+            ValueError: If no name or valid tagclass was given
+            TypeError: If *tagname* is not a string
+            AssertionError: If more than one tag was found - This should never happen!
+        """
+
+        if tagid == None:
+            raise TypeError("Tag ID must be given!")
+        if type(tagid) != int:
+            raise TypeError("ID must be of type string!")
+
+        if tagclass != None and tagclass not in [self.TAG_CLASS_GENRE, self.TAG_CLASS_SUBGENRE, self.TAG_CLASS_MOOD]:
+            raise ValueError("Invalid tag class")
+
+        if tagclass == None:
+            sql   = "SELECT * FROM tags WHERE tagid = ?"
+            value = [tagid]
+        else:
+            sql   = "SELECT * FROM tags WHERE tagid = ? AND class = ?"
+            value = [tagid, tagclass]
+
+        with MusicDatabaseLock:
+            result = self.GetFromDatabase(sql, value)
 
         # check result
         if not result:
