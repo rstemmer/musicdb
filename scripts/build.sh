@@ -14,13 +14,76 @@ fi
 
 VersionFile="../VERSION"
 version=$(grep MusicDB $VersionFile | cut -d ":" -f 2 | tr -d " ")
+MusicDBVersion=$(grep MusicDB $VersionFile | cut -d ":" -f 2 | tr -d " ")
+WebUIVersion=$(grep WebUI $VersionFile | cut -d ":" -f 2 | tr -d " ")
 
 mkdir -p "$repository/pkg"
 
 
 
 function PrintHelp {
-    echo "./build.sh [--help] [src] [pkg] [rpm] [deb] [doc]"
+    echo "./build.sh [--help] [webui] [src] [pkg] [rpm] [deb] [doc]"
+}
+
+function RepairPaths
+{
+     sed -i 's,url("\.\.,url("\.,g' "$1"    # url("..   -> url(".
+     sed -i 's,url(\.\.,url(\.,g' "$1"      # url(..    -> url(.
+     sed -i 's,url("\./\.\.,url("\.,g' "$1" # url("./.. -> url(".
+     sed -i 's,url(\./\.\.,url(\.,g' "$1"   # url(./..  -> url(.
+}
+
+function BuildCSS
+{
+    local WebUIDir="$1"
+    local IndexHTML="$WebUIDir/debug.html"
+    local WebUICSS="$WebUIDir/WebUI.css"
+    local CSSFiles=$(grep "stylesheet" "$IndexHTML" | cut -d "\"" -f 4)
+
+    echo -e "/* Merged CSS File of WebUI $WebUIVersion */\n" > $WebUICSS
+
+    for CSSFile in $CSSFiles
+    do
+        #echo -e "\e[1;35m + \e[1;34m$CSSFile\e[0m"
+        echo "/* Source File: $CSSFile */" >> "$WebUICSS"
+        cat "$WebUIDir/$CSSFile" >> "$WebUICSS"
+    done
+
+    RepairPaths "$WebUICSS"
+}
+
+function BuildJS
+{
+    local WebUIDir="$1"
+    local IndexHTML="$WebUIDir/debug.html"
+    local WebUIJS="$WebUIDir/WebUI.js"
+    local JSFiles=$(grep "script src" "$IndexHTML" | grep -v "webdata" | cut -d "\"" -f 2)
+
+    echo -e "/* Merged CSS File of WebUI $WebUIVersion */\n" > $WebUIJS
+
+    for JSFile in $JSFiles
+    do
+        #echo -e "\e[1;35m + \e[1;34m$JSFile\e[0m"
+        echo "/* Source File: $JSFile */" >> "$WebUIJS"
+        cat "$WebUIDir/$JSFile" >> "$WebUIJS"
+    done
+
+    RepairPaths "$WebUIJS"
+}
+
+
+
+function BuildWebUI {
+    local WebUIDir="./webui"
+
+    oldwd=$(pwd)
+    cd $repository
+    echo -e "\e[1;35m - \e[1;34mCreating WebUI Files…"
+
+    BuildCSS "$WebUIDir"
+    BuildJS  "$WebUIDir"
+
+    cd $oldwd
 }
 
 
@@ -175,7 +238,11 @@ while [[ $# -gt 0 ]]; do
             PrintHelp
             exit 0
             ;;
+        webui)
+            BuildWebUI
+            ;;
         src)
+            BuildWebUI
             BuildSource
             ;;
         rpm)
