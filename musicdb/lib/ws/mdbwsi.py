@@ -865,51 +865,20 @@ class MusicDBWebSocketInterface(object):
                 }
         """
         # Get albums by this artist
-        albums = self.database.GetAlbumsByArtistId(artistid)
+        if applyfilter:
+            filterlist = self.mdbstate.GetActiveTagIDs()
+            genretree  = self.database.GenreListToGenreTree(filterlist)
+            albums     = self.database.GetFilteredAlbumsByArtistId(artistid, genretree)
+        else:
+            albums = self.database.GetAlbumsByArtistId(artistid)
 
         # sort albums for release year
         # In case of an invalid import, the release my become None. So assume a release date of 0 in case it is not a valid integer
         albums = sorted(albums, key = lambda k: k["release"] if type(k["release"]) is int else 0)
 
-        # Prepare the filter set
-        if applyfilter:
-            filterset = set(self.mdbstate.GetActiveTagIDs())
-
-            # FIXME: Improve tag filter mechanism
-            applysubgenrefilter = True
-            # If one of the main genre does not have any genres,
-            # the do not remove the album because of non-matching sub genres
-            genrenames = self.mdbstate.GetGenreFilterList()
-            for genrename in genrenames:
-                subgenres = self.database.GetSubgenresOfGenre(genrename)
-                if len(subgenres) == 0:
-                    logging.debug("Activated genre %s does not have sub genres -> Sub genre filter deactivated", str(genrename))
-                    applysubgenrefilter = False
-
         # assign tags to albums
         albumlist = []
         for album in albums:
-            genres    = self.database.GetTargetTags("album", album["id"], MusicDatabase.TAG_CLASS_GENRE)
-            subgenres = self.database.GetTargetTags("album", album["id"], MusicDatabase.TAG_CLASS_SUBGENRE)
-
-            # if no genres are available, show the album!
-            if applyfilter and genres:
-                tagsset = { genre["id"] for genre in genres }
-
-                # do not continue with this album,
-                # if there is no union set of genres
-                if not filterset & tagsset:
-                    continue
-
-                # Now check for sub genres
-                tagsset = { subgenre["id"] for subgenre in subgenres }
-
-                # do not continue with this album,
-                # if there is no union set of sub genres
-                # It is fine when no sub genres are set
-                if applysubgenrefilter and tagsset and not filterset & tagsset:
-                    continue
-
             entry = {}
             entry["album"] = album
             entry["tags"]  = self.GetAlbumTags(album["id"]) # returns a categorized dict of tags
