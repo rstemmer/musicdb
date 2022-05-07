@@ -146,11 +146,11 @@ class MusicDBConfig(Config):
         self.files = SECTION()
         self.files.webuiconfig      = self.directories.config  + "/webui.ini"
         self.files.wsapikey         = self.directories.config  + "/wsapikey.txt"
+        self.files.randyconfig      = self.directories.config  + "/randy.ini"
         self.files.musicdatabase    = self.directories.data    + "/music.db"
         self.files.trackerdatabase  = self.directories.data    + "/tracker.db"
         self.files.defaultalbumcover= self.directories.artwork + "/default.jpg"
         self.files.webuijsconfig    = self.directories.webdata + "/config.js"
-        self.files.randyconfig      = self.directories.state   + "/randy.ini"
 
 
         # [log]

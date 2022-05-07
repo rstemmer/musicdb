@@ -18,7 +18,7 @@ This module takes care that the configuration of the random song selection algor
 This is *not done automatically* by the :class:`~RandyConfiguration` class.
 Each read or write process to the files that hold the state will be triggered by the classes who manage the related information.
 
-The state is stored in a files ``randy.ini`` in a sub-directory ``state`` inside the MusicDB data directory.
+The configuration is stored in a files ``randy.ini`` in a sub-directory ``config`` inside the MusicDB data directory.
 More details can be found in :doc:`/basics/data`.
 
 Possible configurations
