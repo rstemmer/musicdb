@@ -1853,6 +1853,7 @@ class MusicDatabase(Database):
 
         Returns:
             A random Song fulfilling all requirements given by the parameters of this function.
+            ``None`` gets returned if there is no song fulfilling the constraints.
         """
         # None is valid and is handled as empty list
         if tagfilterlist == None:
@@ -1874,7 +1875,10 @@ class MusicDatabase(Database):
                 #albumids = self.GetFilteredAlbumIds(tagfilterlist)
             else:
                 albumids = self.GetAllAlbumIds()
+
             # Select a random ID
+            if len(albumids) == 0:
+                return None
             albumid = albumids[random.randrange(0, len(albumids))]
 
         # Step 2: Get all Songs of the chosen album and shuffle them
