@@ -130,11 +130,12 @@ class DatabaseMaintainer(object):
             logging.warning("Group of %s is %s but should be %s! \033[1;30m(Will be updated)", self.databasepath, group, expgroup)
             success = False
         if mode != expmode:
-            logging.warning("Access mode of %s is %s but should be %s! \033[1;30m(Will be updated)", self.databasepath, oct(mode), oct(expmode))
+            logging.warning("Access mode of %s is %s but should be %s! \033[1;30m(Will be updated)", self.databasepath, mode, expmode)
             success = False
 
         if not success:
-            self.filesystem.SetAttributes(self.databasepath, expuser, expgroup, expmode)
+            self.filesystem.SetAccessPermissions(self.databasepath, expmode)
+            self.filesystem.SetOwner(self.databasepath, expuser, expgroup)
 
         return
 
