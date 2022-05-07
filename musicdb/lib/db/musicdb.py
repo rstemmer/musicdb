@@ -1248,7 +1248,6 @@ class MusicDatabase(Database):
             for entry in result:
                 album = self.__AlbumEntryToDict(entry)
 
-                keep = False
                 # Step 2: Check sub genres
                 if genretree:
                     albumtags = self.GetTargetTags("album", album["id"])
@@ -1256,6 +1255,7 @@ class MusicDatabase(Database):
                     albumgenreids    = [ genre["id"] for genre in albumgenres ]
                     albumsubgenreids = [ genre["id"] for genre in albumsubgenres ]
 
+                    keep = False
                     for genre in genretree.keys():
                         if int(genre) in albumgenreids:
                             if len(genretree[genre]) == 0:
@@ -1263,8 +1263,8 @@ class MusicDatabase(Database):
                             elif set(genretree[genre]) & set(albumsubgenreids):
                                 keep = True         # Album tagged with correct sub genre -> match
 
-                if not keep:
-                    continue
+                    if not keep:
+                        continue
 
                 if withsongs:
                     album["songs"] = self.GetSongs(album["id"])
