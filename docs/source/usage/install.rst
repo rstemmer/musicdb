@@ -97,14 +97,16 @@ Update your system before installing MusicDB.
    .. code-block:: bash
 
       # Install MusicDB
-      sudo dnf install ./musicdb-8.0.0-1.fc$(rpm -E %fedora).noarch.rpm
+      sudo dnf install ./musicdb-8.1.0-1.fc$(rpm -E %fedora).noarch.rpm
 
 .. tab:: Ubuntu
 
    After downloading the latest MusicDB package for Ubuntu, you can install it with the Ubuntu package manager ``apt``.
-   MusicDB is optimized for the latest version of Ubuntu and not for the LTS version.
+   MusicDB is primary optimized for the latest Long Term Supported (LTS )version.
+   In case software dependencies of the LTS version become too old for MuiscDB, try the latest non-LTS version.
 
    Before beeing able to install downloaded package, you need to make sure that the user ``_apt`` is allowed to access that file.
+   For example by moving the downloaded package into the ``/tmp`` directory.
    The package manager is working under this user ID for tasks that do not require ``root`` priviledges.
 
    .. warning::
@@ -112,7 +114,7 @@ Update your system before installing MusicDB.
       The Debian/Ubuntu package manager ``apt`` starts services automatically during the installation phase.
       It does not let you to configure the services before they are started.
 
-      The web server, Icecast and MusicDB will are running right after the installation before you are able to set them up correctly.
+      The web server, Icecast and MusicDB are running right after the installation before you are able to set them up correctly.
       Keep this in mind!
       MusicDB's default configuration consideres such a use case and is limited to only access connections from localhost by default.
       Other dependencies are not!
@@ -121,7 +123,7 @@ Update your system before installing MusicDB.
    .. code-block:: bash
 
       # Install MusicDB
-      sudo apt install ./musicdb_8.0.0-1_all.deb
+      sudo apt install ./musicdb_8.1.0-1_all.deb
 
       # Stop automatically started unconfigured services
       sudo systemctl stop apache2  # if fresh installed
@@ -132,13 +134,6 @@ Update your system before installing MusicDB.
    You can shoud use this opportunity to set the passwords for Icecast otherwise Icecast gets online with default passwords!
    Anyway we will come to the Icecast configuration later in this installation instruction.
 
-   The installation ends with the following Waring:
-   
-      N: Can't drop privileges for downloading as file '/home/$USERNAME/Downloads/musicdb_8.0.0-1_all.deb' couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permission denied)
-
-   This is a well known issue I will not care about because I do not want to waste my time fixing Debian/Ubuntu issues.
-   It seems to be save to ignore this warning.
-   You are welcome post a solution for avoiding this message in the `Issues tracker <https://github.com/rstemmer/musicdb/issues/>`_ or on the `Discussions page <https://github.com/rstemmer/musicdb/discussions>`_.
 
 
 Initial Setup
