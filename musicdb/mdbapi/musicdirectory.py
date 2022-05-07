@@ -612,8 +612,8 @@ class MusicDirectory(Fileprocessing):
             On success, a dictionary with information about the artist, album and song or video is returned.
             Otherwise ``None`` gets returned.
         """
-        if self.Exists(musicpath):
-            logging.debug("Path \"%s\" does not exist.", str(musicpath));
+        if not self.Exists(musicpath):
+            logging.debug("Path \"%s\" does not exist in %s.", str(musicpath), self.GetRoot());
 
         path = self.TryRemoveRoot(musicpath)
         path = self.ToString(path)
