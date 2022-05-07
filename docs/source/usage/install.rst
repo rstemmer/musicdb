@@ -141,7 +141,7 @@ Initial Setup
 
 .. note::
 
-   In case you just upgraded from an old MusicDB installation, see :doc:`/basics/data` for the transition to the new file and directory structure.
+   In case you just upgraded from an old (before 8.0.0) MusicDB installation, see :doc:`/basics/data` for the transition to the new file and directory structure.
 
 This section describes the initial setup for MusicDB.
 Those steps are required to provide MusicDB a valid environment.
@@ -173,7 +173,7 @@ This can be done in the :doc:`/basics/config` file that is placed at ``/etc/musi
 In this file you need to set the music directory in the section->entry: ``[directories]->music``.
 The default directory is ``/var/music``.
 This directory can be empty but it must be accessible by the MusicDB server.
-The expected ownership is ``$username:musicdb`` with the permission ``rwxrwxr-x``.
+The expected ownership is ``musicdb:musicdb`` with the permission ``rwxrwxr-x``.
 More details about the directories and files managed by MusicDB can be found in the :doc:`/basics/data` section of the documentation.
 
 When your Linux Distribution uses SELinux, make sure the context of the music directory is set to ``httpd_sys_content_t`` if you want to access the music files from your web browser.
@@ -191,7 +191,7 @@ If you want to use the default music directory under ``/var/music`` you can skip
    # Create a new music directory (as root)
    mkdir -p /opt/music
    chmod ug=rwx,o=rx /opt/music
-   chown -R $username:musicdb /opt/music
+   chown -R musicdb:musicdb /opt/music
 
    # Update [directories]->music
    vim /etc/musicdb.ini
@@ -204,7 +204,7 @@ Replace this path with your own music directory if you changed it.
 .. code-block:: bash
 
    # as root
-   chown -R $username:musicdb /var/music
+   chown -R musicdb:musicdb /var/music
 
    # Optional when using SELinux
    semanage fcontext -a -t httpd_sys_content_t "/var/music(/.*)?"
@@ -306,7 +306,7 @@ It is recommend to use HTTPS. Please check the web server manual on how to setup
       dnf install httpd
 
       # Setup web server for the front end
-      mv /etc/httpd/conf/musicdb.conf /etc/httpd/conf.d/.
+      cp /etc/httpd/conf/musicdb.conf /etc/httpd/conf.d/.
 
 
 .. tab:: Ubuntu
@@ -339,6 +339,9 @@ After installation and configuration, the server can be started via ``systemd``:
 Now the web server is running. You can check the status via ``systemctl status httpd``.
 
 You should now be able to access the MusicDB WebUI via ``http://127.0.0.1/musicdb/``.
+The WebUI should load.
+It is likely that immediately a WebSocket connection error occurs.
+Follow the link presented in the error message to go through the web browsers process of allowing https connections to that (your) server.
 
 .. figure:: ../images/welcome.jpg
    :align: center
@@ -397,7 +400,7 @@ Setup Icecast
 
 The default settings in ``/etc/musicdb.ini`` match the default Icecast settings in ``/etc/icecast.xml``.
 Only the source password needs to be configured.
-Again you can use ``openssl rand -base64 32`` to generate a secure password.
+You can use ``openssl rand -base64 32`` to generate a secure password.
 Some more details about Icecast can be found in the chapter: :doc:`/lib/icecast`
 
 The following listing shows the changes that are mandatory to make inside the ``/etc/icecast.xml`` file
