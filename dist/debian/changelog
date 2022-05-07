@@ -1,3 +1,10 @@
+musicdb (8.1.0-1) unstable; urgency=medium
+
+  * Sub-Genres considered for filtering
+  * WebUI improvements for 4K screens
+
+ -- Ralf Stemmer <ralf.stemmer@gmx.net>  Sat, 14 May 2022 00:00:00 +0100
+
 musicdb (8.0.0-1) unstable; urgency=medium
 
   * Initial release.
