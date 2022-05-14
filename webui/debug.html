@@ -174,6 +174,7 @@
         <script src="js/tools/UploadManager.js"></script>
         <script src="js/tools/ColorManager.js"></script>
         <script src="js/tools/TagManager.js"></script>
+        <script src="js/tools/IconManager.js"></script>
         <script src="js/tools/WebUIManager.js"></script>
         <script src="js/tools/ArtistsCache.js"></script>
         <script src="js/tools/SVGIcon.js"></script>
@@ -281,6 +282,14 @@
         <script src="js/tools/Application.js"></script>
         <script src="js/tools/BackEndConnection.js"></script>
         <script src="js/moderator/moderator.js"></script>
+
+        <script>
+            window.onload = function ()
+            {
+                InitializeWebUI();
+                ExecuteWebUI();
+            }
+        </script>
 
     </head>
 
