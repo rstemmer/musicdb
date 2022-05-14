@@ -71,6 +71,15 @@ function BuildJS
     RepairPaths "$WebUIJS"
 }
 
+function BuildJSON
+{
+    local WebUIDir="$1"
+    local WebUIJSON="$WebUIDir/WebUI.json"
+    local IconsDir="$WebUIDir/img/icons"
+    #local JSFiles=$(find "$IconDir" -type f -name "*.svg")
+    svg2json -o "$WebUIJSON" "${IconsDir}"/*.svg
+}
+
 
 
 function BuildWebUI {
@@ -80,8 +89,9 @@ function BuildWebUI {
     cd $repository
     echo -e "\e[1;35m - \e[1;34mCreating WebUI Files…"
 
-    BuildCSS "$WebUIDir"
-    BuildJS  "$WebUIDir"
+    BuildCSS  "$WebUIDir"
+    BuildJS   "$WebUIDir"
+    BuildJSON "$WebUIDir"
 
     cd $oldwd
 }
