@@ -59,9 +59,19 @@ class SVGIcon extends SVGBase
 
     SetIcon(name)
     {
-        let maskurl = `url("img/icons/${name}.svg");`;
-        let maskcss = `mask: ${maskurl}; -webkit-mask: ${maskurl}`;
+        // Try to get the icon as data-URI
+        let iconmanager = WebUI.GetManager("Icons");
+        let icon = iconmanager.GetIcon(name);
 
+        // Define where to get the icon from (cache or server)
+        let maskurl;
+        if(typeof icon === "string")
+            maskurl = `url(${icon});`;
+        else
+            maskurl = `url("img/icons/${name}.svg");`;
+
+        // Apply CSS
+        let maskcss = `mask: ${maskurl}; -webkit-mask: ${maskurl}`;
         this.element.style.cssText = maskcss;
     }
 }
