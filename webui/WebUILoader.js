@@ -18,131 +18,253 @@
 let SVGCACHE = null;
 let FILELOADINGCOUNT = 0;
 
-function LoadFile(filename)
-{
-    let request = new XMLHttpRequest();
-    request.addEventListener("progress", (event)=>{onProgress(filename, event);},   false);
-    request.addEventListener("load",     (event)=>{onFileLoaded(filename, event);}, false);
-    request.open("GET", filename);
-    request.send();
-}
+const FileType = {"Script":1, "Style":2, "Font":3, "Data":4};
 
-function onProgress(filename, event)
+class FileLoader
 {
-    if(event.lengthComputable)
-        UpdateProgress(filename, event.loaded / event.total);
-    else
-        UpdateProgress(filename);
-}
-
-function onFileLoaded(filename, event)
-{
-    let data = event.target.responseText;
-    let observerconfig = { attributes: true, childList: true, subtree: true };
-
-    if(filename === "WebUI.js")
+    // filetype must be an entry from FileType
+    constructor(filetype, url, name=null)
     {
-        let script   = document.createElement("script");
-        let observer = new MutationObserver(()=>{onFileIntegrated(filename, script);});
-        observer.observe(script, observerconfig);
-        script.textContent = data;
-        document.body.appendChild(script);
+        this.type = filetype;
+        this.url  = url;
+        if(name)
+            this.name = name;
+        else
+            this.name = url;
+
+        this.data = null;   // The loaded data is stored in this variable
+        this.progress = null;   // The current loading progress. [0.0 .. 1.0]
+
+        this.progresscallback = null;
+        this.loadedcallback   = null;
     }
-    else if(filename === "WebUI.css")
+
+    Load()
     {
-        let style    = document.createElement("style");
-        let observer = new MutationObserver(()=>{onFileIntegrated(filename, style);});
-        observer.observe(style, observerconfig);
-        style.textContent = data;
-        document.documentElement.appendChild(style);
+        this.progress = 0.0;
+
+        let request = new XMLHttpRequest();
+        request.addEventListener("progress", (event)=>{this.onProgress(event);},   false);
+        request.addEventListener("load",     (event)=>{this.onFileLoaded(event);}, false);
+        request.open("GET", this.url);
+        request.send();
     }
-    else if(filename === "WebUI.json")
+
+
+    SetProgressCallback(callback)
     {
-        SVGCACHE = data;
-        onFileIntegrated("WebUI.json");
+        this.progresscallback = callback;
     }
-    else
+    SetLoadedCallback(callback)
     {
-        window.console?.warn(`Unknown file ${filename} loaded. Will be ignored!`);
+        this.loadedcallback = callback;
+    }
+
+
+
+    onProgress(event)
+    {
+        if(event.lengthComputable)
+            this.progress = event.loaded / event.total;
+        if(typeof this.progresscallback === "function")
+            this.progresscallback(this);
+    }
+
+    onFileLoaded(event)
+    {
+        this.data = event.target.responseText;
+        if(typeof this.loadedcallback === "function")
+            this.loadedcallback(this);
     }
 }
 
 
-function onFileIntegrated(filename, htmlnode=null)
+
+class ApplicationLoaderGUI
 {
-    FILELOADINGCOUNT += 1;
-
-    if(FILELOADINGCOUNT < 3)
-        return;
-
-    // Give the browser some time to load the code
-    let timer = setTimeout(()=>
-        {
-            InitializeWebUI(SVGCACHE);
-            SVGCACHE = null; // unload this big string
-            RemoveLoadingProgressLayer();
-            ExecuteWebUI();  // Now WebUI can take over
-        }, 1000);
-}
-
-
-
-function UpdateProgress(filename, progress=null)
-{
-    let progressbar = document.getElementById(`${filename}.Progress`);
-    if(progress)
-        progressbar.value = progress * 100;
-}
-
-function CreateLoadingProgressLayer()
-{
-    let element = document.createElement("div");
-    element.style.cssText += "position: absolute; top: 0; left: 0;";
-    element.style.cssText += "width: 100vw; height: 100vh; margin: 0; padding: 0;";
-    element.style.cssText += "display: flex; flex-direction: column; background: #202020;";
-    element.style.cssText += "color: #C0C0C0; font-family: Sans-Serif;";
-    element.id = "LoadingProgressLayer";
-
-    function CreateProgressBar(filename)
+    constructor()
     {
-        let label    = document.createElement("label");
-        let progress = document.createElement("progress");
-        progress.id  = `${filename}.Progress`;
-        progress.max = 100;
-        progress.value = 0;
-        label.innerText = `${filename}`;
+        this.gui = document.createElement("div");
+        this.gui.style.cssText += "position: absolute; top: 0; left: 0;";
+        this.gui.style.cssText += "width: 100vw; height: 100vh; margin: 0; padding: 0;";
+        this.gui.style.cssText += "display: flex; flex-direction: column; background: #202020;";
+        this.gui.style.cssText += "color: #C0C0C0; font-family: Sans-Serif;";
+        this.gui.id = "LoadingProgressLayer";
+        document.body.appendChild(this.gui);
+    }
 
-        progress.style.cssText += "width: 40%;";
-        label.style.cssText    += "width: 40%; padding-right: 2rem; text-align: right; display: inline-box;";
+    CreateProgressBar(id, label=null)
+    {
+        if(label === null)
+            label = id;
+
+        let labelelement    = document.createElement("label");
+        let progresselement = document.createElement("progress");
+        progresselement.id  = `${filename}.Progress`;
+        progresselement.max = 100;
+        progresselement.value = 0;
+        labelelement.innerText = `${filename}`;
+
+        progresselement.style.cssText += "width: 40%;";
+        labelelement.style.cssText    += "width: 40%; padding-right: 2rem; text-align: right; display: inline-box;";
 
         let container= document.createElement("div");
         container.style.cssText += "display: flex;";
-        container.appendChild(label);
-        container.appendChild(progress);
-        return container;
+        container.appendChild(labelelement);
+        container.appendChild(progresselement);
+        
+        this.gui.appendChild(container);
     }
 
-    element.appendChild(CreateProgressBar("WebUI.js"));
-    element.appendChild(CreateProgressBar("WebUI.css"));
-    element.appendChild(CreateProgressBar("WebUI.json"));
+    UpdateProgressBar(id, progress=null)
+    {
+        let progressbar = document.getElementById(`${id}`);
+        if(typeof progress === "number")
+            progressbar.value = progress * 100;
+    }
 
-    document.body.appendChild(element);
+    RemoveLoadingProgressLayer()
+    {
+        document.body.removeChild(this.gui);
+    }
 }
 
-function RemoveLoadingProgressLayer()
+
+
+class ApplicationLoader
 {
-    let element = document.getElementById("LoadingProgressLayer");
-    document.body.removeChild(element);
+    constructor()
+    {
+        super();
+    }
+
+    AppendTag(tagname, data, callback)
+    {
+        const observerconfig = { attributes: true, childList: true, subtree: true };
+
+        let tag      = document.createElement(tagname);
+        let observer = new MutationObserver(()=>{callback();});
+        observer.observe(tag, observerconfig);
+        tag.textContent = data;
+        document.body.appendChild(tag);
+    }
+}
+
+
+
+class WebUILoader extends ApplicationLoader, ApplicationLoaderGUI
+{
+    constructor()
+    {
+        super();
+        this.files = new Array();
+        this.data  = new Object(); // Collection of data from data files. Key is the URL
+    }
+
+
+    // For MusicDB's WebUI filename and URL are the same
+    // Order of call defines order of integration
+    AddFile(filetype, url)
+    {
+        let file = new FileLoader(filetype, url);
+
+        this.CreateProgressBar(url);
+        file.SetProgressCallback(
+            (object)=>
+            {
+                this.UpdateProgressBar(object.url, object.progress);
+            }
+        );
+        file.SetLoadedCallback(
+            (object)=>
+            {
+                this.onLoaded(object);
+            }
+        );
+
+        this.files.append(file);
+    }
+
+
+    Load()
+    {
+        for(let file of this.files)
+            file.Load();
+    }
+
+    onLoaded(file)
+    {
+        // Check if all files have been loaded.
+        // Return if not
+        for(let file of this.files)
+            if(file.data === null)
+                return;
+
+        // All files have been loaded.
+        // Now it's time to integrate them
+        this.IntegrateNextFile();
+    }
+
+
+
+    IntegrateNextFile()
+    {
+        let file = this.files.shift(); // pop first element
+        let name = file.name;
+        let type = file.type;
+        let data = file.data;
+
+        if(type === FileType.Data)
+        {
+            this.data[name] = data;
+            this.onIntegrated(file);
+        }
+        else if(type === FileType.Script)
+        {
+            this.AppendTag("script", data, ()=>{this.onIntegrated(file);});
+        }
+        else if(type === FileType.Style)
+        {
+            this.AppendTag("style", data, ()=>{this.onIntegrated(file);});
+        }
+        else
+        {
+            window.console?.warn(`Unknown file ${name} loaded. Will be ignored!`);
+            this.onIntegrated(file);
+        }
+    }
+
+    onIntegrated(file)
+    {
+        if(this.files.length > 0)
+        {
+            this.IntegrateNextFile();
+            return;
+        }
+
+        let timer = setTimeout(()=>{this.Execute();}, 1000);
+    }
+
+
+
+    Execute()
+    {
+        InitializeWebUI(this.data["WebUI.json"]);
+        this.RemoveLoadingProgressLayer();
+        ExecuteWebUI();  // Now WebUI can take over
+    }
 }
 
 
 
 window.onload = function ()
 {
-    CreateLoadingProgressLayer();
-    LoadFile("WebUI.css");
-    LoadFile("WebUI.json");
-    LoadFile("WebUI.js");
+    let webuiloader = new WebUILoader();
+    // The order of AddFile calls defined the order of integrating its content
+    webuiloader.AddFile(FileType.Data,   "WebUI.json");
+    webuiloader.AddFile(FileType.Style,  "WebUI.css");
+    webuiloader.AddFile(FileType.Script, "WebUI.js");
+    webuiloader.Load();
 }
 
 
