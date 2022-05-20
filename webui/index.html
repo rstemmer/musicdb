@@ -98,6 +98,10 @@
         {
             let webuiloader = new ApplicationLoader();
             // The order of AddFile calls defined the order of integrating its content
+
+            webuiloader.AddFile(FileType.Font,   "fonts/DejaVuSans.ttf",                    "DejaVuSans");
+            webuiloader.AddFile(FileType.Font,   "fonts/SourceSansPro-Regular.otf.woff",    "SourceSansPro");
+            webuiloader.AddFile(FileType.Font,   "fonts/SourceSerifPro-Regular.otf.woff",   "SourceSerifPro");
             webuiloader.AddFile(FileType.Data,   "Icons.json");
             webuiloader.AddFile(FileType.Style,  "WebUI.css");
             webuiloader.AddFile(FileType.Script, "WebUI.js");

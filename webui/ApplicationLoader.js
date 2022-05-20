@@ -46,6 +46,9 @@ class FileLoader
         let request = new XMLHttpRequest();
         request.addEventListener("progress", (event)=>{this.onProgress(event);},   false);
         request.addEventListener("load",     (event)=>{this.onFileLoaded(event);}, false);
+        if(this.type === FileType.Font)
+            request.responseType = "arraybuffer";
+
         request.open("GET", this.url);
         request.send();
     }
@@ -72,7 +75,8 @@ class FileLoader
 
     onFileLoaded(event)
     {
-        this.data = event.target.responseText;
+        this.data = event.target.response;
+
         if(typeof this.loadedcallback === "function")
             this.loadedcallback(this);
     }
@@ -143,11 +147,11 @@ class ApplicationLoader extends ApplicationLoaderGUI
 
     // For MusicDB's WebUI filename and URL are the same
     // Order of call defines order of integration
-    AddFile(filetype, url)
+    AddFile(filetype, url, name=null)
     {
-        let file = new FileLoader(filetype, url);
+        let file = new FileLoader(filetype, url, name);
 
-        this.CreateProgressBar(url);
+        this.CreateProgressBar(url, name);
         file.SetProgressCallback(
             (object)=>
             {
@@ -217,6 +221,20 @@ class ApplicationLoader extends ApplicationLoaderGUI
         else if(type === FileType.Style)
         {
             this.AppendTag("style", data, ()=>{this.onIntegrated(file);});
+        }
+        else if(type === FileType.Font)
+        {
+            let fontface = new FontFace(name, data);
+            fontface.load().then(
+                (loadedfontface)=>
+                {
+                    document.fonts.add(loadedfontface);
+                    this.onIntegrated(file);
+                },
+                (error)=>
+                {
+                    window.console?.error(error);
+                });
         }
         else
         {
