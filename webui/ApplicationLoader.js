@@ -32,7 +32,7 @@ class FileLoader
         else
             this.name = url;
 
-        this.data = null;   // The loaded data is stored in this variable
+        this.data     = null;   // The loaded data is stored in this variable
         this.progress = null;   // The current loading progress. [0.0 .. 1.0]
 
         this.progresscallback = null;
@@ -100,10 +100,10 @@ class ApplicationLoaderGUI
 
         let labelelement    = document.createElement("label");
         let progresselement = document.createElement("progress");
-        progresselement.id  = `${filename}.Progress`;
+        progresselement.id  = id;
         progresselement.max = 100;
         progresselement.value = 0;
-        labelelement.innerText = `${filename}`;
+        labelelement.innerText = label;
 
         progresselement.style.cssText += "width: 40%;";
         labelelement.style.cssText    += "width: 40%; padding-right: 2rem; text-align: right; display: inline-box;";
@@ -118,7 +118,7 @@ class ApplicationLoaderGUI
 
     UpdateProgressBar(id, progress=null)
     {
-        let progressbar = document.getElementById(`${id}`);
+        let progressbar = document.getElementById(id);
         if(typeof progress === "number")
             progressbar.value = progress * 100;
     }
@@ -131,28 +131,7 @@ class ApplicationLoaderGUI
 
 
 
-class ApplicationLoader
-{
-    constructor()
-    {
-        super();
-    }
-
-    AppendTag(tagname, data, callback)
-    {
-        const observerconfig = { attributes: true, childList: true, subtree: true };
-
-        let tag      = document.createElement(tagname);
-        let observer = new MutationObserver(()=>{callback();});
-        observer.observe(tag, observerconfig);
-        tag.textContent = data;
-        document.body.appendChild(tag);
-    }
-}
-
-
-
-class WebUILoader extends ApplicationLoader, ApplicationLoaderGUI
+class ApplicationLoader extends ApplicationLoaderGUI
 {
     constructor()
     {
@@ -182,7 +161,7 @@ class WebUILoader extends ApplicationLoader, ApplicationLoaderGUI
             }
         );
 
-        this.files.append(file);
+        this.files.push(file);
     }
 
 
@@ -205,6 +184,18 @@ class WebUILoader extends ApplicationLoader, ApplicationLoaderGUI
         this.IntegrateNextFile();
     }
 
+
+
+    AppendTag(tagname, data, callback)
+    {
+        const observerconfig = { attributes: true, childList: true, subtree: true };
+
+        let tag      = document.createElement(tagname);
+        let observer = new MutationObserver(()=>{callback();});
+        observer.observe(tag, observerconfig);
+        tag.textContent = data;
+        document.body.appendChild(tag);
+    }
 
 
     IntegrateNextFile()
@@ -247,24 +238,17 @@ class WebUILoader extends ApplicationLoader, ApplicationLoaderGUI
 
 
 
+    // callback gets this.data as argument
+    SetExecutionCallback(callback)
+    {
+        this.onexecutecallback = callback;
+    }
     Execute()
     {
-        InitializeWebUI(this.data["WebUI.json"]);
         this.RemoveLoadingProgressLayer();
-        ExecuteWebUI();  // Now WebUI can take over
+        if(typeof this.onexecutecallback === "function")
+            this.onexecutecallback(this.data);
     }
-}
-
-
-
-window.onload = function ()
-{
-    let webuiloader = new WebUILoader();
-    // The order of AddFile calls defined the order of integrating its content
-    webuiloader.AddFile(FileType.Data,   "WebUI.json");
-    webuiloader.AddFile(FileType.Style,  "WebUI.css");
-    webuiloader.AddFile(FileType.Script, "WebUI.js");
-    webuiloader.Load();
 }
 
 

@@ -92,7 +92,26 @@
             </div> <!-- panels -->
         </div> <!-- screen -->
 
-    <script src="WebUILoader.js"></script>
+    <script src="ApplicationLoader.js"></script>
+    <script>
+        window.onload = function ()
+        {
+            let webuiloader = new ApplicationLoader();
+            // The order of AddFile calls defined the order of integrating its content
+            webuiloader.AddFile(FileType.Data,   "Icons.json");
+            webuiloader.AddFile(FileType.Style,  "WebUI.css");
+            webuiloader.AddFile(FileType.Script, "WebUI.js");
+
+            // Initialize and run WebUI
+            webuiloader.SetExecutionCallback((data)=>
+            {
+                InitializeWebUI(data["Icons.json"]);
+                ExecuteWebUI();  // Now WebUI can take over
+            });
+
+            webuiloader.Load();
+        }
+    </script>
     </body>
 </html>
 
