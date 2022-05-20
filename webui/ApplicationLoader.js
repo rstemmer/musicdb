@@ -88,13 +88,17 @@ class ApplicationLoaderGUI
 {
     constructor()
     {
+        this.layer = document.createElement("div");
+        this.layer.style.cssText += "position: absolute; top: 0; left: 0;";
+        this.layer.style.cssText += "width: 100vw; height: 100vh; margin: 0; padding: 0;";
+        this.layer.style.cssText += "display: flex; flex-direction: column; justify-content: space-around";
+        this.layer.style.cssText += "background: #202020;";
+        this.layer.style.cssText += "color: #C0C0C0; font-family: Sans-Serif;";
+        this.layer.id = "LoadingProgressLayer";
         this.gui = document.createElement("div");
-        this.gui.style.cssText += "position: absolute; top: 0; left: 0;";
-        this.gui.style.cssText += "width: 100vw; height: 100vh; margin: 0; padding: 0;";
-        this.gui.style.cssText += "display: flex; flex-direction: column; background: #202020;";
-        this.gui.style.cssText += "color: #C0C0C0; font-family: Sans-Serif;";
-        this.gui.id = "LoadingProgressLayer";
-        document.body.appendChild(this.gui);
+
+        this.layer.appendChild(this.gui);
+        document.body.appendChild(this.layer);
     }
 
     CreateProgressBar(id, label=null)
@@ -109,7 +113,8 @@ class ApplicationLoaderGUI
         progresselement.value = 0;
         labelelement.innerText = label;
 
-        progresselement.style.cssText += "width: 40%;";
+        progresselement.style.cssText += "width: 40%; margin: 0.5rem;";
+        labelelement.style.cssText    += "display: flex; flex-direction: column; justify-content: space-around";
         labelelement.style.cssText    += "width: 40%; padding-right: 2rem; text-align: right; display: inline-box;";
 
         let container= document.createElement("div");
@@ -129,7 +134,7 @@ class ApplicationLoaderGUI
 
     RemoveLoadingProgressLayer()
     {
-        document.body.removeChild(this.gui);
+        document.body.removeChild(this.layer);
     }
 }
 
