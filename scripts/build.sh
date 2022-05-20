@@ -74,7 +74,7 @@ function BuildJS
 function BuildJSON
 {
     local WebUIDir="$1"
-    local WebUIJSON="$WebUIDir/WebUI.json"
+    local WebUIJSON="$WebUIDir/Icons.json"
     local IconsDir="$WebUIDir/img/icons"
     #local JSFiles=$(find "$IconDir" -type f -name "*.svg")
     svg2json -o "$WebUIJSON" "${IconsDir}"/*.svg

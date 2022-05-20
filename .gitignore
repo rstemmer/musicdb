@@ -10,5 +10,5 @@ scripts/WebUI UML Class Diagram.png
 pkg/*
 webui/WebUI.css
 webui/WebUI.js
-webui/WebUI.json
+webui/Icons.json
 
