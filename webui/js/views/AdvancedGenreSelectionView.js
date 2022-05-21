@@ -53,10 +53,16 @@ class AdvancedGenreSelectionView extends LeftView
     // For genres and sub genres
     CreateInfoText(genreid)
     {
+        const unusedmessage  = "<span>This tag is not used yet</span>";
+        const loadingmessage = "<span>Loading ...</span>";
+
         if(this.genrestatistics == null)
-            return "<span>Loading ...</span>"
+            return loadingmessage;
 
         let stats       = this.genrestatistics[genreid];
+        if(typeof stats !== "object")
+            return unusedmessage;
+
         let numsongs    = stats["songs"];
         let numalbums   = stats["albums"];
         let numvideos   = stats["videos"];
@@ -67,7 +73,8 @@ class AdvancedGenreSelectionView extends LeftView
         if(typeof numalbums   === "number" && numalbums   > 0) infotext += `<span>${numalbums  }&nbsp;Albums</span>`;
         if(typeof numvideos   === "number" && numvideos   > 0) infotext += `<span>${numvideos  }&nbsp;Videos</span>`;
         if(typeof numchildren === "number" && numchildren > 0) infotext += `<br><span>${numchildren}&nbsp;Sub-Genres</span>`;
-        if(infotext == "") infotext = "<span>This tag is not used yet</span>"
+        if(infotext == "")
+            return unusedmessage;
 
         return infotext;
     }
