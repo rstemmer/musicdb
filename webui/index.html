@@ -96,9 +96,14 @@
     <script>
         window.onload = function ()
         {
-            let webuiloader = new ApplicationLoader();
-            // The order of AddFile calls defined the order of integrating its content
+            let mdbblue  = "#7A8FC8";
+            let mdbred   = "#C87A80";
+            let mdbgreen = "#9CC87A";
+            let musicdbcolor = `linear-gradient(to right, ${mdbred}, ${mdbblue} 50%, ${mdbgreen})`;
 
+            let webuiloader = new ApplicationLoader("MusicDB", musicdbcolor);
+
+            // The order of AddFile calls defined the order of integrating its content
             webuiloader.AddFile(FileType.Font,   "fonts/DejaVuSans.ttf",                    "DejaVuSans");
             webuiloader.AddFile(FileType.Font,   "fonts/SourceSansPro-Regular.otf.woff",    "SourceSansPro");
             webuiloader.AddFile(FileType.Font,   "fonts/SourceSerifPro-Regular.otf.woff",   "SourceSerifPro");

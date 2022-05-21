@@ -86,50 +86,69 @@ class FileLoader
 
 class ApplicationLoaderGUI
 {
-    constructor()
+    constructor(appname, color)
     {
         this.layer = document.createElement("div");
         this.layer.style.cssText += "position: absolute; top: 0; left: 0;";
         this.layer.style.cssText += "width: 100vw; height: 100vh; margin: 0; padding: 0;";
-        this.layer.style.cssText += "display: flex; flex-direction: column; justify-content: space-around";
+        this.layer.style.cssText += "display: flex; flex-direction: row; justify-content: space-around";
         this.layer.style.cssText += "background: #202020;";
-        this.layer.style.cssText += "color: #C0C0C0; font-family: Sans-Serif;";
+        this.layer.style.cssText += "font-family: Sans-Serif;";
         this.layer.id = "LoadingProgressLayer";
-        this.gui = document.createElement("div");
 
-        this.layer.appendChild(this.gui);
+        this.box = document.createElement("div");
+        this.box.style.cssText    += "display: flex; flex-direction: column; justify-content: space-around";
+        this.box.style.cssText    += "position: relative";
+
+        this.name = document.createElement("span");
+        this.name.innerText = appname;
+        this.name.style.cssText    += "letter-spacing: 0.1ch; font-size: 10rem; font-weight: bold;";
+        this.name.style.cssText    += "color: #404040;";
+        this.name.style.cssText    += "border-bottom: 0.5rem solid;";
+        this.name.style.cssText    += "transition: width 0.1s linear;";
+
+        this.bar = this.name.cloneNode(true);
+        this.bar.style.cssText   += "position: absolute; overflow: hidden; left: 0;";
+        this.bar.style.cssText   += "color: #C0C0C0;";
+        this.bar.style.cssText   += "width: 0;";
+        this.bar.style.cssText   += `background: ${color}; -webkit-background-clip: text; -webkit-text-fill-color: transparent;`;
+
+        // Put everything together
+        this.box.appendChild(this.name);
+        this.box.appendChild(this.bar);
+        this.layer.appendChild(this.box);
         document.body.appendChild(this.layer);
+
+        this.progresscache = new Object(); // Keep track of all progresses
     }
 
-    CreateProgressBar(id, label=null)
+    CreateProgress(id)
     {
-        if(label === null)
-            label = id;
-
-        let labelelement    = document.createElement("label");
-        let progresselement = document.createElement("progress");
-        progresselement.id  = id;
-        progresselement.max = 100;
-        progresselement.value = 0;
-        labelelement.innerText = label;
-
-        progresselement.style.cssText += "width: 40%; margin: 0.5rem;";
-        labelelement.style.cssText    += "display: flex; flex-direction: column; justify-content: space-around";
-        labelelement.style.cssText    += "width: 40%; padding-right: 2rem; text-align: right; display: inline-box;";
-
-        let container= document.createElement("div");
-        container.style.cssText += "display: flex;";
-        container.appendChild(labelelement);
-        container.appendChild(progresselement);
-        
-        this.gui.appendChild(container);
+        this.progresscache[id] = 0;
     }
 
-    UpdateProgressBar(id, progress=null)
+    UpdateProgress(id, progress=null)
     {
-        let progressbar = document.getElementById(id);
         if(typeof progress === "number")
-            progressbar.value = progress * 100;
+            this.progresscache[id] = progress;
+        this.UpdateLoadingProgressLayer();
+    }
+
+
+    UpdateLoadingProgressLayer()
+    {
+        let maxprogress = 0;
+        let currentprogress = 0;
+        for(let id in this.progresscache)
+        {
+            maxprogress += 1;
+            let progress = this.progresscache[id];
+            if(typeof progress === "number")
+                currentprogress += progress;
+        }
+
+        let percentage = (currentprogress/maxprogress)*100;
+        this.bar.style.width = `${percentage}%`;
     }
 
     RemoveLoadingProgressLayer()
@@ -142,9 +161,9 @@ class ApplicationLoaderGUI
 
 class ApplicationLoader extends ApplicationLoaderGUI
 {
-    constructor()
+    constructor(appname, color="white")
     {
-        super();
+        super(appname, color);
         this.files = new Array();
         this.data  = new Object(); // Collection of data from data files. Key is the URL
     }
@@ -156,11 +175,11 @@ class ApplicationLoader extends ApplicationLoaderGUI
     {
         let file = new FileLoader(filetype, url, name);
 
-        this.CreateProgressBar(url, name);
+        this.CreateProgress(url);
         file.SetProgressCallback(
             (object)=>
             {
-                this.UpdateProgressBar(object.url, object.progress);
+                this.UpdateProgress(object.url, object.progress);
             }
         );
         file.SetLoadedCallback(
