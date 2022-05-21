@@ -25,6 +25,7 @@ class GenreSelectionView extends Element
         super("div", ["GenreSelectionView", "flex-row", "frame", "hlcolor", "hovpacity"]);
         this.reloadtimeouthandler = null;
         this.activegenres         = null;
+        this.activesubgenres      = null;
 
         this.SetTooltip("Right click for advanced genre and sub genre selection.");
         this.SetRightClickEventCallback(()=>
@@ -38,10 +39,14 @@ class GenreSelectionView extends Element
 
     // MDBState is optional
     // if it is undefined a cached state is used
+    // Otherwise the cached state gets updated as well
     Update(MDBState)
     {
         if(MDBState !== undefined)
-            this.activegenres = MDBState.GenreFilter;
+        {
+            this.activegenres    = MDBState.GenreFilter;
+            this.activesubgenres = MDBState.SubgenreFilter;
+        }
 
         // Create all buttons
         super.RemoveChilds();
@@ -61,7 +66,7 @@ class GenreSelectionView extends Element
             if(this.activegenres.indexOf(genre.name) >= 0)
             {
                 // Check if also all sub genres are active
-                let activesubgenres = MDBState.SubgenreFilter[genre.name]
+                let activesubgenres = this.activesubgenres[genre.name]
                 let subgenres       = tagmanager.GetSubgenresOfGenre(genre.id);
                 if(activesubgenres.length < subgenres.length)
                 {
