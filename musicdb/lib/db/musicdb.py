@@ -1262,6 +1262,8 @@ class MusicDatabase(Database):
                                 keep = True         # Genre does not have sub genres -> 100% match
                             elif set(genretree[genre]) & set(albumsubgenreids):
                                 keep = True         # Album tagged with correct sub genre -> match
+                            elif len(albumsubgenreids) == 0:
+                                keep = True         # No sub genres set -> keep
 
                     if not keep:
                         continue
