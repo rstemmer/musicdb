@@ -23,6 +23,7 @@ Run  git log --oneline  for more details
 │ + [WebUI/Randy] Allow changing Randy settings from the WebUI
 │ * [Chromium] The chromium web browser is now supported (experimental)
 │ * [WebUI] index.html now only loads a merged css file and a merged js file. debug.html loads each single source file.
+│ * [WebSocket] Fixed a crash ("RuntimeError: To use txaio, you must first select a framework") when using MusicDB with the latest Autobahn framework
 │
 │ * Solved Issues: #76
 │
