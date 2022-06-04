@@ -208,6 +208,9 @@ class ArtistsView extends LeftView
 
     RequestUpdate()
     {
+        // Request an update if the mode is known.
+        // If not, do nothing until the rest of the WebUI got fully initialized.
+        // During initialization other parts will trigger the ArtistsView update.
         let mode = WebUI.GetManager("MusicMode").GetCurrentMode();
         if(mode == "audio")
             MusicDB.Broadcast("GetFilteredArtistsWithAlbums", "ShowArtists");
@@ -255,6 +258,14 @@ class ArtistsView extends LeftView
                 MusicDB.Request("GetFilteredArtistsWithAlbums", "ShowArtists");
         }
         return;
+    }
+
+
+
+    // In case of a reconnection, force an update of the Artists list
+    onWebSocketOpen()
+    {
+        this.RequestUpdate();
     }
 }
 
