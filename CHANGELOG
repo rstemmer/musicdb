@@ -6,7 +6,7 @@
 └────────────────────────────────────────┘
 
 Run  git log --oneline  for more details
-┍━━━━┫ 2022-05-14 ┣━━━━┫ 8.1.0 ┣━━━━━━━━╍╍
+┍━━━━┫ 2022-06-04 ┣━━━━┫ 8.1.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ * [state.ini] A bug has been fixed that makes wrongly case insensitively behavior case sensitive.
 │               This leads to the situation that the selected genres stored in state.ini are no longer recognized.
@@ -25,7 +25,7 @@ Run  git log --oneline  for more details
 │ * [WebUI] index.html now only loads a merged css file and a merged js file. debug.html loads each single source file.
 │ * [WebSocket] Fixed a crash ("RuntimeError: To use txaio, you must first select a framework") when using MusicDB with the latest Autobahn framework
 │
-│ * Solved Issues: #76
+│ * Solved Issues: #76, #81
 │
 ┝━ MINOR CHANGES
 │ * [WebUI] MusicDB WebSocket connection interface refactored (now object oriented)
@@ -34,6 +34,8 @@ Run  git log --oneline  for more details
 │ * [WebUI] Flickering background during Drag'n'Drop fixed
 │ * [Randy] Song selection algorithm changed: Album selection is now uniform distributed, not by their amount of songs.
 │ * [Randy] Reloads its configuration before searching a new song
+│ * [Randy] If all songs of an album are on the blacklist, "AddRandomSongFromAlbum" will return one of the blacklisted songs instead of None.
+│           So the "The show must go on" requirement gets fulfilled.
 └───────────────────────────────────────╌╌
 
 

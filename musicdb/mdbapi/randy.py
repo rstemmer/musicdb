@@ -215,7 +215,8 @@ class Randy(object):
 
             If all the songs are listed in the blacklist, the method would get caught in an infinite loop.
             To avoid this, there are only a limited amount of tries to find a random song.
-            If the limit is reached, the method returns ``None``.
+            If the limit is reached, the method returns a song that may already be on the blacklist.
+            If no song gets found at all ``None`` will be returned.
             The amount of tries can be configured in the MusicDB Configuration
 
         Args:
@@ -230,8 +231,9 @@ class Randy(object):
         self.ReloadConfiguration()
 
         # Get parameters
-        song  = None
-        tries = 0  # there is just a very limited set of possible songs. Avoid infinite loop when all songs are on the blacklist
+        song     = None
+        fallback = None # a song that is on the blacklist - better than no song
+        tries    = 0  # there is just a very limited set of possible songs. Avoid infinite loop when all songs are on the blacklist
 
         while not song and tries <= self.maxtries:
             tries += 1
@@ -251,12 +253,18 @@ class Randy(object):
             # STAGE 2: Make randomness feeling random by checking if the song was recently played
             # only check, if that song is in the blacklist. Artist and album is forced by the user
             if self.blacklist.CheckSongList(song):
-                song = None
+                fallback = song # in case no valid song gets found, this one is better than none
+                song     = None
                 continue 
 
         if not song:
-            logging.warning("The loop that should find a new random song did not deliver a song! \033[1;30m(This happens when there are too many songs of the given album are already on the blacklist)")
-            return None
+            if not fallback:
+                logging.warning("The loop that should find a new random song did not deliver a song! \033[1;30m(This happens when there are too many songs of the given album are already on the blacklist.)")
+                return None
+            else:
+                logging.warning("The loop that should find a new random song did not deliver a song! \033[1;30m(Using one from the blacklist instead.)")
+                song = fallback
+
 
         # Add song to queue
         logging.debug("Randy adds the following song after %s tries: \033[0;36m%s", tries, song["path"])
