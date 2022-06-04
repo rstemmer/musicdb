@@ -18,7 +18,7 @@
 
 // The following two constants should be automatically generated during the installation process! TODO
 const MUSICDB_VERSION = "8.1.0";
-const WEBUI_VERSION = "3.2.1";
+const WEBUI_VERSION = "3.3.0";
 
 class AboutMusicDB
 {
