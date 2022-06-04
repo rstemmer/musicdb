@@ -109,9 +109,10 @@ restorecon -R %{_datadir}/webapps/%{name}
 
 
 %changelog
-* Sat May 14 2022 Ralf Stemmer <ralf.stemmer@gmx.net>
+* Sat Jun 04 2022 Ralf Stemmer <ralf.stemmer@gmx.net>
 - Sub-Genres considered for filtering
 - WebUI improvements for 4K screens
+- Improvements of the Randy algorithm
 
 * Sun Jan 30 2022 Ralf Stemmer <ralf.stemmer@gmx.net>
 - MusicDB 8.0.0 Release
