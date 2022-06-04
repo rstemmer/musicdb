@@ -208,9 +208,8 @@ For best experience I recommend Arch Linux or Fedora to run MusicDB.
 The following list shows on which Linux distribution installing and running the MusicDB back-end succeeded:
 
 * 🟢 [Arch Linux](https://archlinux.org/)
-* 🟢 [Fedora 35](https://getfedora.org)
-* 🔴 [Ubuntu 20.04 LTS](https://ubuntu.com/)<sup>1</sup>
-* 🟢 [Ubuntu 21.10](https://ubuntu.com/)
+* 🟢 [Fedora 36](https://getfedora.org)
+* 🟢 [Ubuntu 22.04 LTS](https://ubuntu.com/)
 * 🔴 [openSUSE Tumbleweed](https://get.opensuse.org/tumbleweed)<sup>1</sup>
 * 🟡 [Raspberry PI OS](https://www.raspberrypi.com/software/)
 
