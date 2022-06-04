@@ -2,21 +2,21 @@
 Song Tracker
 ============
 
-.. automodule:: mdbapi.tracker
+.. automodule:: musicdb.mdbapi.tracker
 
 Tracker Class
 -------------
 
-.. autoclass:: mdbapi.tracker.Tracker
+.. autoclass:: musicdb.mdbapi.tracker.Tracker
    :members:
 
 Tracker Database
 ----------------
 
-.. automodule:: lib.db.trackerdb
+.. automodule:: musicdb.lib.db.trackerdb
 
 TrackerDatabase Class
 ---------------------
 
-.. autoclass:: lib.db.trackerdb.TrackerDatabase
+.. autoclass:: musicdb.lib.db.trackerdb.TrackerDatabase
    :members:

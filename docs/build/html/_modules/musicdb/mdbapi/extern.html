@@ -1,0 +1,1500 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>musicdb.mdbapi.extern &mdash; MusicDB 8.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="MusicDB 8.0.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> MusicDB
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                8.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/install.html">Installation &amp; Update</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#installation-via-package-manager">Installation via Package Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#initial-setup">Initial Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#creating-a-music-directory">Creating a Music Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#websocket-settings">Websocket Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#debugging-logs">Debugging logs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#start-musicdb-server">Start MusicDB Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#setup-web-user-interface-via-apache">Setup Web User Interface via Apache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#start-the-web-server">Start the Web Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#setup-audio-streaming-via-icecast">Setup Audio Streaming via Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#setup-icecast">Setup Icecast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#run-icecast">Run Icecast</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#final-steps">Final Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/import.html">Upload and Importing Music</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/import.html#open-import-manager">Open Import Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/import.html#uploading-an-album">Uploading an Album</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/import.html#importing-an-album">Importing an Album</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/music.html">Music Naming Scheme</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#overview-of-the-naming-scheme">Overview of the Naming Scheme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#music-video-file-name">Music Video File Name</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/webui.html">WebUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/webui.html#architecture-and-wording">Architecture and Wording</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/webui.html#webui-in-audio-mode">WebUI in Audio Mode</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#genre-view">Genre View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#hud">HUD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#stream-control">Stream Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#artists-view">Artists View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#album-view">Album View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#queue-view">Queue View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/webui.html#lyrics-view">Lyrics View</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/webui.html#webui-settings-mode">WebUI Settings Mode</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/stream.html">Audio Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/stream.html#managing-the-audio-stream">Managing the Audio Stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/stream.html#connection-to-audio-stream-via-vlc">Connection to Audio Stream via VLC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/stream.html#connection-to-audio-stream-via-webui">Connection to Audio Stream via WebUI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/cli.html">Command Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/artwork.html">artwork - Artwork Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/database.html">database - Music DB Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/extern.html">extern - Music File Exporter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mod/extern.html#file-export-to-external-device">File Export to External Device</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/metadata.html">metadata - Metadata Reader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/mise.html">mise - Micro Search Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/server.html">server - MusicDB Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/stats.html">stats - MusicDB Song Statistic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mod/tags.html#main-commands">Main commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mod/tags.html#style-guide">Style Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mod/tags.html#example-calls">Example calls</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/fromsource.html">Installation From Source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/fromsource.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/fromsource.html#installing-the-back-end">Installing the Back-End</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/fromsource.html#installing-the-front-end">Installing the Front-End</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/fromsource.html#installing-data-and-configuration-files">Installing Data and Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/fromsource.html#configure-selinux">Configure SELinux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/installdocs.html">Documentation Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Concepts and Configuration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/concept.html">Philosophy of MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#meta">meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#musicdb">musicdb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#directories">directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#websocket">websocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#music">music</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#albumcover">albumcover</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#uploads">uploads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#extern">extern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#tracker">tracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#icecast">Icecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#randy">randy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#log">log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/security.html">Security Concept</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/security.html#file-access-permissions">File Access Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/security.html#password-protected-audio-stream">Password Protected Audio Stream</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/data.html">MusicDB Data Files and Directories</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/data.html#music-directory">Music Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/data.html#musicdb-data-directory">MusicDB Data Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/data.html#musicdb-log-file">MusicDB Log File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/data.html#transition-from-7-2-0-to-8-0-0">Transition from 7.2.0 to 8.0.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/data.html#databases">Databases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/data.html#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/data.html#artworks">Artworks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/data.html#music">Music</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/data.html#web-server-and-logrotate">Web Server and Logrotate</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/overview.html">Overview of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#musicdb-green">MusicDB (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#music-database">Music Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/comparison.html">Comparison to Other Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#comparison">Comparison</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/comparison.html#web-ui-and-streaming-capabilities">Web UI and Streaming Capabilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/comparison.html#detailed-look">Detailed Look</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deeper Insight for Hackers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/streaming.html">MusicDB Streaming Concept</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/mods.html">Creating new CLI Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/mods.html#loading-of-modules">Loading of Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/distribution.html">Workflow for distribution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/distribution.html#create-release-candidate-branch">Create Release Candidate Branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/distribution.html#update-version-numbers">Update Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/distribution.html#source-tarball">Source Tarball</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/distribution.html#arch-linux-pacman-package">Arch Linux pacman Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/distribution.html#fedora-rpm-package">Fedora rpm Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/distribution.html#debian-ubuntu-deb-package">Debian/Ubuntu deb Package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/webapi.html">MusicDB Websocket API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#communication">Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#packet-format">Packet format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#client-side-interface">Client side interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#callback-functions">Callback functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#events">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#module-musicdb.lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#available-methods">Available Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#special-functions">Special Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#artists">Artists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#albums">Albums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#videos">Videos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#queue">Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#tag-related">Tag related</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#uploading">Uploading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#file-handling">File Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#other">Other</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/accesspermissions.html">Access Permissions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/accesspermissions.html#accesspermissions-class">AccessPermissions Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/artwork.html">Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#artwork-related-database-entries">Artwork Related Database Entries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#artwork-path-structure">Artwork Path structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/artwork.html#web-browsers">Web Browsers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#scaled-artwork">Scaled Artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#configuration-for-artworks">Configuration for Artworks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#algorithm-to-create-artworks">Algorithm to Create Artworks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#module-musicdb.lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#audio-streaming-interface">Audio Streaming Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#audio-streaming-thread">Audio Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#audio-stream-command-queue">Audio Stream Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#audio-stream-event-management">Audio Stream Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#audio-stream-manager-class">Audio Stream Manager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/blacklist.html">Blacklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/blacklist.html#module-musicdb.mdbapi.blacklist">Blacklist Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/blacklist.html#music-selection-blacklist">Music Selection Blacklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/blacklist.html#blacklist-interface-class">Blacklist Interface Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/extern.html">MusicDBExtern</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/extern.html#initializing-a-storage">Initializing a Storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/extern.html#storage-configuration">Storage Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/extern.html#the-state-file">The State-File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/extern.html#updating-a-storage">Updating a Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/extern.html#handling-toxic-environments">Handling Toxic Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/extern.html#musicdbextern-class">MusicDBExtern Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/mise.html">Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/music.html">Music Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/music.html#musicdbmusic-class">MusicDBMusic Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/musicdirectory.html">MusicDirectory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicdirectory.html#musicdirectory-class">MusicDirectory Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/randy.html">Randomizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#module-musicdb.mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#randy-class">Randy Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#song-queue-management">Song Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#song-queue-event-management">Song Queue Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/tags.html">MusicDBTags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/tracker.html">Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#module-musicdb.lib.db.trackerdb">Tracker Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#definitions-in-context-of-videos">Definitions in Context of Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#relevant-database-entries">Relevant Database Entries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#video-frames-path-structure">Video Frames Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#https-server-configuration-for-video-frames">HTTPS Server Configuration for Video Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#scaling-video-frames">Scaling Video Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#configuration-of-video-frames">Configuration of Video Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#algorithm-for-creating-video-frames">Algorithm for Creating Video Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#video-queue-management">Video Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#video-queue-event-management">Video Queue Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#video-streaming-interface">Video Streaming Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#video-streaming-thread">Video Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#video-stream-command-queue">Video Stream Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#video-stream-event-management">Video Stream Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#video-stream-manager-class">Video Stream Manager Class</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/config.html">Configuration Access</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#base-configuration-classes">Base Configuration Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/config.html#module-musicdb.lib.cfg.config">ini Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/config.html#module-musicdb.lib.cfg.csv">csv Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#musicdb-configuration-file">MusicDB Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-musicdb.lib.cfg.webui">WebUI Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-musicdb.lib.cfg.extern">External Storage Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-musicdb.lib.cfg.mdbstate">MusicDB State Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-musicdb.lib.cfg.wsapikey">WebSocket API Key File</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/database.html">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/filesystem.html">Filesystem Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/gstreamer.html#installation-of-gstreamer-plugins">Installation of GStreamer Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/gstreamer.html#example-for-using-plugins">Example for Using Plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/logging.html">MusicDB Logging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/logging.html#musicdblogger-class">MusicDBLogger Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/metatags.html">Meta Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/metatags.html#metatags-class">MetaTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#gstreamer-pipeline-for-transcoding">GStreamer Pipeline for Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#validity-of-columns">Validity of columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#songs-table">Songs Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#videos-table">Videos Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#video-relates-methods">Video Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#albums-table">Albums Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#artwork-related-methods">Artwork Related Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#origin">Origin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#artists-table">Artists Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#lyrics-table">Lyrics Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#tags-table">Tags Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-related-methods">Tag Related Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/pidfile.html">PID File Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/websockets.html#module-musicdb.lib.ws.server">Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/websockets.html#module-musicdb.lib.ws.websocket">Websocket Protocol</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Management Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/artworkmanager.html">Artwork Tasks Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../taskmanagement/artworkmanager.html#artworkmanager-class">ArtworkManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/filesystemmanager.html">Files and Directory Tasks Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../taskmanagement/filesystemmanager.html#filesystemmanager-class">FilesystemManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/importmanager.html">Import Tasks Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../taskmanagement/importmanager.html#importmanager-class">ImportManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/integrationmanager.html">Integration Tasks Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../taskmanagement/integrationmanager.html#integrationmanager-class">IntegrationManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/taskmanager.html">Task Management Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/taskmanager.html#module-musicdb.taskmanagement.taskmanager">Task Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../taskmanagement/taskmanager.html#taskmanager-class">TaskManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../taskmanagement/uploadmanager.html">Upload Tasks Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../taskmanagement/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Maintain Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintain/configuration.html">Configuration and Data Maintaining Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintain/database.html">Database Maintaining Modules</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../webui/websockets.html">Websocket Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#connection-process">Connection Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#watchdog">Watchdog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../webui/websockets.html#sending-data">Sending Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../webui/websockets.html#receiving-data">Receiving Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#minimal-usage">Minimal usage</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/impressum.html">Impressum</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#kontakt">Kontakt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#verantwortlich-fur-den-inhalt-nach-55-abs-2-rstv">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#haftung-fur-inhalte">Haftung für Inhalte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#haftung-fur-links">Haftung für Links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#urheberrecht">Urheberrecht</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/impressum.html#datenschutzerklarung-privacy-statement">Datenschutzerklärung / Privacy Statement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#datenschutz">Datenschutz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#cookies">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#server-log-files">Server-Log-Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#facebook-plugins-like-button">Facebook-Plugins (Like-Button)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#twitter">Twitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#google">Google+</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#youtube">YouTube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#ssl-verschlusselung">SSL-Verschlüsselung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#widerspruch-werbe-mails">Widerspruch Werbe-Mails</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MusicDB</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>musicdb.mdbapi.extern</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for musicdb.mdbapi.extern</h1><div class="highlight"><pre>
+<span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
+<span class="c1"># Copyright (C) 2017 - 2022  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># </span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1"># </span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1"># </span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This class handles the upload of music files to external storages.</span>
+<span class="sd">Before most of the methods can be used, the mountpoint of the external storage must be set using :meth:`~musicdb.mdbapi.extern.MusicDBExtern.SetMountpoint`.</span>
+<span class="sd">The default mount poiunt is ``&quot;/mnt&quot;``.</span>
+<span class="sd">There are three main tasks this class implements:</span>
+
+<span class="sd">* `Initializing a Storage`_</span>
+<span class="sd">* `Updating a Storage`_ </span>
+<span class="sd">* `Handling Toxic Environments`_</span>
+
+
+<span class="sd">Initializing a Storage</span>
+<span class="sd">----------------------</span>
+
+<span class="sd">Each storage must have a directory configured in the main MusicDB-Configuration, that holds some states.</span>
+<span class="sd">This directory can be created and initialized using the :meth:`~musicdb.mdbapi.extern.MusicDBExtern.InitializeStorage`.</span>
+<span class="sd">It is possible to check if the storage was already initialized using the method :meth:`~musicdb.mdbapi.extern.MusicDBExtern.IsStorageInitialized`.</span>
+
+<span class="sd">Example:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        database = MusicDatabase(&quot;./music.db&quot;)</span>
+<span class="sd">        config   = MusicDBConfig(&quot;./musicdb.ini&quot;)</span>
+<span class="sd">        extern   = MusicDBExtern(config, database)</span>
+<span class="sd">        extern.SetMountpoint(&quot;/mnt&quot;)</span>
+
+<span class="sd">        # Initialize mounted storage if not done yet</span>
+<span class="sd">        if not extern.IsStorageInitialized():</span>
+<span class="sd">            extern.InitializeStorage()</span>
+
+<span class="sd">After initializing, a directory is created and a bare *config.ini* is copied from the *MusicDB share directory*.</span>
+<span class="sd">The name of the directory, the config-source-file and the state-file-names can be configured in the MusicDB-Config file.</span>
+<span class="sd">It is recommended to use a hidden directory for the states on the external storage.</span>
+<span class="sd">MusicDB must have write access to the directory and its files.</span>
+
+<span class="sd">Storage Configuration</span>
+<span class="sd">^^^^^^^^^^^^^^^^^^^^^</span>
+
+<span class="sd">The storage configuration can be used to adapt to the environment other software or devices require to use the music that will be stored on it.</span>
+<span class="sd">More details about `Handling Toxic Environments`_ can be found in the related subsection.</span>
+
+<span class="sd">Template for such a storage configuration:</span>
+
+<span class="sd">    .. literalinclude:: ../../../share/extconfig.ini</span>
+<span class="sd">        :language: ini</span>
+
+<span class="sd">The State-File</span>
+<span class="sd">^^^^^^^^^^^^^^</span>
+
+<span class="sd">The state-file mostly called *songmap* is a Comma Separated Value (csv) file.</span>
+<span class="sd">It contains a row for each song on the storage and is used to identify the song.</span>
+<span class="sd">This is mandatory because the path on the external storage may differ from the paths of the music collection. </span>
+<span class="sd">This can happen for example by transcoding or renaming to a FAT compatible path.</span>
+
+<span class="sd">Each row has the following columns:</span>
+
+<span class="sd">    * Original file path (relative)</span>
+<span class="sd">    * File path on the external storage (relative)</span>
+
+<span class="sd">The csv file must have the following dialect:</span>
+
+<span class="sd">    * delimiter:  ``,`` </span>
+<span class="sd">    * escapechar: ``\``</span>
+<span class="sd">    * quotechar:  ``&quot;``</span>
+<span class="sd">    * quoting:    ``csv.QUOTE_NONNUMERIC``</span>
+
+<span class="sd">Example:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">       &quot;Rammstein/2001 - Mutter/03 Sonne.m4a&quot;,&quot;Rammstein/2001 - Mutter/03 Sonne.mp3&quot; </span>
+
+<span class="sd">This file gets generated by the method :meth:`~musicdb.mdbapi.extern.MusicDBExtern.WriteSongmap` </span>
+<span class="sd">and can be read by :meth:`~musicdb.mdbapi.extern.MusicDBExtern.ReadSongmap`.</span>
+<span class="sd">Usually the user should never touch this file.</span>
+
+
+<span class="sd">Updating a Storage</span>
+<span class="sd">------------------</span>
+
+<span class="sd">Updating an external storage device like a mp3-player or a SD-Card, the :meth:`~musicdb.mdbapi.extern.MusicDBExtern.UpdateStorage` method can be used.</span>
+
+<span class="sd">Example:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        database = MusicDatabase(&quot;./music.db&quot;)</span>
+<span class="sd">        config   = MusicDBConfig(&quot;./musicdb.ini&quot;)</span>
+<span class="sd">        extern   = MusicDBExtern(config, database)</span>
+<span class="sd">        extern.SetMountpoint(&quot;/mnt&quot;)</span>
+
+<span class="sd">        # Update storage if it is valid</span>
+<span class="sd">        if extern.IsStorageInitialized():</span>
+<span class="sd">            extern.UpdateStorage()</span>
+
+
+<span class="sd">Handling Toxic Environments</span>
+<span class="sd">---------------------------</span>
+
+<span class="sd">A *toxic environment* is a device that has some limitations and constraints the exported music has to fulfill.</span>
+<span class="sd">For example, my car can only read mp3 files, has a path length limit of 256 characters and can only access a FAT filesystem.</span>
+<span class="sd">My mp3-player does not have that many constraints, but slows down if the album covers are too large and have to be scaled down the mp3 players screen resolution.</span>
+<span class="sd">Those limitations can be handled by MusicDBExtern.</span>
+
+<span class="sd">There are several methods to handle toxic environments.</span>
+<span class="sd">They can be activated in the config file that will be generated when the storage gets initialized.</span>
+
+<span class="sd">The following methods will be applied if activated in the config:</span>
+
+<span class="sd">    * :meth:`~musicdb.mdbapi.extern.MusicDBExtern.ReducePathLength` if the pathlength is limited</span>
+<span class="sd">    * :meth:`musicdb.lib.fileprocessing.Fileprocessing.ConvertToMP3` if only mp3-files are allowed</span>
+<span class="sd">    * :meth:`musicdb.lib.fileprocessing.Fileprocessing.OptimizeMP3Tags` to scale artwork and make proper ID3 tags</span>
+<span class="sd">    * :meth:`musicdb.lib.fileprocessing.Fileprocessing.OptimizeM4ATags` make proper meta tags for m4a files</span>
+<span class="sd">    * :meth:`~musicdb.mdbapi.extern.MusicDBExtern.FixPath` to handle unicode in paths</span>
+
+<span class="sd">    .. warning::</span>
+
+<span class="sd">        When optimizing M4A-Tags, the album artwork gets lost.</span>
+<span class="sd">        This is a `bug &lt;https://trac.ffmpeg.org/ticket/2798&gt;`_ in ``ffmpeg``. I did not find any good workarounds yet.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">musicdb.lib.cfg.extern</span>     <span class="kn">import</span> <span class="n">ExternConfig</span>
+<span class="kn">from</span> <span class="nn">musicdb.lib.cfg.musicdb</span>    <span class="kn">import</span> <span class="n">MusicDBConfig</span>
+<span class="kn">from</span> <span class="nn">musicdb.lib.db.musicdb</span>     <span class="kn">import</span> <span class="n">MusicDatabase</span>
+<span class="kn">from</span> <span class="nn">musicdb.lib.filesystem</span>     <span class="kn">import</span> <span class="n">Filesystem</span>
+<span class="kn">from</span> <span class="nn">musicdb.lib.fileprocessing</span> <span class="kn">import</span> <span class="n">Fileprocessing</span>
+<span class="kn">from</span> <span class="nn">musicdb.lib.cache</span>          <span class="kn">import</span> <span class="n">ArtworkCache</span>
+<span class="kn">from</span> <span class="nn">tqdm</span>               <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<div class="viewcode-block" id="MusicDBExtern"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern">[docs]</a><span class="k">class</span> <span class="nc">MusicDBExtern</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        config: MusicDB configuration object</span>
+<span class="sd">        database: MusicDB database</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: when *config* or *database* not of type :class:`~musicdb.lib.cfg.musicdb.MusicDBConfig` or :class:`~musicdb.lib.db.musicdb.MusicDatabase`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDBConfig</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31mFATAL ERROR: Config-class of unknown type!</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;config argument not of type MusicDBConfig&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">database</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDatabase</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31mFATAL ERROR: Database-class of unknown type!</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;database argument not of type MusicDatabase&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span>     <span class="o">=</span> <span class="n">database</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span>    <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mp</span>     <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fs</span>     <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fileprocessor</span> <span class="o">=</span> <span class="n">Fileprocessing</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">artworkcache</span>  <span class="o">=</span> <span class="n">ArtworkCache</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">directories</span><span class="o">.</span><span class="n">artwork</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetMountpoint</span><span class="p">(</span><span class="s2">&quot;/mnt&quot;</span><span class="p">)</span>    <span class="c1"># initialize self.mp with the default mount point /mnt</span>
+
+
+
+<div class="viewcode-block" id="MusicDBExtern.CheckForDependencies"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.CheckForDependencies">[docs]</a>    <span class="k">def</span> <span class="nf">CheckForDependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks for dependencies required by this module.</span>
+<span class="sd">        Those dependencies are ``ffmpeg`` and `id3edit &lt;https://github.com/rstemmer/id3edit&gt;_`.</span>
+
+<span class="sd">        If a module is missing, the error message will be printed into the log file</span>
+<span class="sd">        and also onto the screen (stderr)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` if all dependencies exist, otherwise ``False``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nonemissing</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># no dependency is missing, as long as no check returns false</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileprocessor</span><span class="o">.</span><span class="n">ExistsProgram</span><span class="p">(</span><span class="s2">&quot;ffmpeg&quot;</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Required dependency </span><span class="se">\&quot;</span><span class="s2">ffmpeg</span><span class="se">\&quot;</span><span class="s2"> missing!&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31mRequired dependency </span><span class="se">\&quot;</span><span class="s2">ffmpeg</span><span class="se">\&quot;</span><span class="s2"> missing!&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="n">nonemissing</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileprocessor</span><span class="o">.</span><span class="n">ExistsProgram</span><span class="p">(</span><span class="s2">&quot;id3edit&quot;</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Required dependency </span><span class="se">\&quot;</span><span class="s2">id3edit</span><span class="se">\&quot;</span><span class="s2"> missing!&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31mRequired dependency </span><span class="se">\&quot;</span><span class="s2">id3edit</span><span class="se">\&quot;</span><span class="s2"> missing!&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="n">nonemissing</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="n">nonemissing</span></div>
+
+
+
+    <span class="c1"># INITIALIZATION METHODS</span>
+    <span class="c1">########################</span>
+
+
+<div class="viewcode-block" id="MusicDBExtern.SetMountpoint"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.SetMountpoint">[docs]</a>    <span class="k">def</span> <span class="nf">SetMountpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mountpoint</span><span class="o">=</span><span class="s2">&quot;/mnt&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the mountpoint MusicDBExtern shall work on.</span>
+<span class="sd">        If the mountpoint does not exists, ``False`` gets returned.</span>
+<span class="sd">        The existence of a mountpoint does not guarantee that the device is mounted.</span>
+<span class="sd">        Furthermore the method does not check if the mounted device is initialized - this can be done by calling :meth:`~musicdb.mdbapi.extern.MusicDBExtern.IsStorageInitialized`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mountpoint (str): Path where the storage that shall be worked on is mounted</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` if *mountpoint* exists, ``False`` otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">mountpoint</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31mERROR: &quot;</span><span class="o">+</span><span class="n">mountpoint</span><span class="o">+</span><span class="s2">&quot; is not a valid mountpoint/directory!</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mp</span> <span class="o">=</span> <span class="n">mountpoint</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;set mountpoint to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="MusicDBExtern.IsStorageInitialized"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.IsStorageInitialized">[docs]</a>    <span class="k">def</span> <span class="nf">IsStorageInitialized</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method checks for the state-directory and the storage configuration file inside the state directory.</span>
+<span class="sd">        If both exists, the storage is considered as initialized and ``True`` gets returned.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` if storage is initialized, otherwise ``False``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">mp</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;mountpoint-variable not set. Missing SetMountpoint call!&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">extstatedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mp</span><span class="p">,</span>     <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">extern</span><span class="o">.</span><span class="n">statedir</span><span class="p">)</span>    <span class="c1"># directory for the state config files</span>
+        <span class="n">extcfgfile</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extstatedir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">extern</span><span class="o">.</span><span class="n">configfile</span><span class="p">)</span>  <span class="c1"># config file for the external storage</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">extstatedir</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;State directory missing!&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">extcfgfile</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Config file missing!&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="MusicDBExtern.InitializeStorage"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.InitializeStorage">[docs]</a>    <span class="k">def</span> <span class="nf">InitializeStorage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method creates the state-directory inside the mountpoint.</span>
+<span class="sd">        Then a template of the storage configuration gets copied inside the new creates state-directory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, else ``False``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">mp</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;mountpoint-variable not set. Missing SetMountpoint!&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">extstatedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mp</span><span class="p">,</span>     <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">extern</span><span class="o">.</span><span class="n">statedir</span><span class="p">)</span>    <span class="c1"># directory for the state config files</span>
+        <span class="n">extcfgfile</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extstatedir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">extern</span><span class="o">.</span><span class="n">configfile</span><span class="p">)</span>  <span class="c1"># config file for the external storage</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Creating </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">extstatedir</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">extstatedir</span><span class="p">)</span>
+
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Creating </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">extcfgfile</span><span class="p">)</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">extern</span><span class="o">.</span><span class="n">configtemplate</span><span class="p">,</span> <span class="n">extcfgfile</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Initializing external storage failed!&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;32mCreated new MDB-state at </span><span class="se">\033</span><span class="s2">[0;36m </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">extstatedir</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+    <span class="c1"># OPTIMIZATION METHODS</span>
+    <span class="c1">######################</span>
+
+
+<div class="viewcode-block" id="MusicDBExtern.ReducePathLength"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.ReducePathLength">[docs]</a>    <span class="k">def</span> <span class="nf">ReducePathLength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method reduces a path length to hopefully fit into a path-length-limit.</span>
+<span class="sd">        The reduction is done by removing the song name from the path.</span>
+<span class="sd">        Everything left is the directory the song is stored in, the song number and the file extension.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                self.ReducePathLength(&quot;artist/album/01 very long name.mp3&quot;)</span>
+<span class="sd">                # returns &quot;artist/album/01.mp3&quot;</span>
+<span class="sd">                self.ReducePathLength(&quot;artist/album/1-01 very long name.mp3&quot;)</span>
+<span class="sd">                # returns &quot;artist/album/1-01.mp3&quot;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path (str): path of the song</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            shortend path as string if successfull, ``None`` otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># &quot;directory/num name.ext&quot; -&gt; &quot;directory&quot;, &quot;num name.ext&quot;</span>
+        <span class="n">directory</span><span class="p">,</span> <span class="n">songfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="c1"># &quot;num name.ext&quot; -&gt; &quot;num name&quot;, &quot;ext&quot;</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">songfile</span><span class="p">)</span>
+        <span class="c1"># &quot;num name&quot; -&gt; &quot;num&quot;</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">newpath</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
+        <span class="n">newpath</span> <span class="o">+=</span> <span class="n">extension</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="n">newpath</span></div>
+
+
+<div class="viewcode-block" id="MusicDBExtern.FixPath"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.FixPath">[docs]</a>    <span class="k">def</span> <span class="nf">FixPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">charset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method places characters that are invalid for *charset* by a valid one.</span>
+
+<span class="sd">            #. Replaces ``?&lt;&gt;\:*|&quot;`` by ``_``</span>
+<span class="sd">            #. Replaces ``äöüÄÖÜß`` by ``aouAOUB``</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            Obviously, this method is incomplete and full of shit. It must and will be replaced in future.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                self.FixPath(&quot;FAT/is f*cking/scheiße.mp3&quot;)</span>
+<span class="sd">                # returns &quot;FAT/is f_cking/scheiBe.mp3&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            string (str): string that shall be fixed</span>
+<span class="sd">            charset (str): until now, only ``&quot;FAT&quot;`` is considered. Other sets will be ignored</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A string that is valid for *charset*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 1. replace all bullshit-chars</span>
+        <span class="n">good</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span>
+
+        <span class="k">if</span> <span class="n">charset</span> <span class="o">==</span> <span class="s2">&quot;FAT&quot;</span><span class="p">:</span>
+            <span class="n">bad</span> <span class="o">=</span> <span class="s2">&quot;?&lt;&gt;</span><span class="se">\\</span><span class="s2">:*|</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">string</span>
+
+        <span class="n">fixed</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="o">+</span><span class="n">bad</span><span class="o">+</span><span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="n">good</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
+
+        <span class="c1"># 2. fix unicode problems</span>
+        <span class="c1"># TODO: Rebuild this method. Consider the whole unicode space!</span>
+        <span class="k">if</span> <span class="n">charset</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;FAT&quot;</span><span class="p">,</span><span class="s2">&quot;ASCII&quot;</span><span class="p">]:</span>
+            <span class="n">fixed</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;ä&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+            <span class="n">fixed</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;ö&quot;</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
+            <span class="n">fixed</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;ü&quot;</span><span class="p">,</span> <span class="s2">&quot;u&quot;</span><span class="p">)</span>
+            <span class="n">fixed</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Ä&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
+            <span class="n">fixed</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Ö&quot;</span><span class="p">,</span> <span class="s2">&quot;O&quot;</span><span class="p">)</span>
+            <span class="n">fixed</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Ü&quot;</span><span class="p">,</span> <span class="s2">&quot;U&quot;</span><span class="p">)</span>
+            <span class="n">fixed</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;ß&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span> <span class="c1"># This is ScheiBe</span>
+
+        <span class="k">return</span> <span class="n">fixed</span></div>
+
+
+
+    <span class="c1"># UPDATE METHODS</span>
+    <span class="c1">################</span>
+
+<div class="viewcode-block" id="MusicDBExtern.ReadSongmap"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.ReadSongmap">[docs]</a>    <span class="k">def</span> <span class="nf">ReadSongmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mappath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method reads the song map that maps relative song paths from the collection to relative paths on the external storage.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mappath (str): absolute path to the songmap</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None`` if there is no songmap yet. Otherwise a list of tuples (srcpath, dstpath) is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># if there is no song-list, assume we are in a new environment</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">mappath</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No songlist found under </span><span class="si">%s</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[0;33m(assuming this is the first run and there are no songs yet)&quot;</span><span class="p">,</span> <span class="n">mappath</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">mappath</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> 
+                    <span class="n">delimiter</span>  <span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> 
+                    <span class="n">escapechar</span> <span class="o">=</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> 
+                    <span class="n">quotechar</span>  <span class="o">=</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> 
+                    <span class="n">quoting</span>    <span class="o">=</span><span class="n">csv</span><span class="o">.</span><span class="n">QUOTE_NONNUMERIC</span><span class="p">)</span>
+
+            <span class="c1"># Format of the lines: rel. source-path, rel. destination-path</span>
+            <span class="n">rows</span>    <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="c1"># Transform csv-readers internal iteratable object to a python list.</span>
+            <span class="n">songmap</span> <span class="o">=</span> <span class="p">[]</span>         <span class="c1"># for a list of tuple (src, dst)</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+                <span class="n">songmap</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="k">return</span> <span class="n">songmap</span></div>
+
+
+<div class="viewcode-block" id="MusicDBExtern.UpdateSongmap"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.UpdateSongmap">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateSongmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songmap</span><span class="p">,</span> <span class="n">mdbpathlist</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method updates the songmap read with :meth:`~musicdb.mdbapi.extern.MusicDBExtern.ReadSongmap`.</span>
+<span class="sd">        Therefore, new source-paths will be added, and old one will be removed.</span>
+<span class="sd">        The new ones will be tuple of ``(srcpath, None)`` added to the list.</span>
+<span class="sd">        Removing songs will be done by replacing the sourcepath with ``None``.</span>
+<span class="sd">        This leads to a list of tuple, with each tuple representing one of the following states:</span>
+
+<span class="sd">            #. ``(srcp, dstp)`` Nothing to do: Source and Destination files exists</span>
+<span class="sd">            #. ``(srcp, None)`` New file in the collection that must be copied to the external storage</span>
+<span class="sd">            #. ``(None, dstp)`` Old file on the storage that must be removed</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            songmap: A list of tuples representing the external storage state. If ``None``, an empty map will be created.</span>
+<span class="sd">            mdbpathlist: list of relative paths representing the music colletion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The updated songmap gets returned</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># if there is no songmap, create one</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">songmap</span><span class="p">:</span>
+            <span class="n">songmap</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">songupdatemap</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Check for outdated entries in the songmap</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">songmap</span><span class="p">:</span>
+            <span class="c1"># if srcpath still in collection, otherwise remove ist</span>
+            <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">mdbpathlist</span><span class="p">:</span>
+                <span class="n">mdbpathlist</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>    <span class="c1"># no need to check this entry again</span>
+                <span class="n">songupdatemap</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">songupdatemap</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="kc">None</span><span class="p">,</span> <span class="n">entry</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="c1"># add the rest of the pathlist to the map</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">mdbpathlist</span><span class="p">:</span>
+            <span class="n">songupdatemap</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">path</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">songupdatemap</span></div>
+
+
+<div class="viewcode-block" id="MusicDBExtern.RemoveOldSongs"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.RemoveOldSongs">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveOldSongs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songmap</span><span class="p">,</span> <span class="n">extconfig</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove all songs that have a destination-entry but no source-entry in the songmap.</span>
+<span class="sd">        This constellation means that there is a file on the storage that does not exist in the music collection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            songmap: A list of tuple representing the external storage state.</span>
+<span class="sd">            extconfig: Instance of the external storage configuration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The updated songmap without the entries of the files that were removed in this method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># read config</span>
+        <span class="n">musicdir</span> <span class="o">=</span> <span class="n">extconfig</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">musicdir</span>
+
+        <span class="c1"># remove all old files</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">songmap</span><span class="p">):</span>
+            <span class="c1"># skip if the destination path has a related source path</span>
+            <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Generate all absolute paths that will be considered to remove</span>
+            <span class="n">abspath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mp</span><span class="p">,</span> <span class="n">musicdir</span><span class="p">)</span>
+            <span class="n">abspath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">abspath</span><span class="p">,</span> <span class="n">entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="c1"># Separate between song, album and artist</span>
+            <span class="n">songpath</span>   <span class="o">=</span> <span class="n">abspath</span>
+            <span class="n">albumpath</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">songpath</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">artistpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">albumpath</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        
+            <span class="c1"># remove abandond destination file</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Trying to remove </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">songpath</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>  <span class="c1"># delete file</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">albumpath</span><span class="p">)</span>  <span class="c1"># remove album if there are no more songs</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">artistpath</span><span class="p">)</span> <span class="c1"># remove artist if there are no more albums</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="c1"># remove all entries from the songmap that hold outdated/abandoned files</span>
+        <span class="n">songmap</span> <span class="o">=</span> <span class="p">[</span> <span class="n">entry</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">songmap</span> <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">songmap</span></div>
+
+
+<div class="viewcode-block" id="MusicDBExtern.CopyNewSongs"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.CopyNewSongs">[docs]</a>    <span class="k">def</span> <span class="nf">CopyNewSongs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songmap</span><span class="p">,</span> <span class="n">extconfig</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method handles the songs that are new to the collection and not yet copied to the external storage.</span>
+<span class="sd">        The process is split into two tasks: </span>
+
+<span class="sd">            #. Generate path names for the new files on the external storage</span>
+<span class="sd">            #. Copy the songs to the external storage</span>
+
+<span class="sd">        The copy-process itself is done in another method :meth:`~musicdb.mdbapi.extern.MusicDBExtern.CopySong`.</span>
+<span class="sd">        In future, the ``CopySong`` method shall be called simultaneously for multiple songs.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            songmap: A list of tuples representing the external storage state.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *songmap* with the new state of the storage. The dstpath-column is set for the copied songs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># read configuration</span>
+        <span class="n">musicdir</span>  <span class="o">=</span> <span class="n">extconfig</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">musicdir</span>
+        <span class="n">charset</span>   <span class="o">=</span> <span class="n">extconfig</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">charset</span>
+        <span class="n">pathlimit</span> <span class="o">=</span> <span class="n">extconfig</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">pathlen</span>
+
+        <span class="c1"># split songmap into &quot;already existing&quot; and &quot;new songs&quot;</span>
+        <span class="n">oldsongs</span> <span class="o">=</span> <span class="p">[</span> <span class="n">entry</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">songmap</span> <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="p">]</span>
+        <span class="n">newsongs</span> <span class="o">=</span> <span class="p">[</span> <span class="n">entry</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">songmap</span> <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span> <span class="p">]</span>
+
+        <span class="c1"># 1.: generate destination paths for the new songs</span>
+        <span class="c1"># all pathes are relative!</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">entry</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">newsongs</span><span class="p">):</span>
+            <span class="n">srcpath</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># make constraint-compatible destination path</span>
+            <span class="n">dstpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FixPath</span><span class="p">(</span><span class="n">srcpath</span><span class="p">,</span> <span class="n">charset</span><span class="p">)</span>
+
+            <span class="c1"># check for length-limit (the +1 is a &quot;/&quot;)</span>
+            <span class="k">if</span> <span class="n">pathlimit</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">musicdir</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">dstpath</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">pathlimit</span><span class="p">:</span>
+                <span class="n">dstpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReducePathLength</span><span class="p">(</span><span class="n">dstpath</span><span class="p">)</span>
+
+                <span class="c1"># check result</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">musicdir</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">dstpath</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">pathlimit</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                            <span class="s2">&quot;Path </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> is too long and cannot be shorted to </span><span class="si">%d</span><span class="s2"> characters!&quot;</span>
+                            <span class="s2">&quot; </span><span class="se">\033</span><span class="s2">[1;30m(processing song anyway)&quot;</span><span class="p">,</span> 
+                            <span class="nb">str</span><span class="p">(</span><span class="n">dstpath</span><span class="p">),</span> <span class="n">pathlimit</span><span class="p">)</span>
+
+            <span class="c1"># Add new potential dstpath to the entry </span>
+            <span class="c1"># (the extension may change later due to transcoding)</span>
+            <span class="n">newsongs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dstpath</span><span class="p">)</span>
+
+        <span class="c1"># 2.: Start the copy-process TODO: Make it in parallel</span>
+        <span class="k">with</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">newsongs</span><span class="p">))</span> <span class="k">as</span> <span class="n">progressbar</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">newsongs</span><span class="p">):</span>
+                <span class="n">srcpath</span><span class="p">,</span> <span class="n">dstpath</span> <span class="o">=</span> <span class="n">element</span>
+                <span class="n">dstpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CopySong</span><span class="p">(</span><span class="n">srcpath</span><span class="p">,</span> <span class="n">dstpath</span><span class="p">,</span> <span class="n">extconfig</span><span class="p">)</span>
+                <span class="c1"># same or corrected path, None on error.</span>
+                <span class="n">newsongs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">srcpath</span><span class="p">,</span> <span class="n">dstpath</span><span class="p">)</span>
+                <span class="n">progressbar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="c1"># merge entrie again and return a complete list of the current state of the storage</span>
+        <span class="n">songmap</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">songmap</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">oldsongs</span><span class="p">)</span>
+        <span class="n">songmap</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">newsongs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">songmap</span></div>
+
+
+<div class="viewcode-block" id="MusicDBExtern.CopySong"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.CopySong">[docs]</a>    <span class="k">def</span> <span class="nf">CopySong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relsrcpath</span><span class="p">,</span> <span class="n">reldstpath</span><span class="p">,</span> <span class="n">extconfig</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        In this method, the copy process is done. This method is the core of this class.</span>
+<span class="sd">        The copy process is done in several steps:</span>
+
+<span class="sd">            #. Preparation of all paths and configurations</span>
+<span class="sd">            #. Create missing directories</span>
+<span class="sd">            #. Transcode, optimize, copy file</span>
+
+<span class="sd">        It also creates the Artist and Album directory if they do not exist.</span>
+<span class="sd">        If a song file already exists, the copy-process gets skipped.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            relsrcpath (str): relative source path to the song that shall be copied</span>
+<span class="sd">            reldstpath (str): relative destination path. Its extension may be changed due to transcoding.</span>
+<span class="sd">            extconfig: Instance of the external storage configuration</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            On success the updated ``reldstpath`` is returned. It may differ from the parameter due to transcoding the file. Otherwise ``None`` is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># read config</span>
+        <span class="n">musicdir</span>    <span class="o">=</span> <span class="n">extconfig</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">musicdir</span>
+        <span class="n">forcemp3</span>    <span class="o">=</span> <span class="n">extconfig</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">forcemp3</span>
+        <span class="n">optimizemp3</span> <span class="o">=</span> <span class="n">extconfig</span><span class="o">.</span><span class="n">mp3tags</span><span class="o">.</span><span class="n">optimize</span>
+        <span class="n">noartwork</span>   <span class="o">=</span> <span class="n">extconfig</span><span class="o">.</span><span class="n">mp3tags</span><span class="o">.</span><span class="n">noartwork</span>
+        <span class="n">prescale</span>    <span class="o">=</span> <span class="n">extconfig</span><span class="o">.</span><span class="n">mp3tags</span><span class="o">.</span><span class="n">prescale</span>
+        <span class="n">forceid3v230</span><span class="o">=</span> <span class="n">extconfig</span><span class="o">.</span><span class="n">mp3tags</span><span class="o">.</span><span class="n">forceid3v230</span>
+        <span class="n">optimizem4a</span> <span class="o">=</span> <span class="n">extconfig</span><span class="o">.</span><span class="n">m4atags</span><span class="o">.</span><span class="n">optimize</span>
+
+        <span class="c1"># handle paths</span>
+        <span class="n">srcextension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">relsrcpath</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">forcemp3</span> <span class="ow">and</span> <span class="n">srcextension</span> <span class="o">!=</span> <span class="s2">&quot;.mp3&quot;</span><span class="p">:</span>
+            <span class="n">reldstpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">reldstpath</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.mp3&quot;</span>
+
+        <span class="n">abssrcpath</span>      <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">directories</span><span class="o">.</span><span class="n">music</span><span class="p">,</span> <span class="n">relsrcpath</span><span class="p">)</span>
+
+        <span class="n">absdstpath</span>      <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mp</span><span class="p">,</span>             <span class="n">musicdir</span><span class="p">)</span>
+        <span class="n">absdstpath</span>      <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">absdstpath</span><span class="p">,</span>          <span class="n">reldstpath</span><span class="p">)</span>
+        <span class="n">absdstdirectory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">absdstpath</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;copying song from </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
+
+        <span class="c1"># TODO: Add option to force overwriting</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">absdstpath</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> skipped - does already exist&quot;</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">reldstpath</span>
+        
+        <span class="c1"># Create directories if not exits</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">absdstdirectory</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">absdstdirectory</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Creating directory </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">absdstdirectory</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> failed with error </span><span class="si">%s</span><span class="s2">!&quot;</span>
+                        <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;30m (skipping song)&quot;</span><span class="p">,</span>
+                        <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Open Music Database</span>
+        <span class="n">musicdb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span>
+        <span class="c1"># FIXME: Invalid in multithreading env</span>
+        <span class="c1"># Sadly the Optimization methods for the tags also access self.db.</span>
+        <span class="c1"># No chance for multithreading in near future</span>
+
+        <span class="n">mdbsong</span>   <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongByPath</span><span class="p">(</span><span class="n">relsrcpath</span><span class="p">)</span>
+        <span class="n">mdbalbum</span>  <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetAlbumById</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
+        <span class="n">mdbartist</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetArtistById</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
+
+        <span class="c1"># handle artwork if wanted</span>
+        <span class="k">if</span> <span class="n">noartwork</span><span class="p">:</span>
+            <span class="n">absartworkpath</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Remember: paths of artworks are handled relative to the artwork cache</span>
+            <span class="k">if</span> <span class="n">prescale</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">relartworkpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">artworkcache</span><span class="o">.</span><span class="n">GetArtwork</span><span class="p">(</span><span class="n">mdbalbum</span><span class="p">[</span><span class="s2">&quot;artworkpath&quot;</span><span class="p">],</span> <span class="n">prescale</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Getting artwork from cache failed with exception: </span><span class="si">%s</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;   Artwork: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">mdbalbum</span><span class="p">[</span><span class="s2">&quot;artworkpath&quot;</span><span class="p">])</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+
+                <span class="n">absartworkpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">directories</span><span class="o">.</span><span class="n">artwork</span><span class="p">,</span> <span class="n">relartworkpath</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">absartworkpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">directories</span><span class="o">.</span><span class="n">artwork</span><span class="p">,</span> <span class="n">mdbalbum</span><span class="p">[</span><span class="s2">&quot;artworkpath&quot;</span><span class="p">])</span>
+
+        <span class="c1"># copy the file</span>
+        <span class="k">if</span> <span class="n">forcemp3</span> <span class="ow">and</span> <span class="n">srcextension</span> <span class="o">!=</span> <span class="s2">&quot;.mp3&quot;</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileprocessor</span><span class="o">.</span><span class="n">ConvertToMP3</span><span class="p">(</span><span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">retval</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;30m(skipping song due to previous error)&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="n">os</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>   <span class="c1"># This may help to avoid corrupt files. Conversion and optimization look right</span>
+
+            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileprocessor</span><span class="o">.</span><span class="n">OptimizeMP3Tags</span><span class="p">(</span>
+                    <span class="n">mdbsong</span><span class="p">,</span> <span class="n">mdbalbum</span><span class="p">,</span> <span class="n">mdbartist</span><span class="p">,</span>
+                    <span class="n">absdstpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">,</span> 
+                    <span class="n">absartworkpath</span><span class="p">,</span> 
+                    <span class="n">forceid3v230</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">retval</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;30m(skipping song due to previous error)&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">elif</span> <span class="n">optimizemp3</span> <span class="ow">and</span> <span class="n">srcextension</span> <span class="o">==</span> <span class="s2">&quot;.mp3&quot;</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileprocessor</span><span class="o">.</span><span class="n">OptimizeMP3Tags</span><span class="p">(</span>
+                    <span class="n">mdbsong</span><span class="p">,</span> <span class="n">mdbalbum</span><span class="p">,</span> <span class="n">mdbartist</span><span class="p">,</span>
+                    <span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">,</span>
+                    <span class="n">absartworkpath</span><span class="p">,</span> 
+                    <span class="n">forceid3v230</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">retval</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;30m(skipping song due to previous error)&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">elif</span> <span class="n">optimizem4a</span> <span class="ow">and</span> <span class="n">srcextension</span> <span class="o">==</span> <span class="s2">&quot;.m4a&quot;</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileprocessor</span><span class="o">.</span><span class="n">OptimizeM4ATags</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">,</span> <span class="n">mdbalbum</span><span class="p">,</span> <span class="n">mdbartist</span><span class="p">,</span> <span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">retval</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;30m(skipping song due to previous error)&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fileprocessor</span><span class="o">.</span><span class="n">CopyFile</span><span class="p">(</span><span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
+
+        <span class="c1"># return updated relative destination path for the songmap</span>
+        <span class="k">return</span> <span class="n">reldstpath</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBExtern.WriteSongmap"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.WriteSongmap">[docs]</a>    <span class="k">def</span> <span class="nf">WriteSongmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songmap</span><span class="p">,</span> <span class="n">mappath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Writes all valid entries of *songmap* into the state-file.</span>
+<span class="sd">        This method generates the new state of the external storage.</span>
+
+<span class="sd">        A valid entry has a source and a destination path.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            songmap: A list of tuples representing the external storage state.</span>
+<span class="sd">            mappath (str): Path to the state-file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># open songlist (recreate the whole file)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">mappath</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+            <span class="n">csvwriter</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> 
+                    <span class="n">delimiter</span>  <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="p">,</span> 
+                    <span class="n">escapechar</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> 
+                    <span class="n">quotechar</span>  <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> 
+                    <span class="n">quoting</span>    <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">QUOTE_NONNUMERIC</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">songmap</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">entry</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">csvwriter</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="MusicDBExtern.UpdateStorage"><a class="viewcode-back" href="../../../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.UpdateStorage">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateStorage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method does the whole update process. It consists of the following steps:</span>
+
+<span class="sd">        #. Prepare envrionment like determin configfiles and opening them.</span>
+<span class="sd">        #. Get all song paths from the Music Database</span>
+<span class="sd">        #. :meth:`~musicdb.mdbapi.extern.MusicDBExtern.ReadSongmap` - Read the current state of the external storage</span>
+<span class="sd">        #. :meth:`~musicdb.mdbapi.extern.MusicDBExtern.UpdateSongmap` - Update the list with the current state of the music collection</span>
+<span class="sd">        #. :meth:`~musicdb.mdbapi.extern.MusicDBExtern.RemoveOldSongs` - Remove old songs from the external storage that are no longer in the collection</span>
+<span class="sd">        #. :meth:`~musicdb.mdbapi.extern.MusicDBExtern.CopyNewSongs` - Copy new songs from the collection to the storage. Here, transcoding will be applied if configured. See `Handling Toxic Environments`_</span>
+<span class="sd">        #. :meth:`~musicdb.mdbapi.extern.MusicDBExtern.WriteSongmap` - Writes the new state of the external storage device</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">mp</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Mountpoint is not initialized!&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">extstatedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mp</span><span class="p">,</span>     <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">extern</span><span class="o">.</span><span class="n">statedir</span><span class="p">)</span>
+
+        <span class="c1"># Get songmap-file</span>
+        <span class="n">mapfile</span>     <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extstatedir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">extern</span><span class="o">.</span><span class="n">songmap</span><span class="p">)</span>
+        
+        <span class="c1"># Open external storage configuration</span>
+        <span class="n">extcfgfile</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extstatedir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">extern</span><span class="o">.</span><span class="n">configfile</span><span class="p">)</span>
+        <span class="n">extconfig</span>   <span class="o">=</span> <span class="n">ExternConfig</span><span class="p">(</span><span class="n">extcfgfile</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">extconfig</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected config-version of external storage configuration: </span><span class="si">%d</span><span class="s2"> != 3.&quot;</span>
+                    <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;33mDoing nothing to prevent Damage!&quot;</span><span class="p">,</span> <span class="n">extconfig</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Get all song Paths</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\033</span><span class="s2">[1;35m * </span><span class="se">\033</span><span class="s2">[1;34mReading database …</span><span class="se">\033</span><span class="s2">[0;36m&quot;</span><span class="p">)</span>
+        <span class="n">songs</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAllSongs</span><span class="p">()</span>
+        <span class="n">mdbpathlist</span> <span class="o">=</span> <span class="p">[</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">song</span> <span class="ow">in</span> <span class="n">songs</span> <span class="p">]</span>
+
+        <span class="c1"># Start update</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\033</span><span class="s2">[1;35m * </span><span class="se">\033</span><span class="s2">[1;34mReading songmap …</span><span class="se">\033</span><span class="s2">[0;36m&quot;</span><span class="p">)</span>
+        <span class="n">songmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadSongmap</span>   <span class="p">(</span><span class="n">mapfile</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\033</span><span class="s2">[1;35m * </span><span class="se">\033</span><span class="s2">[1;34mUpdating songmap …</span><span class="se">\033</span><span class="s2">[0;36m&quot;</span><span class="p">)</span>
+        <span class="n">songmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">UpdateSongmap</span> <span class="p">(</span><span class="n">songmap</span><span class="p">,</span> <span class="n">mdbpathlist</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\033</span><span class="s2">[1;35m * </span><span class="se">\033</span><span class="s2">[1;34mRemoving outdated files …</span><span class="se">\033</span><span class="s2">[0;36m&quot;</span><span class="p">)</span>
+        <span class="n">songmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RemoveOldSongs</span><span class="p">(</span><span class="n">songmap</span><span class="p">,</span> <span class="n">extconfig</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\033</span><span class="s2">[1;35m * </span><span class="se">\033</span><span class="s2">[1;34mCopying new files …</span><span class="se">\033</span><span class="s2">[0;36m&quot;</span><span class="p">)</span>
+        <span class="n">songmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CopyNewSongs</span>  <span class="p">(</span><span class="n">songmap</span><span class="p">,</span> <span class="n">extconfig</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\033</span><span class="s2">[1;35m * </span><span class="se">\033</span><span class="s2">[1;34mWriting songmap …</span><span class="se">\033</span><span class="s2">[0;36m&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WriteSongmap</span><span class="p">(</span><span class="n">songmap</span><span class="p">,</span> <span class="n">mapfile</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div></div>
+
+
+
+<span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
+
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 - 2022 Ralf Stemmer.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'8.0.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../_static/tabs.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

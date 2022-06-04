@@ -2,11 +2,6 @@
 videoframes - Video Frames and Preview Manager
 ==============================================
 
-.. automodule:: mod.videoframes
+.. automodule:: musicdb.mod.videoframes
 
-class
------
-
-.. autoclass:: mod.videoframes.videoframes
-   :members:
 

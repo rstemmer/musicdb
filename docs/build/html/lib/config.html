@@ -5,11 +5,10 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Configuration &mdash; MusicDB 7.1.0 documentation</title>
+  <title>Configuration Access &mdash; MusicDB 8.0.0 documentation</title>
   
 
   
@@ -37,14 +36,16 @@
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
+    <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 8.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Database" href="database.html"/>
-        <link rel="prev" title="Command Line User Interface" href="clui.html"/> 
+        <link rel="prev" title="Video Streaming Server" href="../mdbapi/videostream.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -73,7 +74,7 @@
             
             
               <div class="version">
-                7.1
+                8.0
               </div>
             
           
@@ -97,33 +98,132 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#metrics">Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#comparison">Comparison</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#conclusion">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-via-package-manager">Installation via Package Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#initial-setup">Initial Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#creating-a-music-directory">Creating a Music Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#websocket-settings">Websocket Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#debugging-logs">Debugging logs</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#start-musicdb-server">Start MusicDB Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#setup-web-user-interface-via-apache">Setup Web User Interface via Apache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#start-the-web-server">Start the Web Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#setup-audio-streaming-via-icecast">Setup Audio Streaming via Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#setup-icecast">Setup Icecast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#run-icecast">Run Icecast</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#final-steps">Final Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/import.html">Upload and Importing Music</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/import.html#open-import-manager">Open Import Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/import.html#uploading-an-album">Uploading an Album</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/import.html#importing-an-album">Importing an Album</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music Naming Scheme</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#overview-of-the-naming-scheme">Overview of the Naming Scheme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#music-video-file-name">Music Video File Name</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/webui.html">WebUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/webui.html#architecture-and-wording">Architecture and Wording</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/webui.html#webui-in-audio-mode">WebUI in Audio Mode</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/webui.html#genre-view">Genre View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/webui.html#hud">HUD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/webui.html#stream-control">Stream Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/webui.html#artists-view">Artists View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/webui.html#album-view">Album View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/webui.html#queue-view">Queue View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/webui.html#lyrics-view">Lyrics View</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/webui.html#webui-settings-mode">WebUI Settings Mode</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/stream.html">Audio Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/stream.html#managing-the-audio-stream">Managing the Audio Stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/stream.html#connection-to-audio-stream-via-vlc">Connection to Audio Stream via VLC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/stream.html#connection-to-audio-stream-via-webui">Connection to Audio Stream via WebUI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/cli.html">Command Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html">artwork - Artwork Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/extern.html">extern - Music File Exporter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mod/extern.html#file-export-to-external-device">File Export to External Device</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/metadata.html">metadata - Metadata Reader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/mise.html">mise - Micro Search Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/server.html">server - MusicDB Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/stats.html">stats - MusicDB Song Statistic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mod/tags.html#main-commands">Main commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mod/tags.html#style-guide">Style Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mod/tags.html#example-calls">Example calls</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/fromsource.html">Installation From Source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/fromsource.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/fromsource.html#installing-the-back-end">Installing the Back-End</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/fromsource.html#installing-the-front-end">Installing the Front-End</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/fromsource.html#installing-data-and-configuration-files">Installing Data and Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/fromsource.html#configure-selinux">Configure SELinux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/installdocs.html">Documentation Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Concepts and Configuration</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#meta">meta</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicdb">musicdb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#directories">directories</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tls">TLS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#music">music</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#albumcover">albumcover</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#videoframes">videoframes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#icecast">Icecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/security.html">Security Concept</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/security.html#file-access-permissions">File Access Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/security.html#password-protected-audio-stream">Password Protected Audio Stream</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/data.html">MusicDB Data Files and Directories</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/data.html#music-directory">Music Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/data.html#musicdb-data-directory">MusicDB Data Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/data.html#musicdb-log-file">MusicDB Log File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/data.html#transition-from-7-2-0-to-8-0-0">Transition from 7.2.0 to 8.0.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/data.html#databases">Databases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/data.html#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/data.html#artworks">Artworks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/data.html#music">Music</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/data.html#web-server-and-logrotate">Web Server and Logrotate</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
@@ -134,24 +234,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../basics/logging.html">Handling log-files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basics/mods.html">MusicDB Commandline Modules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#loading-of-modules">Loading of Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/overview.html">Overview of MusicDB</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#command-line-modules">Command-Line Modules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-green">MusicDB (Green)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
@@ -159,31 +245,44 @@
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#icecast-server">Icecast Server</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../basics/streaming.html">MusicDB Stream</a><ul>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#comparison">Comparison</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/comparison.html#web-ui-and-streaming-capabilities">Web UI and Streaming Capabilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/comparison.html#detailed-look">Detailed Look</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deeper Insight for Hackers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basics/streaming.html">MusicDB Streaming Concept</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#general-data-flow">General Data Flow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#basic-setup">Basic Setup</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#disk-images">Disk Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/mods.html">Creating new CLI Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#loading-of-modules">Loading of Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#system-setup">System Setup</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#installing-updating-musicdb-test-environment">Installing/Updating MusicDB Test Environment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#create-dummy-files">Create Dummy Files</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#test-systems">Test Systems</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#debian">Debian</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#raspian">Raspian</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#arch-linux">Arch Linux</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/distribution.html">Workflow for distribution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/distribution.html#create-release-candidate-branch">Create Release Candidate Branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/distribution.html#update-version-numbers">Update Version Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/distribution.html#source-tarball">Source Tarball</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/distribution.html#arch-linux-pacman-package">Arch Linux pacman Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/distribution.html#fedora-rpm-package">Fedora rpm Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/distribution.html#debian-ubuntu-deb-package">Debian/Ubuntu deb Package</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/webapi.html">MusicDB Websocket API</a><ul>
@@ -198,8 +297,9 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#events">Events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-musicdb.lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#available-methods">Available Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#special-functions">Special Functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#songs">Songs</a></li>
@@ -208,173 +308,46 @@
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#lyrics">Lyrics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#uploading">Uploading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#file-handling">File Handling</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../basics/workflow.html">Workflow for development</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#working-on-code">Working on code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#rebuilding-the-documentation">Rebuilding the Documentation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#using-git">Using git</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#micro-commits">Micro Commits</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#createing-a-hotfix">Createing a Hotfix</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#merging-develop-to-master">Merging Develop to Master</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#releasing-a-new-version">Releasing a New Version</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#additional-steps-for-ubuntu">Additional Steps for Ubuntu</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#configuring-musicdb">Configuring MusicDB</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configuring-musicdb-webui">Configuring MusicDB WebUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#id1">Configuring MusicDB</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-version">Update to a New Version</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-manually">Installation (Manually)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id2">Install dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3">id3edit</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#musicdb">musicdb</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#music-video-file-name">Music Video File Name</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-database-module">Using the database module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-repair-module">Using the repair module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-add-module">Using the add module</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../usage/scripts.html">Scripts</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-boot">musicdb-boot</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-start">musicdb-start</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#update">update</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/add.html#repair-file-names">Repair File Names</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mod/add.html#album-import-form">Album Import Form</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mod/add.html#new-songs-form">New Songs Form</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mod/add.html#online-check">Online Check</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/add.html#import-process">Import Process</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/artwork.html">artwork - Artwork Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#automatization">Automatization</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/genres.html">genres - Genre Manager with CLUI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/genres.html#managing-genres">Managing Genres</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/genres.html#updating-caches">Updating Caches</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/metadata.html">metadata - Metadata Reader</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/mise.html">mise - Micro Search Engine</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/mise.html#class">class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/moods.html">moods - Mood Tag Manager with CLUI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-list">Mood List</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-grid">Mood Grid</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#style-guide">Style Guide</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#lyrics-check">Lyrics Check</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#checksum-update">Checksum update</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/server.html">server - MusicDB Websocket Server</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/stats.html">stats - MusicDB Song Statistic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#main-commands">Main commands</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#style-guide">Style Guide</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#example-calls">Example calls</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/videoframes.html#class">class</a></li>
-</ul>
-</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/accesspermissions.html">Access Permissions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/accesspermissions.html#accesspermissions-class">AccessPermissions Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#path-structure">Path structure</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#artwork-related-database-entries">Artwork Related Database Entries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#artwork-path-structure">Artwork Path structure</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../mdbapi/artwork.html#web-browsers">Web Browsers</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#scaling">Scaling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#manifest">Manifest</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#scaled-artwork">Scaled Artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#configuration-for-artworks">Configuration for Artworks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#algorithm-to-create-artworks">Algorithm to Create Artworks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-musicdb.lib.cache">ArtworkCache Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#stream-manager-class">Stream Manager Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#audio-streaming-interface">Audio Streaming Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#audio-streaming-thread">Audio Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#audio-stream-command-queue">Audio Stream Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#audio-stream-event-management">Audio Stream Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#audio-stream-manager-class">Audio Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/blacklist.html">Blacklist</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/blacklist.html#module-mdbapi.blacklist">Blacklist Module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/blacklist.html#id1">Blacklist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/blacklist.html#module-musicdb.mdbapi.blacklist">Blacklist Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/blacklist.html#music-selection-blacklist">Music Selection Blacklist</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/blacklist.html#blacklist-interface-class">Blacklist Interface Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/database.html">MusicDBDatabase</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/extern.html">MusicDBExtern</a><ul>
@@ -388,18 +361,20 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#musicdbextern-class">MusicDBExtern Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/lycra.html">LyCra - Lyrics Crawler</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/lycra.html#module-mdbapi.lycra">Lycra API Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/lycra.html#crawler-base-class">Crawler Base Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/lycra.html#module-lib.db.lycradb">Lycra Database</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/mise.html">Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/music.html">Music Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/music.html#musicdbmusic-class">MusicDBMusic Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicdirectory.html">MusicDirectory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdirectory-class">MusicDirectory Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-musicdb.mdbapi.randy">Randy Module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#database-stage">Database Stage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
@@ -413,8 +388,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/server.html">MusicDB Websocket Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#queue-management">Queue Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-management">Song Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-event-management">Song Queue Event Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
@@ -424,64 +399,49 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tracker.html">Song Tracker</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-musicdb.lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/uploadmanager.html">Upload Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#definitions">Definitions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#database">Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#path-structure">Path structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#https-server">HTTPS Server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#scaling">Scaling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#definitions-in-context-of-videos">Definitions in Context of Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#relevant-database-entries">Relevant Database Entries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#video-frames-path-structure">Video Frames Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#https-server-configuration-for-video-frames">HTTPS Server Configuration for Video Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#scaling-video-frames">Scaling Video Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#configuration-of-video-frames">Configuration of Video Frames</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#algorithm-for-creating-video-frames">Algorithm for Creating Video Frames</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#queue-management">Queue Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#video-queue-management">Video Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#video-queue-event-management">Video Queue Event Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/videostream.html">Video Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#stream-manager-class">Stream Manager Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#video-streaming-interface">Video Streaming Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#video-streaming-thread">Video Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#video-stream-command-queue">Video Stream Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#video-stream-event-management">Video Stream Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#video-stream-manager-class">Video Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="clui.html">Command Line User Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.text">Text</a></li>
-<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.frame">Frame</a></li>
-<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.pane">Pane</a></li>
-<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.buttonview">ButtonView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.listview">ListView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.dialog">Dialog</a></li>
-<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.textinput">TextInput</a></li>
-<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.boolinput">BoolInput</a></li>
-<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration Access</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#base-configuration-classes">Base Configuration Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-musicdb.lib.cfg.config">ini Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-musicdb.lib.cfg.csv">csv Files</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#base-classes">Base Classes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-lib.cfg.config">Config</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-lib.cfg.csv">CSVFile</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#musicdb-configuration">MusicDB Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-lib.cfg.webui">WebUI Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-lib.cfg.extern">External Storage Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-lib.cfg.mdbstate">MusicDB State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#musicdb-configuration-file">MusicDB Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-musicdb.lib.cfg.webui">WebUI Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-musicdb.lib.cfg.extern">External Storage Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-musicdb.lib.cfg.mdbstate">MusicDB State Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-musicdb.lib.cfg.wsapikey">WebSocket API Key File</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">Database</a><ul>
@@ -498,7 +458,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="gstreamer.html">GStreamer Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#installation-of-gstreamer-plugins">Installation of GStreamer Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#example-for-using-plugins">Example for Using Plugins</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
@@ -512,12 +473,12 @@
 <li class="toctree-l2"><a class="reference internal" href="icecast.html#icecast-class">Icecast Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="metatags.html">Meta Tags</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="metatags.html#metatags-class">MetaTags Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">MusicDB Logging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#musicdblogger-class">MusicDBLogger Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mp3file.html">MP3 File Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mp3file.html#mp3file-class">MP3File Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metatags.html">Meta Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mp3stream.html">MP3 Stream Interface</a><ul>
@@ -525,7 +486,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mp3transcoder.html">MP3 Transcoder</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#gstreamer-pipeline-for-transcoding">GStreamer Pipeline for Transcoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#transcoding">Transcoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
@@ -534,23 +495,23 @@
 <li class="toctree-l1"><a class="reference internal" href="musicdb.html">MusicDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#songs-table">Songs Table</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#song-relates-methods">Song Relates Methods</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="musicdb.html#videos">Videos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#videos-table">Videos Table</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="musicdb.html#albums">Albums</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#albums-table">Albums Table</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#album-related-methods">Album Related Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="musicdb.html#artworks">Artworks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#artwork-related-methods">Artwork Related Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#origin">Origin</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="musicdb.html#artists">Artists</a></li>
-<li class="toctree-l2"><a class="reference internal" href="musicdb.html#lyrics">Lyrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="musicdb.html#tags">Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#artists-table">Artists Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#lyrics-table">Lyrics Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#tags-table">Tags Table</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-related-methods">Tag Related Methods</a></li>
@@ -559,16 +520,45 @@
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="namedpipe.html">NamedPipe</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="pidfile.html">PID File Handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="websockets.html">MusicDB Websocket Protocol</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="websockets.html#module-lib.ws.server">Websocket Server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="websockets.html#module-lib.ws.websocket">Websocket Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="websockets.html#module-musicdb.lib.ws.server">Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="websockets.html#module-musicdb.lib.ws.websocket">Websocket Protocol</a></li>
 </ul>
 </li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Management Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../taskmanagement/artworkmanager.html">Artwork Tasks Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/artworkmanager.html#artworkmanager-class">ArtworkManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../taskmanagement/filesystemmanager.html">Files and Directory Tasks Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/filesystemmanager.html#filesystemmanager-class">FilesystemManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../taskmanagement/importmanager.html">Import Tasks Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/importmanager.html#importmanager-class">ImportManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../taskmanagement/integrationmanager.html">Integration Tasks Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/integrationmanager.html#integrationmanager-class">IntegrationManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../taskmanagement/taskmanager.html">Task Management Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../taskmanagement/taskmanager.html#module-musicdb.taskmanagement.taskmanager">Task Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/taskmanager.html#taskmanager-class">TaskManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../taskmanagement/uploadmanager.html">Upload Tasks Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Maintain Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../maintain/configuration.html">Configuration and Data Maintaining Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintain/database.html">Database Maintaining Modules</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
@@ -651,7 +641,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Configuration</li>
+      <li>Configuration Access</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -670,8 +660,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="configuration">
-<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="configuration-access">
+<h1>Configuration Access<a class="headerlink" href="#configuration-access" title="Permalink to this headline">¶</a></h1>
 <p>The following class diagram shows the implementation of MusicDBs configuration and state management.
 Only the more important methods are shown in the diagram.
 For a list of all methods see the related documentation of the class.</p>
@@ -694,26 +684,26 @@ For a list of all methods see the related documentation of the class.</p>
    csv    -&gt; mdbstate [arrowtail=open]
 }</p></object></div>
 </div></blockquote>
-<section id="base-classes">
-<h2>Base Classes<a class="headerlink" href="#base-classes" title="Permalink to this headline">¶</a></h2>
-<section id="module-lib.cfg.config">
-<span id="config"></span><h3>Config<a class="headerlink" href="#module-lib.cfg.config" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="base-configuration-classes">
+<h2>Base Configuration Classes<a class="headerlink" href="#base-configuration-classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-musicdb.lib.cfg.config">
+<span id="ini-files"></span><h3>ini Files<a class="headerlink" href="#module-musicdb.lib.cfg.config" title="Permalink to this headline">¶</a></h3>
 <p>This module handles the reading and writing of ini-files.
 The definition of names is shown in the ini file example below.</p>
 <blockquote>
-<div><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[section]</span>
-<span class="na">option</span> <span class="o">=</span> <span class="s">value</span>
+<div><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[section]</span><span class="w"></span>
+<span class="na">option</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">value</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 <dl class="py class">
-<dt class="sig sig-object py" id="lib.cfg.config.Config">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.cfg.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.config.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">musicdb.lib.cfg.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.config.Config" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.config.Config.AllowNoneValue">
-<span class="sig-name descname"><span class="pre">AllowNoneValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">allow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.AllowNoneValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.AllowNoneValue" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.config.Config.AllowNoneValue">
+<span class="sig-name descname"><span class="pre">AllowNoneValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">allow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/config.html#Config.AllowNoneValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.config.Config.AllowNoneValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method enables the possibility to configure (read) a <code class="docutils literal notranslate"><span class="pre">None</span></code> value.
-In case a value has the string <code class="docutils literal notranslate"><span class="pre">&quot;None&quot;</span></code>, the <a class="reference internal" href="#lib.cfg.config.Config.Get" title="lib.cfg.config.Config.Get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Get()</span></code></a> method returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+In case a value has the string <code class="docutils literal notranslate"><span class="pre">&quot;None&quot;</span></code>, the <a class="reference internal" href="#musicdb.lib.cfg.config.Config.Get" title="musicdb.lib.cfg.config.Config.Get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Get()</span></code></a> method returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.
 The upper case N is important!</p>
 <p>Default behavior of this class is to return the string <code class="docutils literal notranslate"><span class="pre">&quot;None&quot;</span></code> as regular string.</p>
 <dl class="field-list simple">
@@ -725,8 +715,8 @@ The upper case N is important!</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[test]</span>
-<span class="na">option</span> <span class="o">=</span> <span class="s">None</span>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[test]</span><span class="w"></span>
+<span class="na">option</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">None</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="s2">&quot;test.ini&quot;</span><span class="p">)</span>
@@ -743,14 +733,14 @@ The upper case N is important!</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.config.Config.Get">
-<span class="sig-name descname"><span class="pre">Get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datatype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">islist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Get" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.config.Config.Get">
+<span class="sig-name descname"><span class="pre">Get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datatype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">islist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/config.html#Config.Get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.config.Config.Get" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads a value from the configuration.
 The values in the file are all stored as string.
 Using the <em>datatype</em> parameter will convert that string into a python data type.</p>
 <p>The default parameter can be used to define a value that shall be returned in case the option does not exist.
 This value can be of a different type than defined by the datatype parameter.</p>
-<p>If the value of an option is <code class="docutils literal notranslate"><span class="pre">&quot;None&quot;</span></code>, and none type is allowed by calling <a class="reference internal" href="#lib.cfg.config.Config.AllowNoneValue" title="lib.cfg.config.Config.AllowNoneValue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AllowNoneValue()</span></code></a>, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</p>
+<p>If the value of an option is <code class="docutils literal notranslate"><span class="pre">&quot;None&quot;</span></code>, and none type is allowed by calling <a class="reference internal" href="#musicdb.lib.cfg.config.Config.AllowNoneValue" title="musicdb.lib.cfg.config.Config.AllowNoneValue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AllowNoneValue()</span></code></a>, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</p>
 <p>If the <em>islist</em> parameter is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the read value gets interpreted as comma separated list and split.
 A list of the striped values (without leading or trailing spaces) gets returned casted to the data type given by the <em>datatype</em> parameter.</p>
 <dl class="field-list simple">
@@ -768,9 +758,9 @@ A list of the striped values (without leading or trailing spaces) gets returned 
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[test]</span>
-<span class="na">integer</span> <span class="o">=</span> <span class="s">1000</span>
-<span class="na">list</span> <span class="o">=</span> <span class="s">13, 23, 42</span>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[test]</span><span class="w"></span>
+<span class="na">integer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1000</span><span class="w"></span>
+<span class="na">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">13, 23, 42</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="s2">&quot;test.ini&quot;</span><span class="p">)</span>
@@ -788,8 +778,8 @@ A list of the striped values (without leading or trailing spaces) gets returned 
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.config.Config.Load">
-<span class="sig-name descname"><span class="pre">Load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Load" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.config.Config.Load">
+<span class="sig-name descname"><span class="pre">Load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/config.html#Config.Load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.config.Config.Load" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method loads a configuration file.
 If the <em>path</em> parameter is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, the path given while instantiating the class will be overwritten.
 If the file was already loaded, it gets reloaded.</p>
@@ -807,8 +797,8 @@ If the file was already loaded, it gets reloaded.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.config.Config.OptionAvailable">
-<span class="sig-name descname"><span class="pre">OptionAvailable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.OptionAvailable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.OptionAvailable" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.config.Config.OptionAvailable">
+<span class="sig-name descname"><span class="pre">OptionAvailable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/config.html#Config.OptionAvailable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.config.Config.OptionAvailable" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to check if an option exists in the configuration file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -824,26 +814,26 @@ If the file was already loaded, it gets reloaded.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.config.Config.Reload">
-<span class="sig-name descname"><span class="pre">Reload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Reload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Reload" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method just calls <a class="reference internal" href="#lib.cfg.config.Config.Load" title="lib.cfg.config.Config.Load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Load()</span></code></a> without a path argument.</p>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.config.Config.Reload">
+<span class="sig-name descname"><span class="pre">Reload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/config.html#Config.Reload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.config.Config.Reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method just calls <a class="reference internal" href="#musicdb.lib.cfg.config.Config.Load" title="musicdb.lib.cfg.config.Config.Load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Load()</span></code></a> without a path argument.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.config.Config.Save">
-<span class="sig-name descname"><span class="pre">Save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Save" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.config.Config.Save">
+<span class="sig-name descname"><span class="pre">Save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/config.html#Config.Save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.config.Config.Save" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method saves all set values back to the configuration file.</p>
 <p>Changing configuration can be prevented by setting the file attributes to read only.</p>
 <p>If writing fails not because of missing write permission, an exception gets raised.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.config.Config.Set">
-<span class="sig-name descname"><span class="pre">Set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Set" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.config.Config.Set">
+<span class="sig-name descname"><span class="pre">Set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/config.html#Config.Set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.config.Config.Set" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets an option.
 The value gets casted to a string.
 If the section or option does not exist, it will be created.</p>
-<p>After setting the option, the <a class="reference internal" href="#lib.cfg.config.Config.Save" title="lib.cfg.config.Config.Save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Save()</span></code></a> method gets called to store the changes.
+<p>After setting the option, the <a class="reference internal" href="#musicdb.lib.cfg.config.Config.Save" title="musicdb.lib.cfg.config.Config.Save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Save()</span></code></a> method gets called to store the changes.
 This is necessary because there is no reliable destructor in python to.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -861,13 +851,13 @@ This is necessary because there is no reliable destructor in python to.</p>
 
 </dd></dl>
 
-</section>
-<section id="module-lib.cfg.csv">
-<span id="csvfile"></span><h3>CSVFile<a class="headerlink" href="#module-lib.cfg.csv" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="module-musicdb.lib.cfg.csv">
+<span id="csv-files"></span><h3>csv Files<a class="headerlink" href="#module-musicdb.lib.cfg.csv" title="Permalink to this headline">¶</a></h3>
 <p>This module handles the reading and writing of csv-files.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="lib.cfg.csv.CSVFile">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.cfg.csv.</span></span><span class="sig-name descname"><span class="pre">CSVFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.csv.CSVFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">musicdb.lib.cfg.csv.</span></span><span class="sig-name descname"><span class="pre">CSVFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/csv.html#CSVFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.csv.CSVFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class reads <a class="reference external" href="https://tools.ietf.org/html/rfc4180">Comma Separated Value (CSV)</a> files as used by MusicDB.</p>
 <p>The class does not cache the files content.
 Every read access accesses the actual file.
@@ -893,8 +883,8 @@ Do not change the layout of the files!</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.csv.CSVFile.Read">
-<span class="sig-name descname"><span class="pre">Read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Read" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.csv.CSVFile.Read">
+<span class="sig-name descname"><span class="pre">Read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/csv.html#CSVFile.Read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.csv.CSVFile.Read" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads the file and returns its a table represented as a list of dictionaries.
 The dictionary has a key for each column in the header of the file.
 So each entry in the list represents one row of the file,
@@ -928,8 +918,8 @@ and each entry in the dictionary represents one cell or column in that row.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.csv.CSVFile.Write">
-<span class="sig-name descname"><span class="pre">Write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Write" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.csv.CSVFile.Write">
+<span class="sig-name descname"><span class="pre">Write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/csv.html#CSVFile.Write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.csv.CSVFile.Write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write rows into the csv file.
 The first row will be the header of the table.</p>
 <p>If there is no header given, the keys of the first dictionary will be used.
@@ -980,43 +970,37 @@ The header also filters the values to store.</p>
 
 </dd></dl>
 
-</section>
-</section>
-<section id="musicdb-configuration">
-<h2>MusicDB Configuration<a class="headerlink" href="#musicdb-configuration" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="musicdb-configuration-file">
+<h2>MusicDB Configuration File<a class="headerlink" href="#musicdb-configuration-file" title="Permalink to this headline">¶</a></h2>
 <p>Detail of the MusicDB Configuration can be found under <a class="reference internal" href="../basics/config.html"><span class="doc">MusicDB Configuration</span></a>.</p>
-<span class="target" id="module-lib.cfg.musicdb"></span><p>All sections and options can be accessed by their names: <code class="docutils literal notranslate"><span class="pre">MusicDBConfig(...).section.option</span></code>.</p>
+<span class="target" id="module-musicdb.lib.cfg.musicdb"></span><p>All sections and options can be accessed by their names: <code class="docutils literal notranslate"><span class="pre">MusicDBConfig(...).section.option</span></code>.</p>
+<p>Details of the configurations possible for MusicDB can be found in <a class="reference internal" href="../basics/config.html"><span class="doc">MusicDB Configuration</span></a>.</p>
 <p>To create a new entry for the MusicDB Configuration the following steps must be done:</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li><p>Set the section and option in the configuration file as well as in the template in the share directory</p></li>
 <li><p>In case a new section shall be created, create an empty class for this section inside this module</p></li>
-<li><p>Read the option in the constructor of the <a class="reference internal" href="#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> class</p></li>
+<li><p>Read the option in the constructor of the <a class="reference internal" href="#musicdb.lib.cfg.musicdb.MusicDBConfig" title="musicdb.lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> class</p></li>
 </ol>
 </div></blockquote>
 <p>For example, the following option shall be added:</p>
 <blockquote>
-<div><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[newmod]</span>
-<span class="na">enable</span> <span class="o">=</span> <span class="s">True</span>
+<div><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[newmod]</span><span class="w"></span>
+<span class="na">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
-<p>Then, first a new dummy class named <code class="docutils literal notranslate"><span class="pre">NEWMOD</span></code> must be added:</p>
+<p>The option must be read inside the <a class="reference internal" href="#musicdb.lib.cfg.musicdb.MusicDBConfig" title="musicdb.lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method.
+The read value must be written into an attribute named as the option, inside an instance of the dummy class named liked the section:</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NEWMOD</span><span class="p">:</span>
-    <span class="k">pass</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>Finaly, the option must be read inside the <a class="reference internal" href="#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method.
-The read value must be writen into an attribute named as the option, inside an instance of the dummy class named liked the section:</p>
-<blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">newmod</span> <span class="o">=</span> <span class="n">NEWMOD</span><span class="p">()</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">newmod</span> <span class="o">=</span> <span class="n">SECTION</span><span class="p">()</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">newmod</span><span class="o">.</span><span class="n">enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="s2">&quot;newmod&quot;</span><span class="p">,</span> <span class="s2">&quot;enable&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
-<p>Now, the new option is availabe in the configuration object created using this class:</p>
+<p>Now, the new option is available in the configuration object created using this class:</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">MusicDBConfig</span><span class="p">(</span><span class="s2">&quot;musicdb.ini&quot;</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">newmod</span><span class="o">.</span><span class="n">enable</span><span class="p">:</span>
@@ -1025,18 +1009,21 @@ The read value must be writen into an attribute named as the option, inside an i
 </div>
 </div></blockquote>
 <dl class="py class">
-<dt class="sig sig-object py" id="lib.cfg.musicdb.MusicDBConfig">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.cfg.musicdb.</span></span><span class="sig-name descname"><span class="pre">MusicDBConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.musicdb.MusicDBConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">musicdb.lib.cfg.musicdb.</span></span><span class="sig-name descname"><span class="pre">MusicDBConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/etc/musicdb.ini'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/musicdb.html#MusicDBConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.musicdb.MusicDBConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides the access to the MusicDB configuration file.</p>
+<p>By default, the configuration will be read from <code class="docutils literal notranslate"><span class="pre">/etc/musicdb.ini</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Optional alternative configuration path. Default is <code class="docutils literal notranslate"><span class="pre">/etc/musicdb.ini</span></code></p>
+</dd>
+</dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.musicdb.MusicDBConfig.GetDirectory">
-<span class="sig-name descname"><span class="pre">GetDirectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig.GetDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig.GetDirectory" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method gets a string from the config file and checks if it is an existing directory.
-If not it prints a warning and creates the directory if possible.
-If it fails with an permission-error an additional error gets printed.
-Except printing the error nothing is done.
+<dt class="sig sig-object py" id="musicdb.lib.cfg.musicdb.MusicDBConfig.GetDirectory">
+<span class="sig-name descname"><span class="pre">GetDirectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/musicdb.html#MusicDBConfig.GetDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.musicdb.MusicDBConfig.GetDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method gets a string from the configuration file and checks if it is an existing directory.
+If not it prints a warning.
 The “invalid” path will be returned anyway, because it may be OK that the directory does not exist yet.</p>
-<p>The permissions of the new created directory will be <code class="docutils literal notranslate"><span class="pre">rwxrwxr-x</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1052,19 +1039,17 @@ The “invalid” path will be returned anyway, because it may be OK that the di
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.musicdb.MusicDBConfig.GetFile">
-<span class="sig-name descname"><span class="pre">GetFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">section</span></em>, <em class="sig-param"><span class="pre">option</span></em>, <em class="sig-param"><span class="pre">default</span></em>, <em class="sig-param"><span class="pre">logger=&lt;function</span> <span class="pre">error&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig.GetFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig.GetFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method gets a string from the config file and checks if it is an existing file.
-If not it prints an error.
-Except printing the error nothing is done.
-The “invalid” will be returned anyway, because it may be OK that the file does not exist yet.</p>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.musicdb.MusicDBConfig.GetFile">
+<span class="sig-name descname"><span class="pre">GetFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/musicdb.html#MusicDBConfig.GetFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.musicdb.MusicDBConfig.GetFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method gets a string from the configuration file and checks if it is an existing file.
+If not it prints a warning.
+The “invalid” path will be returned anyway, because it may be OK that the file does not exist yet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>section</strong> (<em>str</em>) – Section of an ini-file</p></li>
 <li><p><strong>option</strong> (<em>str</em>) – Option inside the section of an ini-file</p></li>
 <li><p><strong>default</strong> (<em>str</em>) – Default file path if option is not set in the file</p></li>
-<li><p><strong>logger</strong> – Logging-handler. Default is logging.error. logging.warning can be more appropriate in some situations.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1075,24 +1060,36 @@ The “invalid” will be returned anyway, because it may be OK that the file do
 
 </dd></dl>
 
-</section>
-<section id="module-lib.cfg.webui">
-<span id="webui-configuration"></span><h2>WebUI Configuration<a class="headerlink" href="#module-lib.cfg.webui" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-musicdb.lib.cfg.webui">
+<span id="webui-configuration-file"></span><h2>WebUI Configuration File<a class="headerlink" href="#module-musicdb.lib.cfg.webui" title="Permalink to this headline">¶</a></h2>
 <p>This module takes care of the WebUI configuration.</p>
 <p>The following sections and keys are available:</p>
 <blockquote>
-<div><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[meta]</span>
-<span class="na">version</span><span class="o">=</span><span class="s">1</span>
+<div><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[meta]</span><span class="w"></span>
+<span class="na">version</span><span class="o">=</span><span class="s">3</span><span class="w"></span>
 
-<span class="k">[WebUI]</span>
-<span class="na">videomode</span><span class="o">=</span><span class="s">disabled</span>
-<span class="na">lyrics</span><span class="o">=</span><span class="s">enabled</span>
+<span class="k">[WebUI]</span><span class="w"></span>
+<span class="na">videomode</span><span class="o">=</span><span class="s">disabled</span><span class="w"></span>
+<span class="na">lyrics</span><span class="o">=</span><span class="s">enabled</span><span class="w"></span>
 
-<span class="k">[ArtistsView]</span>
-<span class="na">showrelease</span><span class="o">=</span><span class="s">true</span>
+<span class="k">[MainMenu]</span><span class="w"></span>
+<span class="na">showstreamplayer</span><span class="o">=</span><span class="s">False</span><span class="w"></span>
+<span class="na">showsystemstatus</span><span class="o">=</span><span class="s">True</span><span class="w"></span>
 
-<span class="k">[debug]</span>
-<span class="na">blurartwork</span><span class="o">=</span><span class="s">false</span>
+<span class="k">[ArtistsView]</span><span class="w"></span>
+<span class="na">showrelease</span><span class="o">=</span><span class="s">True</span><span class="w"></span>
+
+<span class="k">[GenreSelectionView]</span><span class="w"></span>
+<span class="na">showother</span><span class="o">=</span><span class="s">True</span><span class="w"></span>
+
+<span class="k">[Stream]</span><span class="w"></span>
+<span class="na">url</span><span class="o">=</span><span class="s">http://127.0.0.1:8000/stream</span><span class="w"></span>
+<span class="na">username</span><span class="o">=</span><span class="w"></span>
+<span class="na">password</span><span class="o">=</span><span class="w"></span>
+
+<span class="k">[debug]</span><span class="w"></span>
+<span class="na">blurartwork</span><span class="o">=</span><span class="s">false</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -1105,19 +1102,30 @@ This includes, but is not limited to, the buttons of the main menu</p>
 <dt>[WebUI]-&gt;lyrics (string: <code class="docutils literal notranslate"><span class="pre">&quot;enabled&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;disabled&quot;</span></code>):</dt><dd><p>Defines if lyrics should be present in the WebUI or not.
 This includes, but is not limited to, the lyrics state buttons in the Song Lists of the albums</p>
 </dd>
+<dt>[MainMenu]-&gt;showstreamplayer (boolean):</dt><dd><p>If True, then the MusicDB audio stream player is shown in the main menu.
+This player can them be used to connect to the audio stream from the WebUI.</p>
+</dd>
+<dt>[MainMenu]-&gt;showsystemstatus (boolean):</dt><dd><p>If True, the MusicDB system status is shown in the main menu.
+It shows if the connection between the MusicDB Server and Icecast is up and if data gets streamed.
+These information are not mandatory to know but help you to quickly identify issues with the audio stream.</p>
+</dd>
 <dt>[ArtistsView]-&gt;showrelease (boolean):</dt><dd><p>If true, the release date of an album is shown next to its name.
 If false, the release date will not be shown.
 In any case, the albums of an artist are sorted by their release date.</p>
 </dd>
 <dt>[GenreSelectionView]-&gt;showother (boolean):</dt><dd><p>If true, the default genre “Other” will be listed.</p>
 </dd>
+<dt>[Stream]-&gt;url,username,password (strings):</dt><dd><p>Access data to the audio stream that gets managed by MusicDB.
+If the stream is not protected by the authentication methods of Icecast,
+no user name or password is required.</p>
+</dd>
 <dt>[debug]-&gt;blurartwork (boolean):</dt><dd><p>If true, all artworks are blurred.
 This is useful to avoid copyright violations on screenshots that shall be public available</p>
 </dd>
 </dl>
 <dl class="py class">
-<dt class="sig sig-object py" id="lib.cfg.webui.WebUIConfig">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.cfg.webui.</span></span><span class="sig-name descname"><span class="pre">WebUIConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/webui.html#WebUIConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.webui.WebUIConfig" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.webui.WebUIConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">musicdb.lib.cfg.webui.</span></span><span class="sig-name descname"><span class="pre">WebUIConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/webui.html#WebUIConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.webui.WebUIConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class holds the configuration for the WebUI.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1125,8 +1133,8 @@ This is useful to avoid copyright violations on screenshots that shall be public
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.webui.WebUIConfig.LoadConfig">
-<span class="sig-name descname"><span class="pre">LoadConfig</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/webui.html#WebUIConfig.LoadConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.webui.WebUIConfig.LoadConfig" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.webui.WebUIConfig.LoadConfig">
+<span class="sig-name descname"><span class="pre">LoadConfig</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/webui.html#WebUIConfig.LoadConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.webui.WebUIConfig.LoadConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method loads the current WebUI configuration and returns them in a dictionary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -1136,8 +1144,8 @@ This is useful to avoid copyright violations on screenshots that shall be public
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.webui.WebUIConfig.SaveConfig">
-<span class="sig-name descname"><span class="pre">SaveConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/webui.html#WebUIConfig.SaveConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.webui.WebUIConfig.SaveConfig" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.webui.WebUIConfig.SaveConfig">
+<span class="sig-name descname"><span class="pre">SaveConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/webui.html#WebUIConfig.SaveConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.webui.WebUIConfig.SaveConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method saves the current WebUI configuration.
 It is important that the whole configuration is included in <em>cfg</em>.</p>
 <dl class="field-list simple">
@@ -1152,15 +1160,15 @@ It is important that the whole configuration is included in <em>cfg</em>.</p>
 
 </dd></dl>
 
-</section>
-<section id="module-lib.cfg.extern">
-<span id="external-storage-configuration"></span><h2>External Storage Configuration<a class="headerlink" href="#module-lib.cfg.extern" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-musicdb.lib.cfg.extern">
+<span id="external-storage-configuration-file"></span><h2>External Storage Configuration File<a class="headerlink" href="#module-musicdb.lib.cfg.extern" title="Permalink to this headline">¶</a></h2>
 <p>This class reads the configuration of an external music storage.
 All sections and options can be accessed by their names: <code class="docutils literal notranslate"><span class="pre">ExternConfig(...).section.option</span></code>.
 If values get changed, they will not be stored!</p>
 <p class="rubric">Example</p>
-<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[meta]</span>
-<span class="na">version</span> <span class="o">=</span> <span class="s">1</span>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[meta]</span><span class="w"></span>
+<span class="na">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">ExternConfig</span><span class="p">(</span><span class="s2">&quot;test.ini&quot;</span><span class="p">)</span>
@@ -1168,22 +1176,23 @@ If values get changed, they will not be stored!</p>
 </pre></div>
 </div>
 <dl class="py class">
-<dt class="sig sig-object py" id="lib.cfg.extern.ExternConfig">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.cfg.extern.</span></span><span class="sig-name descname"><span class="pre">ExternConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/extern.html#ExternConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.extern.ExternConfig" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.extern.ExternConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">musicdb.lib.cfg.extern.</span></span><span class="sig-name descname"><span class="pre">ExternConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/extern.html#ExternConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.extern.ExternConfig" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</section>
-<section id="module-lib.cfg.mdbstate">
-<span id="musicdb-state"></span><h2>MusicDB State<a class="headerlink" href="#module-lib.cfg.mdbstate" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-musicdb.lib.cfg.mdbstate">
+<span id="musicdb-state-files"></span><h2>MusicDB State Files<a class="headerlink" href="#module-musicdb.lib.cfg.mdbstate" title="Permalink to this headline">¶</a></h2>
 <p>This module takes care that the state of MusicDB will persist over several sessions.
-This is not done automatically by the <a class="reference internal" href="#lib.cfg.mdbstate.MDBState" title="lib.cfg.mdbstate.MDBState"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDBState</span></code></a> class.
+This is <em>not done automatically</em> by the <a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState" title="musicdb.lib.cfg.mdbstate.MDBState"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDBState</span></code></a> class.
 Each read or write process to the files that hold the state will be triggered by the classes who manage the related information.</p>
-<p>The state is stored in several files in a directory that can be configured via <code class="docutils literal notranslate"><span class="pre">[server]-&gt;statedir</span></code></p>
-<p>All files inside the state directory are managed by the <a class="reference internal" href="#lib.cfg.mdbstate.MDBState" title="lib.cfg.mdbstate.MDBState"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDBState</span></code></a> class.
+<p>The state is stored in several files in a sub-directory <code class="docutils literal notranslate"><span class="pre">state</span></code> inside the MusicDB data directory.
+More details can be found in <a class="reference internal" href="../basics/data.html"><span class="doc">MusicDB Data Files and Directories</span></a>.</p>
+<p>All files inside the state directory are managed by the <a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState" title="musicdb.lib.cfg.mdbstate.MDBState"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDBState</span></code></a> class.
 The content of those files should not be changed by any user because its content gets not validated.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.cfg.mdbstate.</span></span><span class="sig-name descname"><span class="pre">MDBState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">musicdb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.mdbstate.MDBState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">musicdb.lib.cfg.mdbstate.</span></span><span class="sig-name descname"><span class="pre">MDBState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">musicdb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/mdbstate.html#MDBState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.mdbstate.MDBState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class holds the MusicDB internal state.</p>
 <p>The following table shows which method is responsible for which file in the MusicDB State Directory.</p>
 <blockquote>
@@ -1201,40 +1210,40 @@ The content of those files should not be changed by any user because its content
 </thead>
 <tbody>
 <tr class="row-even"><td><p>songqueue.csv</p></td>
-<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadSongQueue" title="lib.cfg.mdbstate.MDBState.LoadSongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadSongQueue()</span></code></a></p></td>
-<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveSongQueue" title="lib.cfg.mdbstate.MDBState.SaveSongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveSongQueue()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.LoadSongQueue" title="musicdb.lib.cfg.mdbstate.MDBState.LoadSongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadSongQueue()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.SaveSongQueue" title="musicdb.lib.cfg.mdbstate.MDBState.SaveSongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveSongQueue()</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>videoqueue.csv</p></td>
-<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadVideoQueue" title="lib.cfg.mdbstate.MDBState.LoadVideoQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadVideoQueue()</span></code></a></p></td>
-<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveVideoQueue" title="lib.cfg.mdbstate.MDBState.SaveVideoQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveVideoQueue()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.LoadVideoQueue" title="musicdb.lib.cfg.mdbstate.MDBState.LoadVideoQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadVideoQueue()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.SaveVideoQueue" title="musicdb.lib.cfg.mdbstate.MDBState.SaveVideoQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveVideoQueue()</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td><p>artistblacklist.csv</p></td>
-<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></p></td>
-<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.LoadBlacklists" title="musicdb.lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.SaveBlacklists" title="musicdb.lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>albumblacklist.csv</p></td>
-<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></p></td>
-<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.LoadBlacklists" title="musicdb.lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.SaveBlacklists" title="musicdb.lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td><p>songblacklist.csv</p></td>
-<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></p></td>
-<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.LoadBlacklists" title="musicdb.lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.SaveBlacklists" title="musicdb.lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>videoblacklist.csv</p></td>
-<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></p></td>
-<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.LoadBlacklists" title="musicdb.lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.SaveBlacklists" title="musicdb.lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></p></td>
 </tr>
 </tbody>
 </table>
 </div></blockquote>
 <p>Additional this class allows to access the file <code class="docutils literal notranslate"><span class="pre">state.ini</span></code> in the MusicDB State Directory.
-The file can be accessed via <a class="reference internal" href="#lib.cfg.config.Config.Set" title="lib.cfg.config.Config.Set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Set()</span></code></a> and <a class="reference internal" href="#lib.cfg.config.Config.Get" title="lib.cfg.config.Config.Get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Get()</span></code></a>.
+The file can be accessed via <a class="reference internal" href="#musicdb.lib.cfg.config.Config.Set" title="musicdb.lib.cfg.config.Config.Set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Set()</span></code></a> and <a class="reference internal" href="#musicdb.lib.cfg.config.Config.Get" title="musicdb.lib.cfg.config.Config.Get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Get()</span></code></a>.
 The section <code class="docutils literal notranslate"><span class="pre">meta</span></code> is reserved for this <code class="docutils literal notranslate"><span class="pre">MDBState</span></code> class.</p>
 <p>Another section is <code class="docutils literal notranslate"><span class="pre">MusicDB</span></code> that represents the state of the MusicDB WebUI (and possibly backend in future).
-One key is <code class="docutils literal notranslate"><span class="pre">uimode</span></code> that can be set via <a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SetUIMode" title="lib.cfg.mdbstate.MDBState.SetUIMode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetUIMode()</span></code></a> and read via <a class="reference internal" href="#lib.cfg.mdbstate.MDBState.GetUIMode" title="lib.cfg.mdbstate.MDBState.GetUIMode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetUIMode()</span></code></a>.
+One key is <code class="docutils literal notranslate"><span class="pre">uimode</span></code> that can be set via <a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.SetUIMode" title="musicdb.lib.cfg.mdbstate.MDBState.SetUIMode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetUIMode()</span></code></a> and read via <a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.GetUIMode" title="musicdb.lib.cfg.mdbstate.MDBState.GetUIMode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetUIMode()</span></code></a>.
 The value for this key is a string and can be <code class="docutils literal notranslate"><span class="pre">&quot;audio&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code>.
 The value represents if the user interface is in audio-mode to manage an audio stream or video-mode to present music videos.</p>
-<p>The method <a class="reference internal" href="#lib.cfg.mdbstate.MDBState.GetFilterList" title="lib.cfg.mdbstate.MDBState.GetFilterList"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetFilterList()</span></code></a> accesses a section <code class="docutils literal notranslate"><span class="pre">albumfiler</span></code>.
+<p>The method <a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.GetFilterList" title="musicdb.lib.cfg.mdbstate.MDBState.GetFilterList"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetFilterList()</span></code></a> accesses a section <code class="docutils literal notranslate"><span class="pre">albumfiler</span></code>.
 Each key in this section represents a main genre (all characters lower case) tag and can have the value <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>.
 If a genre is not listed in this section, it is assumed to have the value <code class="docutils literal notranslate"><span class="pre">False</span></code>.
 As soon as the genre gets activated via the WebUIs genre selection interface, it appears in the albumfiler-list.</p>
@@ -1247,14 +1256,15 @@ As soon as the genre gets activated via the WebUIs genre selection interface, it
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.GetFilterList">
-<span class="sig-name descname"><span class="pre">GetFilterList</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.GetFilterList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.GetFilterList" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.mdbstate.MDBState.GetFilterList">
+<span class="sig-name descname"><span class="pre">GetFilterList</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/mdbstate.html#MDBState.GetFilterList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.mdbstate.MDBState.GetFilterList" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of the activated genre
 The list consists of the names of the genres as configured by the user.
-That are the names returned by <a class="reference internal" href="musicdb.html#lib.db.musicdb.MusicDatabase.GetAllTags" title="lib.db.musicdb.MusicDatabase.GetAllTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.GetAllTags()</span></code></a>.</p>
+That are the names returned by <a class="reference internal" href="musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetAllTags" title="musicdb.lib.db.musicdb.MusicDatabase.GetAllTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">musicdb.lib.db.musicdb.MusicDatabase.GetAllTags()</span></code></a>.</p>
 <p>The available genres get compared to the ones set in the state.ini file inside the MusicDB State directory.
 If a genre is not defined in the configuration file, its default value is <code class="docutils literal notranslate"><span class="pre">False</span></code> and so it is not active.
 Before the comparison, the state file gets reloaded so that external changes get applied directly.</p>
+<p>See <a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.UpdateFilterList" title="musicdb.lib.cfg.mdbstate.MDBState.UpdateFilterList"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateFilterList()</span></code></a> for changing the state of the genres.</p>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">filter</span> <span class="o">=</span> <span class="n">mdbstate</span><span class="o">.</span><span class="n">GetFilterList</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span> <span class="c1"># [&#39;Metal&#39;,&#39;NDH&#39;]</span>
@@ -1269,8 +1279,8 @@ Before the comparison, the state file gets reloaded so that external changes get
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.GetUIMode">
-<span class="sig-name descname"><span class="pre">GetUIMode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.GetUIMode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.GetUIMode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.mdbstate.MDBState.GetUIMode">
+<span class="sig-name descname"><span class="pre">GetUIMode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/mdbstate.html#MDBState.GetUIMode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.mdbstate.MDBState.GetUIMode" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method simply returns the content of <code class="docutils literal notranslate"><span class="pre">[MusicDB]-&gt;uimode</span></code> in the state.ini file.
 In case the value is invalid or not set, <code class="docutils literal notranslate"><span class="pre">&quot;audio&quot;</span></code> gets returned.</p>
 <p>Valid strings are <code class="docutils literal notranslate"><span class="pre">&quot;audio&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code></p>
@@ -1282,10 +1292,10 @@ In case the value is invalid or not set, <code class="docutils literal notransla
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.LoadBlacklists">
-<span class="sig-name descname"><span class="pre">LoadBlacklists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songbllen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumbllen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artistbllen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videobllen</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadBlacklists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method returns a dictionary with the blacklist used by <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a>.
-The blacklists are managed by the <a class="reference internal" href="../mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface" title="mdbapi.blacklist.BlacklistInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlacklistInterface</span></code></a> class.
+<dt class="sig sig-object py" id="musicdb.lib.cfg.mdbstate.MDBState.LoadBlacklists">
+<span class="sig-name descname"><span class="pre">LoadBlacklists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songbllen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumbllen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artistbllen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videobllen</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/mdbstate.html#MDBState.LoadBlacklists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.mdbstate.MDBState.LoadBlacklists" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns a dictionary with the blacklist used by <a class="reference internal" href="../mdbapi/randy.html#musicdb.mdbapi.randy.Randy" title="musicdb.mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">musicdb.mdbapi.randy.Randy</span></code></a>.
+The blacklists are managed by the <a class="reference internal" href="../mdbapi/blacklist.html#musicdb.mdbapi.blacklist.BlacklistInterface" title="musicdb.mdbapi.blacklist.BlacklistInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlacklistInterface</span></code></a> class.
 This method also handles the blacklist length by adding empty entries or cutting off exceeding ones.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1297,16 +1307,16 @@ This method also handles the blacklist length by adding empty entries or cutting
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A dictionary with the blacklists as expected by <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a></p>
+<dd class="field-even"><p>A dictionary with the blacklists as expected by <a class="reference internal" href="../mdbapi/randy.html#musicdb.mdbapi.randy.Randy" title="musicdb.mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">musicdb.mdbapi.randy.Randy</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.LoadSongQueue">
-<span class="sig-name descname"><span class="pre">LoadSongQueue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadSongQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadSongQueue" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.mdbstate.MDBState.LoadSongQueue">
+<span class="sig-name descname"><span class="pre">LoadSongQueue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/mdbstate.html#MDBState.LoadSongQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.mdbstate.MDBState.LoadSongQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads the song queue from the state directory.</p>
-<p>The method returns the queue as needed inside <a class="reference internal" href="../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue" title="mdbapi.songqueue.SongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.songqueue.SongQueue()</span></code></a>:
+<p>The method returns the queue as needed inside <a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue" title="musicdb.mdbapi.songqueue.SongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">musicdb.mdbapi.songqueue.SongQueue()</span></code></a>:
 A list of dictionaries, each containing the <code class="docutils literal notranslate"><span class="pre">entryid</span></code> and <code class="docutils literal notranslate"><span class="pre">songid</span></code> as integers and <code class="docutils literal notranslate"><span class="pre">israndom</span></code> as boolean.</p>
 <p>The UUIDs of the queue entries remain.</p>
 <dl class="field-list simple">
@@ -1317,10 +1327,10 @@ A list of dictionaries, each containing the <code class="docutils literal notran
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.LoadVideoQueue">
-<span class="sig-name descname"><span class="pre">LoadVideoQueue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadVideoQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadVideoQueue" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.mdbstate.MDBState.LoadVideoQueue">
+<span class="sig-name descname"><span class="pre">LoadVideoQueue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/mdbstate.html#MDBState.LoadVideoQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.mdbstate.MDBState.LoadVideoQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads the video queue from the state directory.</p>
-<p>The method returns the queue as needed inside <a class="reference internal" href="../mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue" title="mdbapi.videoqueue.VideoQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.videoqueue.VideoQueue()</span></code></a>:
+<p>The method returns the queue as needed inside <a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue" title="musicdb.mdbapi.videoqueue.VideoQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">musicdb.mdbapi.videoqueue.VideoQueue()</span></code></a>:
 A list of dictionaries, each containing the <code class="docutils literal notranslate"><span class="pre">entryid</span></code> and <code class="docutils literal notranslate"><span class="pre">videoid</span></code> as integers and <code class="docutils literal notranslate"><span class="pre">israndom</span></code> as boolean.</p>
 <p>The UUIDs of the queue entries remain.</p>
 <dl class="field-list simple">
@@ -1331,10 +1341,10 @@ A list of dictionaries, each containing the <code class="docutils literal notran
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.ReadList">
-<span class="sig-name descname"><span class="pre">ReadList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.ReadList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.ReadList" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.mdbstate.MDBState.ReadList">
+<span class="sig-name descname"><span class="pre">ReadList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/mdbstate.html#MDBState.ReadList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.mdbstate.MDBState.ReadList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a list from the mdbstate directory.
-The <code class="docutils literal notranslate"><span class="pre">listname</span></code> argument defines which file gets read: <code class="docutils literal notranslate"><span class="pre">config.server.statedir/listname.csv</span></code>.</p>
+The <code class="docutils literal notranslate"><span class="pre">listname</span></code> argument defines which file gets read: <code class="docutils literal notranslate"><span class="pre">config.directories.state</span> <span class="pre">+</span> <span class="pre">&quot;/listname.csv&quot;</span></code>.</p>
 <p>This method should only be used by class internal methods.
 When a file can not be accessed, an empty list gets returned.
 So deleting a file is an option to reset an internal state of MusicDB.</p>
@@ -1349,10 +1359,10 @@ So deleting a file is an option to reset an internal state of MusicDB.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.SaveBlacklists">
-<span class="sig-name descname"><span class="pre">SaveBlacklists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blacklists</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveBlacklists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.mdbstate.MDBState.SaveBlacklists">
+<span class="sig-name descname"><span class="pre">SaveBlacklists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blacklists</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/mdbstate.html#MDBState.SaveBlacklists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.mdbstate.MDBState.SaveBlacklists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method stores the blacklist in the related CSV files.
-The data structure of the dictionary is expected to be the same, <a class="reference internal" href="../mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface" title="mdbapi.blacklist.BlacklistInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.blacklist.BlacklistInterface</span></code></a> uses.</p>
+The data structure of the dictionary is expected to be the same, <a class="reference internal" href="../mdbapi/blacklist.html#musicdb.mdbapi.blacklist.BlacklistInterface" title="musicdb.mdbapi.blacklist.BlacklistInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">musicdb.mdbapi.blacklist.BlacklistInterface</span></code></a> uses.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>blacklist</strong> (<em>dict</em>) – A dictionary of blacklists.</p>
@@ -1364,8 +1374,8 @@ The data structure of the dictionary is expected to be the same, <a class="refer
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.SaveSongQueue">
-<span class="sig-name descname"><span class="pre">SaveSongQueue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveSongQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveSongQueue" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.mdbstate.MDBState.SaveSongQueue">
+<span class="sig-name descname"><span class="pre">SaveSongQueue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/mdbstate.html#MDBState.SaveSongQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.mdbstate.MDBState.SaveSongQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method saves a song queue.
 The data structure of the queue must be exact as the one expected when the queue shall be loaded.</p>
 <dl class="field-list simple">
@@ -1379,8 +1389,8 @@ The data structure of the queue must be exact as the one expected when the queue
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.SaveVideoQueue">
-<span class="sig-name descname"><span class="pre">SaveVideoQueue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveVideoQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveVideoQueue" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.mdbstate.MDBState.SaveVideoQueue">
+<span class="sig-name descname"><span class="pre">SaveVideoQueue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/mdbstate.html#MDBState.SaveVideoQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.mdbstate.MDBState.SaveVideoQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method saves a video queue.
 The data structure of the queue must be exact as the one expected when the queue shall be loaded.</p>
 <dl class="field-list simple">
@@ -1394,8 +1404,8 @@ The data structure of the queue must be exact as the one expected when the queue
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.SetUIMode">
-<span class="sig-name descname"><span class="pre">SetUIMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SetUIMode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SetUIMode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.mdbstate.MDBState.SetUIMode">
+<span class="sig-name descname"><span class="pre">SetUIMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/mdbstate.html#MDBState.SetUIMode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.mdbstate.MDBState.SetUIMode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the UI mode in the state.ini file.
 Before writing the data <code class="docutils literal notranslate"><span class="pre">mode</span></code> gets checked if it contains a valid value.
 If mode is an invalid argument, an exception gets raised.</p>
@@ -1416,10 +1426,29 @@ If mode is an invalid argument, an exception gets raised.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.WriteList">
-<span class="sig-name descname"><span class="pre">WriteList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.WriteList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.WriteList" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="musicdb.lib.cfg.mdbstate.MDBState.UpdateFilterList">
+<span class="sig-name descname"><span class="pre">UpdateFilterList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/mdbstate.html#MDBState.UpdateFilterList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.mdbstate.MDBState.UpdateFilterList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the enable-state of a genre to the value of the parameter <code class="docutils literal notranslate"><span class="pre">enable</span></code>.</p>
+<p>The value is stored in the state.ini file under the category <code class="docutils literal notranslate"><span class="pre">&quot;albumfilter&quot;</span></code>.
+See <a class="reference internal" href="#musicdb.lib.cfg.mdbstate.MDBState.GetFilterList" title="musicdb.lib.cfg.mdbstate.MDBState.GetFilterList"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetFilterList()</span></code></a> for reading out the information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>genre</strong> (<em>str</em>) – Name of a genre to enable or disable</p></li>
+<li><p><strong>enable</strong> (<em>bool</em>) – Enable or disable genre</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="musicdb.lib.cfg.mdbstate.MDBState.WriteList">
+<span class="sig-name descname"><span class="pre">WriteList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/mdbstate.html#MDBState.WriteList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.mdbstate.MDBState.WriteList" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method write a list of rows into the related file.
-The <code class="docutils literal notranslate"><span class="pre">listname</span></code> argument defines which file gets written: <code class="docutils literal notranslate"><span class="pre">config.server.statedir/listname.csv</span></code>.</p>
+The <code class="docutils literal notranslate"><span class="pre">listname</span></code> argument defines which file gets written: <code class="docutils literal notranslate"><span class="pre">config.directories.state</span> <span class="pre">+</span> <span class="pre">&quot;/listname.csv&quot;</span></code>.</p>
 <p>When there is no header given (list of column names), the keys of the rows-dictionaries are used.</p>
 <p>This method should only be used by class internal methods.</p>
 <dl class="field-list simple">
@@ -1438,8 +1467,63 @@ The <code class="docutils literal notranslate"><span class="pre">listname</span>
 
 </dd></dl>
 
-</section>
-</section>
+</div>
+<div class="section" id="module-musicdb.lib.cfg.wsapikey">
+<span id="websocket-api-key-file"></span><h2>WebSocket API Key File<a class="headerlink" href="#module-musicdb.lib.cfg.wsapikey" title="Permalink to this headline">¶</a></h2>
+<p>This module takes care of the WebSocket API Key</p>
+<p>The key will be stored in the MusicDB data directory inside the config sub directory.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="musicdb.lib.cfg.wsapikey.WebSocketAPIKey">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">musicdb.lib.cfg.wsapikey.</span></span><span class="sig-name descname"><span class="pre">WebSocketAPIKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/wsapikey.html#WebSocketAPIKey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.wsapikey.WebSocketAPIKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class manages the WebSocket API Key.
+Use the method <a class="reference internal" href="#musicdb.lib.cfg.wsapikey.WebSocketAPIKey.Read" title="musicdb.lib.cfg.wsapikey.WebSocketAPIKey.Read"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Read()</span></code></a> to get the API key.</p>
+<p>If the key is missing, it will be generated.
+A new key gets also be set in the WebUI JavaScript configuration file <code class="docutils literal notranslate"><span class="pre">config.js</span></code>.</p>
+<p>To generate a new key, delete the <code class="docutils literal notranslate"><span class="pre">wsapikey.txt</span></code> from the MusicDB Configuration Directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> – Instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConifg</span></code> class</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="musicdb.lib.cfg.wsapikey.WebSocketAPIKey.CreateIfMissing">
+<span class="sig-name descname"><span class="pre">CreateIfMissing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/wsapikey.html#WebSocketAPIKey.CreateIfMissing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.wsapikey.WebSocketAPIKey.CreateIfMissing" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a new WebSocket API Key if none has been created yet.</p>
+<p>If the WebSocke API Key file exists nothing will be done.
+If it is missing, it will be created including a new WebSocket API Key.</p>
+<p>It also updates a new generated WebUI <code class="docutils literal notranslate"><span class="pre">config.js</span></code> file.
+It is expected that the <code class="docutils literal notranslate"><span class="pre">config.js</span></code> file exists.</p>
+<p>The WebUI JavaScript configuration must already exist.
+If that file already has a key, it will not be replaced.
+If no key exists yet (a dummy key <code class="docutils literal notranslate"><span class="pre">WSAPIKEY</span></code> is expected in place) the key will be set.</p>
+<p>For creating the key, <code class="docutils literal notranslate"><span class="pre">openssl</span></code> is used:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>openssl rand -base64 -out <span class="nv">$path</span> <span class="m">32</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success or if the key already exists, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="musicdb.lib.cfg.wsapikey.WebSocketAPIKey.Read">
+<span class="sig-name descname"><span class="pre">Read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/musicdb/lib/cfg/wsapikey.html#WebSocketAPIKey.Read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#musicdb.lib.cfg.wsapikey.WebSocketAPIKey.Read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the WebSocket API Key and returns it as string.
+If it does not exist, it will be created via <a class="reference internal" href="#musicdb.lib.cfg.wsapikey.WebSocketAPIKey.CreateIfMissing" title="musicdb.lib.cfg.wsapikey.WebSocketAPIKey.CreateIfMissing"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CreateIfMissing()</span></code></a>.</p>
+<p>Raises an exception if the key file cannot be created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The WebSocket API Key as string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
 
 
            </div>
@@ -1454,7 +1538,7 @@ The <code class="docutils literal notranslate"><span class="pre">listname</span>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
+        &copy; Copyright 2017 - 2022 Ralf Stemmer.
 
     </p>
   </div>
@@ -1476,7 +1560,7 @@ The <code class="docutils literal notranslate"><span class="pre">listname</span>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.1.0',
+            VERSION:'8.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1488,6 +1572,7 @@ The <code class="docutils literal notranslate"><span class="pre">listname</span>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/tabs.js"></script>
 
   
 

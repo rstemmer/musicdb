@@ -2,11 +2,11 @@
 Filesystem Interface
 ====================
 
-.. automodule:: lib.filesystem
+.. automodule:: musicdb.lib.filesystem
 
 Filesystem Class
 ----------------
 
-.. autoclass:: lib.filesystem.Filesystem
+.. autoclass:: musicdb.lib.filesystem.Filesystem
    :members:
 

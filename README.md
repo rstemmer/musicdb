@@ -36,9 +36,15 @@
 
 | Distribution | Download | Quick Installation |
 | --- | --- | --- |
+<<<<<<< HEAD
 | **Arch Linux**   | [📦 musicdb-8.1.0-1-any.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-1-any.pkg.tar.zst) | `pacman -U ./musicdb-8.1.0-1-any.pkg.tar.zst` |
 | **Fedora** 35    | [📦 musicdb-8.1.0-1.fc35.noarch.rpm](https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-1.fc35.noarch.rpm) | `dnf install ./musicdb-8.1.0-1.fc35.noarch.rpm` |
 | **Ubuntu** 21.10 | [📦 musicdb-8.1.0-1_all.deb](        https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-1_all.deb        ) | `apt install ./musicdb-8.1.0-1_all.deb` |
+=======
+| **Arch Linux**   | [📦 musicdb-8.1.0-1-any.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-1-any.pkg.tar.zst) | `pacman -U ./musicdb-8.0.0-1-any.pkg.tar.zst` |
+| **Fedora** 36    | [📦 musicdb-8.1.0-1.fc36.noarch.rpm](https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-1.fc36.noarch.rpm) | `dnf install ./musicdb-8.0.0-1.fc36.noarch.rpm` |
+| **Ubuntu** 22.04 | [📦 musicdb-8.1.0-1_all.deb](        https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-1_all.deb        ) | `apt install ./musicdb-8.0.0-1_all.deb` |
+>>>>>>> master
 | Source Code      | [📦 musicdb-8.1.0-src.tar.zst](      https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-src.tar.zst      ) | [⚙️ Install from Source Code](https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html) |
 | Documentation    | [📦 musicdb-8.1.0-doc.tar.zst](      https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-doc.tar.zst      ) | [⚙️ Install Documentation](https://rstemmer.github.io/musicdb/build/html/usage/installdocs.html) |
 
@@ -180,6 +186,8 @@ In case MusicDB does not run on outdated operating systems, update your system :
 * [Apache](https://httpd.apache.org/) for serving the Web User Interface
 * A detailed list of all dependencies can be found in the [Install from Source](https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html) documentation
 
+MusicDB is hardware independent. It works with any Linux distribution installed on PC, ARM (like [Raspberry Pi](https://www.raspberrypi.com/)) or Mac.
+
 I develop and operate MusicDB on an [Arch Linux](https://www.archlinux.org/) for x86-64. So on this system it will run most reliable :smiley:.
 
 ### Note on Debian/Ubuntu
@@ -189,19 +197,21 @@ I do not support Debian/Ubuntu distributions for lots of reasons.
 Anyway, periodically I test MusicDB also on an [Raspberry Pi 4](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/)
  with [Ubuntu](https://ubuntu.com/download/raspberry-pi)
  or [Raspberry PI OS](https://www.raspberrypi.com/software/) which is Debian based.
+So, in principle it works.
+There may be a .deb package for the latest Ubuntu system, but again, expect some difficulties using MusicDB on Debian/Ubuntu.
+Some quirks with Debian/Ubuntu are documented in the installation documentation.
 
-Sometime it happens that MusicDB does not run on Debian/Ubuntu because some packages provided by those distributions are too old.
+Sometime it happens that MusicDB does not run on certain distributions like Debian or Ubuntu LTS because the packages provided by those distributions are too old.
 I consider this as an issue of those distributions, not of MusicDB.
 
-There may be a .deb package for the latest Ubuntu system, but again, expect some difficulties using MusicDB on Debian/Ubuntu.
+For best experience I recommend Arch Linux or Fedora to run MusicDB.
 
-I recommend Arch Linux or Fedora to run MusicDB on.
-
-### Tests
+### Tested Distributions and Browsers
 
 🟢 Test succeeded, 🔴 Test failed, 🟡 Not tested
 
-The following list shows on which Linux Distributions I tested the MusicDB back-end and if it succeeded.
+
+The following list shows on which Linux distribution installing and running the MusicDB back-end succeeded:
 
 * 🟢 [Arch Linux](https://archlinux.org/)
 * 🟢 [Fedora 35](https://getfedora.org)
@@ -210,7 +220,8 @@ The following list shows on which Linux Distributions I tested the MusicDB back-
 * 🔴 [openSUSE Tumbleweed](https://get.opensuse.org/tumbleweed)<sup>1</sup>
 * 🟡 [Raspberry PI OS](https://www.raspberrypi.com/software/)
 
-The following list shows with which web browsers I tested the MusicDB front-end and if it succeeded.
+
+The following list shows on which web browser running the MusicDB front-end succeeded:
 
 * 🟢 [Firefox](https://www.mozilla.org/en-US/)
 * 🟢 [Chrome](https://www.google.com/chrome/index.htm)

@@ -2,5 +2,5 @@
 server - MusicDB Websocket Server
 =================================
 
-.. automodule:: mod.server
+.. automodule:: musicdb.mod.server
 

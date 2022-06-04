@@ -22,6 +22,12 @@ Music:
    A piece of Music can be a Song or a Video.
    Music is the super-set of both.
 
+Album:
+   A collection of Songs and additional *Album Files*.
+
+Album Files:
+   Songs, videos and any other file related to an Album.
+
 
 Artwork, Thumbnail, Frame and Preview
 -------------------------------------

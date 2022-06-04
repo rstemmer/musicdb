@@ -1,6 +1,6 @@
 
-MusicDB Stream
-==============
+MusicDB Streaming Concept
+=========================
 
 This is the overall documentation of the streaming process in MusicDB
 
@@ -58,21 +58,21 @@ Furthermore it shows where user actions are handled, and where events come from.
 
 The *purple* parts are the implementation of the streaming functionality.
 It starts from the :doc:`/mdbapi/songqueue` that provides a queue with all songs that shall be streamed.
-The :meth:`mdbapi.audiostream.AudioStreamingThread` gets the song at index 0 and streams it 
-using the :class:`lib.stream.icecast.IcecastInterface` (See also :doc:`/lib/icecast`).
+The :meth:`musicdb.mdbapi.audiostream.AudioStreamingThread` gets the song at index 0 and streams it 
+using the :class:`musicdb.lib.stream.icecast.IcecastInterface` (See also :doc:`/lib/icecast`).
 
-The :class:`lib.stream.icecast.IcecastInterface` then loads the audio file of the song that shall be streamed.
+The :class:`musicdb.lib.stream.icecast.IcecastInterface` then loads the audio file of the song that shall be streamed.
 Loading, and at the same time transcoding, is done with :doc:`/lib/gstreamer`.
-The :class:`lib.stream.gstreamer.GStreamerInterface` class provides the audio data as a stream of MP3 frames.
+The :class:`musicdb.lib.stream.gstreamer.GStreamerInterface` class provides the audio data as a stream of MP3 frames.
 Those frames are read and analyzed with the :class:`lib.stream.mp3stream.MP3Stream` class
 and then send to the `Icecast <https://icecast.org/>`_ server (*dark gray* box).
 
 The *green* components are the interface to manage the behavior of the stream and to get its state.
-Depending on the actions, the :class:`mdbapi.songqueue.SongQueue` or :class:`mdbapi.audiostream.AudioStreamManager` class methods get called.
+Depending on the actions, the :class:`musicdb.mdbapi.songqueue.SongQueue` or :class:`musicdb.mdbapi.audiostream.AudioStreamManager` class methods get called.
 At the same time, the ``SongQueue`` as well as the ``AudioStreamingThread`` can trigger events that will be propagated back to the WebUI.
 
 Furthermore the *blue* components are involved in the streaming.
-The :class:`mdbapi.randy.Randy` class is used to get random songs when the queue runs empty, or when the user wants to add a random song to the queue.
+The :class:`musicdb.mdbapi.randy.Randy` class is used to get random songs when the queue runs empty, or when the user wants to add a random song to the queue.
 
 The ``AudioStreamingThread`` informs the :doc:`/mdbapi/tracker` about new played songs and when songs were skipped.
 

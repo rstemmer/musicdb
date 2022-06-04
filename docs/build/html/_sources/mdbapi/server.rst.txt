@@ -2,7 +2,7 @@
 MusicDB Websocket Server
 ========================
 
-.. automodule:: mdbapi.server
+.. automodule:: musicdb.mdbapi.server
    :members: SignalHandler, SIGTERM_Handler,
       Initialize,
       StartWebSocketServer,
