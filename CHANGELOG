@@ -25,13 +25,14 @@ Run  git log --oneline  for more details
 │ * [WebUI] index.html now only loads a merged css file and a merged js file. debug.html loads each single source file.
 │ * [WebSocket] Fixed a crash ("RuntimeError: To use txaio, you must first select a framework") when using MusicDB with the latest Autobahn framework
 │
-│ * Solved Issues: #76, #81
+│ * Solved Issues: #76, #80, #81
 │
 ┝━ MINOR CHANGES
 │ * [WebUI] MusicDB WebSocket connection interface refactored (now object oriented)
 │ * [WebUI] It is now possible to continue an upload when the connection gets lost in between
 │ + [WebUI] Reconnect button to connection error layer added
 │ * [WebUI] Flickering background during Drag'n'Drop fixed
+│ * [WebUI] ArtistsView gets updated after reconnecting to the back end
 │ * [Randy] Song selection algorithm changed: Album selection is now uniform distributed, not by their amount of songs.
 │ * [Randy] Reloads its configuration before searching a new song
 │ * [Randy] If all songs of an album are on the blacklist, "AddRandomSongFromAlbum" will return one of the blacklisted songs instead of None.
