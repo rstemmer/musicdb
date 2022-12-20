@@ -28,7 +28,6 @@ The following sections describe how to install MusicDB and its dependencies.
 For Arch Linux and Fedora, a package is provided that can be installed via ``pacman`` on Arch Linux or ``dnf`` on Fedora.
 If you do not use Arch Linux or Fedora, see the :doc:`/usage/fromsource` documentation.
 
-Download the latest MusicDB package and execute the following commands.
 To make the web interface accessible ``apache`` is used as web server.
 Any other web server can be used as well.
 Finally Icecast is used to provide an SSL secured audio stream.
@@ -46,7 +45,7 @@ Download
 
 Download the latest package file from the `MusicDB Releases page on GitHub <https://github.com/rstemmer/musicdb/releases>`_.
 There are several packages available.
-Download the one that matches to your Linux Distribution.
+Download the one that matches to your Linux Distribution or the source package.
 
 Be aware that MusicDB requires lots of libraries because of its dependency to `FFmpeg <https://www.ffmpeg.org/>`_ and `gstreamer <https://gstreamer.freedesktop.org/>`_.
 All libraries and dependencies are available in the Arch Linux repository so that they will be installed automatically by the package manager.
@@ -168,6 +167,13 @@ that will be managed, presented and streamed by MusicDB.
 
 **Its existence is mandatory for MusicDB to work correctly.**
 
+The default music directory will be ``/var/music``.
+This directory will be set up during the installation of MusicDB.
+If you want to stay with this directory for your music collection you can continue with the next section.
+Otherwise continue with this section to get guided to setup a different music directory.
+
+**When using SELinux then continue reading this section in any case. Additional steps may be necessary.**
+
 Before you can start the MusicDB server, a music directory needs to be defined.
 This can be done in the :doc:`/basics/config` file that is placed at ``/etc/musicdb.ini``.
 In this file you need to set the music directory in the section->entry: ``[directories]->music``.
@@ -235,7 +241,8 @@ If you want to turn off the debug log file edit ``/etc/musicdb.ini`` and change 
 Start MusicDB Server
 --------------------
 
-After setting up the music directory, the WebSocket API Key and possibly other settings, the MusicDB websocket server can be started via ``systemctl start musicdb``.
+After checking and maybe setting up a custom music directory, the WebSocket API Key and possibly other settings,
+the MusicDB websocket server can be started via ``systemctl start musicdb``.
 If you want to autostart the server after a reboot (recommended), you have to enable it via ``systemctl enable musicdb``.
 
 .. code-block:: bash
@@ -252,8 +259,8 @@ This is fine. These files will automatically be created when you use MusicDB for
 There will also be an error "There are no songs in the database yet. Audio stream disabled. (Import albums and restart the server to enable audio streaming again.)".
 This is also an expected behavior because no music has been added to the MusicDB database.
 
-Now MusicDB is in a state where can be added and managed, but not streamed.
-**As soon as you added music to MusicDB, you can restart the server via ``systemctl restart musicdb`` and it will work with all its features including streaming audio.**
+Now MusicDB is in a state where music can be added and managed, but not streamed.
+**As soon as you added a first music album to MusicDB, you can restart the server via ``systemctl restart musicdb`` and it will work with all its features including streaming audio.**
 
 You can already access the websocket server with your web browser to see if all network settings around MusicDB are correct.
 Use the following address: `<https://127.0.0.1:9000>`_. Of course use the correct IP address and port if you changed the port.
@@ -270,8 +277,8 @@ A web server is required to serve the *MusicDB WebUI* - The web front-end for Mu
 
 This server can simply be installed via the package manager.
 
-If you used the package manager to install MusicDB, the Apache HTTP Server has already been installed as dependency.
-The default MusicDB Apache server configuration is already installed in the apache configuration directory.
+If you used the package manager to install MusicDB, the Apache HTTP Server has already been installed (or recommended) as dependency.
+The default MusicDB Apache server configuration is already installed in the Apache configuration directory.
 
 If you installed MusicDB from source, you find the configuration at ``/usr/share/musicdb/apache.conf``.
 
@@ -341,7 +348,7 @@ Now the web server is running. You can check the status via ``systemctl status h
 You should now be able to access the MusicDB WebUI via ``http://127.0.0.1/musicdb/``.
 The WebUI should load.
 It is likely that immediately a WebSocket connection error occurs.
-Follow the link presented in the error message to go through the web browsers process of allowing https connections to that (your) server.
+Follow the link presented in the error message (not in the title) to go through the web browsers process of allowing https connections to that (your) server.
 
 .. figure:: ../images/welcome.jpg
    :align: center
