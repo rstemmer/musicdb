@@ -260,7 +260,7 @@ There will also be an error "There are no songs in the database yet. Audio strea
 This is also an expected behavior because no music has been added to the MusicDB database.
 
 Now MusicDB is in a state where music can be added and managed, but not streamed.
-**As soon as you added a first music album to MusicDB, you can restart the server via ``systemctl restart musicdb`` and it will work with all its features including streaming audio.**
+**As soon as you added a first music album to MusicDB,** you can restart the server via ``systemctl restart musicdb`` and it will work with all its features including streaming audio.
 
 You can already access the websocket server with your web browser to see if all network settings around MusicDB are correct.
 Use the following address: `<https://127.0.0.1:9000>`_. Of course use the correct IP address and port if you changed the port.
