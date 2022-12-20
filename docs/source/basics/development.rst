@@ -1,129 +1,73 @@
-Workflow for distribution
-=========================
+Workflow for development
+========================
 
-This section of the documentation describes how to MusicDB packages will be created.
 
-The workflows starts with creating a clean source tarball.
-This archive is the base of all further packages.
+Setup the Source Code
+---------------------
 
-Create Release Candidate Branch
+Before starting developing on the MusicDB source code, you need to clone if from GitHub.
+
+You may want to create a fork of the original sources before.
+
+.. code-block:: bash
+
+   git clone git@github.com:rstemmer/musicdb.git # Or your fork
+   cd musicdb
+
+   # Optional steps
+   git config user.name "Your Name"           # Your name
+   git config user.email "your.name@mail.xyz" # Your e-mail address
+   git switch develop                         # Or create a new branch from
+
+
+Install and Setup MusicDB
+-------------------------
+
+It makes sense to install MusicDB on your development computer to use this installation for testing.
+
+See :doc:`/usage/install`.
+
+You may want to change some settings in ``/etc/musicdb.ini`` like:
+
+* ``[debug]→loglvel`` to ``DEBUG`` for a verbose log
+* ``[log]→logfile`` to ``/dev/null`` to avoid spamming the system journal
+* ``[websocket]→bind`` to ``127.0.0.1`` (The default value) for security reasons
+* ``[debug]→disableicecast`` to ``True`` if you do not want to setup Icecast on your development machine
+
+
+Prepare Development Environment
 -------------------------------
 
-Packages are created from a release candidate branch.
+* Additional tools
+   * Sphinx: python-sphinx, python-sphinx-inline-tabs, python-sphinx_rtd_theme
+   * sed, zstd
+   * svg2json
+   * python-setuptools, python-build
+   * Optional: makepkg / rpmbuild / debuild
+* Install MusicDB (Setup test environment)
+* Supportive scripts
+* WebUI debugging
+   * → http://127.0.0.1/musicdb/debug.html
 
 .. code-block:: bash
 
-   git checkout -b v8.0.0-rc
+   systemctl start httpd
+   systemctl start musicdb
 
 
-Update Version Numbers
-----------------------
+Read Debugging Log
+------------------
 
-There is a script that propagates the versions in the VERSION file through the whole project.
+The MusicDB websocket server writes all logs into a debug log file.
+To access the log file, you need to be in the MusicDB Unix group.
+The data inside the log file are Unicode encoded text strings extended with ANSI escape sequences for color.
+You can simply read those logs using the ``less`` command with the ``-R`` option.
+To make ``less`` continue reading the file and follow the update if MusicDB writes new entries into the log, use the ``+F`` option.
 
-.. code-block:: bash
-
-   cd scripts
-   vim ../VERSION
-   ./UpdateVersionNumbers.sh
-
-The release date needs to be updated manually.
-Also all files in ``dist/debian`` need to be updated manually.
-
-
-Build Packages via build.sh
----------------------------
-
-Inside the scripts directory is a script called ``build.sh``.
-This script can be used to build a source tarball that then can be used to build packages for some Linux distributions.
-Individual build steps can be given as parameter to the script.
-These steps are executed in the order of the parameters.
-The following steps exist:
-
-* **webui**: Build the release version of the WebUI (Aggregate all JavaScript files in one .js file, all CSS files in one .css file and all vector graphics in one .json file).
-* **src**: Implicit triggers the *webui* step to build a release version of the WebUI. Then all sources from the WebUI (incl. release version), the MusicDB websocket server, other shared files and some meta files like LICENSE and VERSION are collected as one tar archive. This archive contains all sources to install MusicDB from sources. The documentation is not included.
-* **doc**: Build the documentation from its sources and collect the resulting html based documentation as a tar archive.
-* **rpm**: Build a rpm package - expects an existing source package
-* **pkg**: Build a pkg package - expects an existing source package
-* **deb**: Build a deb package - expects an existing source package
-
-All created packages are stored in the pkg sub director inside the repository root directory.
-If the source archive gets not build explicitly before a distribution package gets build, an already existing source archive will be used - or an error occurs if it does not exist.
-
-
-
-Source Tarball
-^^^^^^^^^^^^^^
-
-The source tarball is created out of some directories and files of the git repository.
-It consists of the following files and directories:
-
-* ./musicdb
-* ./webui
-* ./share
-* ./sql
-* README.md
-* LICENSE
-* setup.py
-* pyproject.toml
-* CHANGELOG
-
-The script to create this archive is ``build.sh src``.
-It builds the archive into ``pkg/musicdb-$version-src.tar.zst``.
-The archive extracts into a ``musicdb-$version-src`` directory.
-
-This source archive is then used to create other packages.
-
-The source archive does not include the documentation.
-To create a separate documentation package, run ``build.sh doc``.
-It builds the archive into ``pkg/musicdb-$version-doc.tar.zst``.
-The archive extracts into a ``musicdb-$version-doc`` directory.
-
-
-Arch Linux pacman Package
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This section describes how to create a package for Arch Linux.
-
-Based on the source package, a ``pacman`` package can be build with the ``build.sh`` script.
+With default settings you can simply follow the following commands to access the MusicDB debugging log.
 
 .. code-block:: bash
 
-   # Create Packages
-   cd scripts
-   ./build src pkg doc
+   less -R +F /var/log/musicdb/debuglog.ansi
 
-
-Fedora rpm Package
-^^^^^^^^^^^^^^^^^^
-
-This section describes how to create a package for Fedora.
-
-.. code-block:: bash
-
-   # Create Build Environment
-   sudo dnf install rpmdevtools
-   rpmdev-setuptree
-
-   sudo dnf install python3-devel python3-build /usr/bin/pathfix.py
-
-   # Create Packages
-   cd scripts
-   ./build src rpm
-
-Debian/Ubuntu deb Package
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This section describes how to create a package for Debian that can also be installed on Ubuntu.
-
-.. code-block:: bash
-
-   # Create Build Environment
-   apt install build-essential debmake fakeroot pbuilder debhelper dh-exec
-   apt install zstd
-   apt install dh-python python3-all python3-setuptools
-
-   # Create Packages
-   cd scripts
-   ./build src deb
 
