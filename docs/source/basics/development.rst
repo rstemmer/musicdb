@@ -38,21 +38,28 @@ You may want to change some settings in ``/etc/musicdb.ini`` like:
 Prepare Development Environment
 -------------------------------
 
-* Additional tools
-   * Sphinx: python-sphinx, python-sphinx-inline-tabs, python-sphinx_rtd_theme
-   * sed, zstd
-   * svg2json
-   * python-setuptools, python-build
-   * Optional: makepkg / rpmbuild / debuild
-* Install MusicDB (Setup test environment)
-* Supportive scripts
-* WebUI debugging
-   * → http://127.0.0.1/musicdb/debug.html
+For development you may need some additional tools.
+Some basic tools are ``sed`` and ``zstd`` which may already me installed.
+For building the documentation via Sphinx: ``python-sphinx``, ``python-sphinx-inline-tabs``, ``python-sphinx_rtd_theme`` and make.
+To build the python modules for packaging you need ``python-setuptools`` and ``python-build``.
+For building packages for you distribution you may need ``makepkg``, ``rpmbuild`` or ``debuild``.
+To build the release version of the WebUI you need `svg2json <https://github.com/rstemmer/svg2json>`_.
+
 
 .. code-block:: bash
 
    systemctl start httpd
    systemctl start musicdb
+
+
+Supportive Scripts
+------------------
+
+
+WebUI Debugging
+---------------
+
+ → http://127.0.0.1/musicdb/debug.html
 
 
 Read Debugging Log
