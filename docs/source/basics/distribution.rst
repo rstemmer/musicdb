@@ -24,14 +24,36 @@ There is a script that propagates the versions in the VERSION file through the w
 .. code-block:: bash
 
    cd scripts
+   vim ../VERSION
    ./UpdateVersionNumbers.sh
 
 The release date needs to be updated manually.
 Also all files in ``dist/debian`` need to be updated manually.
 
 
+Build Packages via build.sh
+---------------------------
+
+Inside the scripts directory is a script called ``build.sh``.
+This script can be used to build a source tarball that then can be used to build packages for some Linux distributions.
+Individual build steps can be given as parameter to the script.
+These steps are executed in the order of the parameters.
+The following steps exist:
+
+* **webui**: Build the release version of the WebUI (Aggregate all JavaScript files in one .js file, all CSS files in one .css file and all vector graphics in one .json file).
+* **src**: Implicit triggers the *webui* step to build a release version of the WebUI. Then all sources from the WebUI (incl. release version), the MusicDB websocket server, other shared files and some meta files like LICENSE and VERSION are collected as one tar archive. This archive contains all sources to install MusicDB from sources. The documentation is not included.
+* **doc**: Build the documentation from its sources and collect the resulting html based documentation as a tar archive.
+* **rpm**: Build a rpm package - expects an existing source package
+* **pkg**: Build a pkg package - expects an existing source package
+* **deb**: Build a deb package - expects an existing source package
+
+All created packages are stored in the pkg sub director inside the repository root directory.
+If the source archive gets not build explicitly before a distribution package gets build, an already existing source archive will be used - or an error occurs if it does not exist.
+
+
+
 Source Tarball
---------------
+^^^^^^^^^^^^^^
 
 The source tarball is created out of some directories and files of the git repository.
 It consists of the following files and directories:
@@ -59,11 +81,11 @@ The archive extracts into a ``musicdb-$version-doc`` directory.
 
 
 Arch Linux pacman Package
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section describes how to create a package for Arch Linux.
 
-Based on the source package, a ``pacman`` package can be build with the ``pkg-build.sh`` script.
+Based on the source package, a ``pacman`` package can be build with the ``build.sh`` script.
 
 .. code-block:: bash
 
@@ -73,7 +95,7 @@ Based on the source package, a ``pacman`` package can be build with the ``pkg-bu
 
 
 Fedora rpm Package
-------------------
+^^^^^^^^^^^^^^^^^^
 
 This section describes how to create a package for Fedora.
 
@@ -90,7 +112,7 @@ This section describes how to create a package for Fedora.
    ./build src rpm
 
 Debian/Ubuntu deb Package
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section describes how to create a package for Debian that can also be installed on Ubuntu.
 
