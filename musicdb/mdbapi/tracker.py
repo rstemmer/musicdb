@@ -211,7 +211,7 @@ class SongTracker(Tracker):
         """
         See :meth:`~musicdb.mdbapi.tracker.Tracker.Track`
         """
-        self.Track(songid);
+        self.Track(songid, israndom);
 
 class VideoTracker(Tracker):
     """
