@@ -33,7 +33,7 @@ from musicdb.maintain.datadirectory import DataDirectoryMaintainer
 from musicdb.maintain.artwork       import ArtworkMaintainer
 from musicdb.maintain.selftest      import AssertDatabases, AssertMusicDirectory, AssertCertificate, AssertUserID, AssertGroupID
 
-VERSION = "8.1.0"
+VERSION = "8.2.0"
 
 DEFAULTCONFIGFILE = "/etc/musicdb.ini"
 
