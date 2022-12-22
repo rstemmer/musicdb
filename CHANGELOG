@@ -9,10 +9,11 @@ Run  git log --oneline  for more details
 ┍━━━━┫ 2023-??-?? ┣━━━━┫ 8.2.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │
-│ * Solved Issues:
+│ * Solved Issues: #18
 │
 ┝━ MINOR CHANGES
 │ * [WebUI] Fixed a bug preventing scrolling to an artist when clicking on an artist name in the search results
+│ * [WebUI] Use backdrop-filter feature for opaque overlays
 │ * [Tracker] Fixed a bug that lead the tracker think that all songs have not been added by the random song selection algorithm
 │              → All songs, including random added songs have been tracked since MusicDB 8.0.0 (Commit: deeb13e21456fb6b9973d68ec7690142924e617e - 15.10.2021)
 └───────────────────────────────────────╌╌
