@@ -39,12 +39,9 @@ class SearchResultsElement extends Element
 
 
 
-    // TODO: Use Element class
     CreateArtistResults(MDBArtistResults)
     {
-        let preview = document.createElement("div");
-        preview.classList.add("flex-column");
-        preview.classList.add("ArtistResults");
+        let preview = new Element("div", ["flex-column", "ArtistResults"]);
 
         for(let result of MDBArtistResults)
         {
@@ -53,36 +50,32 @@ class SearchResultsElement extends Element
                 continue;
 
             let MDBArtist     = result.artist;
-            let albumspreview = document.createElement("div");
-            albumspreview.classList.add("flex-row");
-            albumspreview.classList.add("AlbumResults");
+            let albumspreview = new Element("div", ["flex-row", "AlbumResults"]);
+
             for(let MDBAlbum of result.albums)
             {
                 let tile = new SmallAlbumTile(MDBAlbum, ()=>
                     {
                         MusicDB.Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});
                     });
-                albumspreview.appendChild(tile.GetHTMLElement());
+                albumspreview.AppendChild(tile);
             }
 
-            let artistname = document.createElement("span");
-            artistname.innerText = MDBArtist.name;
-            artistname.onclick   = ()=>{WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);};
+            let artistname = new Element("span");
+            artistname.SetInnerText(MDBArtist.name);
+            artistname.SetClickEventCallback(()=>{WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);});
 
-            preview.appendChild(artistname);
-            preview.appendChild(albumspreview);
+            preview.AppendChild(artistname);
+            preview.AppendChild(albumspreview);
         }
         return preview;
     }
 
 
 
-    // TODO: Use Element class
     CreateAlbumResults(MDBAlbumResults)
     {
-        let albumspreview = document.createElement("div");
-        albumspreview.classList.add("flex-row");
-        albumspreview.classList.add("AlbumResults");
+        let albumspreview = new Element("div", ["flex-row", "AlbumResults"]);
 
         for(let result of MDBAlbumResults)
         {
@@ -92,19 +85,16 @@ class SearchResultsElement extends Element
                 {
                     MusicDB.Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});
                 });
-            albumspreview.appendChild(tile.GetHTMLElement());
+            albumspreview.AppendChild(tile);
         }
         return albumspreview;
     }
 
 
 
-    // TODO: Use Element class
     CreateSongResults(MDBSongResults)
     {
-        let songspreview = document.createElement("div");
-        songspreview.classList.add("flex-column");
-        songspreview.classList.add("SongResults");
+        let songspreview = new Element("div", ["flex-column", "SongResults"]);
 
         for(let result of MDBSongResults)
         {
@@ -112,7 +102,7 @@ class SearchResultsElement extends Element
             let MDBAlbum  = result.album;
             let MDBArtist = result.artist;
             let tile      = new SongTile(MDBSong, MDBAlbum, MDBArtist);
-            songspreview.appendChild(tile.GetHTMLElement());
+            songspreview.AppendChild(tile);
         }
         return songspreview;
     }
