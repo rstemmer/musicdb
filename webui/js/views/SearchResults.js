@@ -67,7 +67,7 @@ class SearchResultsElement extends Element
 
             let artistname = document.createElement("span");
             artistname.innerText = MDBArtist.name;
-            artistname.onclick   = ()=>{artistsview.ScrollToArtist(MDBArtist.id);};
+            artistname.onclick   = ()=>{WebUI.GetView("Artists").ScrollToArtist(MDBArtist.id);};
 
             preview.appendChild(artistname);
             preview.appendChild(albumspreview);
