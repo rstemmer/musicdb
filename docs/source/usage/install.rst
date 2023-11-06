@@ -152,13 +152,13 @@ The placeholder ``$username`` must be replaced by that user name.
 If you do not know your user name, enter ``id`` in the terminal.
 The name behind the UID is your user names.
 
-I recommend to add your user to the ``musicdb`` group: ``usermod -G musicdb $username``.
+I recommend to add your user to the ``musicdb`` group: ``usermod --append --groups musicdb $username``.
 Then you have extended read and write access to data managed by MusicDB.
 All users in the ``musicdb`` group can maintain MusicDB and use the MusicDB command line interface.
 
 .. code-block:: bash
 
-   sudo usermod -G musicdb $username
+   sudo usermod --append --groups musicdb $username
 
 Creating a Music Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
