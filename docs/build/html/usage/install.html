@@ -791,10 +791,10 @@ that owns or maintains the music collection.
 The placeholder <code class="docutils literal notranslate"><span class="pre">$username</span></code> must be replaced by that user name.
 If you do not know your user name, enter <code class="docutils literal notranslate"><span class="pre">id</span></code> in the terminal.
 The name behind the UID is your user names.</p>
-<p>I recommend to add your user to the <code class="docutils literal notranslate"><span class="pre">musicdb</span></code> group: <code class="docutils literal notranslate"><span class="pre">usermod</span> <span class="pre">-G</span> <span class="pre">musicdb</span> <span class="pre">$username</span></code>.
+<p>I recommend to add your user to the <code class="docutils literal notranslate"><span class="pre">musicdb</span></code> group: <code class="docutils literal notranslate"><span class="pre">usermod</span> <span class="pre">--append</span>  <span class="pre">--groups</span> <span class="pre">musicdb</span> <span class="pre">$username</span></code>.
 Then you have extended read and write access to data managed by MusicDB.
 All users in the <code class="docutils literal notranslate"><span class="pre">musicdb</span></code> group can maintain MusicDB and use the MusicDB command line interface.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo usermod -G musicdb <span class="nv">$username</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo usermod --append --groups musicdb <span class="nv">$username</span>
 </pre></div>
 </div>
 <div class="section" id="creating-a-music-directory">
