@@ -1,10 +1,22 @@
-Workflow for distribution
+Workflow for Distribution
 =========================
 
-This section of the documentation describes how to MusicDB packages will be created.
+This section of the documentation describes how MusicDB packages can be created.
 
 The workflows starts with creating a clean source tarball.
 This archive is the base of all further packages.
+
+Install svg2json
+----------------
+The WebUI used many vector graphics in form of individual svg files.
+To reduce traffic when loading the WebUI, all these individual svg files get bundled as base64 encoded strings into a JSON file.
+This is done by the python application `svg2json <https://github.com/rstemmer/svg2json>`_.
+
+You can install svg2json via ``pipx``:
+
+.. code-block:: bash
+
+   pipx svg2json
 
 Create Release Candidate Branch
 -------------------------------
