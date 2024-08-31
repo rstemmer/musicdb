@@ -23,7 +23,7 @@ depends=("python>=3.9"
     "python-systemd"
     "python-levenshtein"
     "python-mutagen"
-    "python-fuzzywuzzy"
+    "python-rapidfuzz"
     "python-pillow"
     "python-tqdm"
 )

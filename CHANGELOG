@@ -10,6 +10,7 @@ Run  git log --oneline  for more details
 ┝━ MAJOR CHANGES
 │
 │ * Solved Issues: #18
+│ * Replaced import fuzzywuzzy module by rapidfuzz module
 │
 ┝━ MINOR CHANGES
 │ * [WebUI] Fixed a bug preventing scrolling to an artist when clicking on an artist name in the search results

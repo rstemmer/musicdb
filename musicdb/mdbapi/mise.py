@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2024  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ Example:
 
 import unicodedata
 import re
-from fuzzywuzzy         import fuzz
+from rapidfuzz          import fuzz
 import datetime
 import logging
 from musicdb.lib.db.musicdb     import MusicDatabase
