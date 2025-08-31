@@ -13,6 +13,7 @@ Run  git log --oneline  for more details
 │ * Replaced import fuzzywuzzy module by rapidfuzz module
 │
 ┝━ MINOR CHANGES
+│ * [mise] Remove punctuation for string normalization. Terms like "tatu" should match "t.A.T.u" with high certainty.
 │ * [WebUI] Fixed a bug preventing scrolling to an artist when clicking on an artist name in the search results
 │ * [WebUI] Use backdrop-filter feature for opaque overlays
 │ * [WebUI] Cleaning album names no longer cuts of the name after '('
