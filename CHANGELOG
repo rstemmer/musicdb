@@ -11,8 +11,8 @@ Run  git log --oneline  for more details
 │ * [Tracker] Fixed a bug that lead the tracker think that all songs have not been added by the random song selection algorithm
 │              → All songs, including random added songs have been tracked since MusicDB 8.0.0 (Commit: deeb13e21456fb6b9973d68ec7690142924e617e - 15.10.2021)
 │
-│ * Solved Issues: #18
-│ * Replaced import fuzzywuzzy module by rapidfuzz module
+│ * Solved Issues: #18, #67
+│ * Replaced import fuzzywuzzy module by rapidfuzz module (Issue #67)
 │
 ┝━ MINOR CHANGES
 │ * [mise] Remove punctuation for string normalization. Terms like "tatu" should match "t.A.T.u" with high certainty.
