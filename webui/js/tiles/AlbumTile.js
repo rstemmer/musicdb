@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2025  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -88,11 +88,12 @@ function OptimizeAlbumName(albumname)
     let name = albumname;
 
     // Remove "notes"
-    let startofnote = name.indexOf("(", 1); // do not recognize an album name starting with ( as note
-    if(startofnote > 0)
-    {
-        name = name.substring(0, startofnote);
-    }
+    // ! This code broke displaying the album name "Na(c)htodreise" from "Eden weint im Grab"
+    //let startofnote = name.indexOf("(", 1); // do not recognize an album name starting with ( as note
+    //if(startofnote > 0)
+    //{
+    //    name = name.substring(0, startofnote);
+    //}
 
     // Remove suffixed
     name = _RemoveSuffix(name, " - EP");
