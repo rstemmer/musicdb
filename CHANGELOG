@@ -19,6 +19,7 @@ Run  git log --oneline  for more details
 │ * [WebUI] Fixed a bug preventing scrolling to an artist when clicking on an artist name in the search results
 │ * [WebUI] Use backdrop-filter feature for opaque overlays
 │ * [WebUI] Cleaning album names no longer cuts of the name after '('
+│ * [WebUI] Fixed accidentally closing the main menu by clicking on an empty area inside the menu
 └───────────────────────────────────────╌╌
 
 
