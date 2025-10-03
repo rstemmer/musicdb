@@ -136,7 +136,7 @@ class MainMenu extends Menu
             "About MusicDB",
             ()=>
             {
-                WebUI.GetManager("MainView").ShowAboutMusicDB(); // TODO: Show a different view
+                WebUI.GetManager("MainView").ShowAboutMusicDB();
             },
             "Show information about MusicDB including version numbers");
     }
