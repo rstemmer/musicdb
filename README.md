@@ -5,6 +5,9 @@
 
 ![MusicDB WebUI Screenshot](docs/landingpage/img/WebUI-3.2.0.jpg?raw=true)
 
+MusicDB is a music manager with focus on remote access to your local music collection using a web-based user interface.
+It allows you to manage an audio stream based on a song-queue.
+The WebUI is focusing on being a presentation of your music rather than being a database front-end.
 
 <p align="center">
   <a href="https://github.com/rstemmer/musicdb/releases">
@@ -15,9 +18,6 @@
   </a>
   <a href="https://github.com/rstemmer/musicdb/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/License-GPLv3-green.svg" alt="License"/>
-  </a>
-  <a href="https://twitter.com/MusicDBProject/">
-    <img src="https://img.shields.io/twitter/follow/musicdbproject.svg" alt="Twitter: @MusicDBProject"/>
   </a>
 </p>
 
@@ -34,28 +34,16 @@
   <a href="https://rstemmer.github.io/musicdb/build/html/usage/webui.html">🎵 Usage Guide</a>&nbsp;&nbsp;&nbsp;]
 </p>
 
-| Distribution | Download | Quick Installation |
-| --- | --- | --- |
-| **Arch Linux**   | [📦 musicdb-8.1.0-1-any.pkg.tar.zst](https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-1-any.pkg.tar.zst) | `pacman -U ./musicdb-8.0.0-1-any.pkg.tar.zst` |
-| **Fedora** 36    | [📦 musicdb-8.1.0-1.fc36.noarch.rpm](https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-1.fc36.noarch.rpm) | `dnf install ./musicdb-8.0.0-1.fc36.noarch.rpm` |
-| **Ubuntu** 22.04 | [📦 musicdb-8.1.0-1_all.deb](        https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-1_all.deb        ) | `apt install ./musicdb-8.0.0-1_all.deb` |
-| Source Code      | [📦 musicdb-8.1.0-src.tar.zst](      https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-src.tar.zst      ) | [⚙️ Install from Source Code](https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html) |
-| Documentation    | [📦 musicdb-8.1.0-doc.tar.zst](      https://github.com/rstemmer/musicdb/releases/download/v8.1.0/musicdb-8.1.0-doc.tar.zst      ) | [⚙️ Install Documentation](https://rstemmer.github.io/musicdb/build/html/usage/installdocs.html) |
+| Source Code      | [📦 musicdb-8.2.0-src.tar.zst](https://github.com/rstemmer/musicdb/releases/download/v8.2.0/musicdb-8.2.0-src.tar.zst) | [⚙️ Install from Source Code](https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html) |
+| Documentation    | [📦 musicdb-8.2.0-doc.tar.zst](https://github.com/rstemmer/musicdb/releases/download/v8.2.0/musicdb-8.2.0-doc.tar.zst) | [⚙️ Install Documentation](https://rstemmer.github.io/musicdb/build/html/usage/installdocs.html) |
 
 [⚙️ Install, Setup and Run MusicDB with Apache and Icecast](https://rstemmer.github.io/musicdb/build/html/usage/install.html)
 
-MusicDB requires Python 3 version 3.9.0 or later.
-
 ## 💡 Information
 
+MusicDB requires Python 3 version 3.9.0 or later.
+
 MusicDB is hardware independent. It works with any Linux distribution installed on PC, ARM (like [Raspberry Pi](https://www.raspberrypi.com/)) or Mac.
-
-**Important:** See [Transition from 7.2.0 to 8.0.0](https://rstemmer.github.io/musicdb/build/html/basics/data.html#transition-from-7-2-0-to-8-0-0) in case you already have MusicDB 7.2.0 installed.
-
-**Important:** After updating MusicDB from 8.0.0 to 8.1.0 check if configuration file (/etc/musicdb.ini) has been updated as well.
-Some new album cover scales (200 and 1000) need to be configured.
-Then restart musicdb (`systemctl restart musicdb`).
-Otherwise artworks are missing in the web front-end on high resolution screens.
 
 ---
 
@@ -79,11 +67,9 @@ I started this project on 4th January 2014.
 Since I finished a first prototype within one weekend, I use MusicDB almost every day.
 Time to share it with the world. :smiley:
 
-### New in Version 8.1.0
+### New in Version 8.2.0
 
-* Improved album filter for genres and sub genres
-* Experimental support for the Chromium web browser
-* Some annoying bugs fixed (Most important: Uploading albums can be continued after connection error)
+* Bug fixes and modernization
 
 ### Features
 
@@ -107,7 +93,6 @@ Time to share it with the world. :smiley:
 <p align="center">
   [&nbsp;&nbsp;
   <a href="https://github.com/rstemmer/musicdb/discussions">💬 GitHub Discussions</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-  <a href="https://twitter.com/MusicDBProject">🐦 Twitter</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
   <a href="https://github.com/rstemmer/musicdb/issues">🐞 GitHub Issues</a>&nbsp;&nbsp;&nbsp;]
 </p>
 
@@ -147,8 +132,8 @@ Some helpful hints:
 
 * Don't be to specific with the genre tags. Define only one tag per genre like *Metal*, *Pop*, *Classic*, …
 * Use sub-genre tags for a more detailed classification.
-* Tag albums beforehand and songs only when they are currently playing.
-* Set mood-flags only for the current playing song.
+* Tag albums beforehand and songs only when they are currently playing to not make it feel like annoying work.
+* Set mood-flags only for the current playing song - when you feel it, click it.
 * Check the [:notebook: Configuration of Randy](https://rstemmer.github.io/musicdb/build/html/basics/config.html#randy) to make sure the random song selection can work with your music collection. When you have a small music collection, decrease the blacklist sizes.
 * When defining the Album-View colors, pay attention to good contrast and follow the color scheme of the album cover.
 
@@ -187,12 +172,6 @@ I develop and operate MusicDB on an [Arch Linux](https://www.archlinux.org/) for
 ### Note on Debian/Ubuntu
 
 I do not support Debian/Ubuntu distributions for lots of reasons.
-
-Anyway, periodically I test MusicDB also on an [Raspberry Pi 4](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/)
- with [Ubuntu](https://ubuntu.com/download/raspberry-pi)
- or [Raspberry PI OS](https://www.raspberrypi.com/software/) which is Debian based.
-So, in principle it works.
-There may be a .deb package for the latest Ubuntu system, but again, expect some difficulties using MusicDB on Debian/Ubuntu.
 Some quirks with Debian/Ubuntu are documented in the installation documentation.
 
 Sometime it happens that MusicDB does not run on certain distributions like Debian or Ubuntu LTS because the packages provided by those distributions are too old.
@@ -208,16 +187,16 @@ For best experience I recommend Arch Linux or Fedora to run MusicDB.
 The following list shows on which Linux distribution installing and running the MusicDB back-end succeeded:
 
 * 🟢 [Arch Linux](https://archlinux.org/)
-* 🟢 [Fedora 36](https://getfedora.org)
-* 🟢 [Ubuntu 22.04 LTS](https://ubuntu.com/)
-* 🔴 [openSUSE Tumbleweed](https://get.opensuse.org/tumbleweed)<sup>1</sup>
+* 🟡 [Fedora 42](https://getfedora.org)
+* 🟡 [Ubuntu 24.04 LTS](https://ubuntu.com/)
+* 🟡 [openSUSE Leap](https://get.opensuse.org/tumbleweed)<sup>0</sup>
 * 🟡 [Raspberry PI OS](https://www.raspberrypi.com/software/)
 
 
 The following list shows on which web browser running the MusicDB front-end succeeded:
 
 * 🟢 [Firefox](https://www.mozilla.org/en-US/)
-* 🟢 [Chrome](https://www.google.com/chrome/index.htm)
+* 🟡 [Chrome](https://www.google.com/chrome/index.htm)
 * 🟡 [Safari](https://www.apple.com/safari/)
 
 <sup>**1: Python too Old** - Python 3.9+ is required; </sup>
@@ -232,21 +211,22 @@ Because I use this software every day, it will remain under active development f
 Beside maintaining this software, I also think about improving it or adding new features if necessary.
 
 The following list contains all huge improvements I'm planning to add to MusicDB.
-The links are pointing to the corresponding GitHub Project page.
 
-**[Integration of Music Videos](https://github.com/rstemmer/musicdb/projects/1)** (Alpha Stage)<br/>
-Integrate music videos into the MusicDB infrastructure.
-The UI should be switch to video-mode.
-Then, instead of showing artists and their albums, artists and their videos will be shown.
+**Integration of Music Videos** (Alpha Stage)<br/>
+Integration of music videos into the MusicDB infrastructure.
+The UI should provide a video mode.
+Instead of showing artists and their albums, artists and their videos will be shown in video mode.
 The videos can then be put into a video-queue that get streamed.
 
-**[Virtual Albums](https://github.com/rstemmer/musicdb/projects/8)** (Planning Phase)<br/>
-Virtual albums are a collection of single songs that are not related to an album, or a collection of sym-links to (for example) remixes.
+**Collections aka Virtual Albums** (Planning Phase)<br/>
+Collections are a set of single songs that are not related to a specific album.
+Collections may be related to a singe artist, or a collection of songs of multiple artists.
 
 **MusicAIv2** (Idea)<br/>
-Next generation of MusicAI. I already miss the old one that was surprisingly helpful tagging songs. The next generation might base on TensorFlow 2.0 directly. I will have the same or similar architecture since it worked in the past.
-
-More ideas in "brain-storming-phase" can be found on the [Roadmap GitHub Project page](https://github.com/rstemmer/musicdb/projects/4)
+Next generation of MusicAI.
+I already miss the old one that was surprisingly helpful tagging songs.
+The next generation might use <s>TensorFlow 2.0</s> a free AI framework.
+It might have the same or similar architecture since it worked in the past.
 
 
 ![MusicDB Logo](graphics/MusicDB/mdblogo.png?raw=true)
