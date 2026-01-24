@@ -1,6 +1,31 @@
 
 <h1 align="center">MusicDB</h1>
 
+---
+
+**MusicDB 8 is dying.** And so is this repository.
+
+MusicDB is a system application, a systemd service strongly integrated into the operating system environment.
+Python became a pure prototyping language with tooling focusing on isolation, not on integration.
+Python became the very wrong language and execution environment for applications like MusicDB.
+
+In addition to the core language issues, third party frameworks break or get abandoned.
+This was always a pain in the ass since the beginning of MusicDB.
+While I implemented more and more things myself, getting rid of many dependencies, there are sill some left.
+Some with lower quality than I would like to work with.
+
+Beside technical reasons there are also social motivation to go a step back with this repository.
+While this repo got many stars - I appreciate each single interaction with the community, thank you very much - The resonance is not worth the effort.
+Writing and maintaining software for other uses than oneself is very time consuming.
+I can barely keep up keeping MusicDB in a working state on my own machine.
+This is not the case for many setups other then mine.
+
+* As long as I still use MusicDB 8, there will be bug fixes pushed into this repo
+* Only the Linux distribution I use will be supported (At the moment Arch Linux)
+* I do no longer maintain the installation documentation
+
+---
+
 <p align="center"><b>Your Music. Your Cloud.</b></p>
 
 ![MusicDB WebUI Screenshot](docs/landingpage/img/WebUI-3.2.0.jpg?raw=true)
@@ -41,9 +66,10 @@ The WebUI is focusing on being a presentation of your music rather than being a 
 
 ## 💡 Information
 
-MusicDB requires Python 3 version 3.9.0 or later.
+With the way Python tooling evolves, MusicDB heavily relies on the package manager of the used Linux distribution.
+While MusicDB is hardware independent in theory, it uses frameworks that may or may not work on specific CPU architectures.
 
-MusicDB is hardware independent. It works with any Linux distribution installed on PC, ARM (like [Raspberry Pi](https://www.raspberrypi.com/)) or Mac.
+MusicDB is only supported for the latest version of Arch Linux installed on a PC with an 13th Gen Intel® Core™ i7-13700.
 
 ---
 
@@ -165,69 +191,13 @@ In case MusicDB does not run on outdated operating systems, update your system :
 * [Apache](https://httpd.apache.org/) for serving the Web User Interface
 * A detailed list of all dependencies can be found in the [Install from Source](https://rstemmer.github.io/musicdb/build/html/usage/fromsource.html) documentation
 
-MusicDB is hardware independent. It works with any Linux distribution installed on PC, ARM (like [Raspberry Pi](https://www.raspberrypi.com/)) or Mac.
-
 I develop and operate MusicDB on an [Arch Linux](https://www.archlinux.org/) for x86-64. So on this system it will run most reliable :smiley:.
 
-### Note on Debian/Ubuntu
+MusicDB is only supported for the latest version of Arch Linux installed on a PC with an 13th Gen Intel® Core™ i7-13700.
 
-I do not support Debian/Ubuntu distributions for lots of reasons.
-Some quirks with Debian/Ubuntu are documented in the installation documentation.
-
-Sometime it happens that MusicDB does not run on certain distributions like Debian or Ubuntu LTS because the packages provided by those distributions are too old.
-I consider this as an issue of those distributions, not of MusicDB.
-
-For best experience I recommend Arch Linux or Fedora to run MusicDB.
-
-### Tested Distributions and Browsers
-
-🟢 Test succeeded, 🔴 Test failed, 🟡 Not tested
-
-
-The following list shows on which Linux distribution installing and running the MusicDB back-end succeeded:
-
-* 🟢 [Arch Linux](https://archlinux.org/)
-* 🟡 [Fedora 42](https://getfedora.org)
-* 🟡 [Ubuntu 24.04 LTS](https://ubuntu.com/)
-* 🟡 [openSUSE Leap](https://get.opensuse.org/tumbleweed)<sup>0</sup>
-* 🟡 [Raspberry PI OS](https://www.raspberrypi.com/software/)
-
-
-The following list shows on which web browser running the MusicDB front-end succeeded:
-
-* 🟢 [Firefox](https://www.mozilla.org/en-US/)
-* 🟡 [Chrome](https://www.google.com/chrome/index.htm)
-* 🟡 [Safari](https://www.apple.com/safari/)
-
-<sup>**1: Python too Old** - Python 3.9+ is required; </sup>
-
-
----
-
-## 🏗 Roadmap
-
-MusicDB is under active development since 2014.
-Because I use this software every day, it will remain under active development for a long time.
-Beside maintaining this software, I also think about improving it or adding new features if necessary.
-
-The following list contains all huge improvements I'm planning to add to MusicDB.
-
-**Integration of Music Videos** (Alpha Stage)<br/>
-Integration of music videos into the MusicDB infrastructure.
-The UI should provide a video mode.
-Instead of showing artists and their albums, artists and their videos will be shown in video mode.
-The videos can then be put into a video-queue that get streamed.
-
-**Collections aka Virtual Albums** (Planning Phase)<br/>
-Collections are a set of single songs that are not related to a specific album.
-Collections may be related to a singe artist, or a collection of songs of multiple artists.
-
-**MusicAIv2** (Idea)<br/>
-Next generation of MusicAI.
-I already miss the old one that was surprisingly helpful tagging songs.
-The next generation might use <s>TensorFlow 2.0</s> a free AI framework.
-It might have the same or similar architecture since it worked in the past.
-
+I learned that not having the exact instruction set can break MusicDB dependencies, so I only say that MusicDB runs on my specific CPU as long as I still use this specific framework.
+Well, to be precise, the framework did not work on my CPU, causing an illegal instruction exception.
+But at least I then know and can workaround the issue (or wait until the dependency got fixed).
 
 ![MusicDB Logo](graphics/MusicDB/mdblogo.png?raw=true)
 
