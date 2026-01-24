@@ -56,7 +56,12 @@ class MusicDBWebSocketServer(object):
     def __init__(self):
         self.factory    = MusicDBWebSocketFactory()
         self.factory.protocol = MusicDBWebSocketProtocol
-        self.eventloop  = asyncio.get_event_loop()
+        try:
+            self.eventloop  = asyncio.get_event_loop()
+        except RuntimeError:
+            logging.warning("Expected to get an event loop from asyncio. Got none, so I create and set a new one!")
+            self.eventloop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
         self.coro       = None
         self.server     = None
         self.tlscontext = None
