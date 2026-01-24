@@ -268,7 +268,7 @@ class IcecastInterface(object):
         try:
             self.icecast.set_metadata_song(title)
         except Exception as e:
-            logging.warning("Sending title update to Icecast failed with error %s! \033[1;30m(Error will be igored)", str(e))
+            logging.warning("Sending title update to Icecast failed with error %s! \033[1;30m(Error will be ignored)", str(e))
             return False
         return True
 
