@@ -6,13 +6,15 @@
 └────────────────────────────────────────┘
 
 Run  git log --oneline  for more details
-┍━━━━┫ 2026-??-?? ┣━━━━┫ 8.2.0 ┣━━━━━━━━╍╍
+┍━━━━┫ 2026-01-29 ┣━━━━┫ 8.2.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ * [Tracker] Fixed a bug that lead the tracker think that all songs have not been added by the random song selection algorithm
 │              → All songs, including random added songs have been tracked since MusicDB 8.0.0 (Commit: deeb13e21456fb6b9973d68ec7690142924e617e - 15.10.2021)
 │
 │ * Solved Issues: #18, #67
 │ * Replaced import fuzzywuzzy module by rapidfuzz module (Issue #67)
+│
+│ ! This is the last public release of MusicDB !
 │
 ┝━ MINOR CHANGES
 │ * [server] Create asyncio event loop is none exists
