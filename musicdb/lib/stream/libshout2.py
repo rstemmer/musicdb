@@ -173,7 +173,6 @@ class LibShout2(object):
         lib.shout_metadata_new.restype = c_void_p
         return lib.shout_metadata_new()
 
-    @check_error_code
     def metadata_free(self, metadata):
         lib.shout_metadata_free.argtypes = [c_void_p]
         return lib.shout_metadata_free(metadata)

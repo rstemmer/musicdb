@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2025  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -47,11 +47,10 @@ class SVGIcon extends SVGBase
         this.SetIcon(name);
     }
 
-    SetTooltip(tooltip)
-    {
-        this.element.title = tooltip;
-    }
-
+    // This method overloads Element::SetColor.
+    // Instead of the foreground color, the background color gets changed.
+    // This is needed because of the icon being a masked div element
+    // so that the div elements background appears to be the icons foreground.
     SetColor(htmlcolor)
     {
         this.element.style.backgroundColor = htmlcolor;
@@ -91,13 +90,13 @@ class SVGButton extends SVGIcon
 
     Enable()
     {
-        this.element.dataset.disabled = false;
-        this.element.onclick = this.onclick;
+        this.SetData("enabled", true);
+        this.SetClickEventCallback(this.onclick);
     }
     Disable()
     {
-        this.element.dataset.disabled = true;
-        this.element.onclick = null;
+        this.SetData("enabled", false);
+        this.SetClickEventCallback(null);
     }
 }
 
@@ -180,14 +179,14 @@ class SVGCheckBox extends SVGSwitch
 
 
 
-class SVGToggleButton extends SVGIcon
+class SVGToggleButton extends SVGButton
 {
     constructor(name, onclick)
     {
         super(name)
-        this.onclick                  = onclick;
-        this.element.dataset.selected = false;
-        this.element.onclick          = ()=>{this.onIconClick();};
+        this.onclick = onclick;
+        this.SetSelectionState(false);
+        this.SetClickEventCallback(()=>{this.onIconClick();});
     }
 
     onIconClick()
@@ -205,12 +204,12 @@ class SVGToggleButton extends SVGIcon
 
     GetSelectionState()
     {
-        let state = this.element.dataset.selected;
+        let state = this.GetData("selected");
         return (state === "true");
     }
     SetSelectionState(state)
     {
-        this.element.dataset.selected = state;
+        this.SetData("selected", state);
     }
 }
 
@@ -223,14 +222,16 @@ class UnicodeToggleButton extends SVGToggleButton
         super("", onclick);
 
         // Destroy SVG icon
-        this.element.classList.remove("SVGIcon")
+        this.RemoveCSSClass("SVGIcon");
         this.element.style.cssText = "";
 
         // Create Unicode icon
-        this.element.innerText     = character;
-        this.element.classList.add("unicodeicon");
+        this.SetInnerText(character);
+        this.AddCSSClass("unicodeicon");
     }
 
+    // Reset SetColor function to its default behavior.
+    // I has been overloaded by the super class SVGIcon.
     SetColor(htmlcolor)
     {
         this.element.style.color = htmlcolor;

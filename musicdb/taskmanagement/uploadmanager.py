@@ -185,7 +185,7 @@ class UploadManager(TaskManager):
         # Check checksum
         destchecksum = self.fileprocessing.Checksum(task["uploadpath"], "sha1")
         if destchecksum != task["sourcechecksum"]:
-            logging.error("Upload Failed: \033[0;36m%s \e[1;30m(Checksum mismatch)", task["uploadpath"]);
+            logging.error("Upload Failed: \033[0;36m%s \033[1;30m(Checksum mismatch)", task["uploadpath"]);
             self.UpdateTaskState(task, "uploadfailed", "Checksum mismatch")
             return False
 

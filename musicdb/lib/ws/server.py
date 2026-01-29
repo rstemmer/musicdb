@@ -1,5 +1,6 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2022  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2025  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2025 - 2026  Marie Stemmer <marie.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -54,9 +55,20 @@ class MusicDBWebSocketServer(object):
     Outside of the MusicDB WebSocket Interface abstraction this is the only class to use.
     """
     def __init__(self):
+        # Autobahn expects and relies on an existing event loop.
+        # I also need one.
+        # In contrast to Autobahn, MusicDB can handle the case where asyncio not yet has one.
+        # This is why it is important that first MusicDB tries to access the event loop,
+        # and in case none exists, creating a new one.
+        # Therefore the factory setup must come after the event loop setup!
+        try:
+            self.eventloop  = asyncio.get_event_loop()
+        except RuntimeError:
+            logging.warning("Expected to get an event loop from asyncio. Got none, so I create and set a new one!")
+            self.eventloop = asyncio.new_event_loop()
+            asyncio.set_event_loop(self.eventloop)
         self.factory    = MusicDBWebSocketFactory()
         self.factory.protocol = MusicDBWebSocketProtocol
-        self.eventloop  = asyncio.get_event_loop()
         self.coro       = None
         self.server     = None
         self.tlscontext = None

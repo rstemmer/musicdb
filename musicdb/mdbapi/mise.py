@@ -1,5 +1,5 @@
-# MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# MusicDB,  a music manager with web-based UI that focus on music.
+# Copyright (C) 2017 - 2025  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ method must be called to generate the cache.
 
 The cache consists of three lists of tuples. One list for Artists, Albums and Songs.
 The Tuples contain the *ID* and the *normalized Name* (see :meth:`~musicdb.mdbapi.mise.MusicDBMicroSearchEngine.NormalizeString`).
+User input gets normalized as well.
+The search term comparison is applied to normalized strings and aims for best similarity.
 
 If the `Levenshtein module <https://pypi.python.org/pypi/python-Levenshtein>`_ is installed, the search through all artists, albums and song is usually done in less than 100ms.
 Without this module, you better not use this module only if time does matter.
@@ -45,9 +47,10 @@ Example:
 
 import unicodedata
 import re
-from fuzzywuzzy         import fuzz
+from rapidfuzz          import fuzz
 import datetime
 import logging
+import string as pystring # string is already used by NormalizeString where the name makes too much sense to replace it
 from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 
@@ -72,6 +75,8 @@ class MusicDBMicroSearchEngine(object):
             raise TypeError("Configuration-class of unknown type or None! (MusicDBConfig instance expected)")
 
         self.config = config
+
+        self.punctuationfilter = str.maketrans("", "", pystring.punctuation) # 🦈
 
         # the caches are lists of tuple of name and id (name, id)
         self.songcache   = None
@@ -123,8 +128,10 @@ class MusicDBMicroSearchEngine(object):
             itemname = item["name"]
             itemid   = item["id"]
 
-            # optimize name to make it faulttollerant
+            # optimize name to make it fault tolerant
             itemname = self.NormalizeString(itemname)
+            if len(itemname) == 0 or itemname == " ":
+                continue
 
             # add to cache
             cache.append((itemname, itemid))
@@ -139,9 +146,13 @@ class MusicDBMicroSearchEngine(object):
         The normalization is done in the following steps:
 
             #. Unicode normalization (method: NFKC)
+            #. removes all punctuation
             #. all characters to Lower Case
             #. removes leading and training spaces
             #. replaces multiple spaces to one space
+
+        The normalization process may end up with an empty string,
+        or a string that only contains a single space!
 
         Args:
             string (str): A string that shall be normalized
@@ -150,6 +161,7 @@ class MusicDBMicroSearchEngine(object):
             A normalized string
         """
         string = unicodedata.normalize("NFKC", string)
+        string = string.translate(self.punctuationfilter)
         string = string.lower()
         string = string.strip()
         string = re.sub(" +", " ", string)  # remove double/multi spaces
@@ -182,6 +194,8 @@ class MusicDBMicroSearchEngine(object):
             return (None,None,None)
 
         searchstring = self.NormalizeString(userinput)
+        if len(searchstring) == 0 or searchstring == " ":
+            return (None,None,None)
 
         t_start = datetime.datetime.now()
         artists = self.__FindInData(searchstring, self.artistcache)
@@ -196,6 +210,7 @@ class MusicDBMicroSearchEngine(object):
             logging.debug("Searching took %s", str(t_diff))
 
         return (artists, albums, songs)
+
 
 
     # return a tuple of id and ratio

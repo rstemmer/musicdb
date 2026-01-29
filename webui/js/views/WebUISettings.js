@@ -22,14 +22,16 @@ class WebUISettings extends MainSettingsView
     {
         super("WebUISettings", "WebUI Settings", "Enable or disable features of the WebUI. These settings are applied to all clients. The behavior of the MusicDB server is not affected in any way.");
 
-        this.videocheckbox = new SettingsCheckbox(
-            "Enable Video Mode",
-            "This switch allows hiding or showing all WebUI elements corresponding to music videos.</br>This includes the Song/Video mode switch in the main menu.</br><span style=\"color:red\">Experimental Feature!</span>",
-            (state)=>{
-                if(state == true) this.ChangeSetting("WebUI", "videomode", "enabled");
-                else              this.ChangeSetting("WebUI", "videomode", "disabled");
-            }
-        );
+        // This feature is basically dead.
+        // I did not work on this for years. Unlikely this will change in near future.
+        //this.videocheckbox = new SettingsCheckbox(
+        //    "Enable Video Mode",
+        //    "This switch allows hiding or showing all WebUI elements corresponding to music videos.</br>This includes the Song/Video mode switch in the main menu.</br><span style=\"color:red\">Experimental Feature!</span>",
+        //    (state)=>{
+        //        if(state == true) this.ChangeSetting("WebUI", "videomode", "enabled");
+        //        else              this.ChangeSetting("WebUI", "videomode", "disabled");
+        //    }
+        //);
 
         this.lyricscheckbox = new SettingsCheckbox(
             "Enable Lyrics",
@@ -79,7 +81,7 @@ class WebUISettings extends MainSettingsView
         );
 
         let settingslist = new SettingsList();
-        settingslist.AddEntry(this.videocheckbox);
+        //settingslist.AddEntry(this.videocheckbox);
         settingslist.AddEntry(this.lyricscheckbox);
         settingslist.AddEntry(this.avshowreleasecheckbox);
         settingslist.AddEntry(this.gsvshowothercheckbox);
@@ -96,7 +98,7 @@ class WebUISettings extends MainSettingsView
     {
         this.settings = settings;
 
-        this.videocheckbox.SetState( settings.WebUI.videomode == "enabled");
+        //this.videocheckbox.SetState( settings.WebUI.videomode == "enabled");
         this.lyricscheckbox.SetState(settings.WebUI.lyrics    == "enabled");
         this.avshowreleasecheckbox.SetState(settings.ArtistsView.showrelease == true);
         this.gsvshowothercheckbox.SetState(settings.GenreSelectionView.showother == true);

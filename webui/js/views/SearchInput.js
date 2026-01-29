@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017 - 2023  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,44 +20,48 @@ class SearchInput extends Element
 {
     constructor(curtain=null)
     {
-        super("div", ["SearchInput", "flex-row", "hlcolor", "hovpacity"]);
-        this._AddInputBoxElements();
+        super("div", ["flex-column"]);
+
+        this.showpreview = false;
+        this.showresults = false;
+        this.target      = "none";
+        this.timeoutinterval = 500;
 
         this.curtain = curtain;
         if(this.curtain)
             this.curtain.AddClickEvent(()=>{this.HidePreview();});
 
-        this.timeoutinterval = 500;
+        let inputbox = this._CreateInputBoxElements();
         this.preview = new SearchResultsPopup(()=>{this.HidePreview();});
         this.preview.Hide();
+        this.AppendChild(inputbox);
         this.AppendChild(this.preview);
     }
 
 
 
-    _AddInputBoxElements()
+    _CreateInputBoxElements()
     {
-        this.icon        = new SVGIcon("Search");
+        let inputbox    = new Element("div", ["SearchInput", "flex-row", "hlcolor", "hovpacity"]);
+        let icon        = new SVGIcon("Search");
         
-        this.clearbutton = new SVGButton("Remove", ()=>{this.ClearInput();});
-        this.clearbutton.GetHTMLElement().classList.add("hovpacity");
-        this.clearbutton.SetTooltip("Clear search input and close preview");
+        let clearbutton = new SVGButton("Remove", ()=>{this.ClearInput();});
+        clearbutton.AddCSSClass("hovpacity");
+        clearbutton.SetTooltip("Clear search input and close preview");
 
+        // Use a raw input element to address all special cases a search requires.
+        // For example delayed requests for search results from the server.
         this.input       = document.createElement("input");
         this.input.oninput     = ()=>{this.onInput(event);};
         this.input.onkeyup     = ()=>{this.onKeyUp(event);};
         this.input.onclick     = ()=>{this.onClick(event);};
         this.input.type        = "search";
-        this.input.placeholder = "Search…";
+        this.input.placeholder = "Find …";
 
-        this.AppendChild(this.icon);
-        this.AppendChild(this.input);
-        this.AppendChild(this.clearbutton);
-
-        this.showpreview = false;
-        this.showresults = false;
-        this.target      = "none";
-        return;
+        inputbox.AppendChild(icon);
+        inputbox.AppendChild(this.input);
+        inputbox.AppendChild(clearbutton);
+        return inputbox;
     }
 
 
