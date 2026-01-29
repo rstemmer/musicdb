@@ -28,7 +28,6 @@ The following sections describe how to install MusicDB and its dependencies.
 For Arch Linux and Fedora, a package is provided that can be installed via ``pacman`` on Arch Linux or ``dnf`` on Fedora.
 If you do not use Arch Linux or Fedora, see the :doc:`/usage/fromsource` documentation.
 
-Download the latest MusicDB package and execute the following commands.
 To make the web interface accessible ``apache`` is used as web server.
 Any other web server can be used as well.
 Finally Icecast is used to provide an SSL secured audio stream.
@@ -46,7 +45,7 @@ Download
 
 Download the latest package file from the `MusicDB Releases page on GitHub <https://github.com/rstemmer/musicdb/releases>`_.
 There are several packages available.
-Download the one that matches to your Linux Distribution.
+Download the one that matches to your Linux Distribution or the source package.
 
 Be aware that MusicDB requires lots of libraries because of its dependency to `FFmpeg <https://www.ffmpeg.org/>`_ and `gstreamer <https://gstreamer.freedesktop.org/>`_.
 All libraries and dependencies are available in the Arch Linux repository so that they will be installed automatically by the package manager.
@@ -97,14 +96,16 @@ Update your system before installing MusicDB.
    .. code-block:: bash
 
       # Install MusicDB
-      sudo dnf install ./musicdb-8.0.0-1.fc$(rpm -E %fedora).noarch.rpm
+      sudo dnf install ./musicdb-8.1.0-1.fc$(rpm -E %fedora).noarch.rpm
 
 .. tab:: Ubuntu
 
    After downloading the latest MusicDB package for Ubuntu, you can install it with the Ubuntu package manager ``apt``.
-   MusicDB is optimized for the latest version of Ubuntu and not for the LTS version.
+   MusicDB is primary optimized for the latest Long Term Supported (LTS )version.
+   In case software dependencies of the LTS version become too old for MuiscDB, try the latest non-LTS version.
 
    Before beeing able to install downloaded package, you need to make sure that the user ``_apt`` is allowed to access that file.
+   For example by moving the downloaded package into the ``/tmp`` directory.
    The package manager is working under this user ID for tasks that do not require ``root`` priviledges.
 
    .. warning::
@@ -112,7 +113,7 @@ Update your system before installing MusicDB.
       The Debian/Ubuntu package manager ``apt`` starts services automatically during the installation phase.
       It does not let you to configure the services before they are started.
 
-      The web server, Icecast and MusicDB will are running right after the installation before you are able to set them up correctly.
+      The web server, Icecast and MusicDB are running right after the installation before you are able to set them up correctly.
       Keep this in mind!
       MusicDB's default configuration consideres such a use case and is limited to only access connections from localhost by default.
       Other dependencies are not!
@@ -121,7 +122,7 @@ Update your system before installing MusicDB.
    .. code-block:: bash
 
       # Install MusicDB
-      sudo apt install ./musicdb_8.0.0-1_all.deb
+      sudo apt install ./musicdb_8.1.0-1_all.deb
 
       # Stop automatically started unconfigured services
       sudo systemctl stop apache2  # if fresh installed
@@ -132,13 +133,6 @@ Update your system before installing MusicDB.
    You can shoud use this opportunity to set the passwords for Icecast otherwise Icecast gets online with default passwords!
    Anyway we will come to the Icecast configuration later in this installation instruction.
 
-   The installation ends with the following Waring:
-   
-      N: Can't drop privileges for downloading as file '/home/$USERNAME/Downloads/musicdb_8.0.0-1_all.deb' couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permission denied)
-
-   This is a well known issue I will not care about because I do not want to waste my time fixing Debian/Ubuntu issues.
-   It seems to be save to ignore this warning.
-   You are welcome post a solution for avoiding this message in the `Issues tracker <https://github.com/rstemmer/musicdb/issues/>`_ or on the `Discussions page <https://github.com/rstemmer/musicdb/discussions>`_.
 
 
 Initial Setup
@@ -146,7 +140,7 @@ Initial Setup
 
 .. note::
 
-   In case you just upgraded from an old MusicDB installation, see :doc:`/basics/data` for the transition to the new file and directory structure.
+   In case you just upgraded from an old (before 8.0.0) MusicDB installation, see :doc:`/basics/data` for the transition to the new file and directory structure.
 
 This section describes the initial setup for MusicDB.
 Those steps are required to provide MusicDB a valid environment.
@@ -157,13 +151,13 @@ The placeholder ``$username`` must be replaced by that user name.
 If you do not know your user name, enter ``id`` in the terminal.
 The name behind the UID is your user names.
 
-I recommend to add your user to the ``musicdb`` group: ``usermod -G musicdb $username``.
+I recommend to add your user to the ``musicdb`` group: ``usermod --append --groups musicdb $username``.
 Then you have extended read and write access to data managed by MusicDB.
 All users in the ``musicdb`` group can maintain MusicDB and use the MusicDB command line interface.
 
 .. code-block:: bash
 
-   sudo usermod -G musicdb $username
+   sudo usermod --append --groups musicdb $username
 
 Creating a Music Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -173,12 +167,19 @@ that will be managed, presented and streamed by MusicDB.
 
 **Its existence is mandatory for MusicDB to work correctly.**
 
+The default music directory will be ``/var/music``.
+This directory will be set up during the installation of MusicDB.
+If you want to stay with this directory for your music collection you can continue with the next section.
+Otherwise continue with this section to get guided to setup a different music directory.
+
+**When using SELinux then continue reading this section in any case. Additional steps may be necessary.**
+
 Before you can start the MusicDB server, a music directory needs to be defined.
 This can be done in the :doc:`/basics/config` file that is placed at ``/etc/musicdb.ini``.
 In this file you need to set the music directory in the section->entry: ``[directories]->music``.
 The default directory is ``/var/music``.
 This directory can be empty but it must be accessible by the MusicDB server.
-The expected ownership is ``$username:musicdb`` with the permission ``rwxrwxr-x``.
+The expected ownership is ``musicdb:musicdb`` with the permission ``rwxrwxr-x``.
 More details about the directories and files managed by MusicDB can be found in the :doc:`/basics/data` section of the documentation.
 
 When your Linux Distribution uses SELinux, make sure the context of the music directory is set to ``httpd_sys_content_t`` if you want to access the music files from your web browser.
@@ -196,7 +197,7 @@ If you want to use the default music directory under ``/var/music`` you can skip
    # Create a new music directory (as root)
    mkdir -p /opt/music
    chmod ug=rwx,o=rx /opt/music
-   chown -R $username:musicdb /opt/music
+   chown -R musicdb:musicdb /opt/music
 
    # Update [directories]->music
    vim /etc/musicdb.ini
@@ -209,7 +210,7 @@ Replace this path with your own music directory if you changed it.
 .. code-block:: bash
 
    # as root
-   chown -R $username:musicdb /var/music
+   chown -R musicdb:musicdb /var/music
 
    # Optional when using SELinux
    semanage fcontext -a -t httpd_sys_content_t "/var/music(/.*)?"
@@ -240,7 +241,8 @@ If you want to turn off the debug log file edit ``/etc/musicdb.ini`` and change 
 Start MusicDB Server
 --------------------
 
-After setting up the music directory, the WebSocket API Key and possibly other settings, the MusicDB websocket server can be started via ``systemctl start musicdb``.
+After checking and maybe setting up a custom music directory, the WebSocket API Key and possibly other settings,
+the MusicDB websocket server can be started via ``systemctl start musicdb``.
 If you want to autostart the server after a reboot (recommended), you have to enable it via ``systemctl enable musicdb``.
 
 .. code-block:: bash
@@ -257,8 +259,8 @@ This is fine. These files will automatically be created when you use MusicDB for
 There will also be an error "There are no songs in the database yet. Audio stream disabled. (Import albums and restart the server to enable audio streaming again.)".
 This is also an expected behavior because no music has been added to the MusicDB database.
 
-Now MusicDB is in a state where can be added and managed, but not streamed.
-**As soon as you added music to MusicDB, you can restart the server via ``systemctl restart musicdb`` and it will work with all its features including streaming audio.**
+Now MusicDB is in a state where music can be added and managed, but not streamed.
+**As soon as you added a first music album to MusicDB,** you can restart the server via ``systemctl restart musicdb`` and it will work with all its features including streaming audio.
 
 You can already access the websocket server with your web browser to see if all network settings around MusicDB are correct.
 Use the following address: `<https://127.0.0.1:9000>`_. Of course use the correct IP address and port if you changed the port.
@@ -275,8 +277,8 @@ A web server is required to serve the *MusicDB WebUI* - The web front-end for Mu
 
 This server can simply be installed via the package manager.
 
-If you used the package manager to install MusicDB, the Apache HTTP Server has already been installed as dependency.
-The default MusicDB Apache server configuration is already installed in the apache configuration directory.
+If you used the package manager to install MusicDB, the Apache HTTP Server has already been installed (or recommended) as dependency.
+The default MusicDB Apache server configuration is already installed in the Apache configuration directory.
 
 If you installed MusicDB from source, you find the configuration at ``/usr/share/musicdb/apache.conf``.
 
@@ -311,7 +313,7 @@ It is recommend to use HTTPS. Please check the web server manual on how to setup
       dnf install httpd
 
       # Setup web server for the front end
-      mv /etc/httpd/conf/musicdb.conf /etc/httpd/conf.d/.
+      cp /etc/httpd/conf/musicdb.conf /etc/httpd/conf.d/.
 
 
 .. tab:: Ubuntu
@@ -344,6 +346,9 @@ After installation and configuration, the server can be started via ``systemd``:
 Now the web server is running. You can check the status via ``systemctl status httpd``.
 
 You should now be able to access the MusicDB WebUI via ``http://127.0.0.1/musicdb/``.
+The WebUI should load.
+It is likely that immediately a WebSocket connection error occurs.
+Follow the link presented in the error message (not in the title) to go through the web browsers process of allowing https connections to that (your) server.
 
 .. figure:: ../images/welcome.jpg
    :align: center
@@ -402,7 +407,7 @@ Setup Icecast
 
 The default settings in ``/etc/musicdb.ini`` match the default Icecast settings in ``/etc/icecast.xml``.
 Only the source password needs to be configured.
-Again you can use ``openssl rand -base64 32`` to generate a secure password.
+You can use ``openssl rand -base64 32`` to generate a secure password.
 Some more details about Icecast can be found in the chapter: :doc:`/lib/icecast`
 
 The following listing shows the changes that are mandatory to make inside the ``/etc/icecast.xml`` file

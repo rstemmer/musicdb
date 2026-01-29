@@ -1,103 +1,55 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Creating new CLI Modules &mdash; MusicDB 8.0.0 documentation</title>
-  
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creating new CLI Modules &mdash; MusicDB 8.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
 
   
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-
-  
-
-  
-  
-    
-
-  
-
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-  
-    <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 8.0.0 documentation" href="../index.html"/>
-        <link rel="next" title="Workflow for distribution" href="distribution.html"/>
-        <link rel="prev" title="MusicDB Streaming Concept" href="streaming.html"/> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=15c97ff8"></script>
+        <script src="../_static/doctools.js?v=9bcbadda"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Workflow for development" href="development.html" />
+    <link rel="prev" title="MusicDB Streaming Concept" href="streaming.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
+        <div class="wy-side-nav-search" >
 
           
-            <a href="../index.html" class="icon icon-home"> MusicDB
           
-
-          
+          <a href="../index.html" class="icon icon-home">
+            MusicDB
           </a>
-
-          
-            
-            
               <div class="version">
-                8.0
+                8.2
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
@@ -149,6 +101,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/webui.html#webui-settings-mode">WebUI Settings Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/webui.html#random-song-selection">Random Song Selection</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/stream.html">Audio Stream</a><ul>
@@ -202,7 +155,6 @@
 <li class="toctree-l2"><a class="reference internal" href="config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#icecast">Icecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#randy">randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#debug">debug</a></li>
 </ul>
@@ -276,13 +228,26 @@
 <li class="toctree-l2"><a class="reference internal" href="#creation-of-new-modules">Creation of new Modules</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="distribution.html">Workflow for distribution</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Workflow for development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="development.html#setup-the-source-code">Setup the Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#install-and-setup-musicdb">Install and Setup MusicDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#prepare-development-environment">Prepare Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#supportive-scripts">Supportive Scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#webui-debugging">WebUI Debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#read-debugging-log">Read Debugging Log</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="distribution.html">Workflow for Distribution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="distribution.html#install-svg2json">Install svg2json</a></li>
 <li class="toctree-l2"><a class="reference internal" href="distribution.html#create-release-candidate-branch">Create Release Candidate Branch</a></li>
 <li class="toctree-l2"><a class="reference internal" href="distribution.html#update-version-numbers">Update Version Numbers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="distribution.html#source-tarball">Source Tarball</a></li>
-<li class="toctree-l2"><a class="reference internal" href="distribution.html#arch-linux-pacman-package">Arch Linux pacman Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="distribution.html#fedora-rpm-package">Fedora rpm Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="distribution.html#debian-ubuntu-deb-package">Debian/Ubuntu deb Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distribution.html#build-packages-via-build-sh">Build Packages via build.sh</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="distribution.html#source-tarball">Source Tarball</a></li>
+<li class="toctree-l3"><a class="reference internal" href="distribution.html#arch-linux-pacman-package">Arch Linux pacman Package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="distribution.html#fedora-rpm-package">Fedora rpm Package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="distribution.html#debian-ubuntu-deb-package">Debian/Ubuntu deb Package</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="webapi.html">MusicDB Websocket API</a><ul>
@@ -299,17 +264,50 @@
 <li class="toctree-l2"><a class="reference internal" href="webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webapi.html#module-musicdb.lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="webapi.html#available-methods">Available Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#special-functions">Special Functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#artists">Artists</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#albums">Albums</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#songs">Songs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#videos">Videos</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#queue">Queue</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#tag-related">Tag related</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#lyrics">Lyrics</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#uploading">Uploading</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#file-handling">File Handling</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#other">Other</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webapi.html#special-functions">Special Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webapi.html#musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketInterface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="webapi.html#artists">Artists</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webapi.html#id0"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketInterface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="webapi.html#albums">Albums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webapi.html#id1"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketInterface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="webapi.html#songs">Songs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webapi.html#id2"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketInterface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="webapi.html#videos">Videos</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webapi.html#id3"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketInterface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="webapi.html#queue">Queue</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webapi.html#id4"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketInterface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="webapi.html#tag-related">Tag related</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webapi.html#id13"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketInterface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="webapi.html#lyrics">Lyrics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webapi.html#id14"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketInterface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="webapi.html#uploading">Uploading</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webapi.html#id15"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketInterface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="webapi.html#file-handling">File Handling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webapi.html#id16"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketInterface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="webapi.html#other">Other</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webapi.html#id17"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketInterface</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -318,7 +316,18 @@
 <p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/accesspermissions.html">Access Permissions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/accesspermissions.html#accesspermissions-class">AccessPermissions Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/accesspermissions.html#accesspermissions-class">AccessPermissions Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/accesspermissions.html#musicdb.mdbapi.accesspermissions.AccessPermissions"><code class="docutils literal notranslate"><span class="pre">AccessPermissions</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/accesspermissions.html#musicdb.mdbapi.accesspermissions.AccessPermissions.EvaluateArtworkDirectory"><code class="docutils literal notranslate"><span class="pre">AccessPermissions.EvaluateArtworkDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/accesspermissions.html#musicdb.mdbapi.accesspermissions.AccessPermissions.EvaluateStateDirectory"><code class="docutils literal notranslate"><span class="pre">AccessPermissions.EvaluateStateDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/accesspermissions.html#musicdb.mdbapi.accesspermissions.AccessPermissions.EvaluateTasksDirectory"><code class="docutils literal notranslate"><span class="pre">AccessPermissions.EvaluateTasksDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/accesspermissions.html#musicdb.mdbapi.accesspermissions.AccessPermissions.EvaluateUploadsDirectory"><code class="docutils literal notranslate"><span class="pre">AccessPermissions.EvaluateUploadsDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/accesspermissions.html#musicdb.mdbapi.accesspermissions.AccessPermissions.IsReadable"><code class="docutils literal notranslate"><span class="pre">AccessPermissions.IsReadable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/accesspermissions.html#musicdb.mdbapi.accesspermissions.AccessPermissions.IsWritable"><code class="docutils literal notranslate"><span class="pre">AccessPermissions.IsWritable()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
@@ -330,8 +339,25 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#scaled-artwork">Scaled Artwork</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#configuration-for-artworks">Configuration for Artworks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#algorithm-to-create-artworks">Algorithm to Create Artworks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-musicdb.lib.cache">ArtworkCache Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/artwork.html#musicdb.mdbapi.artwork.MusicDBArtwork"><code class="docutils literal notranslate"><span class="pre">MusicDBArtwork</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/artwork.html#musicdb.mdbapi.artwork.MusicDBArtwork.CreateArtworkName"><code class="docutils literal notranslate"><span class="pre">MusicDBArtwork.CreateArtworkName()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/artwork.html#musicdb.mdbapi.artwork.MusicDBArtwork.GetArtworkFromFile"><code class="docutils literal notranslate"><span class="pre">MusicDBArtwork.GetArtworkFromFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/artwork.html#musicdb.mdbapi.artwork.MusicDBArtwork.SetArtwork"><code class="docutils literal notranslate"><span class="pre">MusicDBArtwork.SetArtwork()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/artwork.html#musicdb.mdbapi.artwork.MusicDBArtwork.UpdateAlbumArtwork"><code class="docutils literal notranslate"><span class="pre">MusicDBArtwork.UpdateAlbumArtwork()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/artwork.html#musicdb.mdbapi.artwork.MusicDBArtwork.UpdateFileAttributes"><code class="docutils literal notranslate"><span class="pre">MusicDBArtwork.UpdateFileAttributes()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-musicdb.lib.cache">ArtworkCache Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/artwork.html#musicdb.lib.cache.ArtworkCache"><code class="docutils literal notranslate"><span class="pre">ArtworkCache</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/artwork.html#musicdb.lib.cache.ArtworkCache.GetArtwork"><code class="docutils literal notranslate"><span class="pre">ArtworkCache.GetArtwork()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/artwork.html#musicdb.lib.cache.ArtworkCache.RebuildArtwork"><code class="docutils literal notranslate"><span class="pre">ArtworkCache.RebuildArtwork()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
@@ -339,7 +365,21 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#audio-streaming-thread">Audio Streaming Thread</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#audio-stream-command-queue">Audio Stream Command Queue</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#audio-stream-event-management">Audio Stream Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#audio-stream-manager-class">Audio Stream Manager Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#musicdb.mdbapi.audiostream.AudioStreamingThread"><code class="docutils literal notranslate"><span class="pre">AudioStreamingThread()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#musicdb.mdbapi.audiostream.StartAudioStreamingThread"><code class="docutils literal notranslate"><span class="pre">StartAudioStreamingThread()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#musicdb.mdbapi.audiostream.StopAudioStreamingThread"><code class="docutils literal notranslate"><span class="pre">StopAudioStreamingThread()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#audio-stream-manager-class">Audio Stream Manager Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/audiostream.html#musicdb.mdbapi.audiostream.AudioStreamManager"><code class="docutils literal notranslate"><span class="pre">AudioStreamManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/audiostream.html#musicdb.mdbapi.audiostream.AudioStreamManager.GetStreamState"><code class="docutils literal notranslate"><span class="pre">AudioStreamManager.GetStreamState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/audiostream.html#musicdb.mdbapi.audiostream.AudioStreamManager.Play"><code class="docutils literal notranslate"><span class="pre">AudioStreamManager.Play()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/audiostream.html#musicdb.mdbapi.audiostream.AudioStreamManager.PlayNextSong"><code class="docutils literal notranslate"><span class="pre">AudioStreamManager.PlayNextSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/audiostream.html#musicdb.mdbapi.audiostream.AudioStreamManager.PushCommand"><code class="docutils literal notranslate"><span class="pre">AudioStreamManager.PushCommand()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/audiostream.html#musicdb.mdbapi.audiostream.AudioStreamManager.RegisterCallback"><code class="docutils literal notranslate"><span class="pre">AudioStreamManager.RegisterCallback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/audiostream.html#musicdb.mdbapi.audiostream.AudioStreamManager.RemoveCallback"><code class="docutils literal notranslate"><span class="pre">AudioStreamManager.RemoveCallback()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/blacklist.html">Blacklist</a><ul>
@@ -347,7 +387,20 @@
 <li class="toctree-l3"><a class="reference internal" href="../mdbapi/blacklist.html#music-selection-blacklist">Music Selection Blacklist</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/blacklist.html#blacklist-interface-class">Blacklist Interface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/blacklist.html#blacklist-interface-class">Blacklist Interface Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/blacklist.html#musicdb.mdbapi.blacklist.BlacklistInterface"><code class="docutils literal notranslate"><span class="pre">BlacklistInterface</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/blacklist.html#musicdb.mdbapi.blacklist.BlacklistInterface.AddSong"><code class="docutils literal notranslate"><span class="pre">BlacklistInterface.AddSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/blacklist.html#musicdb.mdbapi.blacklist.BlacklistInterface.AddVideo"><code class="docutils literal notranslate"><span class="pre">BlacklistInterface.AddVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/blacklist.html#musicdb.mdbapi.blacklist.BlacklistInterface.CheckAllListsForSong"><code class="docutils literal notranslate"><span class="pre">BlacklistInterface.CheckAllListsForSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/blacklist.html#musicdb.mdbapi.blacklist.BlacklistInterface.CheckAllListsForVideo"><code class="docutils literal notranslate"><span class="pre">BlacklistInterface.CheckAllListsForVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/blacklist.html#musicdb.mdbapi.blacklist.BlacklistInterface.CheckSongList"><code class="docutils literal notranslate"><span class="pre">BlacklistInterface.CheckSongList()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/blacklist.html#musicdb.mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist"><code class="docutils literal notranslate"><span class="pre">BlacklistInterface.GetIDsFromBlacklist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/blacklist.html#musicdb.mdbapi.blacklist.BlacklistInterface.GetValidIDsFromBlacklists"><code class="docutils literal notranslate"><span class="pre">BlacklistInterface.GetValidIDsFromBlacklists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/blacklist.html#musicdb.mdbapi.blacklist.BlacklistInterface.ValidateBlacklist"><code class="docutils literal notranslate"><span class="pre">BlacklistInterface.ValidateBlacklist()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/extern.html">MusicDBExtern</a><ul>
@@ -358,19 +411,87 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#updating-a-storage">Updating a Storage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#handling-toxic-environments">Handling Toxic Environments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#musicdbextern-class">MusicDBExtern Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#musicdbextern-class">MusicDBExtern Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.CheckForDependencies"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern.CheckForDependencies()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.CopyNewSongs"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern.CopyNewSongs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.CopySong"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern.CopySong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.FixPath"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern.FixPath()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.InitializeStorage"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern.InitializeStorage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.IsStorageInitialized"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern.IsStorageInitialized()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.ReadSongmap"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern.ReadSongmap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.ReducePathLength"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern.ReducePathLength()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.RemoveOldSongs"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern.RemoveOldSongs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.SetMountpoint"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern.SetMountpoint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.UpdateSongmap"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern.UpdateSongmap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.UpdateStorage"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern.UpdateStorage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/extern.html#musicdb.mdbapi.extern.MusicDBExtern.WriteSongmap"><code class="docutils literal notranslate"><span class="pre">MusicDBExtern.WriteSongmap()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/mise.html">Micro Search Engine</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/mise.html#musicdb.mdbapi.mise.MusicDBMicroSearchEngine"><code class="docutils literal notranslate"><span class="pre">MusicDBMicroSearchEngine</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/mise.html#musicdb.mdbapi.mise.MusicDBMicroSearchEngine.Find"><code class="docutils literal notranslate"><span class="pre">MusicDBMicroSearchEngine.Find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/mise.html#musicdb.mdbapi.mise.MusicDBMicroSearchEngine.NormalizeString"><code class="docutils literal notranslate"><span class="pre">MusicDBMicroSearchEngine.NormalizeString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/mise.html#musicdb.mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="docutils literal notranslate"><span class="pre">MusicDBMicroSearchEngine.UpdateCache()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/music.html">Music Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/music.html#musicdbmusic-class">MusicDBMusic Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/music.html#musicdbmusic-class">MusicDBMusic Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.AddAlbum"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.AddAlbum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.AddArtist"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.AddArtist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.AddLyricsFromFile"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.AddLyricsFromFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.AddSong"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.AddSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.AddVideo"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.AddVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.ChangeAlbumArtist"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.ChangeAlbumArtist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.CreateNewArtist"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.CreateNewArtist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.FindLostPaths"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.FindLostPaths()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.FindNewPaths"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.FindNewPaths()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.FindNewSongs"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.FindNewSongs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.RemoveAlbum"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.RemoveAlbum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.RemoveArtist"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.RemoveArtist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.RemoveSong"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.RemoveSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.UpdateAlbum"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.UpdateAlbum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.UpdateArtist"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.UpdateArtist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.UpdateChecksum"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.UpdateChecksum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.UpdateSong"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.UpdateSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/music.html#musicdb.mdbapi.music.MusicDBMusic.UpdateVideo"><code class="docutils literal notranslate"><span class="pre">MusicDBMusic.UpdateVideo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicdirectory.html">MusicDirectory</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdirectory-class">MusicDirectory Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdirectory-class">MusicDirectory Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory"><code class="docutils literal notranslate"><span class="pre">MusicDirectory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.AnalyseAlbumDirectoryName"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.AnalyseAlbumDirectoryName()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.AnalysePath"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.AnalysePath()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.AnalyseSongFileName"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.AnalyseSongFileName()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.AnalyseVideoFileName"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.AnalyseVideoFileName()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.EstimateContentTypeByPath"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.EstimateContentTypeByPath()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.EvaluateAlbumDirectory"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.EvaluateAlbumDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.EvaluateArtistDirectory"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.EvaluateArtistDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.EvaluateMusicFile"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.EvaluateMusicFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.FixAttributes"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.FixAttributes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.RenameAlbumDirectory"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.RenameAlbumDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.RenameArtistDirectory"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.RenameArtistDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.RenameSongFile"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.RenameSongFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.RenameVideoFile"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.RenameVideoFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/musicdirectory.html#musicdb.mdbapi.musicdirectory.MusicDirectory.TryAnalysePathFor"><code class="docutils literal notranslate"><span class="pre">MusicDirectory.TryAnalysePathFor()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
@@ -383,24 +504,103 @@
 <li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randy-class">Randy Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randy-class">Randy Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#musicdb.mdbapi.randy.Randy"><code class="docutils literal notranslate"><span class="pre">Randy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#musicdb.mdbapi.randy.Randy.GetSong"><code class="docutils literal notranslate"><span class="pre">Randy.GetSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#musicdb.mdbapi.randy.Randy.GetSongFromAlbum"><code class="docutils literal notranslate"><span class="pre">Randy.GetSongFromAlbum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#musicdb.mdbapi.randy.Randy.GetVideo"><code class="docutils literal notranslate"><span class="pre">Randy.GetVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#musicdb.mdbapi.randy.Randy.ReloadConfiguration"><code class="docutils literal notranslate"><span class="pre">Randy.ReloadConfiguration()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/server.html">MusicDB Websocket Server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/server.html">MusicDB Websocket Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/server.html#musicdb.mdbapi.server.Initialize"><code class="docutils literal notranslate"><span class="pre">Initialize()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/server.html#musicdb.mdbapi.server.Run"><code class="docutils literal notranslate"><span class="pre">Run()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/server.html#musicdb.mdbapi.server.SIGTERM_Handler"><code class="docutils literal notranslate"><span class="pre">SIGTERM_Handler()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/server.html#musicdb.mdbapi.server.Shutdown"><code class="docutils literal notranslate"><span class="pre">Shutdown()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/server.html#musicdb.mdbapi.server.SignalHandler"><code class="docutils literal notranslate"><span class="pre">SignalHandler()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/server.html#musicdb.mdbapi.server.StartWebSocketServer"><code class="docutils literal notranslate"><span class="pre">StartWebSocketServer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/server.html#musicdb.mdbapi.server.UpdateCaches"><code class="docutils literal notranslate"><span class="pre">UpdateCaches()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-management">Song Queue Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-event-management">Song Queue Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue"><code class="docutils literal notranslate"><span class="pre">SongQueue</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.AddRandomSong"><code class="docutils literal notranslate"><span class="pre">SongQueue.AddRandomSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.AddSong"><code class="docutils literal notranslate"><span class="pre">SongQueue.AddSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.CurrentSong"><code class="docutils literal notranslate"><span class="pre">SongQueue.CurrentSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.Event_SongChanged"><code class="docutils literal notranslate"><span class="pre">SongQueue.Event_SongChanged()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.Event_SongQueueChanged"><code class="docutils literal notranslate"><span class="pre">SongQueue.Event_SongQueueChanged()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.GenerateID"><code class="docutils literal notranslate"><span class="pre">SongQueue.GenerateID()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.GetQueue"><code class="docutils literal notranslate"><span class="pre">SongQueue.GetQueue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.GetSong"><code class="docutils literal notranslate"><span class="pre">SongQueue.GetSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.Load"><code class="docutils literal notranslate"><span class="pre">SongQueue.Load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.MoveSong"><code class="docutils literal notranslate"><span class="pre">SongQueue.MoveSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.NextSong"><code class="docutils literal notranslate"><span class="pre">SongQueue.NextSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.RegisterCallback"><code class="docutils literal notranslate"><span class="pre">SongQueue.RegisterCallback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.RemoveCallback"><code class="docutils literal notranslate"><span class="pre">SongQueue.RemoveCallback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.RemoveSong"><code class="docutils literal notranslate"><span class="pre">SongQueue.RemoveSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.Save"><code class="docutils literal notranslate"><span class="pre">SongQueue.Save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/songqueue.html#musicdb.mdbapi.songqueue.SongQueue.TriggerEvent"><code class="docutils literal notranslate"><span class="pre">SongQueue.TriggerEvent()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tags.html">MusicDBTags</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags"><code class="docutils literal notranslate"><span class="pre">MusicDBTags</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.CreateGenre"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.CreateGenre()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.CreateMood"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.CreateMood()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.CreateSubgenre"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.CreateSubgenre()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.DeleteGenre"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.DeleteGenre()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.DeleteMood"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.DeleteMood()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.DeleteSubgenre"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.DeleteSubgenre()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.DeriveAlbumTags"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.DeriveAlbumTags()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.GetAllGenres"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.GetAllGenres()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.GetAllMoods"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.GetAllMoods()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.GetAllSubgenres"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.GetAllSubgenres()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.ModifyGenre"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.ModifyGenre()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.ModifyMood"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.ModifyMood()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.ModifySubgenre"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.ModifySubgenre()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tags.html#musicdb.mdbapi.tags.MusicDBTags.ModifyTag"><code class="docutils literal notranslate"><span class="pre">MusicDBTags.ModifyTag()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tracker.html">Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-musicdb.lib.db.trackerdb">Tracker Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#tracker-class">Tracker Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/tracker.html#musicdb.mdbapi.tracker.Tracker"><code class="docutils literal notranslate"><span class="pre">Tracker</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tracker.html#musicdb.mdbapi.tracker.Tracker.Track"><code class="docutils literal notranslate"><span class="pre">Tracker.Track()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-musicdb.lib.db.trackerdb">Tracker Database</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/tracker.html#music-relation-chain">Music Relation Chain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/tracker.html#music-played-history">Music Played History</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/tracker.html#musicdb.lib.db.trackerdb.TrackerDatabase"><code class="docutils literal notranslate"><span class="pre">TrackerDatabase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tracker.html#musicdb.lib.db.trackerdb.TrackerDatabase.AddMusic"><code class="docutils literal notranslate"><span class="pre">TrackerDatabase.AddMusic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tracker.html#musicdb.lib.db.trackerdb.TrackerDatabase.AddRelation"><code class="docutils literal notranslate"><span class="pre">TrackerDatabase.AddRelation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tracker.html#musicdb.lib.db.trackerdb.TrackerDatabase.GetRelations"><code class="docutils literal notranslate"><span class="pre">TrackerDatabase.GetRelations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tracker.html#musicdb.lib.db.trackerdb.TrackerDatabase.RemoveRelation"><code class="docutils literal notranslate"><span class="pre">TrackerDatabase.RemoveRelation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tracker.html#musicdb.lib.db.trackerdb.TrackerDatabase.RemoveSong"><code class="docutils literal notranslate"><span class="pre">TrackerDatabase.RemoveSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/tracker.html#musicdb.lib.db.trackerdb.TrackerDatabase.RemoveVideo"><code class="docutils literal notranslate"><span class="pre">TrackerDatabase.RemoveVideo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
@@ -411,13 +611,49 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#scaling-video-frames">Scaling Video Frames</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#configuration-of-video-frames">Configuration of Video Frames</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#algorithm-for-creating-video-frames">Algorithm for Creating Video Frames</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/videoframes.html#musicdb.mdbapi.videoframes.VideoFrames"><code class="docutils literal notranslate"><span class="pre">VideoFrames</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoframes.html#musicdb.mdbapi.videoframes.VideoFrames.ChangeThumbnail"><code class="docutils literal notranslate"><span class="pre">VideoFrames.ChangeThumbnail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoframes.html#musicdb.mdbapi.videoframes.VideoFrames.CreateAnimation"><code class="docutils literal notranslate"><span class="pre">VideoFrames.CreateAnimation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoframes.html#musicdb.mdbapi.videoframes.VideoFrames.CreateFramesDirectory"><code class="docutils literal notranslate"><span class="pre">VideoFrames.CreateFramesDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoframes.html#musicdb.mdbapi.videoframes.VideoFrames.CreateFramesDirectoryName"><code class="docutils literal notranslate"><span class="pre">VideoFrames.CreateFramesDirectoryName()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoframes.html#musicdb.mdbapi.videoframes.VideoFrames.GenerateFrames"><code class="docutils literal notranslate"><span class="pre">VideoFrames.GenerateFrames()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoframes.html#musicdb.mdbapi.videoframes.VideoFrames.GeneratePreviews"><code class="docutils literal notranslate"><span class="pre">VideoFrames.GeneratePreviews()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoframes.html#musicdb.mdbapi.videoframes.VideoFrames.ScaleFrame"><code class="docutils literal notranslate"><span class="pre">VideoFrames.ScaleFrame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoframes.html#musicdb.mdbapi.videoframes.VideoFrames.ScaleThumbnail"><code class="docutils literal notranslate"><span class="pre">VideoFrames.ScaleThumbnail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoframes.html#musicdb.mdbapi.videoframes.VideoFrames.SetVideoFrames"><code class="docutils literal notranslate"><span class="pre">VideoFrames.SetVideoFrames()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoframes.html#musicdb.mdbapi.videoframes.VideoFrames.UpdateVideoFrames"><code class="docutils literal notranslate"><span class="pre">VideoFrames.UpdateVideoFrames()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#video-queue-management">Video Queue Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#video-queue-event-management">Video Queue Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue"><code class="docutils literal notranslate"><span class="pre">VideoQueue</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.AddRandomVideo"><code class="docutils literal notranslate"><span class="pre">VideoQueue.AddRandomVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.AddVideo"><code class="docutils literal notranslate"><span class="pre">VideoQueue.AddVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.CurrentVideo"><code class="docutils literal notranslate"><span class="pre">VideoQueue.CurrentVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.Event_VideoChanged"><code class="docutils literal notranslate"><span class="pre">VideoQueue.Event_VideoChanged()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.Event_VideoQueueChanged"><code class="docutils literal notranslate"><span class="pre">VideoQueue.Event_VideoQueueChanged()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.GenerateID"><code class="docutils literal notranslate"><span class="pre">VideoQueue.GenerateID()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.GetQueue"><code class="docutils literal notranslate"><span class="pre">VideoQueue.GetQueue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.GetVideo"><code class="docutils literal notranslate"><span class="pre">VideoQueue.GetVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.Load"><code class="docutils literal notranslate"><span class="pre">VideoQueue.Load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.MoveVideo"><code class="docutils literal notranslate"><span class="pre">VideoQueue.MoveVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.NextVideo"><code class="docutils literal notranslate"><span class="pre">VideoQueue.NextVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.RegisterCallback"><code class="docutils literal notranslate"><span class="pre">VideoQueue.RegisterCallback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.RemoveCallback"><code class="docutils literal notranslate"><span class="pre">VideoQueue.RemoveCallback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.RemoveVideo"><code class="docutils literal notranslate"><span class="pre">VideoQueue.RemoveVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.Save"><code class="docutils literal notranslate"><span class="pre">VideoQueue.Save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videoqueue.html#musicdb.mdbapi.videoqueue.VideoQueue.TriggerEvent"><code class="docutils literal notranslate"><span class="pre">VideoQueue.TriggerEvent()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/videostream.html">Video Streaming Server</a><ul>
@@ -425,7 +661,22 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#video-streaming-thread">Video Streaming Thread</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#video-stream-command-queue">Video Stream Command Queue</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#video-stream-event-management">Video Stream Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#video-stream-manager-class">Video Stream Manager Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#musicdb.mdbapi.videostream.StartVideoStreamingThread"><code class="docutils literal notranslate"><span class="pre">StartVideoStreamingThread()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#musicdb.mdbapi.videostream.StopVideoStreamingThread"><code class="docutils literal notranslate"><span class="pre">StopVideoStreamingThread()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#musicdb.mdbapi.videostream.VideoStreamingThread"><code class="docutils literal notranslate"><span class="pre">VideoStreamingThread()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#video-stream-manager-class">Video Stream Manager Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/videostream.html#musicdb.mdbapi.videostream.VideoStreamManager"><code class="docutils literal notranslate"><span class="pre">VideoStreamManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videostream.html#musicdb.mdbapi.videostream.VideoStreamManager.GetStreamState"><code class="docutils literal notranslate"><span class="pre">VideoStreamManager.GetStreamState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videostream.html#musicdb.mdbapi.videostream.VideoStreamManager.Play"><code class="docutils literal notranslate"><span class="pre">VideoStreamManager.Play()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videostream.html#musicdb.mdbapi.videostream.VideoStreamManager.PlayNextVideo"><code class="docutils literal notranslate"><span class="pre">VideoStreamManager.PlayNextVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videostream.html#musicdb.mdbapi.videostream.VideoStreamManager.PushCommand"><code class="docutils literal notranslate"><span class="pre">VideoStreamManager.PushCommand()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videostream.html#musicdb.mdbapi.videostream.VideoStreamManager.RegisterCallback"><code class="docutils literal notranslate"><span class="pre">VideoStreamManager.RegisterCallback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videostream.html#musicdb.mdbapi.videostream.VideoStreamManager.RemoveCallback"><code class="docutils literal notranslate"><span class="pre">VideoStreamManager.RemoveCallback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/videostream.html#musicdb.mdbapi.videostream.VideoStreamManager.VideoEnded"><code class="docutils literal notranslate"><span class="pre">VideoStreamManager.VideoEnded()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -433,27 +684,147 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/config.html">Configuration Access</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#base-configuration-classes">Base Configuration Classes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-musicdb.lib.cfg.config">ini Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-musicdb.lib.cfg.csv">csv Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-musicdb.lib.cfg.config">ini Files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#musicdb-configuration-file">MusicDB Configuration File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-musicdb.lib.cfg.webui">WebUI Configuration File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-musicdb.lib.cfg.extern">External Storage Configuration File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-musicdb.lib.cfg.mdbstate">MusicDB State Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-musicdb.lib.cfg.wsapikey">WebSocket API Key File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-musicdb.lib.cfg.csv">csv Files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.csv.CSVFile"><code class="docutils literal notranslate"><span class="pre">CSVFile</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#musicdb-configuration-file">MusicDB Configuration File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.musicdb.MusicDBConfig"><code class="docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.musicdb.MusicDBConfig.GetDirectory"><code class="docutils literal notranslate"><span class="pre">MusicDBConfig.GetDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.musicdb.MusicDBConfig.GetFile"><code class="docutils literal notranslate"><span class="pre">MusicDBConfig.GetFile()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-musicdb.lib.cfg.webui">WebUI Configuration File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.webui.WebUIConfig"><code class="docutils literal notranslate"><span class="pre">WebUIConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.webui.WebUIConfig.LoadConfig"><code class="docutils literal notranslate"><span class="pre">WebUIConfig.LoadConfig()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.webui.WebUIConfig.SaveConfig"><code class="docutils literal notranslate"><span class="pre">WebUIConfig.SaveConfig()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-musicdb.lib.cfg.extern">External Storage Configuration File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.extern.ExternConfig"><code class="docutils literal notranslate"><span class="pre">ExternConfig</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-musicdb.lib.cfg.mdbstate">MusicDB State Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState"><code class="docutils literal notranslate"><span class="pre">MDBState</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.GetActiveTagIDs"><code class="docutils literal notranslate"><span class="pre">MDBState.GetActiveTagIDs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.GetAllSubgenreFilterLists"><code class="docutils literal notranslate"><span class="pre">MDBState.GetAllSubgenreFilterLists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.GetGenreFilterList"><code class="docutils literal notranslate"><span class="pre">MDBState.GetGenreFilterList()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.GetSubgenreFilterList"><code class="docutils literal notranslate"><span class="pre">MDBState.GetSubgenreFilterList()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.GetUIMode"><code class="docutils literal notranslate"><span class="pre">MDBState.GetUIMode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="docutils literal notranslate"><span class="pre">MDBState.LoadBlacklists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.LoadSongQueue"><code class="docutils literal notranslate"><span class="pre">MDBState.LoadSongQueue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.LoadVideoQueue"><code class="docutils literal notranslate"><span class="pre">MDBState.LoadVideoQueue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.ReadList"><code class="docutils literal notranslate"><span class="pre">MDBState.ReadList()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="docutils literal notranslate"><span class="pre">MDBState.SaveBlacklists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.SaveSongQueue"><code class="docutils literal notranslate"><span class="pre">MDBState.SaveSongQueue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.SaveVideoQueue"><code class="docutils literal notranslate"><span class="pre">MDBState.SaveVideoQueue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.SetUIMode"><code class="docutils literal notranslate"><span class="pre">MDBState.SetUIMode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.UpdateGenreFilterList"><code class="docutils literal notranslate"><span class="pre">MDBState.UpdateGenreFilterList()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.UpdateSubgenreFilterList"><code class="docutils literal notranslate"><span class="pre">MDBState.UpdateSubgenreFilterList()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.mdbstate.MDBState.WriteList"><code class="docutils literal notranslate"><span class="pre">MDBState.WriteList()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-musicdb.lib.cfg.randy">Randy Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#possible-configurations">Possible configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.randy.RandyConfiguration"><code class="docutils literal notranslate"><span class="pre">RandyConfiguration</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.randy.RandyConfiguration.LoadConfig"><code class="docutils literal notranslate"><span class="pre">RandyConfiguration.LoadConfig()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.randy.RandyConfiguration.Reload"><code class="docutils literal notranslate"><span class="pre">RandyConfiguration.Reload()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.randy.RandyConfiguration.SaveConfig"><code class="docutils literal notranslate"><span class="pre">RandyConfiguration.SaveConfig()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-musicdb.lib.cfg.wsapikey">WebSocket API Key File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.wsapikey.WebSocketAPIKey"><code class="docutils literal notranslate"><span class="pre">WebSocketAPIKey</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.wsapikey.WebSocketAPIKey.CreateIfMissing"><code class="docutils literal notranslate"><span class="pre">WebSocketAPIKey.CreateIfMissing()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/config.html#musicdb.lib.cfg.wsapikey.WebSocketAPIKey.Read"><code class="docutils literal notranslate"><span class="pre">WebSocketAPIKey.Read()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/database.html">Database</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/database.html#database-class">Database Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/database.html#database-class">Database Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/database.html#musicdb.lib.db.database.Database"><code class="docutils literal notranslate"><span class="pre">Database</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/database.html#musicdb.lib.db.database.Database.Compress"><code class="docutils literal notranslate"><span class="pre">Database.Compress()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/database.html#musicdb.lib.db.database.Database.Decompress"><code class="docutils literal notranslate"><span class="pre">Database.Decompress()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/database.html#musicdb.lib.db.database.Database.Execute"><code class="docutils literal notranslate"><span class="pre">Database.Execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/database.html#musicdb.lib.db.database.Database.ExecuteScript"><code class="docutils literal notranslate"><span class="pre">Database.ExecuteScript()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/database.html#musicdb.lib.db.database.Database.GetFromDatabase"><code class="docutils literal notranslate"><span class="pre">Database.GetFromDatabase()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/fileprocessing.html#musicdb.lib.fileprocessing.Fileprocessing"><code class="docutils literal notranslate"><span class="pre">Fileprocessing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/fileprocessing.html#musicdb.lib.fileprocessing.Fileprocessing.Checksum"><code class="docutils literal notranslate"><span class="pre">Fileprocessing.Checksum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/fileprocessing.html#musicdb.lib.fileprocessing.Fileprocessing.ConvertToMP3"><code class="docutils literal notranslate"><span class="pre">Fileprocessing.ConvertToMP3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/fileprocessing.html#musicdb.lib.fileprocessing.Fileprocessing.ExistsProgram"><code class="docutils literal notranslate"><span class="pre">Fileprocessing.ExistsProgram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/fileprocessing.html#musicdb.lib.fileprocessing.Fileprocessing.OptimizeM4ATags"><code class="docutils literal notranslate"><span class="pre">Fileprocessing.OptimizeM4ATags()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/fileprocessing.html#musicdb.lib.fileprocessing.Fileprocessing.OptimizeMP3Tags"><code class="docutils literal notranslate"><span class="pre">Fileprocessing.OptimizeMP3Tags()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/filesystem.html">Filesystem Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/filesystem.html#filesystem-class">Filesystem Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem"><code class="docutils literal notranslate"><span class="pre">Filesystem</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.AbsolutePath"><code class="docutils literal notranslate"><span class="pre">Filesystem.AbsolutePath()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.AssertDirectory"><code class="docutils literal notranslate"><span class="pre">Filesystem.AssertDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.AssertFile"><code class="docutils literal notranslate"><span class="pre">Filesystem.AssertFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.CheckAccessPermissions"><code class="docutils literal notranslate"><span class="pre">Filesystem.CheckAccessPermissions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.CopyFile"><code class="docutils literal notranslate"><span class="pre">Filesystem.CopyFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.CreateSubdirectory"><code class="docutils literal notranslate"><span class="pre">Filesystem.CreateSubdirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.Execute"><code class="docutils literal notranslate"><span class="pre">Filesystem.Execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.Exists"><code class="docutils literal notranslate"><span class="pre">Filesystem.Exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetAccessPermissions"><code class="docutils literal notranslate"><span class="pre">Filesystem.GetAccessPermissions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetDirectory"><code class="docutils literal notranslate"><span class="pre">Filesystem.GetDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetDirectoryName"><code class="docutils literal notranslate"><span class="pre">Filesystem.GetDirectoryName()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetFileExtension"><code class="docutils literal notranslate"><span class="pre">Filesystem.GetFileExtension()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetFileName"><code class="docutils literal notranslate"><span class="pre">Filesystem.GetFileName()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetFiles"><code class="docutils literal notranslate"><span class="pre">Filesystem.GetFiles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetMode"><code class="docutils literal notranslate"><span class="pre">Filesystem.GetMode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetModificationDate"><code class="docutils literal notranslate"><span class="pre">Filesystem.GetModificationDate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetOwner"><code class="docutils literal notranslate"><span class="pre">Filesystem.GetOwner()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetRoot"><code class="docutils literal notranslate"><span class="pre">Filesystem.GetRoot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GetSubdirectories"><code class="docutils literal notranslate"><span class="pre">Filesystem.GetSubdirectories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.GuessMimeType"><code class="docutils literal notranslate"><span class="pre">Filesystem.GuessMimeType()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.IsDirectory"><code class="docutils literal notranslate"><span class="pre">Filesystem.IsDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.IsFile"><code class="docutils literal notranslate"><span class="pre">Filesystem.IsFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.ListDirectory"><code class="docutils literal notranslate"><span class="pre">Filesystem.ListDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.MoveDirectory"><code class="docutils literal notranslate"><span class="pre">Filesystem.MoveDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.MoveFile"><code class="docutils literal notranslate"><span class="pre">Filesystem.MoveFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.RemoveDirectory"><code class="docutils literal notranslate"><span class="pre">Filesystem.RemoveDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.RemoveFile"><code class="docutils literal notranslate"><span class="pre">Filesystem.RemoveFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.RemoveRoot"><code class="docutils literal notranslate"><span class="pre">Filesystem.RemoveRoot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.Rename"><code class="docutils literal notranslate"><span class="pre">Filesystem.Rename()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.SetAccessPermissions"><code class="docutils literal notranslate"><span class="pre">Filesystem.SetAccessPermissions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.SetAttributes"><code class="docutils literal notranslate"><span class="pre">Filesystem.SetAttributes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.SetOwner"><code class="docutils literal notranslate"><span class="pre">Filesystem.SetOwner()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.ToString"><code class="docutils literal notranslate"><span class="pre">Filesystem.ToString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/filesystem.html#musicdb.lib.filesystem.Filesystem.TryRemoveRoot"><code class="docutils literal notranslate"><span class="pre">Filesystem.TryRemoveRoot()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/gstreamer.html">GStreamer Interface</a><ul>
@@ -462,7 +833,16 @@
 <li class="toctree-l3"><a class="reference internal" href="../lib/gstreamer.html#example-for-using-plugins">Example for Using Plugins</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/gstreamer.html#musicdb.lib.stream.gstreamer.GStreamerInterface"><code class="docutils literal notranslate"><span class="pre">GStreamerInterface</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/gstreamer.html#musicdb.lib.stream.gstreamer.GStreamerInterface.Cancel"><code class="docutils literal notranslate"><span class="pre">GStreamerInterface.Cancel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/gstreamer.html#musicdb.lib.stream.gstreamer.GStreamerInterface.CreateElement"><code class="docutils literal notranslate"><span class="pre">GStreamerInterface.CreateElement()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/gstreamer.html#musicdb.lib.stream.gstreamer.GStreamerInterface.Execute"><code class="docutils literal notranslate"><span class="pre">GStreamerInterface.Execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/gstreamer.html#musicdb.lib.stream.gstreamer.GStreamerInterface.GetState"><code class="docutils literal notranslate"><span class="pre">GStreamerInterface.GetState()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/icecast.html">Icecast Interface</a><ul>
@@ -470,26 +850,87 @@
 <li class="toctree-l3"><a class="reference internal" href="../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#icecast-class">Icecast Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#icecast-class">Icecast Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/icecast.html#musicdb.lib.stream.icecast.IcecastInterface"><code class="docutils literal notranslate"><span class="pre">IcecastInterface</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/icecast.html#musicdb.lib.stream.icecast.IcecastInterface.Connect"><code class="docutils literal notranslate"><span class="pre">IcecastInterface.Connect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/icecast.html#musicdb.lib.stream.icecast.IcecastInterface.Disconnect"><code class="docutils literal notranslate"><span class="pre">IcecastInterface.Disconnect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/icecast.html#musicdb.lib.stream.icecast.IcecastInterface.IsConnected"><code class="docutils literal notranslate"><span class="pre">IcecastInterface.IsConnected()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/icecast.html#musicdb.lib.stream.icecast.IcecastInterface.Mute"><code class="docutils literal notranslate"><span class="pre">IcecastInterface.Mute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/icecast.html#musicdb.lib.stream.icecast.IcecastInterface.StreamChunk"><code class="docutils literal notranslate"><span class="pre">IcecastInterface.StreamChunk()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/icecast.html#musicdb.lib.stream.icecast.IcecastInterface.StreamFile"><code class="docutils literal notranslate"><span class="pre">IcecastInterface.StreamFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/icecast.html#musicdb.lib.stream.icecast.IcecastInterface.UpdateTitle"><code class="docutils literal notranslate"><span class="pre">IcecastInterface.UpdateTitle()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/logging.html">MusicDB Logging</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/logging.html#musicdblogger-class">MusicDBLogger Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/logging.html#musicdblogger-class">MusicDBLogger Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/logging.html#musicdb.lib.logging.MusicDBLogger"><code class="docutils literal notranslate"><span class="pre">MusicDBLogger</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/logging.html#musicdb.lib.logging.MusicDBLogger.Reconfigure"><code class="docutils literal notranslate"><span class="pre">MusicDBLogger.Reconfigure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/logging.html#musicdb.lib.logging.MusicDBLogger.SetFilePermissions"><code class="docutils literal notranslate"><span class="pre">MusicDBLogger.SetFilePermissions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/logging.html#musicdb.lib.logging.MDBLogFormatter"><code class="docutils literal notranslate"><span class="pre">MDBLogFormatter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/logging.html#musicdb.lib.logging.MDBLogFormatter.format"><code class="docutils literal notranslate"><span class="pre">MDBLogFormatter.format()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/metatags.html">Meta Tags</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/metatags.html#metatags-class">MetaTags Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/metatags.html#metatags-class">MetaTags Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags"><code class="docutils literal notranslate"><span class="pre">MetaTags</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.AnalysePlaytime"><code class="docutils literal notranslate"><span class="pre">MetaTags.AnalysePlaytime()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.CheckArtwork"><code class="docutils literal notranslate"><span class="pre">MetaTags.CheckArtwork()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.GetAlbumname"><code class="docutils literal notranslate"><span class="pre">MetaTags.GetAlbumname()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.GetAllMetadata"><code class="docutils literal notranslate"><span class="pre">MetaTags.GetAllMetadata()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.GetArtistname"><code class="docutils literal notranslate"><span class="pre">MetaTags.GetArtistname()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.GetBitrate"><code class="docutils literal notranslate"><span class="pre">MetaTags.GetBitrate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.GetCDNumber"><code class="docutils literal notranslate"><span class="pre">MetaTags.GetCDNumber()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.GetLyrics"><code class="docutils literal notranslate"><span class="pre">MetaTags.GetLyrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.GetOrigin"><code class="docutils literal notranslate"><span class="pre">MetaTags.GetOrigin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.GetPlaytime"><code class="docutils literal notranslate"><span class="pre">MetaTags.GetPlaytime()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.GetReleaseyear"><code class="docutils literal notranslate"><span class="pre">MetaTags.GetReleaseyear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.GetSongname"><code class="docutils literal notranslate"><span class="pre">MetaTags.GetSongname()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.GetTracknumber"><code class="docutils literal notranslate"><span class="pre">MetaTags.GetTracknumber()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.GetVideoCodec"><code class="docutils literal notranslate"><span class="pre">MetaTags.GetVideoCodec()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.GetVideoResolution"><code class="docutils literal notranslate"><span class="pre">MetaTags.GetVideoResolution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.Load"><code class="docutils literal notranslate"><span class="pre">MetaTags.Load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/metatags.html#musicdb.lib.metatags.MetaTags.StoreArtwork"><code class="docutils literal notranslate"><span class="pre">MetaTags.StoreArtwork()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/mp3stream.html">MP3 Stream Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/mp3stream.html#musicdb.lib.stream.mp3stream.MP3Stream"><code class="docutils literal notranslate"><span class="pre">MP3Stream</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/mp3stream.html#musicdb.lib.stream.mp3stream.MP3Stream.AnalyzeHeader"><code class="docutils literal notranslate"><span class="pre">MP3Stream.AnalyzeHeader()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/mp3stream.html#musicdb.lib.stream.mp3stream.MP3Stream.Frames"><code class="docutils literal notranslate"><span class="pre">MP3Stream.Frames()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#gstreamer-pipeline-for-transcoding">GStreamer Pipeline for Transcoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/mp3transcoder.html#musicdb.lib.stream.mp3transcoder.MP3Transcoder"><code class="docutils literal notranslate"><span class="pre">MP3Transcoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/mp3transcoder.html#musicdb.lib.stream.mp3transcoder.MP3Transcoder.Cancel"><code class="docutils literal notranslate"><span class="pre">MP3Transcoder.Cancel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/mp3transcoder.html#musicdb.lib.stream.mp3transcoder.MP3Transcoder.GetChunk"><code class="docutils literal notranslate"><span class="pre">MP3Transcoder.GetChunk()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/mp3transcoder.html#musicdb.lib.stream.mp3transcoder.MP3Transcoder.Transcode"><code class="docutils literal notranslate"><span class="pre">MP3Transcoder.Transcode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/mp3transcoder.html#musicdb.lib.stream.mp3transcoder.MP3Transcoder.onDecoderPadAdded"><code class="docutils literal notranslate"><span class="pre">MP3Transcoder.onDecoderPadAdded()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
@@ -517,41 +958,219 @@
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase"><code class="docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.AddAlbum"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.AddAlbum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.AddArtist"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.AddArtist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.AddFullSong"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.AddFullSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.AddFullVideo"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.AddFullVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.AddSong"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.AddSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.AddVideo"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.AddVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.CreateTag"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.CreateTag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.DeleteTag"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.DeleteTag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.DeleteTagById"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.DeleteTagById()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.DeleteTagByName"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.DeleteTagByName()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GenreListToGenreTree"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GenreListToGenreTree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetAlbumById"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetAlbumById()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetAlbumByPath"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetAlbumByPath()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetAlbums"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetAlbums()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetAlbumsByArtistId()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetAllAlbumIds"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetAllAlbumIds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetAllAlbums"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetAllAlbums()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetAllArtists"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetAllArtists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetAllSongs"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetAllSongs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetAllTags"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetAllTags()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetArtistById"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetArtistById()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetArtistByPath"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetArtistByPath()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetFilteredAlbumIds"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetFilteredAlbumIds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetFilteredAlbums"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetFilteredAlbums()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetFilteredAlbumsByArtistId"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetFilteredAlbumsByArtistId()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetFilteredSongIds"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetFilteredSongIds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetLyrics"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetLyrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetRandomSong"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetRandomSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetRandomVideo"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetRandomVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetSongById"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetSongById()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetSongByPath"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetSongByPath()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetSongs"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetSongs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetSongsByAlbumId"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetSongsByAlbumId()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetSongsByArtistId"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetSongsByArtistId()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetSubgenresOfGenre"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetSubgenresOfGenre()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetTagById"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetTagById()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetTagByName"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetTagByName()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetTagStatistics"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetTagStatistics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetTargetTags"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetTargetTags()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetVideoById"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetVideoById()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetVideoByPath"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetVideoByPath()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetVideos"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetVideos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.GetVideosByArtistId"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.GetVideosByArtistId()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.ModifyTag"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.ModifyTag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.ModifyTagById"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.ModifyTagById()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.RemoveAlbum"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.RemoveAlbum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.RemoveArtist"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.RemoveArtist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.RemoveSong"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.RemoveSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.RemoveTargetTag"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.RemoveTargetTag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.SetAlbumAddedTime"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.SetAlbumAddedTime()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.SetAlbumHiddenState"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.SetAlbumHiddenState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.SetAlbumOrigin"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.SetAlbumOrigin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.SetArtwork"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.SetArtwork()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.SetArtworkColorByAlbumId"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.SetArtworkColorByAlbumId()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.SetColorThemeByVideoId"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.SetColorThemeByVideoId()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.SetLyrics"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.SetLyrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.SetTargetTag"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.SetTargetTag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.SetVideoFrames"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.SetVideoFrames()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.SetVideoTimeFrame"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.SetVideoTimeFrame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.SplitTagsByClass"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.SplitTagsByClass()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.UpdateMusicProperty"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.UpdateMusicProperty()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.UpdateSongStatistic"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.UpdateSongStatistic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.UpdateVideoStatistic"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.UpdateVideoStatistic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.WriteAlbum"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.WriteAlbum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.WriteArtist"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.WriteArtist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.WriteSong"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.WriteSong()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.WriteTag"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.WriteTag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/musicdb.html#musicdb.lib.db.musicdb.MusicDatabase.WriteVideo"><code class="docutils literal notranslate"><span class="pre">MusicDatabase.WriteVideo()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../lib/pidfile.html">PID File Handling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/pidfile.html">PID File Handling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/pidfile.html#musicdb.lib.pidfile.CheckPIDFile"><code class="docutils literal notranslate"><span class="pre">CheckPIDFile()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/pidfile.html#musicdb.lib.pidfile.CreatePIDFile"><code class="docutils literal notranslate"><span class="pre">CreatePIDFile()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/pidfile.html#musicdb.lib.pidfile.DeletePIDFile"><code class="docutils literal notranslate"><span class="pre">DeletePIDFile()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/websockets.html#module-musicdb.lib.ws.server">Websocket Server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/websockets.html#module-musicdb.lib.ws.websocket">Websocket Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/websockets.html#module-musicdb.lib.ws.server">Websocket Server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.server.MusicDBWebSocketProtocol"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketProtocol</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.server.MusicDBWebSocketServer"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketServer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.server.MusicDBWebSocketServer.HandleEvents"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketServer.HandleEvents()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.server.MusicDBWebSocketServer.Setup"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketServer.Setup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.server.MusicDBWebSocketServer.Start"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketServer.Start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.server.MusicDBWebSocketServer.Stop"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketServer.Stop()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/websockets.html#module-musicdb.lib.ws.websocket">Websocket Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.MusicDBWebSocketFactory"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.MusicDBWebSocketFactory.AddToBroadcast"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketFactory.AddToBroadcast()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.MusicDBWebSocketFactory.BroadcastPacket"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketFactory.BroadcastPacket()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.MusicDBWebSocketFactory.CloseConnections"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketFactory.CloseConnections()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.MusicDBWebSocketFactory.RemoveFromBroadcast"><code class="docutils literal notranslate"><span class="pre">MusicDBWebSocketFactory.RemoveFromBroadcast()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.WebSocket"><code class="docutils literal notranslate"><span class="pre">WebSocket</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.WebSocket.BeautifyValues"><code class="docutils literal notranslate"><span class="pre">WebSocket.BeautifyValues()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.WebSocket.BroadcastPacket"><code class="docutils literal notranslate"><span class="pre">WebSocket.BroadcastPacket()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.WebSocket.SendPacket"><code class="docutils literal notranslate"><span class="pre">WebSocket.SendPacket()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.WebSocket.onClose"><code class="docutils literal notranslate"><span class="pre">WebSocket.onClose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.WebSocket.onCloseHandshakeTimeout"><code class="docutils literal notranslate"><span class="pre">WebSocket.onCloseHandshakeTimeout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.WebSocket.onConnect"><code class="docutils literal notranslate"><span class="pre">WebSocket.onConnect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.WebSocket.onMessage"><code class="docutils literal notranslate"><span class="pre">WebSocket.onMessage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.WebSocket.onOpen"><code class="docutils literal notranslate"><span class="pre">WebSocket.onOpen()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lib/websockets.html#musicdb.lib.ws.websocket.WebSocket.onOpenHandshakeTimeout"><code class="docutils literal notranslate"><span class="pre">WebSocket.onOpenHandshakeTimeout()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Management Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../taskmanagement/artworkmanager.html">Artwork Tasks Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/artworkmanager.html#artworkmanager-class">ArtworkManager Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/artworkmanager.html#artworkmanager-class">ArtworkManager Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../taskmanagement/artworkmanager.html#musicdb.taskmanagement.artworkmanager.ArtworkManager"><code class="docutils literal notranslate"><span class="pre">ArtworkManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/artworkmanager.html#musicdb.taskmanagement.artworkmanager.ArtworkManager.ImportAlbumArtwork"><code class="docutils literal notranslate"><span class="pre">ArtworkManager.ImportAlbumArtwork()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/artworkmanager.html#musicdb.taskmanagement.artworkmanager.ArtworkManager.ImportArtwork"><code class="docutils literal notranslate"><span class="pre">ArtworkManager.ImportArtwork()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/artworkmanager.html#musicdb.taskmanagement.artworkmanager.ArtworkManager.ImportArtworkFromUpload"><code class="docutils literal notranslate"><span class="pre">ArtworkManager.ImportArtworkFromUpload()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/artworkmanager.html#musicdb.taskmanagement.artworkmanager.ArtworkManager.ImportVideoArtwork"><code class="docutils literal notranslate"><span class="pre">ArtworkManager.ImportVideoArtwork()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/artworkmanager.html#musicdb.taskmanagement.artworkmanager.ArtworkManager.InitiateImport"><code class="docutils literal notranslate"><span class="pre">ArtworkManager.InitiateImport()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../taskmanagement/filesystemmanager.html">Files and Directory Tasks Manager</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/filesystemmanager.html#filesystemmanager-class">FilesystemManager Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/filesystemmanager.html#filesystemmanager-class">FilesystemManager Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../taskmanagement/filesystemmanager.html#musicdb.taskmanagement.filesystemmanager.FilesystemManager"><code class="docutils literal notranslate"><span class="pre">FilesystemManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/filesystemmanager.html#musicdb.taskmanagement.filesystemmanager.FilesystemManager.FindNewPaths"><code class="docutils literal notranslate"><span class="pre">FilesystemManager.FindNewPaths()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/filesystemmanager.html#musicdb.taskmanagement.filesystemmanager.FilesystemManager.InitiateFilesystemScan"><code class="docutils literal notranslate"><span class="pre">FilesystemManager.InitiateFilesystemScan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/filesystemmanager.html#musicdb.taskmanagement.filesystemmanager.FilesystemManager.ScanFilesystem"><code class="docutils literal notranslate"><span class="pre">FilesystemManager.ScanFilesystem()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../taskmanagement/importmanager.html">Import Tasks Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/importmanager.html#importmanager-class">ImportManager Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/importmanager.html#importmanager-class">ImportManager Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../taskmanagement/importmanager.html#musicdb.taskmanagement.importmanager.ImportManager"><code class="docutils literal notranslate"><span class="pre">ImportManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/importmanager.html#musicdb.taskmanagement.importmanager.ImportManager.ImportAlbum"><code class="docutils literal notranslate"><span class="pre">ImportManager.ImportAlbum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/importmanager.html#musicdb.taskmanagement.importmanager.ImportManager.ImportMusic"><code class="docutils literal notranslate"><span class="pre">ImportManager.ImportMusic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/importmanager.html#musicdb.taskmanagement.importmanager.ImportManager.ImportVideo"><code class="docutils literal notranslate"><span class="pre">ImportManager.ImportVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/importmanager.html#musicdb.taskmanagement.importmanager.ImportManager.InitiateImport"><code class="docutils literal notranslate"><span class="pre">ImportManager.InitiateImport()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../taskmanagement/integrationmanager.html">Integration Tasks Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/integrationmanager.html#integrationmanager-class">IntegrationManager Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/integrationmanager.html#integrationmanager-class">IntegrationManager Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../taskmanagement/integrationmanager.html#musicdb.taskmanagement.integrationmanager.IntegrationManager"><code class="docutils literal notranslate"><span class="pre">IntegrationManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/integrationmanager.html#musicdb.taskmanagement.integrationmanager.IntegrationManager.InitiateIntegration"><code class="docutils literal notranslate"><span class="pre">IntegrationManager.InitiateIntegration()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/integrationmanager.html#musicdb.taskmanagement.integrationmanager.IntegrationManager.IntegrateAlbumFile"><code class="docutils literal notranslate"><span class="pre">IntegrationManager.IntegrateAlbumFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/integrationmanager.html#musicdb.taskmanagement.integrationmanager.IntegrationManager.IntegrateUploadedFile"><code class="docutils literal notranslate"><span class="pre">IntegrationManager.IntegrateUploadedFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/integrationmanager.html#musicdb.taskmanagement.integrationmanager.IntegrationManager.IntegrateVideo"><code class="docutils literal notranslate"><span class="pre">IntegrationManager.IntegrateVideo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../taskmanagement/taskmanager.html">Task Management Thread</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../taskmanagement/taskmanager.html#module-musicdb.taskmanagement.taskmanager">Task Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/taskmanager.html#taskmanager-class">TaskManager Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/taskmanager.html#taskmanager-class">TaskManager Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager"><code class="docutils literal notranslate"><span class="pre">TaskManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.CreateNewTask"><code class="docutils literal notranslate"><span class="pre">TaskManager.CreateNewTask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.CreateTaskID"><code class="docutils literal notranslate"><span class="pre">TaskManager.CreateTaskID()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.ExistsTaskFile"><code class="docutils literal notranslate"><span class="pre">TaskManager.ExistsTaskFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.GetTaskByID"><code class="docutils literal notranslate"><span class="pre">TaskManager.GetTaskByID()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.GetTasks"><code class="docutils literal notranslate"><span class="pre">TaskManager.GetTasks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.InitiateProcess"><code class="docutils literal notranslate"><span class="pre">TaskManager.InitiateProcess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.LoadTasks"><code class="docutils literal notranslate"><span class="pre">TaskManager.LoadTasks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.NotifyClient"><code class="docutils literal notranslate"><span class="pre">TaskManager.NotifyClient()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.RegisterCallback"><code class="docutils literal notranslate"><span class="pre">TaskManager.RegisterCallback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.RemoveCallback"><code class="docutils literal notranslate"><span class="pre">TaskManager.RemoveCallback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.RemoveTask"><code class="docutils literal notranslate"><span class="pre">TaskManager.RemoveTask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.SaveTask"><code class="docutils literal notranslate"><span class="pre">TaskManager.SaveTask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.ScheduleTask"><code class="docutils literal notranslate"><span class="pre">TaskManager.ScheduleTask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/taskmanager.html#musicdb.taskmanagement.taskmanager.TaskManager.UpdateTaskState"><code class="docutils literal notranslate"><span class="pre">TaskManager.UpdateTaskState()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../taskmanagement/uploadmanager.html">Upload Tasks Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../taskmanagement/uploadmanager.html#uploadmanager-class">UploadManager Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../taskmanagement/uploadmanager.html#musicdb.taskmanagement.uploadmanager.UploadManager"><code class="docutils literal notranslate"><span class="pre">UploadManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/uploadmanager.html#musicdb.taskmanagement.uploadmanager.UploadManager.AnnotateUpload"><code class="docutils literal notranslate"><span class="pre">UploadManager.AnnotateUpload()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/uploadmanager.html#musicdb.taskmanagement.uploadmanager.UploadManager.InitiateUpload"><code class="docutils literal notranslate"><span class="pre">UploadManager.InitiateUpload()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/uploadmanager.html#musicdb.taskmanagement.uploadmanager.UploadManager.NewChunk"><code class="docutils literal notranslate"><span class="pre">UploadManager.NewChunk()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/uploadmanager.html#musicdb.taskmanagement.uploadmanager.UploadManager.PreProcessAlbumFile"><code class="docutils literal notranslate"><span class="pre">UploadManager.PreProcessAlbumFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/uploadmanager.html#musicdb.taskmanagement.uploadmanager.UploadManager.PreProcessArtwork"><code class="docutils literal notranslate"><span class="pre">UploadManager.PreProcessArtwork()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/uploadmanager.html#musicdb.taskmanagement.uploadmanager.UploadManager.PreProcessUploadedFile"><code class="docutils literal notranslate"><span class="pre">UploadManager.PreProcessUploadedFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/uploadmanager.html#musicdb.taskmanagement.uploadmanager.UploadManager.PreProcessVideo"><code class="docutils literal notranslate"><span class="pre">UploadManager.PreProcessVideo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/uploadmanager.html#musicdb.taskmanagement.uploadmanager.UploadManager.RequestRemoveUpload"><code class="docutils literal notranslate"><span class="pre">UploadManager.RequestRemoveUpload()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taskmanagement/uploadmanager.html#musicdb.taskmanagement.uploadmanager.UploadManager.UploadCompleted"><code class="docutils literal notranslate"><span class="pre">UploadManager.UploadCompleted()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -599,73 +1218,36 @@
 </li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">MusicDB</a>
-        
       </nav>
 
-
-      
       <div class="wy-nav-content">
         <div class="rst-content">
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
-      <li>Creating new CLI Modules</li>
-    
-    
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Creating new CLI Modules</li>
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../_sources/basics/mods.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="creating-new-cli-modules">
-<h1>Creating new CLI Modules<a class="headerlink" href="#creating-new-cli-modules" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="creating-new-cli-modules">
+<h1>Creating new CLI Modules<a class="headerlink" href="#creating-new-cli-modules" title="Link to this heading"></a></h1>
 <p>Modules are the interface to the MusicDB API for the command line tool <code class="docutils literal notranslate"><span class="pre">musicdb</span></code>.
 The following sections explain how to build a module.</p>
-<div class="section" id="loading-of-modules">
-<h2>Loading of Modules<a class="headerlink" href="#loading-of-modules" title="Permalink to this headline">¶</a></h2>
+<section id="loading-of-modules">
+<h2>Loading of Modules<a class="headerlink" href="#loading-of-modules" title="Link to this heading"></a></h2>
 <p>When <code class="docutils literal notranslate"><span class="pre">musicdb</span></code> gets called, all python modules in the module directory gets loaded and the <code class="docutils literal notranslate"><span class="pre">MDBM_CreateArgumentParser</span></code> method gets called.
 So, the command line argument parser can handle the parameter given to MusicDB.py.
 After some further initialization the module gets called.
@@ -695,9 +1277,9 @@ The <code class="docutils literal notranslate"><span class="pre">__init__</span>
 <span class="n">exit</span><span class="p">(</span><span class="n">exitcode</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="creation-of-new-modules">
-<h2>Creation of new Modules<a class="headerlink" href="#creation-of-new-modules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="creation-of-new-modules">
+<h2>Creation of new Modules<a class="headerlink" href="#creation-of-new-modules" title="Link to this heading"></a></h2>
 <p>Modules are a class with the same man as the file.
 The class is derived from the <code class="docutils literal notranslate"><span class="pre">MDBModule</span></code> class as shown in the following class diagram.
 Modules are regular python files stored in the MusicDB module directory (<code class="docutils literal notranslate"><span class="pre">/mod</span></code>)
@@ -707,7 +1289,7 @@ Furthermore a main method called <code class="docutils literal notranslate"><spa
 This method implements the main function of the CLI mod and gets called if the command is given to <code class="docutils literal notranslate"><span class="pre">musicdb</span></code>
 Last, the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method gets a MusicDB Configuration object and a MusicDB Database object.</p>
 <blockquote>
-<div><div class="graphviz"><object data="../_images/graphviz-5d9feb83c9bf14e25e6d72c80181e142e33bd252.svg" type="image/svg+xml" class="graphviz">
+<div><div class="graphviz"><object data="../_images/graphviz-8d0d7e280f4d942851779c94de1998a399417ffc.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph hierarchy {
    size=&quot;5,5&quot;
    node[shape=record,style=filled,fillcolor=gray95]
@@ -720,24 +1302,24 @@ Last, the <code class="docutils literal notranslate"><span class="pre">__init__<
 }</p></object></div>
 </div></blockquote>
 <p>The following example shows a template of a module:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
-<span class="kn">from</span> <span class="nn">musicdb.lib.modapi</span>         <span class="kn">import</span> <span class="n">MDBModule</span>
-<span class="kn">from</span> <span class="nn">musicdb.lib.cfg.musicdb</span>    <span class="kn">import</span> <span class="n">MusicDBConfig</span>
-<span class="kn">from</span> <span class="nn">musicdb.lib.db.musicdb</span>     <span class="kn">import</span> <span class="n">MusicDatabase</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">musicdb.lib.modapi</span><span class="w">         </span><span class="kn">import</span> <span class="n">MDBModule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">musicdb.lib.cfg.musicdb</span><span class="w">    </span><span class="kn">import</span> <span class="n">MusicDBConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">musicdb.lib.db.musicdb</span><span class="w">     </span><span class="kn">import</span> <span class="n">MusicDatabase</span>
 
-<span class="k">class</span> <span class="nc">module</span><span class="p">(</span><span class="n">MDBModule</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">module</span><span class="p">(</span><span class="n">MDBModule</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
         <span class="n">MDBModule</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">MDBM_CreateArgumentParser</span><span class="p">(</span><span class="n">parserset</span><span class="p">,</span> <span class="n">modulename</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">MDBM_CreateArgumentParser</span><span class="p">(</span><span class="n">parserset</span><span class="p">,</span> <span class="n">modulename</span><span class="p">):</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">parserset</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="n">modulename</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;This is an example module&quot;</span><span class="p">)</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="n">modulename</span><span class="p">)</span>
 
 
     <span class="c1"># return exit-code</span>
-    <span class="k">def</span> <span class="nf">MDBM_Main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">MDBM_Main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
 
         <span class="c1"># execute command</span>
         <span class="k">try</span><span class="p">:</span>
@@ -751,17 +1333,17 @@ Last, the <code class="docutils literal notranslate"><span class="pre">__init__<
 </pre></div>
 </div>
 <p>Its base class is as simple as the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
 
-<span class="k">class</span> <span class="nc">MDBModule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MDBModule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">MDBM_CreateArgumentParser</span><span class="p">(</span><span class="n">parserset</span><span class="p">,</span> <span class="n">modulename</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">MDBM_CreateArgumentParser</span><span class="p">(</span><span class="n">parserset</span><span class="p">,</span> <span class="n">modulename</span><span class="p">):</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">parserset</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="n">modulename</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;FATAL: MISSING IMPLEMENTATION MDBM_CreateArgumentParser(parserset, modulename)&quot;</span><span class="p">)</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="n">modulename</span><span class="p">)</span>
 
     <span class="c1"># return exit-code</span>
-    <span class="k">def</span> <span class="nf">MDBM_Main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">MDBM_Main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FATAL: MISSING IMPLEMENTATION MDBM_Main(self, args)&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="mi">1</span>
 
@@ -769,73 +1351,35 @@ Last, the <code class="docutils literal notranslate"><span class="pre">__init__<
 
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
-           </div>
-           <div class="articleComments">
-            
            </div>
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2017 - 2022 Ralf Stemmer.
-
-    </p>
+    <p>&#169; Copyright 2017 - 2025 Ralf Stemmer.</p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'8.0.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/documentation_options.js"></script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/tabs.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
-
-  
-  
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

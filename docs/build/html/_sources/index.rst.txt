@@ -94,6 +94,7 @@ See the :doc:`/basics/concept` chapter and  :doc:`/basics/overview` to get an id
 
    basics/streaming
    basics/mods
+   basics/development
    basics/distribution
    basics/webapi
 

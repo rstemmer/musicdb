@@ -57,6 +57,11 @@ In this view, genres can be activated or deactivated by clicking on them.
 The WebUI only shows albums that have songs of an activated genre.
 Furthermore the random song selection algorithm only selects songs that are of the selected genre.
 
+Shift+Click allows an exclusive selection, so all other genres get deactivated.
+
+Right Click on the Genre View opens an advanced genre selection view that allows to also select specific sub genres.
+If only some sub genres of a main genre is selected, the corresponding genre button is shown with dashed lines.
+
 HUD
 ^^^
 
@@ -187,6 +192,8 @@ Below the Queue View are two buttons to add a random song to the Queue.
 You can append one at the end of the queue or add it right after the current streamed song.
 Of course only songs associated to the activated genres were considered.
 
+Details of how to configure the random song selection algorithm can be found in :doc:`/lib/config`.
+
 
 Lyrics View
 ^^^^^^^^^^^
@@ -196,6 +203,11 @@ To Do.
 
 WebUI Settings Mode
 -------------------
+
+To Do.
+
+Random Song Selection
+---------------------
 
 To Do.
 

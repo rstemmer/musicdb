@@ -85,6 +85,15 @@ MusicDB State Files
    :members:
 
 
+Randy Configuration
+-------------------
+
+.. automodule:: musicdb.lib.cfg.randy
+
+.. autoclass:: musicdb.lib.cfg.randy.RandyConfiguration
+   :members:
+
+
 WebSocket API Key File
 ----------------------
 
